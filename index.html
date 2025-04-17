@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>EMoji Weather by OrfeusEife</title>
+    <style>
+        :root {
+            --primary: #0066cc;
+            --secondary: #0099ff;
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-dark: rgba(0, 0, 0, 0.7);
+            --warning: #ff4757;
+            --warning-bg: rgba(255, 71, 87, 0.1);
+            --background-day: linear-gradient(135deg, #a9dfbf, #f9e79f, #f1948a, #5dade2);
+            --background-night: linear-gradient(135deg, #2F4F4F, #2a2a40, #DC143C, #191970, #CCFF33, #000000);
+            --text-color-day: #333;
+            --text-color-night: #ffffff;
+            --shadow: 0 8px 32px rgba(0, 102, 204, 0.15);
+            --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.3);
+            
+            /* Warning colors */
+            --warning-yellow: rgba(255, 204, 0, 0.2);
+            --warning-orange: rgba(255, 165, 0, 0.2);
+            --warning-red: rgba(255, 0, 0, 0.2);
+            
+            /* Air quality colors */
+            --aqi-1: rgba(0, 228, 0, 0.2);
+            --aqi-2: rgba(255, 255, 0, 0.2);
+            --aqi-3: rgba(255, 126, 0, 0.2);
+            --aqi-4: rgba(255, 0, 0, 0.2);
+            --aqi-5: rgba(153, 0, 76, 0.2);
+            --aqi-6: rgba(126, 0, 35, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--background-day);
+            min-height: 100vh;
+            padding: 1rem;
+            color: var(--text-color-day);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        body.night-mode {
+            background: var(--background-night);
+            color: var(--text-color-night);
+        }
+
+        body.light-mode {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        body.dark-mode {
+            background: #121212;
+            color: #f5f5f5;
+        }
+
+        /* Nowe motywy */
+        body.forest-mode {
+            --primary: #2e8b57;
+            --secondary: #3cb371;
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-dark: rgba(34, 139, 34, 0.2);
+            --text-color-day: #2e3713;
+            --text-color-night: #e0f7d4;
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1, #6b8e23);
+        }
+
+        body.space-mode {
+            --primary: #9370db;
+            --secondary: #4169e1;
+            --glass: rgba(25, 25, 112, 0.85);
+            --glass-dark: rgba(0, 0, 0, 0.8);
+            --text-color-day: #e0e0ff;
+            --text-color-night: #b0e0e6;
+            background: linear-gradient(135deg, #000033, #000066, #000080);
+        }
+
+        body.desert-mode {
+            --primary: #cd853f;
+            --secondary: #d2691e;
+            --glass: rgba(255, 248, 220, 0.9);
+            --glass-dark: rgba(210, 105, 30, 0.2);
+            --text-color-day: #654321;
+            --text-color-night: #f5deb3;
+            background: linear-gradient(135deg, #f5deb3, #d2b48c, #cd853f);
+        }
+
+        body.rainy-day-mode {
+            --primary: #4682b4;
+            --secondary: #5f9ea0;
+            --glass: rgba(176, 196, 222, 0.9);
+            --glass-dark: rgba(70, 130, 180, 0.2);
+            --text-color-day: #1e3f66;
+            --text-color-night: #f0f8ff;
+            background: linear-gradient(135deg, #b0c4de, #778899, #4682b4);
+        }
+
+        body.spring-mode {
+            --primary: #2e8b57;
+            --secondary: #3cb371;
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-dark: rgba(152, 251, 152, 0.2);
+            --text-color-day: #1e5631;
+            --text-color-night: #e0f7d4;
+            background: linear-gradient(135deg, #98fb98, #e0f7d4, #ffb6c1);
+        }
+
+        body.summer-mode {
+            --primary: #ff8c00;
+            --secondary: #ff4500;
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-dark: rgba(255, 140, 0, 0.2);
+            --text-color-day: #8b0000;
+            --text-color-night: #fffacd;
+            background: linear-gradient(135deg, #ffa07a, #ff8c00, #ff4500);
+        }
+
+        body.autumn-mode {
+            --primary: #d2691e;
+            --secondary: #a0522d;
+            --glass: rgba(255, 248, 220, 0.9);
+            --glass-dark: rgba(210, 105, 30, 0.2);
+            --text-color-day: #654321;
+            --text-color-night: #f5deb3;
+            background: linear-gradient(135deg, #d2691e, #a0522d, #8b4513);
+        }
+
+        body.winter-mode {
+            --primary: #1e5f8c;
+            --secondary: #4682b4;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(173, 216, 230, 0.2);
+            --text-color-day: #000080;
+            --text-color-night: #f0f8ff;
+            background: linear-gradient(135deg, #e6e6fa, #add8e6, #87ceeb);
+        }
+
+        body.matrix-mode {
+            --primary: #00ff41;
+            --secondary: #008f11;
+            --glass: rgba(0, 0, 0, 0.8);
+            --glass-dark: rgba(0, 0, 0, 0.9);
+            --text-color-day: #00ff41;
+            --text-color-night: #00ff41;
+            --text-color: #00ff41;
+            background: #000;
+            color: #00ff41;
+        }
+
+        body.hubba-bubba-mode {
+            --primary: #ff69b4;
+            --secondary: #ff1493;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(255, 105, 180, 0.2);
+            --text-color-day: #333;
+            --text-color-night: #fff;
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493);
+        }
+
+        /* Nowe dodatkowe motywy */
+        body.christmas-mode {
+            --primary: #d62b2b;
+            --secondary: #2b8d2b;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(214, 43, 43, 0.2);
+            --text-color-day: #333;
+            --text-color-night: #f0f8ff;
+            background: linear-gradient(135deg, #d62b2b, #2b8d2b, #f5f5f5);
+        }
+
+        body.easter-mode {
+            --primary: #8a2be2;
+            --secondary: #9932cc;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(138, 43, 226, 0.2);
+            --text-color-day: #4b0082;
+            --text-color-night: #f0f8ff;
+            background: linear-gradient(135deg, #ff9ff3, #feca57, #1dd1a1);
+        }
+
+        body.birthday-mode {
+            --primary: #ff6b6b;
+            --secondary: #48dbfb;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(255, 107, 107, 0.2);
+            --text-color-day: #333;
+            --text-color-night: #f0f8ff;
+            background: linear-gradient(135deg, #ff6b6b, #48dbfb, #feca57);
+        }
+
+        body.disco-mode {
+            --primary: #9b59b6;
+            --secondary: #3498db;
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-dark: rgba(155, 89, 182, 0.2);
+            --text-color-day: #2c3e50;
+            --text-color-night: #ecf0f1;
+            background: linear-gradient(135deg, #9b59b6, #3498db, #e74c3c);
+        }
+
+        body.ocean-mode {
+            --primary: #1abc9c;
+            --secondary: #3498db;
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-dark: rgba(26, 188, 156, 0.2);
+            --text-color-day: #2c3e50;
+            --text-color-night: #ecf0f1;
+            background: linear-gradient(135deg, #1abc9c, #3498db, #9b59b6);
+        }
+
+        body.sunset-mode {
+            --primary: #e74c3c;
+            --secondary: #f39c12;
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-dark: rgba(231, 76, 60, 0.2);
+            --text-color-day: #2c3e50;
+            --text-color-night: #ecf0f1;
+            background: linear-gradient(135deg, #e74c3c, #f39c12, #9b59b6);
+        }
+
+        body.neon-mode {
+            --primary: #00ff9d;
+            --secondary: #00b8ff;
+            --glass: rgba(20, 20, 30, 0.9);
+            --glass-dark: rgba(0, 0, 0, 0.95);
+            --text-color-day: #00ff9d;
+            --text-color-night: #00ff9d;
+            --text-color: #00ff9d;
+            background: #000;
+            color: #00ff9d;
+        }
+
+        body.retro-mode {
+            --primary: #ff6b6b;
+            --secondary: #5f27cd;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(255, 107, 107, 0.2);
+            --text-color-day: #5f27cd;
+            --text-color-night: #f0f8ff;
+            background: linear-gradient(135deg, #ff6b6b, #feca57, #1dd1a1);
+        }
+
+        body.galaxy-mode {
+            --primary: #9370db;
+            --secondary: #4169e1;
+            --glass: rgba(20, 20, 40, 0.9);
+            --glass-dark: rgba(0, 0, 20, 0.9);
+            --text-color-day: #e0e0ff;
+            --text-color-night: #e0e0ff;
+            background: linear-gradient(135deg, #000033, #000066, #000080);
+        }
+
+        body.candy-mode {
+            --primary: #ff9ff3;
+            --secondary: #feca57;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(255, 159, 243, 0.2);
+            --text-color-day: #5f27cd;
+            --text-color-night: #f0f8ff;
+            background: linear-gradient(135deg, #ff9ff3, #feca57, #1dd1a1);
+        }
+
+        body.monochrome-mode {
+            --primary: #555;
+            --secondary: #999;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(85, 85, 85, 0.2);
+            --text-color-day: #333;
+            --text-color-night: #f5f5f5;
+            background: linear-gradient(135deg, #eee, #ccc, #aaa);
+        }
+
+        body.amber-mode {
+            --primary: #ff7f50;
+            --secondary: #ff6347;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(255, 127, 80, 0.2);
+            --text-color-day: #333;
+            --text-color-night: #f5f5f5;
+            background: linear-gradient(135deg, #ff7f50, #ff8c00, #ff6347);
+        }
+
+        /* Nowy motyw LKS Burzyn */
+        body.dzik-mode {
+            --primary: #ff0000;
+            --secondary: #000000;
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-dark: rgba(0, 0, 0, 0.8);
+            --text-color-day: #000000;
+            --text-color-night: #ffffff;
+            --text-color: #000000;
+            background: linear-gradient(135deg, #000000, #ff0000, #ffffff);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        body.night-mode .container,
+        body.dark-mode .container {
+            background: var(--glass-dark);
+            box-shadow: var(--shadow-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .container {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+        }
+
+        body.matrix-mode .container,
+        body.neon-mode .container,
+        body.galaxy-mode .container,
+        body.dzik-mode .container {
+            border: 1px solid var(--primary);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        body.night-mode h1,
+        body.night-mode h2,
+        body.night-mode h3,
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.galaxy-mode h1,
+        body.galaxy-mode h2,
+        body.galaxy-mode h3 {
+            color: var(--secondary);
+        }
+
+        body.matrix-mode h1,
+        body.matrix-mode h2,
+        body.matrix-mode h3,
+        body.neon-mode h1,
+        body.neon-mode h2,
+        body.neon-mode h3 {
+            color: var(--primary);
+            text-shadow: 0 0 5px var(--primary);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        input {
+            padding: 0.8rem 1.2rem;
+            border: 1px solid var(--primary);
+            border-radius: 0.8rem;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-color-day);
+            transition: all 0.3s ease;
+        }
+
+        body.night-mode input,
+        body.dark-mode input,
+        body.galaxy-mode input,
+        body.space-mode input {
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--text-color-night);
+            border-color: var(--secondary);
+        }
+
+        body.light-mode input {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border-color: #0066cc;
+        }
+
+        body.matrix-mode input,
+        body.neon-mode input {
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        body.matrix-mode button,
+        body.neon-mode button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+        }
+
+        .theme-toggle {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: auto;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body.matrix-mode .theme-toggle,
+        body.neon-mode .theme-toggle {
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--primary);
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 20px;
+            right: 70px;
+            background: var(--glass);
+            border-radius: 0.8rem;
+            padding: 0.5rem;
+            border: 1px solid var(--primary);
+            color: var(--text-color-day);
+        }
+
+        body.night-mode .theme-selector,
+        body.dark-mode .theme-selector,
+        body.galaxy-mode .theme-selector,
+        body.space-mode .theme-selector {
+            background: var(--glass-dark);
+            color: var(--text-color-night);
+        }
+
+        body.matrix-mode .theme-selector,
+        body.neon-mode .theme-selector {
+            background: rgba(0, 0, 0, 0.9);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .theme-option {
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+        }
+
+        .theme-option:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        body.matrix-mode .theme-option:hover,
+        body.neon-mode .theme-option:hover {
+            background: rgba(0, 255, 157, 0.2);
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(245, 249, 255, 0.9));
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        body.night-mode .card,
+        body.dark-mode .card,
+        body.galaxy-mode .card,
+        body.space-mode .card {
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(30, 30, 47, 0.7));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 249, 255, 0.95));
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.matrix-mode .card,
+        body.neon-mode .card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+        }
+
+        .warning-card {
+            background: var(--warning-bg);
+            border-left: 4px solid var(--warning);
+            padding: 1.25rem;
+            border-radius: 0.8rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .warning-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .warning-card.yellow {
+            background: var(--warning-yellow);
+            border-left-color: #ffcc00;
+        }
+
+        .warning-card.orange {
+            background: var(--warning-orange);
+            border-left-color: #ffa500;
+        }
+
+        .warning-card.red {
+            background: var(--warning-red);
+            border-left-color: #ff0000;
+        }
+
+        body.matrix-mode .warning-card,
+        body.neon-mode .warning-card {
+            background: rgba(255, 0, 0, 0.1);
+            border-left-color: #ff0000;
+        }
+
+        .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+        }
+
+        .warning-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--warning);
+        }
+
+        .warning-card.yellow .warning-title {
+            color: #cc9900;
+        }
+
+        .warning-card.orange .warning-title {
+            color: #cc8400;
+        }
+
+        .warning-card.red .warning-title {
+            color: #cc0000;
+        }
+
+        body.matrix-mode .warning-title,
+        body.neon-mode .warning-title {
+            color: #ff0000;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        .warning-details {
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        body.matrix-mode .warning-details,
+        body.neon-mode .warning-details {
+            color: var(--primary);
+        }
+
+        .weather-icon {
+            font-size: 3.5rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .weather-icon img {
+            width: 72px;
+            height: 64px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .weather-icon img:hover {
+            transform: scale(1.1);
+        }
+
+        .parameter-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .parameter-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        body.night-mode .parameter-item,
+        body.dark-mode .parameter-item,
+        body.galaxy-mode .parameter-item,
+        body.space-mode .parameter-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .parameter-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.matrix-mode .parameter-item,
+        body.neon-mode .parameter-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--primary);
+        }
+
+        .parameter-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.1);
+        }
+
+        body.matrix-mode .parameter-item:hover,
+        body.neon-mode .parameter-item:hover {
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+        }
+
+        .parameter-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 0.3rem;
+        }
+
+        body.matrix-mode .parameter-label,
+        body.neon-mode .parameter-label {
+            color: var(--primary);
+        }
+
+        .parameter-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2em;
+            animation: pulse 1s ease-in-out;
+        }
+
+        body.night-mode .parameter-value,
+        body.dark-mode .parameter-value,
+        body.galaxy-mode .parameter-value,
+        body.space-mode .parameter-value {
+            color: var(--secondary);
+        }
+
+        body.matrix-mode .parameter-value,
+        body.neon-mode .parameter-value {
+            color: var(--primary);
+            text-shadow: 0 0 5px var(--primary);
+        }
+
+        .hourly-forecast {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .hour-item {
+            padding: 1rem;
+            border-radius: 0.8rem;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+            min-width: 100px;
+        }
+
+        body.night-mode .hour-item,
+        body.dark-mode .hour-item,
+        body.galaxy-mode .hour-item,
+        body.space-mode .hour-item {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .hour-item {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.matrix-mode .hour-item,
+        body.neon-mode .hour-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--primary);
+        }
+
+        .forecast-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .current-condition {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            color: var(--text-color-day);
+        }
+
+        body.night-mode .current-condition,
+        body.dark-mode .current-condition,
+        body.galaxy-mode .current-condition,
+        body.space-mode .current-condition {
+            color: var(--text-color-night);
+        }
+
+        body.matrix-mode .current-condition,
+        body.neon-mode .current-condition {
+            color: var(--primary);
+        }
+
+        .temp-extremes {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .temp-max { color: #e74c3c; }
+        .temp-min { color: #3498db; }
+
+        body.matrix-mode .temp-max,
+        body.neon-mode .temp-max { color: #ff0000; }
+        body.matrix-mode .temp-min,
+        body.neon-mode .temp-min { color: #00a3ff; }
+
+        .sun-times {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color-day);
+        }
+
+        body.night-mode .sun-times,
+        body.dark-mode .sun-times,
+        body.galaxy-mode .sun-times,
+        body.space-mode .sun-times {
+            color: var(--text-color-night);
+        }
+
+        body.matrix-mode .sun-times,
+        body.neon-mode .sun-times {
+            color: var(--primary);
+        }
+
+        .air-quality-advice {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color-day);
+        }
+
+        body.night-mode .air-quality-advice,
+        body.dark-mode .air-quality-advice,
+        body.galaxy-mode .air-quality-advice,
+        body.space-mode .air-quality-advice {
+            color: var(--text-color-night);
+        }
+
+        body.matrix-mode .air-quality-advice,
+        body.neon-mode .air-quality-advice {
+            color: var(--primary);
+        }
+
+        .air-quality-emoji {
+            font-size: 2em;
+            margin-top: 0.5rem;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        body.matrix-mode .loading,
+        body.neon-mode .loading {
+            border-top-color: var(--primary);
+        }
+
+        .mobile-buttons {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .weather-summary {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 0.8rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        body.night-mode .weather-summary,
+        body.dark-mode .weather-summary,
+        body.galaxy-mode .weather-summary,
+        body.space-mode .weather-summary {
+            background: rgba(0, 0, 0, 0.4);
+            border-left-color: var(--secondary);
+        }
+
+        body.light-mode .weather-summary {
+            background: rgba(255, 255, 255, 0.9);
+            border-left-color: var(--primary);
+        }
+
+        body.matrix-mode .weather-summary,
+        body.neon-mode .weather-summary {
+            background: rgba(0, 0, 0, 0.6);
+            border-left-color: var(--primary);
+        }
+
+        .runner-tip {
+            background: rgba(0, 102, 204, 0.1);
+            border-radius: 0.8rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid #0066cc;
+        }
+
+        body.night-mode .runner-tip,
+        body.dark-mode .runner-tip,
+        body.galaxy-mode .runner-tip,
+        body.space-mode .runner-tip {
+            background: rgba(0, 153, 255, 0.1);
+            border-left-color: var(--secondary);
+            color: var(--text-color-night);
+        }
+
+        body.light-mode .runner-tip {
+            background: rgba(0, 102, 204, 0.15);
+            border-left-color: var(--primary);
+        }
+
+        body.matrix-mode .runner-tip,
+        body.neon-mode .runner-tip {
+            background: rgba(0, 255, 65, 0.1);
+            border-left-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .aqi-1 { background: var(--aqi-1) !important; border-left-color: #00e400 !important; }
+        .aqi-2 { background: var(--aqi-2) !important; border-left-color: #ffff00 !important; }
+        .aqi-3 { background: var(--aqi-3) !important; border-left-color: #ff7e00 !important; }
+        .aqi-4 { background: var(--aqi-4) !important; border-left-color: #ff0000 !important; }
+        .aqi-5 { background: var(--aqi-5) !important; border-left-color: #99004c !important; }
+        .aqi-6 { background: var(--aqi-6) !important; border-left-color: #7e0023 !important; }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            .current-weather {
+                grid-template-columns: 1fr;
+            }
+
+            .forecast-container {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .theme-selector {
+                position: static;
+                margin-top: 1rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+                border-radius: 1rem;
+            }
+            
+            .search-box {
+                gap: 0.5rem;
+            }
+            
+            input {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+                min-width: unset;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            button {
+                padding: 0.6rem;
+                font-size: 0.85rem;
+                flex: 1;
+            }
+            
+            .parameter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hour-item {
+                min-width: 80px;
+                padding: 0.8rem;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            h2 {
+                font-size: 1.1rem;
+            }
+            
+            .sun-times {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            
+            .temp-extremes {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .parameter-item {
+                padding: 0.6rem;
+            }
+            
+            .weather-icon {
+                font-size: 2.5rem;
+            }
+            
+            .weather-icon img {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .hour-item .weather-icon {
+                font-size: 1.5rem;
+            }
+            
+            .hour-item .weather-icon img {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .mobile-buttons {
+                display: flex;
+                width: 100%;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (min-width: 481px) {
+            .mobile-buttons {
+                display: contents;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+            <h1 style="margin: 0;">EMoji Weather by OrfeusEife</h1>
+            <div class="theme-toggle" id="themeToggle" title="Zmień motyw">
+                🌓
+            </div>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="locationInput" placeholder="Wpisz nazwę miasta..." onkeypress="handleEnter(event)">
+            <div class="mobile-buttons">
+                <button onclick="searchLocation()">🔍 Szukaj</button>
+                <button onclick="getLocation()">🌍 Moja lokalizacja</button>
+            </div>
+            <div id="loadingIndicator" style="display:none; align-items:center; gap:0.5rem;">
+                <span class="loading"></span> Ładowanie...
+            </div>
+        </div>
+
+        <div id="weatherSummary" class="weather-summary" style="display: none;">
+            <h3>Komunikat meteo</h3>
+            <div id="weatherSummaryText"></div>
+        </div>
+
+        <div id="runnerTip" class="runner-tip" style="display: none;">
+            <h3>💡 Porada dla biegacza</h3>
+            <div id="runnerTipText"></div>
+        </div>
+
+        <div class="current-weather">
+            <div class="card">
+                <h2 id="currentCity">Ładowanie lokalizacji...</h2>
+                <div class="sun-times" id="sunTimes">
+                    <span>🌅 Wschód: <span id="sunriseTime">-</span></span>
+                    <span>🌇 Zachód: <span id="sunsetTime">-</span></span>
+                </div>
+                <div class="weather-icon" id="currentIcon"></div>
+                <div class="current-condition" id="currentCondition">-</div>
+                <div class="parameter-grid">
+                    <div class="parameter-item">
+                        <span>🌡️</span>
+                        <div>
+                            <div class="parameter-label">Temperatura</div>
+                            <div class="parameter-value" id="tempNow">-</div>
+                        </div>
+                    </div>
+                    <div class="parameter-item">
+                        <span>💨</span>
+                        <div>
+                            <div class="parameter-label">Wiatr</div>
+                            <div class="parameter-value" id="windNow">-</div>
+                        </div>
+                    </div>
+                    <div class="parameter-item">
+                        <span>🎚️</span>
+                        <div>
+                            <div class="parameter-label">Ciśnienie</div>
+                            <div class="parameter-value" id="pressureNow">-</div>
+                        </div>
+                    </div>
+                    <div class="parameter-item">
+                        <span>💧</span>
+                        <div>
+                            <div class="parameter-label">Wilgotność</div>
+                            <div class="parameter-value" id="humidityNow">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Jakość powietrza</h3>
+                <div class="parameter-grid">
+                    <div class="parameter-item" id="aqiItem">
+                        <span>🌫️</span>
+                        <div>
+                            <div class="parameter-label">AQI</div>
+                            <div class="parameter-value" id="aqiValue">-</div>
+                        </div>
+                    </div>
+                    <div class="parameter-item">
+                        <span>💨</span>
+                        <div>
+                            <div class="parameter-label">PM2.5</div>
+                            <div class="parameter-value" id="pm25Value">-</div>
+                        </div>
+                    </div>
+                    <div class="parameter-item">
+                        <span>🌪️</span>
+                        <div>
+                            <div class="parameter-label">PM10</div>
+                            <div class="parameter-value" id="pm10Value">-</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="air-quality-advice" id="airQualityAdvice"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Prognoza na najbliższe godziny</h3>
+            <div class="hourly-forecast" id="hourlyForecast">
+                <div class="hour-item">Ładowanie danych...</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Prognoza na 3 dni</h3>
+            <div class="forecast-container" id="forecast">
+                <div class="card">Ładowanie danych...</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Ostrzeżenia pogodowe</h3>
+            <div id="weatherWarnings">
+                <div class="warning-card">
+                    <div class="warning-header">
+                        <span class="warning-icon">⚠️</span>
+                        <span class="warning-title">Ładowanie ostrzeżeń...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cache DOM elements
+        const weatherElements = {
+            currentCity: document.getElementById('currentCity'),
+            currentCondition: document.getElementById('currentCondition'),
+            tempNow: document.getElementById('tempNow'),
+            windNow: document.getElementById('windNow'),
+            pressureNow: document.getElementById('pressureNow'),
+            humidityNow: document.getElementById('humidityNow'),
+            sunriseTime: document.getElementById('sunriseTime'),
+            sunsetTime: document.getElementById('sunsetTime'),
+            airQualityAdvice: document.getElementById('airQualityAdvice'),
+            aqiValue: document.getElementById('aqiValue'),
+            aqiItem: document.getElementById('aqiItem'),
+            pm25Value: document.getElementById('pm25Value'),
+            pm10Value: document.getElementById('pm10Value'),
+            currentIcon: document.getElementById('currentIcon'),
+            hourlyForecast: document.getElementById('hourlyForecast'),
+            forecast: document.getElementById('forecast'),
+            weatherWarnings: document.getElementById('weatherWarnings'),
+            locationInput: document.getElementById('locationInput'),
+            loadingIndicator: document.getElementById('loadingIndicator'),
+            weatherSummary: document.getElementById('weatherSummary'),
+            weatherSummaryText: document.getElementById('weatherSummaryText'),
+            runnerTip: document.getElementById('runnerTip'),
+            runnerTipText: document.getElementById('runnerTipText'),
+            themeToggle: document.getElementById('themeToggle')
+        };
+
+        const API_KEY = 'd0c0831962dc429f91771349242705';
+        const TRANSLATE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznFB7otJiVr5HS-L1il3FiWEYNsWxDypy5MxAU47UA1-RAkDmvuvsoPQj9J8MiikR0PQ/exec';
+        
+        const WARNING_TYPES = {
+            'storm': { emoji: '⛈️', name: 'Burza', description: 'Burze z intensywnymi wyładowaniami atmosferycznymi', severity: 'orange' },
+            'rain': { emoji: '🌧️', name: 'Ulewny deszcz', description: 'Intensywne opady deszczu', severity: 'yellow' },
+            'wind': { emoji: '💨', name: 'Silny wiatr', description: 'Porywisty wiatr o dużej sile', severity: 'yellow' },
+            'snow': { emoji: '❄️', name: 'Opady śniegu', description: 'Śnieg powodujący utrudnienia', severity: 'yellow' },
+            'fog': { emoji: '🌫️', name: 'Gęsta mgła', description: 'Znaczne ograniczenie widoczności', severity: 'yellow' },
+            'heat': { emoji: '🔥', name: 'Upał', description: 'Wysokie temperatury stanowiące zagrożenie', severity: 'orange' },
+            'cold': { emoji: '🥶', name: 'Silny mróz', description: 'Niskie temperatury stanowiące zagrożenie', severity: 'orange' },
+            'flood': { emoji: '🌊', name: 'Powódź', description: 'Wezbrania wód i podtopienia', severity: 'red' },
+            'fire': { emoji: '🔥', name: 'Zagrożenie pożarowe', description: 'Wysokie ryzyko pożarów', severity: 'red' },
+            'frost': { emoji: '❄️', name: 'Przymrozki', description: 'Temperatury spadające poniżej zera', severity: 'yellow' },
+            'watch': { emoji: '👀', name: 'Monitorowanie', description: 'Warunki sprzyjające rozwojowi zagrożenia', severity: 'yellow' },
+            'warning': { emoji: '⚠️', name: 'Ostrzeżenie', description: 'Zagrożenie aktualne lub nadchodzące', severity: 'orange' }
+        };
+
+        const WARNING_TRANSLATIONS = {
+            'es': { // Hiszpański
+                'tormentas': { name: 'Burza', description: 'Burza z intensywnymi wyładowaniami atmosferycznymi', severity: 'orange' },
+                'vientos': { name: 'Silny wiatr', description: 'Niebezpieczne podmuchy wiatru', severity: 'yellow' },
+                'lluvia': { name: 'Ulewny deszcz', description: 'Intensywne opady deszczu', severity: 'yellow' },
+                'costeros': { name: 'Wiatry przybrzeżne', description: 'Silne wiatry nadmorskie', severity: 'yellow' },
+                'nivel amarillo': { name: 'Żółty poziom', description: 'Średnie zagrożenie', severity: 'yellow' }
+            },
+            'no': { // Norweski
+                'snøskredfare': { name: 'Zagrożenie lawinowe', description: 'Możliwość wystąpienia lawin śnieżnych', severity: 'red' },
+                'varsel': { name: 'Ostrzeżenie', description: 'Ostrzeżenie meteorologiczne', severity: 'yellow' }
+            },
+            'fr': { // Francuski
+                'tempête': { name: 'Burza', description: 'Silna burza z wyładowaniami', severity: 'orange' },
+                'vent': { name: 'Silny wiatr', description: 'Niebezpieczne podmuchy wiatru', severity: 'yellow' }
+            },
+            'pt': { // Portugalski
+                'tempestade': { name: 'Burza', description: 'Silna burza z wyładowaniami', severity: 'orange' },
+                'vento': { name: 'Wiatr', description: 'Silne porywy wiatru', severity: 'yellow' }
+            },
+            'zh': { // Chiński (Pekin)
+                'blue lightning warning': { name: 'Niebieskie ostrzeżenie przed piorunami', description: 'Ostrzeżenie przed burzami z wyładowaniami', severity: 'yellow' },
+                'yellow hail warning': { name: 'Żółte ostrzeżenie przed gradem', description: 'Ostrzeżenie przed silnymi opadami gradu', severity: 'orange' }
+            }
+        };
+
+        const WEATHER_ICONS = {
+            1000: { day: '113.svg', night: '113.svg' }, // Sunny/Clear
+            1003: { day: '116.svg', night: '116.svg' }, // Partly cloudy
+            1006: { day: '119.svg', night: '119.svg' }, // Cloudy
+            1009: { day: '122.svg', night: '122.svg' }, // Overcast
+            1030: { day: '143.svg', night: '143.svg' }, // Mist
+            1063: { day: '176.svg', night: '176.svg' }, // Patchy rain possible
+            1066: { day: '179.svg', night: '179.svg' }, // Patchy snow possible
+            1069: { day: '182.svg', night: '182.svg' }, // Patchy sleet possible
+            1072: { day: '185.svg', night: '185.svg' }, // Patchy freezing drizzle possible
+            1087: { day: '200.svg', night: '200.svg' }, // Thundery outbreaks possible
+            1114: { day: '227.svg', night: '227.svg' }, // Blowing snow
+            1117: { day: '230.svg', night: '230.svg' }, // Blizzard
+            1135: { day: '248.svg', night: '248.svg' }, // Fog
+            1147: { day: '260.svg', night: '260.svg' }, // Freezing fog
+            1150: { day: '263.svg', night: '263.svg' }, // Patchy light drizzle
+            1153: { day: '266.svg', night: '266.svg' }, // Light drizzle
+            1168: { day: '281.svg', night: '281.svg' }, // Freezing drizzle
+            1171: { day: '284.svg', night: '284.svg' }, // Heavy freezing drizzle
+            1180: { day: '293.svg', night: '293.svg' }, // Patchy light rain
+            1183: { day: '296.svg', night: '296.svg' }, // Light rain
+            1186: { day: '299.svg', night: '299.svg' }, // Moderate rain at times
+            1189: { day: '302.svg', night: '302.svg' }, // Moderate rain
+            1192: { day: '305.svg', night: '305.svg' }, // Heavy rain at times
+            1195: { day: '308.svg', night: '308.svg' }, // Heavy rain
+            1198: { day: '311.svg', night: '311.svg' }, // Light freezing rain
+            1201: { day: '314.svg', night: '314.svg' }, // Moderate or heavy freezing rain
+            1204: { day: '317.svg', night: '317.svg' }, // Light sleet
+            1207: { day: '320.svg', night: '320.svg' }, // Moderate or heavy sleet
+            1210: { day: '323.svg', night: '323.svg' }, // Patchy light snow
+            1213: { day: '326.svg', night: '326.svg' }, // Light snow
+            1216: { day: '329.svg', night: '329.svg' }, // Patchy moderate snow
+            1219: { day: '332.svg', night: '332.svg' }, // Moderate snow
+            1222: { day: '335.svg', night: '335.svg' }, // Patchy heavy snow
+            1225: { day: '338.svg', night: '338.svg' }, // Heavy snow
+            1237: { day: '350.svg', night: '350.svg' }, // Ice pellets
+            1240: { day: '353.svg', night: '353.svg' }, // Light rain shower
+            1243: { day: '356.svg', night: '356.svg' }, // Moderate or heavy rain shower
+            1246: { day: '359.svg', night: '359.svg' }, // Torrential rain shower
+            1249: { day: '362.svg', night: '362.svg' }, // Light sleet showers
+            1252: { day: '365.svg', night: '365.svg' }, // Moderate or heavy sleet showers
+            1255: { day: '368.svg', night: '368.svg' }, // Light snow showers
+            1258: { day: '371.svg', night: '371.svg' }, // Moderate or heavy snow showers
+            1261: { day: '374.svg', night: '374.svg' }, // Light showers of ice pellets
+            1264: { day: '377.svg', night: '377.svg' }, // Moderate or heavy showers of ice pellets
+            1273: { day: '386.svg', night: '386.svg' }, // Patchy light rain with thunder
+            1276: { day: '389.svg', night: '389.svg' }, // Moderate or heavy rain with thunder
+            1279: { day: '392.svg', night: '392.svg' }, // Patchy light snow with thunder
+            1282: { day: '395.svg', night: '395.svg' }  // Moderate or heavy snow with thunder
+        };
+
+        const RUNNER_TIPS = {
+            sunny: {
+                title: "Idealna pogoda na trening!",
+                text: (temp) => {
+                    if (temp > 30) return "🏃‍♂️ <strong>Bieganie w upale:</strong> Wybierz poranne lub wieczorne godziny. Noś przewiewne, jasne ubrania i czapkę z daszkiem. Pamiętaj o kremie z filtrem UV i nawadnianiu co 15-20 minut.";
+                    if (temp > 25) return "☀️ <strong>Letni trening:</strong> Biegaj w cieniu drzew lub wzdłuż zbiorników wodnych. Zabierz ze sobą wodę w pasie biegowym lub mały plecak.";
+                    return "😎 <strong>Dobra pogoda:</strong> Możesz biegać w krótkich spodenkach i koszulce. Rozważ trasę z różnymi rodzajami nawierzchni dla urozmaicenia treningu.";
+                }
+            },
+            cloudy: {
+                title: "Dobry dzień na bieganie!",
+                text: (temp) => {
+                    if (temp < 5) return "🧤 <strong>Chłodne warunki:</strong> Załóż rękawiczki i czapkę. Rozgrzewka powinna być dłuższa - zacznij od marszu i truchtu. Oddychaj przez nos, aby ogrzać powietrze.";
+                    return "⛅ <strong>Optymalne warunki:</strong> Chmury chronią przed przegrzaniem. Możesz spróbować dłuższego dystansu lub interwałów. Uważaj na podmuchy wiatru w otwartym terenie.";
+                }
+            },
+            rainy: {
+                title: "Bieganie w deszczu?",
+                text: (temp, precip) => {
+                    if (temp < 10) return "🌧️ <strong>Zimny deszcz:</strong> Załóż wodoodporną kurtkę i czapkę z daszkiem. Unikaj bawełny - wybierz odzież techniczną. Biegaj krótsze dystanse i zwracaj uwagę na śliskie powierzchnie.";
+                    if (precip > 10) return "☔ <strong>Ulewa:</strong> Jeśli musisz biegać, wybierz trasę z możliwością szybkiego schronienia. Po treningu od razu przebierz się w suche ubranie.";
+                    return "💦 <strong>Lekki deszcz:</strong> To świetna okazja do treningu w trudniejszych warunkach. Załóż czapkę z daszkiem i jasne ubrania. Uważaj na kałuże i mokre liście.";
+                }
+            },
+            snowy: {
+                title: "Bieg w śniegu",
+                text: (temp) => {
+                    if (temp < -5) return "❄️ <strong>Ekstremalny mróz:</strong> Załóż kilka warstw odzieży termicznej. Ogrzej dłonie i stopy przed wyjściem. Skróć dystans i biegaj w pętli blisko domu.";
+                    return "⛄ <strong>Śnieżna trasa:</strong> Wybierz buty z agresywnym bieżnikiem. Biegaj wolniej i krótszymi krokami. Rozważ trasę w lesie, gdzie wiatr jest mniejszy.";
+                }
+            },
+            cold: {
+                title: "Zimowy trening",
+                text: (temp) => {
+                    if (temp < -10) return "🧊 <strong>Silny mróz:</strong> Zakryj wszystkie odsłonięte części ciała. Rozgrzewkę wykonaj w domu. Biegaj z partnerem i miej przy sobie telefon.";
+                    return "🧣 <strong>Chłodno:</strong> Oddychaj przez szalik lub buff. Po treningu nie stoń na mrozie - od razu wejdź do ciepłego pomieszczenia. Rozciąganie wykonaj w domu.";
+                }
+            },
+            hot: {
+                title: "Upał? Bieganie wymaga ostrożności",
+                text: (temp) => {
+                    if (temp > 35) return "🔥 <strong>Ekstremalny upał:</strong> Rozważ trening na bieżni lub w klimatyzowanym pomieszczeniu. Jeśli biegasz na zewnątrz, wybierz wczesny poranek i miej przy sobie wodę.";
+                    return "☀️ <strong>Gorąco:</strong> Biegaj w cieniu, np. w lesie lub parku. Zmniejsz intensywność treningu o 10-15%. Po biegu schładzaj się stopniowo.";
+                }
+            },
+            windy: {
+                title: "Silny wiatr?",
+                text: (windSpeed) => {
+                    if (windSpeed > 30) return "💨 <strong>Wichura:</strong> Unikaj otwartych przestrzeni i biegaj w osłoniętych miejscach. Uważaj na spadające gałęzie. Rozważ trening siłowy w domu.";
+                    return "🌬️ <strong>Wietrznie:</strong> Rozpocznij bieg pod wiatr, aby mieć go w plecy na finiszu. Załóż przylegające ubranie, aby zmniejszyć opór powietrza. Chroń oczy okularami.";
+                }
+            },
+            foggy: {
+                title: "Mgła ogranicza widoczność",
+                text: "🌫️ <strong>Bieganie w mgle:</strong> Noś odblaski i jasne ubrania. Biegaj znanymi, bezpiecznymi trasami z dala od ruchu ulicznego. Uważaj na nierówności terenu i kałuże.",
+            },
+            storm: {
+                title: "⛈️ Uwaga na burzę!",
+                text: `Środki ostrożności dla biegaczy:
+                
+1. <strong>Bezpieczeństwo przede wszystkim</strong>
+   - Unikaj biegania gdy zapowiadana jest burza
+   - Jeśli burza zaskoczy Cię w trakcie biegu, szukaj schronienia w budynku
+
+2. <strong>Gdy musisz biegać</strong>
+   - Wybierz krótką, znaną trasę z możliwością szybkiego schronienia
+   - Unikaj otwartych przestrzeni, wody i wysokich obiektów
+   - Nie używaj słuchawek - musisz słyszeć nadchodzącą burzę
+
+3. <strong>Przygotowanie</strong>
+   - Sprawdź dokładną prognozę przed wyjściem
+   - Zabierz wodoodporną odzież i nakrycie głowy
+   - Poinformuj kogoś o swojej trasie i planowanym czasie powrotu
+
+4. <strong>Po burzy</strong>
+   - Uważaj na mokre i śliskie powierzchnie
+   - Sprawdź czy nie ma zerwanych linii energetycznych
+   - Jeśli byłeś narażony na ulewę, zmień szybko ubranie po powrocie`
+            },
+            default: {
+                title: "Gotowy na trening?",
+                text: "👟 <strong>Dzisiejsze wskazówki:</strong> Dostosuj strój do warunków. Rozgrzej się przez 5-10 minut przed właściwym biegiem. Pamiętaj o nawodnieniu i rozciąganiu po treningu."
+            }
+        };
+
+        const THEMES = [
+            { name: 'Auto', value: 'auto', emoji: '🌓' },
+            { name: 'Jasny', value: 'light', emoji: '☀️' },
+            { name: 'Ciemny', value: 'dark', emoji: '🌙' },
+            { name: 'Matrix', value: 'matrix', emoji: '📟' },
+            { name: 'Hubba Bubba', value: 'hubba-bubba', emoji: '🍬' },
+            { name: 'Las', value: 'forest', emoji: '🌲' },
+            { name: 'Kosmos', value: 'space', emoji: '🚀' },
+            { name: 'Pustynia', value: 'desert', emoji: '🏜️' },
+            { name: 'Deszczowy Dzień', value: 'rainy-day', emoji: '🌧️' },
+            { name: 'Wiosna', value: 'spring', emoji: '🌸' },
+            { name: 'Lato', value: 'summer', emoji: '🌞' },
+            { name: 'Jesień', value: 'autumn', emoji: '🍁' },
+            { name: 'Zima', value: 'winter', emoji: '⛄' },
+            // Nowe motywy
+            { name: 'Świąteczny', value: 'christmas', emoji: '🎄' },
+            { name: 'Wielkanoc', value: 'easter', emoji: '🐰' },
+            { name: 'Urodziny', value: 'birthday', emoji: '🎂' },
+            { name: 'Disco', value: 'disco', emoji: '🎵' },
+            { name: 'Ocean', value: 'ocean', emoji: '🌊' },
+            { name: 'Zachód słońca', value: 'sunset', emoji: '🌅' },
+            { name: 'Neon', value: 'neon', emoji: '💡' },
+            { name: 'Retro', value: 'retro', emoji: '📺' },
+            { name: 'Galaktyka', value: 'galaxy', emoji: '🌌' },
+            { name: 'Słodki', value: 'candy', emoji: '🍭' },
+            { name: 'Monochrom', value: 'monochrome', emoji: '⚫' },
+            { name: 'Bursztyn', value: 'amber', emoji: '🟠' },
+			{ name: 'LKS Burzyn ', value: 'dzik', emoji: '🐗' }
+			
+			
+			
+        ];
+
+        let currentLat = null;
+        let currentLon = null;
+        let lastWeatherData = null;
+        let themeMode = 'auto'; // auto, light, dark, matrix, hubba-bubba, forest, etc.
+
+        function showLoading(show) {
+            weatherElements.loadingIndicator.style.display = show ? 'flex' : 'none';
+        }
+
+        function detectWarningLanguage(text) {
+            if (!text) return 'en';
+            
+            // Proste wykrywanie języka na podstawie znaków
+            if (/[а-яА-Я]/.test(text)) return 'ru';
+            if (/[ěščřžýáíé]/.test(text)) return 'cs';
+            if (/[ôáä]/.test(text)) return 'sk';
+            if (/[äöüß]/.test(text)) return 'de';
+            if (/[ñáéíóúü]/.test(text)) return 'es';
+            if (/[ãõáéíóúâêô]/.test(text)) return 'pt';
+            if (/[àâçéèêëîïôùûüÿ]/.test(text)) return 'fr';
+            if (/[æøåÆØÅ]/.test(text)) return 'no';
+            if (/[\u4e00-\u9fff]/.test(text)) return 'zh'; // Chiński
+            
+            return 'en';
+        }
+
+        async function translateWarning(text, sourceLang = 'en') {
+            if (!text || !/[a-zA-Zа-яА-Я]/.test(text)) return text;
+            
+            try {
+                // Najpierw wykonaj podstawowe tłumaczenie
+                const timestamp = new Date().getTime();
+                const response = await fetch(
+                    `${TRANSLATE_SCRIPT_URL}?text=${encodeURIComponent(text)}&source=${sourceLang}&target=pl&nocache=${timestamp}`
+                );
+                
+                if (!response.ok) throw new Error('Błąd tłumaczenia: ' + response.status);
+                
+                let translated = await response.text();
+                
+                // Specjalne przypadki dla chińskich ostrzeżeń (Pekin)
+                if (sourceLang === 'zh') {
+                    translated = translated
+                        .replace(/Miyun District Meteorological Observatory issues blue lightning warning/g, 'Obserwatorium Meteorologiczne Dzielnicy Miyun wydaje niebieskie ostrzeżenie przed piorunami')
+                        .replace(/Miyun District Meteorological Observatory issues yellow hail warning/g, 'Obserwatorium Meteorologiczne Dzielnicy Miyun wydaje żółte ostrzeżenie przed gradem')
+                        .replace(/\[IV\/General\]/g, '[IV/Ogólne]')
+                        .replace(/\[III\/Heavy\]/g, '[III/Ciężkie]');
+                }
+
+                // Specjalne przypadki dla hiszpańskich ostrzeżeń
+                if (sourceLang === 'es') {
+                    translated = translated
+                        .replace(/Aviso de tormentas de nivel amarillo/g, 'Żółte ostrzeżenie przed burzami')
+                        .replace(/Aviso de vientos de nivel amarillo/g, 'Żółte ostrzeżenie przed silnymi wiatrami')
+                        .replace(/Aviso de costeros de nivel amarillo/g, 'Żółte ostrzeżenie przed wiatrami przybrzeżnymi')
+                        .replace(/Valle del Tajo/g, 'Dolina Tagu')
+                        .replace(/Litoral de Barcelona/g, 'Wybrzeże Barcelony')
+                        .replace(/Costa - Litoral de Huelva/g, 'Wybrzeże Huelvy')
+                        .replace(/tormentas de/g, 'burzami')
+                        .replace(/vientos de/g, 'wiatrami');
+                }
+
+                // Poprawki ogólne
+                translated = translated
+                    .replace(/nivel amarillo/g, 'żółty poziom')
+                    .replace(/Forest Defense Office/g, 'Biuro Ochrony Lasów')
+                    .replace(/issues (.*?) warning/g, 'wydaje $1 ostrzeżenie')
+                    .replace(/at (\d{2}:\d{2}) on (.*? \d{4})/g, 'od godziny $1 $2 r.')
+                    .replace(/Avertissement de/g, 'Ostrzeżenie przed')
+                    .replace(/en vigueur/g, 'obowiązujące')
+                    .replace(/Vigilance/g, 'Monitorowanie')
+                    .replace(/Alerta de/g, 'Ostrzeżenie przed')
+                    .replace(/Aviso de/g, 'Ostrzeżenie przed')
+                    .replace(/Varsel om/g, 'Ostrzeżenie o')
+                    .replace(/snøskredfare/g, 'zagrożeniu lawinowym');
+                
+                return translated || text;
+            } catch (error) {
+                console.error('Błąd tłumaczenia:', error);
+                return text;
+            }
+        }
+
+        function extractWarningDetails(alert, lang = 'en') {
+            const defaultType = WARNING_TYPES.storm;
+            if (!alert.headline) return { type: defaultType, description: defaultType.description };
+            
+            const lowerHeadline = alert.headline.toLowerCase();
+            
+            // Specjalne przypadki dla chińskich ostrzeżeń (Pekin)
+            if (lang === 'zh') {
+                if (lowerHeadline.includes('blue lightning warning')) {
+                    return {
+                        type: { 
+                            emoji: '⚡', 
+                            name: 'Niebieskie ostrzeżenie przed piorunami', 
+                            description: 'Ostrzeżenie przed burzami z wyładowaniami',
+                            severity: 'yellow'
+                        },
+                        description: alert.headline
+                    };
+                }
+                if (lowerHeadline.includes('yellow hail warning')) {
+                    return {
+                        type: { 
+                            emoji: '🧊', 
+                            name: 'Żółte ostrzeżenie przed gradem', 
+                            description: 'Ostrzeżenie przed silnymi opadami gradu',
+                            severity: 'orange'
+                        },
+                        description: alert.headline
+                    };
+                }
+            }
+            
+            // Specjalne przypadki dla hiszpańskich ostrzeżeń
+            if (lang === 'es') {
+                if (lowerHeadline.includes('tormentas')) {
+                    return {
+                        type: { 
+                            emoji: '⛈️', 
+                            name: 'Burza', 
+                            description: 'Burza z intensywnymi wyładowaniami atmosferycznymi',
+                            severity: 'orange'
+                        },
+                        description: alert.headline
+                    };
+                }
+                if (lowerHeadline.includes('vientos')) {
+                    return {
+                        type: { 
+                            emoji: '💨', 
+                            name: 'Silny wiatr', 
+                            description: 'Niebezpieczne podmuchy wiatru',
+                            severity: 'yellow'
+                        },
+                        description: alert.headline
+                    };
+                }
+                if (lowerHeadline.includes('costeros')) {
+                    return {
+                        type: { 
+                            emoji: '🌊', 
+                            name: 'Wiatry przybrzeżne', 
+                            description: 'Silne wiatry nadmorskie',
+                            severity: 'yellow'
+                        },
+                        description: alert.headline
+                    };
+                }
+            }
+            
+            // Specjalne przypadki dla norweskich ostrzeżeń
+            if (lang === 'no') {
+                if (lowerHeadline.includes('snøskredfare')) {
+                    return {
+                        type: { 
+                            emoji: '🏔️', 
+                            name: 'Zagrożenie lawinowe', 
+                            description: 'Możliwość lawin w regionie',
+                            severity: 'red'
+                        },
+                        description: alert.headline
+                    };
+                }
+            }
+
+            for (const [key, value] of Object.entries(WARNING_TYPES)) {
+                if (lowerHeadline.includes(key)) {
+                    if (lang !== 'pl' && WARNING_TRANSLATIONS[lang]?.[key]) {
+                        return {
+                            type: {
+                                emoji: value.emoji,
+                                name: WARNING_TRANSLATIONS[lang][key].name,
+                                description: WARNING_TRANSLATIONS[lang][key].description,
+                                severity: WARNING_TRANSLATIONS[lang][key].severity || value.severity
+                            },
+                            description: alert.headline || WARNING_TRANSLATIONS[lang][key].description
+                        };
+                    }
+                    return {
+                        type: value,
+                        description: alert.headline || value.description
+                    };
+                }
+            }
+
+            return { type: defaultType, description: alert.headline || defaultType.description };
+        }
+
+        async function renderWarning(alert) {
+            const lang = detectWarningLanguage(alert.headline || alert.description);
+            const details = extractWarningDetails(alert, lang);
+            const severity = details.type.severity || 'yellow';
+            
+            const translatedDescription = await translateWarning(details.description, lang);
+            const translatedName = await translateWarning(details.type.name, lang);
+
+            // Check for duplicates
+            const existingWarnings = document.querySelectorAll('.warning-details');
+            for (const warning of existingWarnings) {
+                if (warning.textContent.trim() === translatedDescription.trim()) {
+                    return '';
+                }
+            }
+
+            return `
+                <div class="warning-card ${severity}">
+                    <div class="warning-header">
+                        <span class="warning-icon">${details.type.emoji}</span>
+                        <span class="warning-title">${translatedName}</span>
+                    </div>
+                    <div class="warning-details">
+                        ${translatedDescription}
+                    </div>
+                    <div class="warning-footer" style="font-size:0.7em; margin-top:0.5rem; opacity:0.7;">
+                        Ostrzeżenia są opracowywane na podstawie prognoz regionalnych centrów meteorologicznych i dotyczą obszarów, na których może wystąpić dane zjawisko.
+                    </div>
+                    ${lang !== 'pl' ? `<div class="warning-original" style="font-size:0.8em;opacity:0.7;margin-top:0.5rem;">
+                        (Oryginał: ${details.description})
+                    </div>` : ''}
+                </div>
+            `;
+        }
+
+        function hasStormForecast(forecastData) {
+            if (!forecastData || !forecastData.forecastday) return false;
+            
+            // Sprawdzamy prognozę godzinową na najbliższe 12 godzin
+            const next12Hours = forecastData.forecastday[0]?.hour?.filter(hour => {
+                const hourTime = new Date(hour.time);
+                const now = new Date();
+                return hourTime > now && hourTime < new Date(now.getTime() + 12 * 60 * 60 * 1000);
+            });
+            
+            if (!next12Hours) return false;
+            
+            // Szukamy burzy w opisie lub kodzie warunków
+            return next12Hours.some(hour => {
+                const condition = hour.condition?.text?.toLowerCase() || '';
+                return condition.includes('burza') || 
+                       condition.includes('storm') || 
+                       condition.includes('thunder') ||
+                       [1087, 1273, 1276, 1279, 1282].includes(hour.condition?.code);
+            });
+        }
+
+        function getRunnerTip(weatherCondition, temp, precip = 0, forecastData) {
+            // Najpierw sprawdzamy czy jest prognozowana burza
+            if (hasStormForecast(forecastData)) {
+                return RUNNER_TIPS.storm;
+            }
+            
+            // Reszta logiki wyboru porady
+            const condition = weatherCondition.toLowerCase();
+            
+            if (temp > 25) {
+                return {
+                    title: RUNNER_TIPS.hot.title,
+                    text: RUNNER_TIPS.hot.text(temp)
+                };
+            } else if (temp < 5) {
+                return {
+                    title: RUNNER_TIPS.cold.title,
+                    text: RUNNER_TIPS.cold.text(temp)
+                };
+            } else if (condition.includes('deszcz') || condition.includes('rain')) {
+                return {
+                    title: RUNNER_TIPS.rainy.title,
+                    text: RUNNER_TIPS.rainy.text(temp, precip)
+                };
+            } else if (condition.includes('śnieg') || condition.includes('snow')) {
+                return {
+                    title: RUNNER_TIPS.snowy.title,
+                    text: RUNNER_TIPS.snowy.text(temp)
+                };
+            } else if (condition.includes('słonecznie') || condition.includes('sunny')) {
+                return {
+                    title: RUNNER_TIPS.sunny.title,
+                    text: RUNNER_TIPS.sunny.text(temp)
+                };
+            } else if (condition.includes('pochmurno') || condition.includes('cloudy')) {
+                return {
+                    title: RUNNER_TIPS.cloudy.title,
+                    text: RUNNER_TIPS.cloudy.text(temp)
+                };
+            } else if (condition.includes('wiatr') || condition.includes('wind')) {
+                return {
+                    title: RUNNER_TIPS.windy.title,
+                    text: RUNNER_TIPS.windy.text(forecastData?.current?.wind_kph || 0)
+                };
+            } else if (condition.includes('mgła') || condition.includes('fog')) {
+                return {
+                    title: RUNNER_TIPS.foggy.title,
+                    text: RUNNER_TIPS.foggy.text
+                };
+            }
+            
+            return RUNNER_TIPS.default;
+        }
+
+        async function updateWarnings(alerts) {
+            const container = weatherElements.weatherWarnings;
+            
+            if (!alerts?.alert?.length) {
+                container.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">✅</span>
+                            <span class="warning-title">Brak aktywnych ostrzeżeń</span>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            showLoading(true);
+            container.innerHTML = `
+                <div class="warning-card">
+                    <div class="warning-header">
+                        <span class="warning-icon">🔄</span>
+                        <span class="warning-title">Ładowanie ostrzeżeń...</span>
+                    </div>
+                </div>
+            `;
+
+            // Unikalne alerty
+            const uniqueAlerts = alerts.alert.filter((alert, index, self) =>
+                index === self.findIndex(a => 
+                    a.headline === alert.headline && 
+                    a.description === alert.description
+                )
+            );
+
+            try {
+                const warningsHTML = await Promise.all(
+                    uniqueAlerts.map(alert => renderWarning(alert))
+                );
+                
+                container.innerHTML = warningsHTML.filter(html => html !== '').join('') || `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">ℹ️</span>
+                            <span class="warning-title">Brak nowych ostrzeżeń</span>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Błąd przetwarzania ostrzeżeń:', error);
+                container.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">❌</span>
+                            <span class="warning-title">Błąd ładowania ostrzeżeń</span>
+                        </div>
+                    </div>
+                `;
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function getWeatherIcon(code, isDay) {
+            const iconData = WEATHER_ICONS[code] || WEATHER_ICONS[1000];
+            const iconFile = isDay ? iconData.day : iconData.night;
+            const iconPath = `weather-icons/${isDay ? 'day' : 'night'}/${iconFile}`;
+            
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    img.width = 64;
+                    img.height = 64;
+                    img.alt = 'Weather icon';
+                    resolve(img);
+                };
+                img.onerror = () => {
+                    console.error('Błąd ładowania ikony:', iconPath);
+                    resolve(createFallbackIcon());
+                };
+                img.src = iconPath;
+            });
+        }
+
+        function createFallbackIcon() {
+            const fallbackSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            fallbackSvg.setAttribute('viewBox', '0 0 64 64');
+            fallbackSvg.setAttribute('width', '64');
+            fallbackSvg.setAttribute('height', '64');
+            fallbackSvg.innerHTML = `
+                <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+                <text x="32" y="32" text-anchor="middle" dominant-baseline="middle" fill="currentColor">?</text>
+            `;
+            return fallbackSvg;
+        }
+
+        function getAirQualityAdvice(aqi) {
+            const advice = {
+                1: { label: 'Dobra 😊', text: 'Możesz bezpiecznie uprawiać sport na powietrzu 🏃♂️🚴♀️', emoji: '🏆🌳' },
+                2: { label: 'Umiarkowana 😐', text: 'Możliwa normalna aktywność z zachowaniem ostrożności 🚶♂️⚠️', emoji: '⚠️' },
+                3: { label: 'Niezdrowa dla wrażliwych 😷', text: 'Ogranicz aktywność na zewnątrz jeśli jesteś w grupie ryzyka 🚷⛔', emoji: '😷' },
+                4: { label: 'Niezdrowa 😨', text: 'Unikaj długotrwałego przebywania na zewnątrz 🏠❌', emoji: '😨' },
+                5: { label: 'Bardzo niezdrowa ☠️', text: 'Zalecane pozostanie w domu z oczyszczaczem powietrza 🏠🔒', emoji: '☠️' },
+                6: { label: 'Niebezpieczna 💀', text: 'Całkowicie unikaj aktywności na zewnątrz 🚫❗', emoji: '💀' }
+            };
+            return advice[aqi] || { label: '-', text: 'Brak danych', emoji: '❓' };
+        }
+
+        function formatTime(time) {
+            if (!time) return '-';
+            const [hours, minutes] = time.split(':');
+            return `${hours.padStart(2, '0')}:${minutes}`;
+        }
+
+        function generateWeatherSummary(forecast) {
+            if (!forecast || !forecast.forecastday || forecast.forecastday.length === 0) {
+                return "Brak danych pogodowych do wygenerowania podsumowania.";
+            }
+
+            const today = forecast.forecastday[0];
+            const dayCondition = today.day.condition.text;
+            const maxTemp = today.day.maxtemp_c;
+            const minTemp = today.day.mintemp_c;
+            const avgHumidity = today.day.avghumidity;
+            const maxWind = today.day.maxwind_kph;
+            const totalPrecip = today.day.totalprecip_mm;
+            const sunrise = parseSunTime(today.astro.sunrise);
+            const sunset = parseSunTime(today.astro.sunset);
+
+            // Calculate night temperature (22:00-06:00)
+            let nightTemps = [];
+            let dayTemps = [];
+            let dayPrecipitation = false;
+            
+            if (today.hour) {
+                today.hour.forEach(hour => {
+                    const hourTime = new Date(hour.time).getHours();
+                    if (hourTime >= 22 || hourTime <= 6) {
+                        nightTemps.push(hour.temp_c);
+                    }
+                    if (hourTime >= 6 && hourTime <= 20) {
+                        dayTemps.push(hour.temp_c);
+                        if (hour.chance_of_rain > 30 || hour.chance_of_snow > 30) {
+                            dayPrecipitation = true;
+                        }
+                    }
+                });
+            }
+
+            const nightMinTemp = nightTemps.length > 0 ? Math.min(...nightTemps) : minTemp;
+            const dayMaxTemp = dayTemps.length > 0 ? Math.max(...dayTemps) : maxTemp;
+
+            let summary = '';
+            
+            // Day forecast
+            if (dayPrecipitation) {
+                summary += `W dzień miejscowe opady deszczu . `;
+            } else {
+                summary += `W dzień  ${dayCondition.toLowerCase()}. `;
+            }
+            
+            summary += `Temperatura wyniesie do ${dayMaxTemp.toFixed(1)}°C. `;
+
+            // Wind description
+            if (maxWind > 20) {
+                summary += `Wiatr silny, z porywami do ${maxWind} km/h. `;
+            } else if (maxWind > 10) {
+                summary += `Wiatr umiarkowany, ${maxWind} km/h. `;
+            } else {
+                summary += `Wiatr słaby. `;
+            }
+
+            // Humidity description
+            if (avgHumidity > 70) {
+                summary += `Wilgotność względna wysoka – około ${avgHumidity}%. `;
+            } else if (avgHumidity < 40) {
+                summary += `Wilgotność względna niska – około ${avgHumidity}%. `;
+            } else {
+                summary += `Wilgotność względna na poziomie ${avgHumidity}%. `;
+            }
+
+            // Precipitation description
+            if (totalPrecip > 5) {
+                summary += `Spodziewane są intensywne opady deszczu (do ${totalPrecip} mm). `;
+            } else if (totalPrecip > 0) {
+                summary += `Możliwe niewielkie opady deszczu (do ${totalPrecip} mm). `;
+            }
+
+            // Night forecast
+            summary += `W nocy temperatura spadnie do około ${nightMinTemp.toFixed(1)}°C.`;
+
+            // Sunrise/sunset
+            summary += ` Wschód słońca o ${sunrise}, zachód o ${sunset}.`;
+
+            return summary;
+        }
+
+        async function updateHourlyForecast(hourlyData, isDay) {
+            const hourlyContainer = weatherElements.hourlyForecast;
+            if (!hourlyData || !Array.isArray(hourlyData)) {
+                hourlyContainer.innerHTML = '<div class="hour-item">Brak danych godzinowych</div>';
+                return;
+            }
+            
+            const now = new Date();
+            const nextHours = hourlyData
+                .filter(hour => new Date(hour.time) >= now)
+                .slice(0, 14);
+
+            hourlyContainer.innerHTML = '';
+            
+            for (const hour of nextHours) {
+                try {
+                    const time = formatTime(hour.time.split(' ')[1]);
+                    const temp = hour.temp_c?.toFixed(1) || '-';
+                    const condition = hour.condition?.text || 'Brak danych';
+                    const iconCode = hour.condition?.code || 1000;
+                    const hourIsDay = hour.is_day !== 0;
+                    
+                    const iconImg = await getWeatherIcon(iconCode, hourIsDay);
+                    
+                    const hourElement = document.createElement('div');
+                    hourElement.className = 'hour-item';
+                    hourElement.innerHTML = `
+                        <div>${time}</div>
+                        <div class="weather-icon"></div>
+                        <div>${temp}°C</div>
+                        <div style="font-size: 0.9rem;">${condition}</div>
+                    `;
+                    
+                    hourElement.querySelector('.weather-icon').appendChild(iconImg);
+                    hourlyContainer.appendChild(hourElement);
+                } catch (e) {
+                    console.error('Błąd tworzenia prognozy godzinowej:', e);
+                }
+            }
+        }
+
+        async function updateDailyForecast(forecastDays) {
+            const forecastContainer = weatherElements.forecast;
+            if (!forecastDays || !Array.isArray(forecastDays)) {
+                forecastContainer.innerHTML = '<div class="card">Brak danych długoterminowych</div>';
+                return;
+            }
+            
+            forecastContainer.innerHTML = '';
+            
+            // Pokaż prognozę na 3 dni (dziś + 2 kolejne dni)
+            for (const day of forecastDays.slice(0, 3)) {
+                try {
+                    const date = new Date(day.date);
+                    const weekday = date.toLocaleDateString('pl', { weekday: 'long' });
+                    const condition = day.day?.condition?.text || 'Brak danych';
+                    const maxTemp = day.day?.maxtemp_c?.toFixed(1) || '-';
+                    const minTemp = day.day?.mintemp_c?.toFixed(1) || '-';
+                    const iconCode = day.day?.condition?.code || 1000;
+                    const chanceOfRain = day.day?.daily_chance_of_rain || 0;
+                    const chanceOfSnow = day.day?.daily_chance_of_snow || 0;
+                    
+                    const iconImg = await getWeatherIcon(iconCode, true);
+                    
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'card';
+                    dayElement.innerHTML = `
+                        <div style="font-weight: 600;">${weekday.charAt(0).toUpperCase() + weekday.slice(1)}</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">${day.date}</div>
+                        <div class="weather-icon"></div>
+                        <div style="margin: 0.5rem 0; font-size: 0.9rem;">${condition}</div>
+                        <div class="temp-extremes">
+                            <span class="temp-max">↑ ${maxTemp}°C</span>
+                            <span class="temp-min">↓ ${minTemp}°C</span>
+                        </div>
+                        ${chanceOfRain > 0 ? `<div style="font-size:0.8rem;">☔ ${chanceOfRain}%</div>` : ''}
+                        ${chanceOfSnow > 0 ? `<div style="font-size:0.8rem;">❄️ ${chanceOfSnow}%</div>` : ''}
+                    `;
+                    
+                    dayElement.querySelector('.weather-icon').appendChild(iconImg);
+                    forecastContainer.appendChild(dayElement);
+                } catch (e) {
+                    console.error('Błąd tworzenia prognozy dziennej:', e);
+                }
+            }
+        }
+
+        async function updateCurrentWeatherIcon(code, isDay) {
+            const iconContainer = weatherElements.currentIcon;
+            iconContainer.innerHTML = '';
+            
+            const iconImg = await getWeatherIcon(code, isDay);
+            iconContainer.appendChild(iconImg);
+        }
+
+        function createThemeSelector() {
+            const selector = document.createElement('select');
+            selector.className = 'theme-selector';
+            selector.innerHTML = THEMES.map(theme => 
+                `<option value="${theme.value}">${theme.emoji} ${theme.name}</option>`
+            ).join('');
+            
+            selector.value = localStorage.getItem('weatherAppTheme') || 'auto';
+            selector.addEventListener('change', (e) => {
+                setTheme(e.target.value);
+            });
+            
+            document.body.appendChild(selector);
+        }
+
+        function setTheme(theme) {
+            themeMode = theme;
+            document.body.className = '';
+            
+            const themeClasses = {
+                'light': 'light-mode',
+                'dark': 'dark-mode',
+                'matrix': 'matrix-mode',
+                'hubba-bubba': 'hubba-bubba-mode',
+                'forest': 'forest-mode',
+                'space': 'space-mode',
+                'desert': 'desert-mode',
+                'rainy-day': 'rainy-day-mode',
+                'spring': 'spring-mode',
+                'summer': 'summer-mode',
+                'autumn': 'autumn-mode',
+                'winter': 'winter-mode',
+                'christmas': 'christmas-mode',
+                'easter': 'easter-mode',
+                'birthday': 'birthday-mode',
+                'disco': 'disco-mode',
+                'ocean': 'ocean-mode',
+                'sunset': 'sunset-mode',
+                'neon': 'neon-mode',
+                'retro': 'retro-mode',
+                'galaxy': 'galaxy-mode',
+                'candy': 'candy-mode',
+                'monochrome': 'monochrome-mode',
+                'amber': 'amber-mode',
+				'dzik': 'dzik-mode'
+            };
+            
+            if (theme !== 'auto' && themeClasses[theme]) {
+                document.body.classList.add(themeClasses[theme]);
+            } else {
+                // Auto mode - sprawdź porę dnia dla aktualnej lokalizacji
+                if (lastWeatherData) {
+                    const sunrise = parseSunTime(lastWeatherData.forecast.forecastday[0].astro.sunrise);
+                    const sunset = parseSunTime(lastWeatherData.forecast.forecastday[0].astro.sunset);
+                    setThemeBasedOnTime(sunrise, sunset, lastWeatherData.location.tz_id);
+                }
+            }
+            
+            localStorage.setItem('weatherAppTheme', theme);
+            
+            // Update toggle button icon
+            const currentTheme = THEMES.find(t => t.value === theme) || THEMES[0];
+            weatherElements.themeToggle.textContent = currentTheme.emoji;
+        }
+
+        function setThemeBasedOnTime(sunrise, sunset, timezone) {
+            if (!sunrise || !sunset || !timezone) return;
+            
+            try {
+                const now = new Date();
+                const options = { timeZone: timezone, hour12: false };
+                const localTimeStr = now.toLocaleTimeString('en-US', options);
+                const [hours, minutes] = localTimeStr.split(':');
+                
+                const sunriseParts = sunrise.split(':');
+                const sunsetParts = sunset.split(':');
+                
+                const sunriseDate = new Date();
+                sunriseDate.setHours(parseInt(sunriseParts[0], 10));
+                sunriseDate.setMinutes(parseInt(sunriseParts[1], 10));
+                
+                const sunsetDate = new Date();
+                sunsetDate.setHours(parseInt(sunsetParts[0], 10));
+                sunsetDate.setMinutes(parseInt(sunsetParts[1], 10));
+                
+                const currentDate = new Date();
+                currentDate.setHours(parseInt(hours, 10));
+                currentDate.setMinutes(parseInt(minutes, 10));
+                
+                const isNight = currentDate < sunriseDate || currentDate >= sunsetDate;
+                document.body.classList.toggle('night-mode', isNight);
+                document.body.classList.remove('light-mode', 'dark-mode');
+            } catch (e) {
+                console.error('Błąd ustawiania motywu:', e);
+            }
+        }
+
+        function toggleTheme() {
+            const currentIndex = THEMES.findIndex(t => t.value === themeMode);
+            const nextIndex = (currentIndex + 1) % THEMES.length;
+            setTheme(THEMES[nextIndex].value);
+        }
+
+        async function updateUI(data) {
+            if (!data || !data.location || !data.current || !data.forecast) {
+                console.error('Nieprawidłowe dane:', data);
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">❌</span>
+                            <span class="warning-title">Błąd ładowania danych pogodowych</span>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const { location, current, forecast, alerts } = data;
+            const isDay = current.is_day !== 0;
+
+            weatherElements.currentCity.textContent = location.name || 'Nieznana lokalizacja';
+            weatherElements.currentCondition.textContent = current.condition?.text || 'Brak danych';
+            weatherElements.tempNow.textContent = current.temp_c ? `${current.temp_c.toFixed(1)}°C` : '-';
+            weatherElements.windNow.textContent = current.wind_kph ? `${current.wind_kph} km/h` : '-';
+            weatherElements.pressureNow.textContent = current.pressure_mb ? `${current.pressure_mb} hPa` : '-';
+            weatherElements.humidityNow.textContent = current.humidity ? `${current.humidity}%` : '-';
+
+            await updateCurrentWeatherIcon(current.condition?.code || 1000, isDay);
+
+            if (forecast.forecastday?.[0]?.astro) {
+                const sunrise = parseSunTime(forecast.forecastday[0].astro.sunrise);
+                const sunset = parseSunTime(forecast.forecastday[0].astro.sunset);
+                weatherElements.sunriseTime.textContent = sunrise;
+                weatherElements.sunsetTime.textContent = sunset;
+                
+                // Aktualizuj motyw tylko jeśli jest w trybie auto
+                if (themeMode === 'auto') {
+                    setThemeBasedOnTime(sunrise, sunset, location.tz_id);
+                }
+            }
+
+            if (current.air_quality) {
+                const aqi = current.air_quality['us-epa-index'] || 0;
+                const airQualityAdvice = getAirQualityAdvice(aqi);
+                weatherElements.airQualityAdvice.innerHTML = `
+                    <strong>${airQualityAdvice.label}</strong><br>
+                    ${airQualityAdvice.text}<br>
+                    <span class="air-quality-emoji">${airQualityAdvice.emoji}</span>
+                `;
+                weatherElements.aqiValue.textContent = aqi;
+                weatherElements.pm25Value.textContent = current.air_quality.pm2_5?.toFixed(1) || '-';
+                weatherElements.pm10Value.textContent = current.air_quality.pm10?.toFixed(1) || '-';
+                
+                // Update AQI color
+                weatherElements.aqiItem.className = `parameter-item aqi-${aqi}`;
+            }
+
+            // Update weather summary
+            weatherElements.weatherSummary.style.display = 'block';
+            weatherElements.weatherSummaryText.textContent = generateWeatherSummary(forecast);
+            
+            // Update runner tip with storm forecast check
+            const runnerTip = getRunnerTip(
+                current.condition?.text, 
+                current.temp_c, 
+                forecast.forecastday[0]?.day?.totalprecip_mm || 0,
+                data
+            );
+            
+            weatherElements.runnerTip.style.display = 'block';
+            weatherElements.runnerTipText.innerHTML = `
+                <strong>${runnerTip.title}</strong><br>
+                ${typeof runnerTip.text === 'function' ? runnerTip.text() : runnerTip.text}
+            `;
+
+            await updateHourlyForecast(forecast.forecastday?.[0]?.hour, isDay);
+            await updateDailyForecast(forecast.forecastday);
+            await updateWarnings(alerts);
+            
+            lastWeatherData = data;
+        }
+
+        async function showWeather(position) {
+            try {
+                const coords = position.coords;
+                currentLat = coords.latitude;
+                currentLon = coords.longitude;
+                const weatherData = await getWeatherData(coords.latitude, coords.longitude);
+                if (weatherData) {
+                    updateUI(weatherData);
+                }
+            } catch (error) {
+                console.error('Błąd geolokalizacji:', error);
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">❌</span>
+                            <span class="warning-title">Błąd pobierania danych: ${error.message}</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function searchLocation() {
+            const city = weatherElements.locationInput.value.trim();
+            if (!city) {
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">⚠️</span>
+                            <span class="warning-title">Wpisz nazwę miasta</span>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                showLoading(true);
+                const coords = await getCoordinates(city);
+                if (!coords) return;
+
+                const weatherData = await getWeatherData(coords.lat, coords.lon);
+                if (weatherData) {
+                    weatherData.location.name = coords.name;
+                    weatherData.location.tz_id = coords.timezone;
+                    updateUI(weatherData);
+                }
+            } catch (error) {
+                console.error('Błąd wyszukiwania:', error);
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">❌</span>
+                            <span class="warning-title">Błąd wyszukiwania: ${error.message}</span>
+                        </div>
+                    </div>
+                `;
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                searchLocation();
+            }
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">🔄</span>
+                            <span class="warning-title">Wyszukiwanie Twojej lokalizacji...</span>
+                        </div>
+                    </div>
+                `;
+                
+                navigator.geolocation.getCurrentPosition(
+                    showWeather, 
+                    (error) => {
+                        let errorMessage = 'Nie udało się uzyskać lokalizacji';
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = 'Brak uprawnień do geolokalizacji';
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = 'Informacje o lokalizacji niedostępne';
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = 'Przekroczono czas oczekiwania na lokalizację';
+                                break;
+                        }
+                        weatherElements.weatherWarnings.innerHTML = `
+                            <div class="warning-card">
+                                <div class="warning-header">
+                                    <span class="warning-icon">❌</span>
+                                    <span class="warning-title">${errorMessage}. Wyszukaj miasto ręcznie.</span>
+                                </div>
+                            </div>
+                        `;
+                    },
+                    { 
+                        enableHighAccuracy: true, 
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">❌</span>
+                            <span class="warning-title">Twoja przeglądarka nie wspiera geolokalizacji. Wyszukaj miasto ręcznie.</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function getCoordinates(city) {
+            try {
+                showLoading(true);
+                const response = await fetch(
+                    `https://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=${city}`
+                );
+                const data = await response.json();
+                
+                if (!data || data.error || data.length === 0) {
+                    throw new Error(data?.error?.message || 'Nie znaleziono miasta');
+                }
+                
+                const location = data[0];
+                return { 
+                    lat: location.lat, 
+                    lon: location.lon, 
+                    name: location.name, 
+                    timezone: location.tz_id 
+                };
+            } catch (error) {
+                console.error('Błąd geokodowania:', error);
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">❌</span>
+                            <span class="warning-title">Nie znaleziono miasta: ${error.message}</span>
+                        </div>
+                    </div>
+                `;
+                return null;
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function getWeatherData(lat, lon) {
+            try {
+                showLoading(true);
+                const response = await fetch(
+                    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=4&aqi=yes&alerts=yes&lang=pl`
+                );
+                const data = await response.json();
+                
+                if (!data || data.error) {
+                    throw new Error(data?.error?.message || 'Błąd pobierania danych');
+                }
+                
+                lastWeatherData = data;
+                return data;
+            } catch (error) {
+                console.error('Błąd API:', error);
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">❌</span>
+                            <span class="warning-title">Błąd ładowania danych: ${error.message}</span>
+                        </div>
+                    </div>
+                `;
+                return null;
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function parseSunTime(time) {
+            if (!time) return null;
+            // Remove AM/PM if present and convert to 24-hour format
+            const timeStr = time.replace(/\s/g, '').toUpperCase();
+            
+            if (timeStr.includes('AM') || timeStr.includes('PM')) {
+                const [timePart, period] = timeStr.split(/(AM|PM)/);
+                let [hours, minutes] = timePart.split(':');
+                
+                hours = parseInt(hours, 10);
+                if (period === 'PM' && hours < 12) {
+                    hours += 12;
+                } else if (period === 'AM' && hours === 12) {
+                    hours = 0;
+                }
+                
+                return `${hours.toString().padStart(2, '0')}:${minutes}`;
+            }
+            
+            // If already in 24-hour format
+            const [hours, minutes] = timeStr.split(':');
+            return `${hours.padStart(2, '0')}:${minutes}`;
+        }
+
+        // Inicjalizacja
+        function init() {
+            // Load saved theme preference
+            const savedTheme = localStorage.getItem('weatherAppTheme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            }
+            
+            // Create theme selector
+            createThemeSelector();
+            
+            // Set up theme toggle
+            weatherElements.themeToggle.addEventListener('click', toggleTheme);
+            
+            if (navigator.geolocation) {
+                getLocation();
+            } else {
+                weatherElements.weatherWarnings.innerHTML = `
+                    <div class="warning-card">
+                        <div class="warning-header">
+                            <span class="warning-icon">ℹ️</span>
+                            <span class="warning-title">Geolokalizacja niedostępna. Wpisz miasto.</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
