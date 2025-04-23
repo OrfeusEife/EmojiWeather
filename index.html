@@ -1223,7 +1223,15 @@
             'zh': { // Chiński (Pekin)
                 'blue lightning warning': { name: 'Niebieskie ostrzeżenie przed piorunami', description: 'Ostrzeżenie przed burzami z wyładowaniami', severity: 'yellow' },
                 'yellow hail warning': { name: 'Żółte ostrzeżenie przed gradem', description: 'Ostrzeżenie przed silnymi opadami gradu', severity: 'orange' }
-            }
+            },
+			'sk': { // Słowacki
+        'burza': { name: 'Búrka', description: 'Silná búrka s bleskami a hrmením', severity: 'orange' },
+        'búrka': { name: 'Búrka', description: 'Silná búrka s bleskami a hrmením', severity: 'orange' },
+        'dážď': { name: 'Dážď', description: 'Silné dažďové zrážky', severity: 'yellow' },
+        'vietor': { name: 'Vietor', description: 'Silný vietor s nárazmi', severity: 'yellow' },
+        'sneh': { name: 'Sneh', description: 'Silné snehové zrážky', severity: 'yellow' },
+        'mráz': { name: 'Mráz', description: 'Nízke teploty pod bodom mrazu', severity: 'orange' }
+    },
         };
 
         const WEATHER_ICONS = {
@@ -1443,6 +1451,15 @@
                         .replace(/\[IV\/General\]/g, '[IV/Ogólne]')
                         .replace(/\[III\/Heavy\]/g, '[III/Ciężkie]');
                 }
+				
+				// Specjalne przypadki dla słowackich ostrzeżeń
+    if (sourceLang === 'sk') {
+        translated = translated
+            .replace(/Burza/g, 'Búrka')
+            .replace(/giełda/g, 'búrka') // Poprawka dla błędnego tłumaczenia
+            .replace(/Výstraha pred/g, 'Varovanie pred')
+            .replace(/Národná výstražná služba/g, 'Národná výstražná služba');
+    }
 
                 // Specjalne przypadki dla hiszpańskich ostrzeżeń
                 if (sourceLang === 'es') {
@@ -1546,6 +1563,7 @@
                     };
                 }
             }
+			
             
             // Specjalne przypadki dla norweskich ostrzeżeń
             if (lang === 'no') {
