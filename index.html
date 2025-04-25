@@ -516,80 +516,87 @@
             border: 1px solid var(--primary);
             box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
         }
+		
+		.warning-severity {
+    font-size: 0.9em;
+    opacity: 0.8;
+    margin-top: 0.3rem;
+    font-style: italic;
+}
 
-        .warning-card {
-            background: var(--warning-bg);
-            border-left: 4px solid var(--warning);
-            padding: 1.25rem;
-            border-radius: 0.8rem;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-        }
+.warning-card {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 6px solid;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-        .warning-card:hover {
-            transform: translateY(-3px);
-        }
 
-        .warning-card.yellow {
-            background: var(--warning-yellow);
-            border-left-color: #ffcc00;
-        }
 
-        .warning-card.orange {
-            background: var(--warning-orange);
-            border-left-color: #ffa500;
-        }
+.warning-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
 
-        .warning-card.red {
-            background: var(--warning-red);
-            border-left-color: #ff0000;
-        }
+.warning-icon {
+    font-size: 2rem;
+}
 
-        body.matrix-mode .warning-card,
-        body.neon-mode .warning-card {
-            background: rgba(255, 0, 0, 0.1);
-            border-left-color: #ff0000;
-        }
+.warning-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: inherit;
+}
 
-        .warning-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
 
-        .warning-icon {
-            font-size: 1.5rem;
-        }
+.warning-details {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 1rem 0;
+    white-space: pre-line;
+}
 
-        .warning-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--warning);
-        }
 
-        .warning-card.yellow .warning-title {
-            color: #cc9900;
-        }
 
-        .warning-card.orange .warning-title {
-            color: #cc8400;
-        }
+.warning-time {
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+.warning-time-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.08);
+}
 
-        .warning-card.red .warning-title {
-            color: #cc0000;
-        }
 
-        body.matrix-mode .warning-title,
-        body.neon-mode .warning-title {
-            color: #ff0000;
-            text-shadow: 0 0 5px #ff0000;
-        }
 
-        .warning-details {
-            font-size: 0.95rem;
-            margin-top: 0.5rem;
-        }
+/* Kolory dla różnych poziomów ostrzeżeń */
+.warning-card.yellow {
+    border-left-color: #ffcc00;
+    background: rgba(255, 204, 0, 0.1);
+}
+
+.warning-card.orange {
+    border-left-color: #ff9500;
+    background: rgba(255, 149, 0, 0.1);
+}
+
+.warning-card.red {
+    border-left-color: #ff3b30;
+    background: rgba(255, 59, 48, 0.1);
+}
+
+
 
         body.matrix-mode .warning-details,
         body.neon-mode .warning-details {
@@ -932,7 +939,13 @@
                 margin-top: 1rem;
                 width: 100%;
             }
-        }
+        .warning-title {
+        font-size: 1.3rem;
+    }
+    .warning-details {
+        font-size: 1rem;
+    }
+}
 
         @media (max-width: 480px) {
             .container {
@@ -1199,14 +1212,22 @@
             'watch': { emoji: '👀', name: 'Monitorowanie', description: 'Warunki sprzyjające rozwojowi zagrożenia', severity: 'yellow' },
             'warning': { emoji: '⚠️', name: 'Ostrzeżenie', description: 'Zagrożenie aktualne lub nadchodzące', severity: 'orange' }
         };
+		
+		const SEVERITY_TRANSLATIONS = {
+    'minor': 'niskie',
+    'moderate': 'umiarkowane',
+    'severe': 'silne',
+    'extreme': 'ekstremalne',
+    'major': 'poważne',
+    'unknown': 'nieokreślone'
+};
 
         const WARNING_TRANSLATIONS = {
-            'es': { // Hiszpański
-                'tormentas': { name: 'Burza', description: 'Burza z intensywnymi wyładowaniami atmosferycznymi', severity: 'orange' },
-                'vientos': { name: 'Silny wiatr', description: 'Niebezpieczne podmuchy wiatru', severity: 'yellow' },
-                'lluvia': { name: 'Ulewny deszcz', description: 'Intensywne opady deszczu', severity: 'yellow' },
-                'costeros': { name: 'Wiatry przybrzeżne', description: 'Silne wiatry nadmorskie', severity: 'yellow' },
-                'nivel amarillo': { name: 'Żółty poziom', description: 'Średnie zagrożenie', severity: 'yellow' }
+                'es': {
+        'tormentas de': { name: 'Burze', description: 'Intensywne burze', severity: 'orange' },
+        'moderate': { name: 'Umiarkowane', description: 'Umiarkowane zagrożenie', severity: 'yellow' },
+        'severe': { name: 'Silne', description: 'Silne zagrożenie', severity: 'orange' },
+        'extreme': { name: 'Ekstremalne', description: 'Ekstremalne zagrożenie', severity: 'red' }
             },
             'no': { // Norweski
                 'snøskredfare': { name: 'Zagrożenie lawinowe', description: 'Możliwość wystąpienia lawin śnieżnych', severity: 'red' },
@@ -1427,10 +1448,14 @@
             if (/[\u4e00-\u9fff]/.test(text)) return 'zh'; // Chiński
             
             return 'en';
+			
         }
 
-        async function translateWarning(text, sourceLang = 'en') {
+        async function translateWarning(text, sourceLang = 'en') 
+		
+		{
             if (!text || !/[a-zA-Zа-яА-Я]/.test(text)) return text;
+			
             
             try {
                 // Najpierw wykonaj podstawowe tłumaczenie
@@ -1442,6 +1467,21 @@
                 if (!response.ok) throw new Error('Błąd tłumaczenia: ' + response.status);
                 
                 let translated = await response.text();
+				const severityTranslations = {
+        'minor': 'niskie',
+        'moderate': 'umiarkowane', 
+        'severe': 'silne',
+        'extreme': 'ekstremalne',
+        'major': 'poważne',
+        'unknown': 'nieokreślone'
+    };
+
+    // Tylko tłumaczymy stopnie, nie zmieniamy reszty tekstu
+    for (const [eng, pl] of Object.entries(severityTranslations)) {
+        text = text.replace(new RegExp(`\\b${eng}\\b`, 'gi'), pl);
+    }
+				
+				
                 
                 // Specjalne przypadki dla chińskich ostrzeżeń (Pekin)
                 if (sourceLang === 'zh') {
@@ -1473,6 +1513,7 @@
                         .replace(/tormentas de/g, 'burzami')
                         .replace(/vientos de/g, 'wiatrami');
                 }
+				
 
                 // Poprawki ogólne
                 translated = translated
@@ -1498,6 +1539,8 @@
         function extractWarningDetails(alert, lang = 'en') {
             const defaultType = WARNING_TYPES.storm;
             if (!alert.headline) return { type: defaultType, description: defaultType.description };
+			
+			
             
             const lowerHeadline = alert.headline.toLowerCase();
             
@@ -1551,6 +1594,7 @@
                         description: alert.headline
                     };
                 }
+				
                 if (lowerHeadline.includes('costeros')) {
                     return {
                         type: { 
@@ -1579,6 +1623,22 @@
                     };
                 }
             }
+			
+			// Specjalne przypadki dla języka słowackiego
+    if (lang === 'sk' && alert.headline) {
+        if (alert.headline.includes('Burza') || alert.headline.includes('Búrka')) {
+            return {
+                type: { 
+                    emoji: '⛈️', 
+                    name: 'Búrka', 
+                    description: 'Silná búrka s bleskami a hrmením',
+                    severity: 'orange'
+                },
+                description: alert.description || alert.headline
+            };
+        }
+    }
+
 
             for (const [key, value] of Object.entries(WARNING_TYPES)) {
                 if (lowerHeadline.includes(key)) {
@@ -1603,40 +1663,83 @@
             return { type: defaultType, description: alert.headline || defaultType.description };
         }
 
-        async function renderWarning(alert) {
-            const lang = detectWarningLanguage(alert.headline || alert.description);
-            const details = extractWarningDetails(alert, lang);
-            const severity = details.type.severity || 'yellow';
-            
-            const translatedDescription = await translateWarning(details.description, lang);
-            const translatedName = await translateWarning(details.type.name, lang);
+async function renderWarning(alert) {
+    const lang = detectWarningLanguage(alert.headline || alert.description);
+    const details = extractWarningDetails(alert, lang);
+    const severity = details.type.severity || 'yellow';
+	
+	
+    
+    // Tłumaczymy tylko jeśli to konieczne
+    const descriptionToTranslate = alert.description || alert.headline || '';
+    let translatedContent = descriptionToTranslate;
+    
+    if (lang !== 'pl') {
+        translatedContent = await translateWarning(descriptionToTranslate, lang);
+    }
+	
+	
 
-            // Check for duplicates
-            const existingWarnings = document.querySelectorAll('.warning-details');
-            for (const warning of existingWarnings) {
-                if (warning.textContent.trim() === translatedDescription.trim()) {
-                    return '';
-                }
-            }
+    // Format dat
+    const effectiveDate = alert.effective ? new Date(alert.effective).toLocaleString('pl-PL') : 'Nieznany';
+    const expiresDate = alert.expires ? new Date(alert.expires).toLocaleString('pl-PL') : 'Nieznany';
 
-            return `
-                <div class="warning-card ${severity}">
-                    <div class="warning-header">
-                        <span class="warning-icon">${details.type.emoji}</span>
-                        <span class="warning-title">${translatedName}</span>
-                    </div>
-                    <div class="warning-details">
-                        ${translatedDescription}
-                    </div>
-                    <div class="warning-footer" style="font-size:0.7em; margin-top:0.5rem; opacity:0.7;">
+    // Sprawdzanie duplikatów
+    const existingWarnings = document.querySelectorAll('.warning-details');
+    for (const warning of existingWarnings) {
+        if (warning.textContent.includes(translatedContent.substring(0, 50))) {
+            return '';
+        }
+    }
+
+    // Formatowanie szczegółowych ostrzeżeń
+    let warningDetails = '';
+    if (translatedContent.includes('stopień:') || translatedContent.includes('prawd.')) {
+        warningDetails = `
+            <div class="warning-details">
+                ${translatedContent.replace(/\n/g, '<br>')}
+            </div>
+        `;
+    } else {
+        warningDetails = `
+            <div class="warning-details">
+                ${translatedContent}
+                ${alert.note ? `<div class="warning-note">${alert.note}</div>` : ''}
+            </div>
+        `;
+    }
+
+return `
+        <div class="warning-card ${severity}">
+            <div class="warning-header">
+                <span class="warning-icon">${details.type.emoji}</span>
+                <div>
+                    <div class="warning-title">${details.type.name}</div>
+                    ${alert.severity ? `
+                        <div class="warning-severity">
+                            Stopień: ${await translateWarning(alert.severity.toLowerCase())}
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+            <div class="warning-details">
+                ${translatedContent.replace(/\n/g, '<br>')}
+            </div>
+            <div class="warning-time">
+                <strong>⏰ Czas obowiązywania:</strong><br>
+                <span>⌛ Od: ${effectiveDate}</span><br>
+                <span>🛑 Do: ${expiresDate}</span>
+                </div>
+				<div class="warning-footer" style="font-size:0.7em; margin-top:0.5rem; opacity:0.7;">
                         Ostrzeżenia są opracowywane na podstawie prognoz regionalnych centrów meteorologicznych i dotyczą obszarów, na których może wystąpić dane zjawisko.
                     </div>
-                    ${lang !== 'pl' ? `<div class="warning-original" style="font-size:0.8em;opacity:0.7;margin-top:0.5rem;">
-                        (Oryginał: ${details.description})
-                    </div>` : ''}
-                </div>
-            `;
-        }
+            </div>
+        </div>
+    `;
+}
+
+			
+
 
         function hasStormForecast(forecastData) {
             if (!forecastData || !forecastData.forecastday) return false;
@@ -2409,6 +2512,20 @@
             
             // Set up theme toggle
             weatherElements.themeToggle.addEventListener('click', toggleTheme);
+			
+			function initWarningCards() {
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.warning-header')) {
+            const card = e.target.closest('.warning-card');
+            card.classList.toggle('expanded');
+            
+            // Jeśli to ważne ostrzeżenie (red), dodaj animację
+            if (card.classList.contains('red')) {  // Poprawione - brakujący nawias
+                card.classList.add('important');
+            }
+        }
+    });
+}
             
             if (navigator.geolocation) {
                 getLocation();
