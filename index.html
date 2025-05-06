@@ -516,20 +516,46 @@
             border: 1px solid var(--primary);
             box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
         }
-		.warning-sources {
-    font-size: 0.8rem;
-    opacity: 0.7;
-    margin-top: 1rem;
-    padding-top: 0.5rem;
-    border-top: 1px dashed rgba(0, 0, 0, 0.1);
-}
 		
+		
+		.warning-card.hydro {
+    border-left-color: #1e90ff;
+    background: rgba(30, 144, 255, 0.1);
+}
+
+.warning-card.hydro .warning-header {
+    color: #1e90ff;
+}
+
+.warning-card.hydro.red {
+    border-left-color: #ff3b30;
+    background: rgba(255, 59, 48, 0.1);
+}
+
+.warning-card.hydro.red .warning-header {
+    color: #ff3b30;
+}
 		
 		.warning-severity {
     font-size: 0.9em;
     opacity: 0.8;
     margin-top: 0.3rem;
     font-style: italic;
+	
+	
+}
+
+.warning-sources {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+body.night-mode .warning-sources,
+body.dark-mode .warning-sources {
+    border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 .warning-card {
@@ -584,6 +610,18 @@
     padding: 0.3rem 0.6rem;
     border-radius: 20px;
     background: rgba(0, 0, 0, 0.08);
+}
+
+.warning-details a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.warning-details a:hover {
+    text-decoration: underline;
 }
 
 
@@ -1221,6 +1259,115 @@
             'warning': { emoji: '⚠️', name: 'Ostrzeżenie', description: 'Zagrożenie aktualne lub nadchodzące', severity: 'orange' }
         };
 		
+		function translateWeatherCondition(code, isDay) {
+    const translation = WEATHER_CODE_TRANSLATIONS[code] || 
+                      { day: "Warunki pogodowe", night: "Warunki pogodowe" };
+    
+    const emoji = getWeatherEmoji(code, isDay);
+    return `${emoji} ${isDay ? translation.day : translation.night}`;
+}
+
+function getWeatherEmoji(code, isDay) {
+    const emojiMap = {
+        1000: isDay ? '☀️' : '🌙',
+        1003: isDay ? '⛅' : '☁️',
+        1006: '☁️',
+        1009: '☁️',
+        1030: '🌫️',
+        1135: '🌁',
+        1147: '🌫️',
+        // ... i tak dalej dla innych kodów
+        1276: '⛈️',
+        1282: '❄️⚡'
+    };
+    return emojiMap[code] || '🌀';
+}
+
+function translateWeatherCondition(code, isDay) {
+    try {
+        if (!code) return "Brak danych pogodowych";
+        
+        const translation = WEATHER_CODE_TRANSLATIONS[code];
+        if (!translation) {
+            console.warn(`Nieznany kod pogodowy: ${code}`);
+            return "Warunki pogodowe";
+        }
+        
+        return isDay ? translation.day : translation.night;
+    } catch (e) {
+        console.error('Błąd tłumaczenia warunków pogodowych:', e);
+        return "Warunki pogodowe";
+    }
+}
+		
+		const WEATHER_CODE_TRANSLATIONS = {
+    // Sunny/Clear
+    1000: { day: "Słonecznie", night: "Bezchmurnie" },
+    
+    // Partly cloudy
+    1003: { day: "Częściowe zachmurzenie", night: "Częściowe zachmurzenie" },
+    
+    // Cloudy/Overcast
+    1006: { day: "Pochmurno", night: "Pochmurno" },
+    1009: { day: "Zachmurzenie całkowite", night: "Zachmurzenie całkowite" },
+    
+    // Fog/Mist
+    1030: { day: "Lekka mgła", night: "Lekka mgła" },
+    1135: { day: "Mgła", night: "Mgła" },
+    1147: { day: "Marznąca mgła/Szadź", night: "Marznąca mgła/Szadź" },
+    
+    // Rain
+    1063: { day: "Przelotne opady deszczu", night: "Przelotne opady deszczu" },
+    1072: { day: "Przelotna marznąca mżawka", night: "Przelotna marznąca mżawka" },
+    1150: { day: "Przelotna mżawka", night: "Przelotna mżawka" },
+    1153: { day: "Lekka mżawka", night: "Lekka mżawka" },
+    1168: { day: "Marznąca mżawka", night: "Marznąca mżawka" },
+    1171: { day: "Silna marznąca mżawka", night: "Silna marznąca mżawka" },
+    1180: { day: "Miejscowy lekki deszcz", night: "Miejscowy lekki deszcz" },
+    1183: { day: "Lekki deszcz", night: "Lekki deszcz" },
+    1186: { day: "Umiarkowany deszcz, przejaśnienia", night: "Umiarkowany deszcz, przejaśnienia" },
+    1189: { day: "Umiarkowany deszcz", night: "Umiarkowany deszcz" },
+    1192: { day: "Ulewny deszcz, przejaśnienia", night: "Ulewny deszcz, przejaśnienia" },
+    1195: { day: "Ulewny deszcz", night: "Ulewny deszcz" },
+    1198: { day: "Lekki marznący deszcz", night: "Lekki marznący deszcz" },
+    1201: { day: "Umiarkowany/mocny marznący deszcz", night: "Umiarkowany/mocny marznący deszcz" },
+    1240: { day: "Lekki przelotny deszcz", night: "Lekki przelotny deszcz" },
+    1243: { day: "Umiarkowany/mocny przelotny deszcz", night: "Umiarkowany/mocny przelotny deszcz" },
+    1246: { day: "Gwałtowna ulewa", night: "Gwałtowna ulewa" },
+    
+    // Snow
+    1066: { day: "Przelotne opady śniegu", night: "Przelotne opady śniegu" },
+    1114: { day: "Zawieja śnieżna", night: "Zawieja śnieżna" },
+    1117: { day: "Zamieć śnieżna", night: "Zamieć śnieżna" },
+    1210: { day: "Przelotny lekki śnieg", night: "Przelotny lekki śnieg" },
+    1213: { day: "Lekki śnieg", night: "Lekki śnieg" },
+    1216: { day: "Przelotny umiarkowany śnieg", night: "Przelotny umiarkowany śnieg" },
+    1219: { day: "Umiarkowany śnieg", night: "Umiarkowany śnieg" },
+    1222: { day: "Przelotny obfity śnieg", night: "Przelotny obfity śnieg" },
+    1225: { day: "Obfity śnieg", night: "Obfity śnieg" },
+    1255: { day: "Lekkie opady śniegu", night: "Lekkie opady śniegu" },
+    1258: { day: "Umiarkowane/obfite opady śniegu", night: "Umiarkowane/obfite opady śniegu" },
+    
+    // Sleet
+    1069: { day: "Przelotny deszcz ze śniegiem", night: "Przelotny deszcz ze śniegiem" },
+    1204: { day: "Lekki deszcz ze śniegiem", night: "Lekki deszcz ze śniegiem" },
+    1207: { day: "Umiarkowany/obfity deszcz ze śniegiem", night: "Umiarkowany/obfity deszcz ze śniegiem" },
+    1249: { day: "Lekkie opady deszczu ze śniegiem", night: "Lekkie opady deszczu ze śniegiem" },
+    1252: { day: "Umiarkowane/obfite opady deszczu ze śniegiem", night: "Umiarkowane/obfite opady deszczu ze śniegiem" },
+    
+    // Ice pellets
+    1237: { day: "Grad", night: "Grad" },
+    1261: { day: "Lekkie opady gradu", night: "Lekkie opady gradu" },
+    1264: { day: "Umiarkowane/obfite opady gradu", night: "Umiarkowane/obfite opady gradu" },
+    
+    // Thunder
+    1087: { day: "Możliwe burze", night: "Możliwe burze" },
+    1273: { day: "Lekki deszcz z burzą", night: "Lekki deszcz z burzą" },
+    1276: { day: "Umiarkowany/obfity deszcz z burzą", night: "Umiarkowany/obfity deszcz z burzą" },
+    1279: { day: "Lekki śnieg z burzą", night: "Lekki śnieg z burzą" },
+    1282: { day: "Umiarkowany/obfity śnieg z burzą", night: "Umiarkowany/obfity śnieg z burzą" }
+};
+		
 		const SEVERITY_TRANSLATIONS = {
     'minor': 'niskie',
     'moderate': 'umiarkowane',
@@ -1349,7 +1496,7 @@
                 title: "Zimowy trening",
                 text: (temp) => {
                     if (temp < -10) return "🧊 <strong>Silny mróz:</strong> Zakryj wszystkie odsłonięte części ciała. Rozgrzewkę wykonaj w domu. Biegaj z partnerem i miej przy sobie telefon.";
-                    return "🧣 <strong>Chłodno:</strong> Oddychaj przez szalik lub buff. Po treningu nie stoń na mrozie - od razu wejdź do ciepłego pomieszczenia. Rozciąganie wykonaj w domu.";
+                    return "🧣 <strong>Chłodno:</strong> Oddychaj przez szalik lub buff. Po treningu nie stój na zimnie - od razu wejdź do ciepłego pomieszczenia. Rozciąganie wykonaj w domu.";
                 }
             },
             hot: {
@@ -1440,6 +1587,145 @@
         function showLoading(show) {
             weatherElements.loadingIndicator.style.display = show ? 'flex' : 'none';
         }
+		
+		function translateWeatherCondition(code, isDay) {
+    const translation = WEATHER_CODE_TRANSLATIONS[code] || 
+                      { day: "Warunki pogodowe", night: "Warunki pogodowe" };
+    return isDay ? translation.day : translation.night;
+}
+		
+async function fetchTvpWarnings() {
+    try {
+        // Linki do komunikatów w formacie XML
+        const meteoUrl = 'https://komunikaty.tvp.pl/komunikaty/wszystkie/meteorologiczne/0?_format=xml';
+        const hydroUrl = 'https://komunikaty.tvp.pl/komunikaty/wszystkie/hydrologiczne/0?_format=xml';
+        
+        // Pobieramy oba typy ostrzeżeń równolegle
+        const [meteoResponse, hydroResponse] = await Promise.all([
+            fetch(meteoUrl, { headers: { 'Accept': 'application/xml' } }),
+            fetch(hydroUrl, { headers: { 'Accept': 'application/xml' } })
+        ]);
+        
+        if (!meteoResponse.ok) throw new Error('Błąd pobierania ostrzeżeń meteorologicznych');
+        if (!hydroResponse.ok) throw new Error('Błąd pobierania ostrzeżeń hydrologicznych');
+        
+        const meteoXml = await meteoResponse.text();
+        const hydroXml = await hydroResponse.text();
+        
+        const parser = new DOMParser();
+        const meteoDoc = parser.parseFromString(meteoXml, "text/xml");
+        const hydroDoc = parser.parseFromString(hydroXml, "text/xml");
+        
+        // Parsujemy oba typy ostrzeżeń
+        const meteoWarnings = parseTvpXml(meteoDoc, 'meteo');
+        const hydroWarnings = parseTvpXml(hydroDoc, 'hydro');
+        
+        // Łączymy i zwracamy wyniki
+        return [...meteoWarnings, ...hydroWarnings];
+    } catch (error) {
+        console.error('Błąd pobierania ostrzeżeń TVP:', error);
+        return [];
+    }
+}
+
+function parseTvpXml(xmlDoc, type = 'meteo') {
+    const newsItems = xmlDoc.getElementsByTagName('news');
+    const warnings = [];
+    
+    for (let item of newsItems) {
+        try {
+            const title = item.getElementsByTagName('title')[0]?.textContent || '';
+            const shortcut = item.getElementsByTagName('shortcut')[0]?.textContent || '';
+            const content = item.getElementsByTagName('content')[0]?.textContent || '';
+            const validFrom = item.getElementsByTagName('valid_from')[0]?.textContent || '';
+            const validTo = item.getElementsByTagName('valid_to')[0]?.textContent || '';
+            const rsoAlarm = parseInt(item.getElementsByTagName('rso_alarm')[0]?.textContent || '0');
+            const link = `https://komunikaty.tvp.pl/komunikaty/${type === 'hydro' ? 'hydrologiczne' : 'meteorologiczne'}`;
+            
+            // Określamy ważność ostrzeżenia na podstawie rso_alarm
+            let severity = 'yellow';
+            let emoji = '⚠️';
+            
+            if (type === 'hydro') {
+                severity = 'red';
+                emoji = '🌊';
+            } else {
+                if (rsoAlarm >= 2) {
+                    severity = 'red';
+                    emoji = '🔴';
+                } else if (rsoAlarm === 1) {
+                    severity = 'orange';
+                    emoji = '🟠';
+                }
+                
+                // Dodatkowe określenie typu na podstawie tytułu
+                if (title.includes('burz') || title.includes('Burz')) {
+                    emoji = '⛈️';
+                    severity = 'orange';
+                } else if (title.includes('mróz') || title.includes('przymrozki')) {
+                    emoji = '❄️';
+                } else if (title.includes('upał')) {
+                    emoji = '🔥';
+                    severity = 'orange';
+                } else if (title.includes('wiatr')) {
+                    emoji = '💨';
+                }
+            }
+            
+            warnings.push({
+                headline: title,
+                description: `${shortcut}\n\n${content}`,
+                effective: validFrom,
+                expires: validTo,
+                severity: severity,
+                type: type,
+                emoji: emoji,
+                source: 'IMGW via TVP',
+                link: link,
+                rsoAlarm: rsoAlarm
+            });
+        } catch (e) {
+            console.error('Błąd parsowania ostrzeżenia TVP:', e);
+        }
+    }
+    
+    return warnings;
+}
+
+async function renderTvpWarning(alert) {
+    const severity = alert.severity || 'yellow';
+    const effectiveDate = alert.effective ? new Date(alert.effective).toLocaleString('pl-PL') : 'Nieznana';
+    const expiresDate = alert.expires ? new Date(alert.expires).toLocaleString('pl-PL') : 'Nieznana';
+    
+    // Dodatkowe informacje o stopniu zagrożenia
+    let alarmLevel = '';
+    if (alert.rsoAlarm > 0) {
+        alarmLevel = `<div class="warning-severity">Stopień zagrożenia: ${alert.rsoAlarm}</div>`;
+    }
+    
+    return `
+        <div class="warning-card ${severity} ${alert.type === 'hydro' ? 'hydro' : ''}">
+            <div class="warning-header">
+                <span class="warning-icon">${alert.emoji}</span>
+                <div>
+                    <div class="warning-title">${alert.headline}</div>
+                    ${alarmLevel}
+                </div>
+            </div>
+            <div class="warning-details">
+                ${alert.description.replace(/\n/g, '<br>')}
+                ${alert.link ? `<br><a href="${alert.link}" target="_blank" style="color: var(--primary);">Czytaj więcej na tvp.pl</a>` : ''}
+            </div>
+            <div class="warning-time">
+                <strong>Ważne od:</strong> ${effectiveDate}<br>
+                <strong>Ważne do:</strong> ${expiresDate}
+            </div>
+            <div class="warning-footer" style="font-size:0.7em; margin-top:0.5rem; opacity:0.7;">
+                Ostrzeżenie ${alert.type === 'hydro' ? 'hydrologiczne' : 'meteorologiczne'} IMGW-PIB przekazane przez TVP
+            </div>
+        </div>
+    `;
+}
 
         function detectWarningLanguage(text) {
             if (!text) return 'en';
@@ -1672,9 +1958,33 @@
         }
 
 async function renderWarning(alert) {
+
+    // Specjalna obsługa ostrzeżeń hydrologicznych
+    if (alert.type === 'hydro') {
+        return `
+            <div class="warning-card ${alert.severity}">
+                <div class="warning-header">
+                    <span class="warning-icon">${alert.emoji}</span>
+                    <span class="warning-title">${alert.headline} (IMGW Hydro via TVP)</span>
+                </div>
+                <div class="warning-details">
+                    ${alert.description.replace(/\n/g, '<br>')}
+                    ${alert.link ? `<br><a href="${alert.link}" target="_blank" style="color: var(--primary);">Czytaj więcej na tvp.pl</a>` : ''}
+                </div>
+                <div class="warning-time">
+                    <strong>Opublikowano:</strong> ${new Date(alert.effective).toLocaleString('pl-PL')}
+                </div>
+                <div class="warning-footer" style="font-size:0.7em; margin-top:0.5rem; opacity:0.7;">
+                    Ostrzeżenie hydrologiczne - sprawdź lokalne komunikaty dla szczegółów.
+                </div>
+            </div>
+        `;
+    }
+	
     const lang = detectWarningLanguage(alert.headline || alert.description);
     const details = extractWarningDetails(alert, lang);
     const severity = details.type.severity || 'yellow';
+	
 	
 	
     
@@ -1699,6 +2009,8 @@ async function renderWarning(alert) {
             return '';
         }
     }
+	
+	
 
     // Formatowanie szczegółowych ostrzeżeń
     let warningDetails = '';
@@ -1713,6 +2025,25 @@ async function renderWarning(alert) {
             <div class="warning-details">
                 ${translatedContent}
                 ${alert.note ? `<div class="warning-note">${alert.note}</div>` : ''}
+            </div>
+        `;
+    }
+	
+	// Specjalna obsługa ostrzeżeń TVP
+    if (alert.source === 'TVP') {
+        return `
+            <div class="warning-card ${alert.severity}">
+                <div class="warning-header">
+                    <span class="warning-icon">${alert.emoji}</span>
+                    <span class="warning-title">${alert.headline} (IMGW via TVP)</span>
+                </div>
+                <div class="warning-details">
+                    ${alert.description.replace(/\n/g, '<br>')}
+                    ${alert.link ? `<br><a href="${alert.link}" target="_blank" style="color: var(--primary);">Czytaj więcej na tvp.pl</a>` : ''}
+                </div>
+                <div class="warning-time">
+                    <strong>Opublikowano:</strong> ${new Date(alert.effective).toLocaleString('pl-PL')}
+                </div>
             </div>
         `;
     }
@@ -1745,6 +2076,8 @@ return `
         </div>
     `;
 }
+
+
 
 			
 
@@ -1825,71 +2158,103 @@ return `
             return RUNNER_TIPS.default;
         }
 
-        async function updateWarnings(alerts) {
-            const container = weatherElements.weatherWarnings;
-            
-            if (!alerts?.alert?.length) {
-                container.innerHTML = `
-                    <div class="warning-card">
-                        <div class="warning-header">
-                            <span class="warning-icon">✅</span>
-                            <span class="warning-title">Brak aktywnych ostrzeżeń</span>
-                        </div>
-                    </div>
-                `;
-                return;
-            }
+async function updateWarnings(alerts) {
+    const container = weatherElements.weatherWarnings;
+    
+    // Pobierz ostrzeżenia z TVP
+    let tvpWarnings = [];
+    try {
+        tvpWarnings = await fetchTvpWarnings();
+    } catch (error) {
+        console.error('Błąd TVP:', error);
+    }
 
-            showLoading(true);
+    // Połącz wszystkie ostrzeżenia
+    const allWarnings = [
+        ...(alerts?.alert || []),
+        ...tvpWarnings
+    ];
+
+    
+    if (allWarnings.length === 0) {
+        container.innerHTML = `
+            <div class="warning-card">
+                <div class="warning-header">
+                    <span class="warning-icon">✅</span>
+                    <span class="warning-title">Brak aktywnych ostrzeżeń</span>
+                </div>
+                <div class="warning-details">
+                    Obecnie nie ma żadnych aktywnych ostrzeżeń pogodowych dla Twojej lokalizacji.
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    showLoading(true);
+    container.innerHTML = `
+        <div class="warning-card">
+            <div class="warning-header">
+                <span class="warning-icon">🔄</span>
+                <span class="warning-title">Ładowanie ostrzeżeń...</span>
+            </div>
+        </div>
+    `;
+
+    try {
+        const warningsHTML = await Promise.all(
+            allWarnings.map(alert => renderWarning(alert))
+        );
+        
+        // Filtruj puste wyniki i duplikaty
+        const uniqueWarningsHTML = warningsHTML
+            .filter(html => html !== '')
+            .filter((html, index, self) => 
+                self.findIndex(h => h.includes(html.substring(0, 100))) === index
+            );
+        
+        if (uniqueWarningsHTML.length === 0) {
             container.innerHTML = `
                 <div class="warning-card">
                     <div class="warning-header">
-                        <span class="warning-icon">🔄</span>
-                        <span class="warning-title">Ładowanie ostrzeżeń...</span>
+                        <span class="warning-icon">ℹ️</span>
+                        <span class="warning-title">Brak nowych ostrzeżeń</span>
+                    </div>
+                    <div class="warning-details">
+                        Nie znaleziono nowych ostrzeżeń pogodowych.
                     </div>
                 </div>
             `;
-
-            // Unikalne alerty
-            const uniqueAlerts = alerts.alert.filter((alert, index, self) =>
-                index === self.findIndex(a => 
-                    a.headline === alert.headline && 
-                    a.description === alert.description
-                )
-            );
-
-            try {
-                const warningsHTML = await Promise.all(
-                    uniqueAlerts.map(alert => renderWarning(alert))
-                );
-                
-                container.innerHTML = warningsHTML.filter(html => html !== '').join('') || `
-                    <div class="warning-card">
-                        <div class="warning-header">
-                            <span class="warning-icon">ℹ️</span>
-                            <span class="warning-title">Brak nowych ostrzeżeń</span>
-                        </div>
-                    </div>
-                `;
-				// Dodaj informację o źródłach ostrzeżeń
+        } else {
+            container.innerHTML = uniqueWarningsHTML.join('');
+            
+            // Dodaj informację o źródłach ostrzeżeń
             const sourcesInfo = document.createElement('div');
             sourcesInfo.className = 'warning-sources';
-            sourcesInfo.textContent = 'Źródła ostrzeżeń: IMGW, Severe-Weather, MeteoAlarm, NWS';
+            sourcesInfo.textContent = 'Źródła ostrzeżeń: IMGW, Severe-Weather, MeteoAlarm, NWS, TVP';
             container.appendChild(sourcesInfo);
-            } catch (error) {
-                console.error('Błąd przetwarzania ostrzeżeń:', error);
-                container.innerHTML = `
-                    <div class="warning-card">
-                        <div class="warning-header">
-                            <span class="warning-icon">❌</span>
-                            <span class="warning-title">Błąd ładowania ostrzeżeń</span>
-                        </div>
-                    </div>
-                `;
-            } finally {
-                showLoading(false);
-            }
         }
+    } catch (error) {
+        console.error('Błąd przetwarzania ostrzeżeń:', error);
+        container.innerHTML = `
+            <div class="warning-card red">
+                <div class="warning-header">
+                    <span class="warning-icon">❌</span>
+                    <span class="warning-title">Błąd ładowania ostrzeżeń</span>
+                </div>
+                <div class="warning-details">
+                    Wystąpił problem podczas ładowania ostrzeżeń pogodowych.<br>
+                    ${error.message || 'Spróbuj odświeżyć stronę.'}
+                </div>
+                <div class="warning-time">
+                    <strong>Status:</strong> ${new Date().toLocaleString('pl-PL')}
+                </div>
+            </div>
+        `;
+    } finally {
+        showLoading(false);
+    }
+}
 
         async function getWeatherIcon(code, isDay) {
             const iconData = WEATHER_ICONS[code] || WEATHER_ICONS[1000];
@@ -1948,7 +2313,8 @@ return `
             }
 
             const today = forecast.forecastday[0];
-            const dayCondition = today.day.condition.text;
+             const weatherCode = forecast.forecastday[0].day.condition.code;
+    const dayCondition = translateWeatherCondition(weatherCode, true);
             const maxTemp = today.day.maxtemp_c;
             const minTemp = today.day.mintemp_c;
             const avgHumidity = today.day.avghumidity;
@@ -1984,7 +2350,7 @@ return `
             
             // Day forecast
             if (dayPrecipitation) {
-                summary += `W dzień miejscowe opady deszczu . `;
+                summary += `W dzień przelotne opady deszczu . `;
             } else {
                 summary += `W dzień  ${dayCondition.toLowerCase()}. `;
             }
@@ -2043,9 +2409,10 @@ return `
                 try {
                     const time = formatTime(hour.time.split(' ')[1]);
                     const temp = hour.temp_c?.toFixed(1) || '-';
-                    const condition = hour.condition?.text || 'Brak danych';
+                 const weatherCode = hour.condition?.code || 1000;
                     const iconCode = hour.condition?.code || 1000;
                     const hourIsDay = hour.is_day !== 0;
+					const condition = translateWeatherCondition(weatherCode, hourIsDay);
                     
                     const iconImg = await getWeatherIcon(iconCode, hourIsDay);
                     
@@ -2060,11 +2427,11 @@ return `
                     
                     hourElement.querySelector('.weather-icon').appendChild(iconImg);
                     hourlyContainer.appendChild(hourElement);
-                } catch (e) {
-                    console.error('Błąd tworzenia prognozy godzinowej:', e);
-                }
-            }
+                 } catch (e) {
+            console.error('Błąd tworzenia prognozy godzinowej:', e);
         }
+    }
+}
 
         async function updateDailyForecast(forecastDays) {
             const forecastContainer = weatherElements.forecast;
@@ -2076,16 +2443,18 @@ return `
             forecastContainer.innerHTML = '';
             
             // Pokaż prognozę na 3 dni (dziś + 2 kolejne dni)
-            for (const day of forecastDays.slice(0, 3)) {
-                try {
+            for (const day of forecastDays.slice(0, 5)) {
+        try {
                     const date = new Date(day.date);
                     const weekday = date.toLocaleDateString('pl', { weekday: 'long' });
-                    const condition = day.day?.condition?.text || 'Brak danych';
+					const weatherCode = day.day?.condition?.code || 1000;
+                    const condition = translateWeatherCondition(weatherCode, true);
                     const maxTemp = day.day?.maxtemp_c?.toFixed(1) || '-';
                     const minTemp = day.day?.mintemp_c?.toFixed(1) || '-';
                     const iconCode = day.day?.condition?.code || 1000;
                     const chanceOfRain = day.day?.daily_chance_of_rain || 0;
                     const chanceOfSnow = day.day?.daily_chance_of_snow || 0;
+					
                     
                     const iconImg = await getWeatherIcon(iconCode, true);
                     
@@ -2107,10 +2476,10 @@ return `
                     dayElement.querySelector('.weather-icon').appendChild(iconImg);
                     forecastContainer.appendChild(dayElement);
                 } catch (e) {
-                    console.error('Błąd tworzenia prognozy dziennej:', e);
-                }
-            }
+            console.error('Błąd tworzenia prognozy dziennej:', e);
         }
+    }
+}
 
         async function updateCurrentWeatherIcon(code, isDay) {
             const iconContainer = weatherElements.currentIcon;
@@ -2239,9 +2608,10 @@ return `
 
             const { location, current, forecast, alerts } = data;
             const isDay = current.is_day !== 0;
+    const weatherCode = current.condition?.code || 1000;
 
             weatherElements.currentCity.textContent = location.name || 'Nieznana lokalizacja';
-            weatherElements.currentCondition.textContent = current.condition?.text || 'Brak danych';
+              weatherElements.currentCondition.textContent = translateWeatherCondition(weatherCode, isDay);
             weatherElements.tempNow.textContent = current.temp_c ? `${current.temp_c.toFixed(1)}°C` : '-';
             weatherElements.windNow.textContent = current.wind_kph ? `${current.wind_kph} km/h` : '-';
             weatherElements.pressureNow.textContent = current.pressure_mb ? `${current.pressure_mb} hPa` : '-';
