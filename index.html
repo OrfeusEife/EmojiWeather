@@ -126,6 +126,19 @@
             text-align: center;
             margin: 0.5rem 0;
         }
+		
+		.widget-toggle {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: var(--primary);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
 
         /* Theme Panel */
         .theme-panel {
@@ -1341,7 +1354,70 @@
             .container {
                 padding: 1rem;
             }
+			widgets-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        overflow-x: auto;
+        padding: 10px;
+        background: var(--glass);
+        z-index: 900;
+        height: 150px;
+    }
+    
+    .widget {
+        min-width: 80%;
+        margin-right: 10px;
+    }
+    
+    body {
+        padding-bottom: 180px;
+    }
+    
+    .container {
+        margin-top: 20px;
+    }
         }
+		
+		@media (max-width: 576px) {
+    .widget-toggle {
+        display: block;
+    }
+    
+    .widgets-container {
+        display: none;
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        right: 0;
+        background: var(--glass);
+        padding: 10px;
+        z-index: 999;
+    }
+    
+    .widgets-container.visible {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+	widget {
+        padding: 8px;
+    }
+    
+    .widget-header {
+        font-size: 0.9rem;
+    }
+    
+    .widget-row {
+        font-size: 0.8rem;
+    }
+    
+    .moon-phase-icon {
+        font-size: 1.5rem;
+    }
+}
+
 
         @media (max-width: 480px) {
             .theme-panel {
@@ -2468,6 +2544,11 @@ return `
                        [1087, 1273, 1276, 1279, 1282].includes(hour.condition?.code);
             });
         }
+		
+		function toggleWidgets() {
+    const container = document.querySelector('.widgets-container');
+    container.classList.toggle('visible');
+}
 
         function getRunnerTip(weatherCondition, temp, precip = 0, forecastData) {
             // Najpierw sprawdzamy czy jest prognozowana burza
@@ -3468,5 +3549,6 @@ if (data.alerts) {
 
         init();
     </script>
+	<div class="widget-toggle" onclick="toggleWidgets()">📊 Widgety</div>
 </body>
 </html>
