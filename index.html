@@ -74,6 +74,22 @@
             gap: 1rem;
             z-index: 999;
         }
+		
+		.widget-icon-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 90px;
+    margin-right: 8px;
+}
+
+.widget-icon-container img,
+.widget-icon-container svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
         .widget {
             background: var(--glass);
@@ -1455,13 +1471,14 @@
                 <span>Aktualna pogoda</span>
             </div>
             <div class="widget-content">
+			<center><span class="widget-icon-container" id="widgetIcon"></span></center>
+			<div class="widget-row">
+                    <span class="widget-label">Warunki:</span>
+                    <span class="widget-value" id="widgetCondition">-</span>
+                </div>
                 <div class="widget-row">
                     <span class="widget-label">Temperatura:</span>
                     <span class="widget-value" id="widgetTemp">-</span>
-                </div>
-                <div class="widget-row">
-                    <span class="widget-label">Warunki:</span>
-                    <span class="widget-value" id="widgetCondition">-</span>
                 </div>
                 <div class="widget-row">
                     <span class="widget-label">Wiatr:</span>
@@ -3076,13 +3093,38 @@ function toggleThemePanel() {
         }
 		
 		// Funkcje do aktualizacji widgetów
-        function updateCurrentWeatherWidget(data) {
+        async function updateCurrentWeatherWidget(data) {
     if (!data) return;
     
+    const weatherCode = data.condition?.code || 1000;
+    const isDay = data.is_day !== 0;
+    const condition = translateWeatherCondition(weatherCode, isDay);
+    
+    // Aktualizuj wartości
     document.getElementById('widgetTemp').textContent = data.temp_c ? `${data.temp_c.toFixed(1)}°C` : '-';
-    document.getElementById('widgetCondition').textContent = data.condition?.text || '-';
+    document.getElementById('widgetCondition').textContent = condition;
     document.getElementById('widgetWind').textContent = data.wind_kph ? `${data.wind_kph} km/h` : '-';
     document.getElementById('widgetHumidity').textContent = data.humidity ? `${data.humidity}%` : '-';
+    
+    // Aktualizuj ikonę (dynamicznie z API)
+    const iconContainer = document.getElementById('widgetIcon');
+    if (iconContainer) {
+        try {
+            const icon = await getWeatherIcon(weatherCode, isDay);
+            iconContainer.innerHTML = '';
+            
+            // Dostosuj rozmiar ikony dla widgeta
+            if (icon.tagName === 'IMG' || icon.tagName === 'svg') {
+                icon.style.width = '70px';
+                icon.style.height = '60px';
+            }
+            iconContainer.appendChild(icon);
+        } catch (error) {
+            console.error('Błąd ładowania ikony:', error);
+            // Fallback na emoji jeśli ikona się nie załaduje
+            iconContainer.innerHTML = getWeatherEmoji(weatherCode, isDay);
+        }
+    }
 }
 
         function updateSunWidget(astroData) {
@@ -3161,8 +3203,8 @@ function updateAlertsWidget(alerts) {
         return;
     }
     
-    // Ogranicz do 2 najważniejszych ostrzeżeń
-    const importantAlerts = alerts.alert.slice(0, 2);
+    // Ogranicz do 1 najważniejszych ostrzeżeń
+    const importantAlerts = alerts.alert.slice(0, 1);
     alertsContainer.innerHTML = '';
     
     importantAlerts.forEach(async (alert) => {
