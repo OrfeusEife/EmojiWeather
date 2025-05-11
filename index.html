@@ -2653,179 +2653,191 @@ return `
 // Zaktualizowana funkcja do aktualizacji widgetu przymrozków
 function updateFrostWidget(hourlyForecast, alerts) {
     const container = document.getElementById('frostContent');
+    if (!container) return;
+
+    // 1. Sprawdź alerty IMGW dotyczące niskich temperatur i przymrozków
+    const frostWarnings = checkForFrostWarnings(alerts);
     
-    // Sprawdź alerty IMGW o niskiej temperaturze
-    const frostAlerts = alerts?.alert?.filter(alert => {
-        const headline = alert.headline?.toLowerCase() || '';
-        const description = alert.description?.toLowerCase() || '';
-        const event = alert.event?.toLowerCase() || '';
-        
-        return headline.includes('przymrozk') || 
-               headline.includes('mróz') ||
-               headline.includes('niską temperaturą') ||
-               description.includes('przymrozk') ||
-               description.includes('mróz') ||
-               description.includes('niską temperaturą') ||
-               event.includes('frost') ||
-               event.includes('freeze') ||
-               event.includes('low temperature');
-    }) || [];
-
-    // Sprawdź prognozę godzinową pod kątem temperatur <= 2°C
-    const now = new Date();
-    const frostHours = [];
+    // 2. Sprawdź prognozę godzinową pod kątem przymrozków (temp <= 2°C)
+    const forecastFrostPeriods = getFrostPeriodsFromForecast(hourlyForecast);
     
-    if (hourlyForecast) {
-        hourlyForecast.forEach(hour => {
-            const hourTime = new Date(hour.time);
-            if (hourTime > now && hour.temp_c <= 2) {
-                frostHours.push({
-                    time: hourTime,
-                    temp: hour.temp_c
-                });
-            }
-        });
-    }
-
-    // Jeśli są alerty lub prognozowane przymrozki
-    if (frostAlerts.length > 0 || frostHours.length > 0) {
-        let html = '<div class="frost-warning">❄️ Aktywne ostrzeżenie o przymrozkach</div>';
-        
-        // Dodaj szczegóły z alertów IMGW
-        frostAlerts.forEach(alert => {
-            const effective = alert.effective ? new Date(alert.effective).toLocaleString('pl-PL', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            }) : 'brak danych';
-            
-            const expires = alert.expires ? new Date(alert.expires).toLocaleString('pl-PL', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            }) : 'brak danych';
-            
-            const severity = alert.severity ? translateSeverity(alert.severity) : 'nieokreślony';
-            
-            html += `
-                <div class="frost-alert">
-                    <strong>${alert.headline || 'Ostrzeżenie IMGW'}</strong><br>
-                    <span style="font-size:0.9em;">Stopień: ${severity}</span><br>
-                    <span style="font-size:0.9em;">⏰ Obowiązuje: ${effective} - ${expires}</span>
-                </div>
-            `;
-        });
-
-        // Dodaj informacje z prognozy godzinowej
-        if (frostHours.length > 0) {
-            const minTemp = Math.min(...frostHours.map(h => h.temp)).toFixed(1);
-            const periods = getFrostPeriods(frostHours);
-            
-            html += `
-                <div class="frost-details">
-                    <strong>Prognoza:</strong><br>
-                    Najniższa temperatura: ${minTemp}°C<br>
-                    Spodziewane okresy: ${periods.join(', ')}
-                </div>
-            `;
-        }
-
-        // Dodaj porady
-        html += `
-            <div class="frost-advice">
-                <strong>Zalecenia:</strong><br>
-                - Osłoń rośliny wrażliwe na mróz<br>
-                - Zabezpiecz instalacje wodne przed zamarznięciem<br>
-                - Rozważ cieplejsze ubranie w godzinach porannych<br>
-                - Sprawdź prognozę przed wyjściem
-            </div>
-        `;
-
-        container.innerHTML = html;
-    } else {
-        container.innerHTML = 'Brak aktywnych ostrzeżeń o przymrozkach';
-    }
+    // 3. Przygotuj treść widgetu na podstawie zebranych danych
+    container.innerHTML = generateFrostWidgetContent(frostWarnings, forecastFrostPeriods);
 }
 
-// Funkcja pomocnicza do tłumaczenia stopnia zagrożenia
-function translateSeverity(severity) {
-    const translations = {
-        'minor': 'niskie',
-        'moderate': 'umiarkowane',
-        'severe': 'silne',
-        'extreme': 'ekstremalne',
-        'major': 'poważne'
-    };
-    return translations[severity.toLowerCase()] || severity;
+// Funkcja sprawdzająca alerty IMGW
+function checkForFrostWarnings(alerts) {
+    if (!alerts || !alerts.alert) return [];
+    
+    const now = new Date();
+    const frostKeywords = [
+        'przymrozk', 'mróz', 'niską temperaturą', 
+        'frost', 'freez', 'low temperature', 'zimno'
+    ];
+    
+    return alerts.alert.filter(alert => {
+        // Sprawdź czy alert dotyczy niskich temperatur
+        const isFrostAlert = frostKeywords.some(keyword => 
+            (alert.headline && alert.headline.toLowerCase().includes(keyword)) ||
+            (alert.event && alert.event.toLowerCase().includes(keyword))
+        );
+        
+        if (!isFrostAlert) return false;
+        
+        // Sprawdź okres obowiązywania alertu
+        const start = alert.effective ? new Date(alert.effective) : null;
+        const end = alert.expires ? new Date(alert.expires) : null;
+        
+        alert.isActive = start && end && now >= start && now <= end;
+        alert.isFuture = start && now < start;
+        
+        return true;
+    });
 }
 
-// Funkcja określająca okresy przymrozków
-function getFrostPeriods(frostHours) {
-    const periods = [];
-    const now = new Date();
+// Funkcja analizująca prognozę godzinową
+function getFrostPeriodsFromForecast(hourlyForecast) {
+    if (!hourlyForecast || !hourlyForecast.length) return [];
     
-    // Grupuj przymrozki w okresy
+    const now = new Date();
+    const frostPeriods = [];
     let currentPeriod = null;
     
-    frostHours.forEach(hour => {
+    hourlyForecast.forEach(hour => {
         const hourTime = new Date(hour.time);
-        const hourOfDay = hourTime.getHours();
+        if (hourTime < now) return;
         
-        // Określ porę dnia
-        let period;
-        if (hourOfDay >= 22 || hourOfDay < 5) period = 'noc';
-        else if (hourOfDay >= 5 && hourOfDay < 10) period = 'ranek';
-        else if (hourOfDay >= 10 && hourOfDay < 18) period = 'dzień';
-        else period = 'wieczór';
+        const isFrostHour = hour.temp_c <= 2;
         
-        // Sprawdź czy to nowy okres
-        if (!currentPeriod || currentPeriod.period !== period) {
-            if (currentPeriod) periods.push(currentPeriod);
-            currentPeriod = {
-                period: period,
-                start: hourTime,
-                end: hourTime,
-                minTemp: hour.temp_c
-            };
-        } else {
-            currentPeriod.end = hourTime;
-            currentPeriod.minTemp = Math.min(currentPeriod.minTemp, hour.temp_c);
+        if (isFrostHour) {
+            if (!currentPeriod) {
+                currentPeriod = {
+                    start: hourTime,
+                    end: hourTime,
+                    minTemp: hour.temp_c,
+                    conditions: hour.condition?.text || ''
+                };
+            } else {
+                currentPeriod.end = hourTime;
+                currentPeriod.minTemp = Math.min(currentPeriod.minTemp, hour.temp_c);
+            }
+        } else if (currentPeriod) {
+            frostPeriods.push(currentPeriod);
+            currentPeriod = null;
         }
     });
     
-    if (currentPeriod) periods.push(currentPeriod);
-    
-    // Formatuj okresy do wyświetlenia
-    return periods.map(p => {
-        const startTime = p.start.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
-        const endTime = p.end.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
-        return `${p.period} (${startTime}-${endTime}, min ${p.minTemp.toFixed(1)}°C)`;
-    });
+    if (currentPeriod) frostPeriods.push(currentPeriod);
+    return frostPeriods;
 }
 
-// Funkcja pomocnicza do określania okresu przymrozków
-function getTimePeriod(hours) {
-    const periods = {
-        night: { name: 'w nocy', hours: [20, 21, 22, 23, 0, 1, 2, 3, 4, 5] },
-        morning: { name: 'nad ranem', hours: [6, 7, 8, 9] },
-        day: { name: 'w ciągu dnia', hours: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }
-    };
-
-    let activePeriods = [];
+// Funkcja generująca treść widgetu
+function generateFrostWidgetContent(warnings, forecastPeriods) {
+    const now = new Date();
     
-    // Sprawdź które okresy mają przymrozki
-    for (const [period, data] of Object.entries(periods)) {
-        const hasFrost = hours.some(h => 
-            data.hours.includes(new Date(h.time).getHours())
-        );
-        if (hasFrost) activePeriods.push(data.name);
+    // 1. Sprawdź aktywne alerty
+    const activeWarnings = warnings.filter(w => w.isActive);
+    
+    // 2. Sprawdź przyszłe alerty
+    const futureWarnings = warnings.filter(w => w.isFuture);
+    
+    // 3. Przygotuj zawartość HTML
+    if (activeWarnings.length > 0 || forecastPeriods.length > 0) {
+        let html = '<div class="frost-header" style="color:#d35400; font-weight:bold; margin-bottom:0.5rem;">❄️ AKTYWNE OSTRZEŻENIE O PRZYMROZKACH</div>';
+        
+        // Dodaj informacje o alertach
+        activeWarnings.forEach(warning => {
+            html += `
+                <div class="frost-alert" style="background-color:#f8f9fa; padding:0.5rem; border-radius:0.25rem; margin-bottom:0.5rem;">
+                    <div style="font-weight:bold;">${warning.headline || 'Ostrzeżenie IMGW'}</div>
+                    <div style="font-size:0.9rem; margin-top:0.3rem;">
+                        <strong>Okres obowiązywania:</strong><br>
+                        ${formatAlertPeriod(warning.effective, warning.expires)}
+                    </div>
+                    ${warning.description ? `
+                    <div style="font-size:0.85rem; margin-top:0.3rem;">
+                        ${warning.description}
+                    </div>` : ''}
+                </div>
+            `;
+        });
+        
+        // Dodaj informacje o prognozowanych przymrozkach
+        if (forecastPeriods.length > 0) {
+            html += '<div class="frost-forecast" style="margin-top:0.5rem;">';
+            html += '<div style="font-weight:bold;">Prognozowane okresy przymrozków:</div>';
+            
+            forecastPeriods.forEach(period => {
+                html += `
+                    <div style="margin-top:0.3rem; font-size:0.9rem;">
+                        <strong>${formatPeriod(period.start, period.end)}</strong><br>
+                        Minimalna temperatura: ${period.minTemp.toFixed(1)}°C<br>
+                        Warunki: ${period.conditions}
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+        }
+        
+        // Dodaj zalecenia
+        html += `
+            <div class="frost-advice" style="margin-top:1rem; padding:0.5rem; background-color:#e6f7ff; border-radius:0.25rem;">
+                <div style="font-weight:bold;">Zalecenia:</div>
+                <ul style="margin-top:0.3rem; padding-left:1rem; font-size:0.9rem;">
+                    <li>Osłoń rośliny wrażliwe na mróz, agrowłókniną lub słomą</li>
+					<li>Zabezpiecz zwierzęta hodowlane</li>
+                    <li>Zabezpiecz instalacje wodne przed zamarznięciem</li>
+					<li>Rano załóż ciepłe ubranie</li>
+					<li>Uważaj na śliskie powierzchnie</li>
+                    
+                </ul>
+            </div>
+        `;
+        
+        return html;
     }
+    else if (futureWarnings.length > 0) {
+        let html = '<div class="frost-header" style="color:#e67e22; font-weight:bold; margin-bottom:0.5rem;">❄️ PLANOWANE OSTRZEŻENIA</div>';
+        
+        futureWarnings.forEach(warning => {
+            html += `
+                <div style="margin-bottom:0.5rem;">
+                    <div style="font-weight:bold;">${warning.headline || 'Ostrzeżenie IMGW'}</div>
+                    <div style="font-size:0.9rem; margin-top:0.3rem;">
+                        <strong>Planowany okres:</strong><br>
+                        ${formatAlertPeriod(warning.effective, warning.expires)}
+                    </div>
+                </div>
+            `;
+        });
+        
+        return html;
+    }
+    else {
+        return '<div style="text-align:center; padding:0.5rem; color:#7f8c8d;">Brak aktywnych ostrzeżeń o przymrozkach</div>';
+    }
+}
 
-    return activePeriods.join(', ');
+// Funkcje pomocnicze do formatowania czasu
+function formatAlertPeriod(startStr, endStr) {
+    try {
+        const start = startStr ? new Date(startStr) : null;
+        const end = endStr ? new Date(endStr) : null;
+        
+        if (!start || !end) return 'Brak danych czasowych';
+        
+        return `Od: ${start.toLocaleString('pl-PL')}<br>Do: ${end.toLocaleString('pl-PL')}`;
+    } catch (e) {
+        return 'Błędny format daty';
+    }
+}
+
+function formatPeriod(start, end) {
+    if (start.toDateString() === end.toDateString()) {
+        return `${start.toLocaleDateString('pl-PL')} ${start.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'})} - ${end.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'})}`;
+    }
+    return `${start.toLocaleString('pl-PL')} - ${end.toLocaleString('pl-PL')}`;
 }
 
 // Funkcja do rysowania wykresu temperatury
