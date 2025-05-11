@@ -3,6 +3,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>EMoji Weather by OrfeusEife</title>
+	<head>
+    <!-- Dodaj przed innymi skryptami -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 <style>
         :root {
             --primary: #0066cc;
@@ -65,15 +69,16 @@
 
         /* Widgety po prawej stronie */
         .widgets-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 380px;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            z-index: 999;
-        }
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 999;
+    transition: transform 0.3s ease;
+}
 		
 		.widget-icon-container {
     display: inline-flex;
@@ -1371,16 +1376,17 @@
             .container {
                 padding: 1rem;
             }
-			widgets-container {
+			.widgets-container {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        display: flex;
+        top: auto;
+        width: auto;
+        flex-direction: row;
         overflow-x: auto;
         padding: 10px;
         background: var(--glass);
-        z-index: 900;
         height: 150px;
     }
     
@@ -1460,7 +1466,181 @@
 			.mobile-buttons {
         flex-direction: row; /* Upewnij się, że na mobile też są obok siebie */
     }
-        }
+	/* Style wspólne dla wszystkich widgetów */
+.widget {
+    background: var(--glass);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 1rem;
+}
+
+body.night-mode .widget,
+body.dark-mode .widget {
+    background: var(--glass-dark);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.widget-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.widget-content {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.widget-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+}
+
+.widget-label {
+    opacity: 0.8;
+}
+
+.widget-value {
+    font-weight: 500;
+}
+
+.widget-note {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+    padding-top: 0.5rem;
+}
+
+body.night-mode .widget-note {
+    border-top-color: rgba(255,255,255,0.1);
+}
+
+/* Style specyficzne dla poszczególnych widgetów */
+
+
+
+/* Widget Prognoza Opadów */
+#precipitationWidget {
+    border-left: 4px solid var(--secondary);
+}
+
+.precipitation-item {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+body.night-mode .precipitation-item {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Widget Ostrzeżenie Burzowe */
+#stormWidget {
+    border-left: 4px solid var(--warning);
+}
+
+.storm-warning {
+    color: var(--warning);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.storm-alert {
+    background-color: var(--warning-bg);
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin: 0.5rem 0;
+    font-weight: 500;
+}
+
+.storm-recommendations {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+body.night-mode .storm-recommendations {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+
+/* Style dla widgetu opadów */
+.precipitation-chart-container {
+    position: relative;
+    height: 120px;
+    margin-bottom: 10px;
+}
+
+.precipitation-summary {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(0,0,0,0.2);
+}
+
+body.night-mode .precipitation-summary {
+    border-top-color: rgba(255,255,255,0.2);
+}
+.precipitation-period {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+
+body.night-mode .precipitation-period {
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+/* Widget Przymrozki */
+#frostWidget {
+    border-left: 4px solid #3498db;
+}
+
+.frost-warning {
+    color: #3498db;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.frost-alert {
+    background-color: rgba(52, 152, 219, 0.15);
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin: 0.5rem 0;
+    font-weight: 500;
+}
+
+.frost-details {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background-color: rgba(52, 152, 219, 0.05);
+    border-radius: 6px;
+}
+
+.frost-advice {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+}
+
+body.night-mode .frost-advice {
+    border-top-color: rgba(255,255,255,0.1);
+}
+
+/* Widget Temperatura */
+.temperature-chart-container {
+    position: relative;
+    height: 150px;
+    margin-bottom: 5px;
+}
     </style>
 </head>
 <body>
@@ -1534,7 +1714,36 @@
             </div>
         </div>
 
-        <div class="widget" id="alertsWidget">
+        
+	   
+
+<div class="widget" id="precipitationWidget">
+        <div class="widget-header">
+            <span>🌧️</span>
+            <span>Prognoza opadów</span>
+        </div>
+        <div class="widget-content">
+            <div class="precipitation-chart-container">
+                <canvas id="precipitationChart"></canvas>
+            </div>
+            <div class="precipitation-summary" id="precipitationSummary">
+                Ładowanie danych o opadach...
+            </div>
+        </div>
+    </div>
+<div class="widget" id="temperatureWidget">
+    <div class="widget-header">
+        <span>🌡️</span>
+        <span>Prognoza Temperatury</span>
+    </div>
+    <div class="widget-content">
+        <div class="temperature-chart-container">
+            <canvas id="temperatureChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="widget" id="alertsWidget">
             <div class="widget-header">
                 <span>⚠️</span>
                 <span>Ostrzeżenia</span>
@@ -1542,8 +1751,30 @@
             <div class="widget-content" id="widgetAlerts">
                 Brak aktywnych ostrzeżeń
             </div>
+		
+       </div>
+
+<div class="widget" id="stormWidget">
+    <div class="widget-header">
+        <span>⚡</span>
+        <span>Ostrzeżenie burzowe</span>
+    </div>
+    <div class="widget-content" id="stormContent">
+        Brak burz w prognozie
+    </div>
+</div>
+<div class="widget" id="frostWidget">
+        <div class="widget-header">
+            <span>❄️</span>
+            <span>Ostrzeżenie o przymrozkach</span>
+        </div>
+        <div class="widget-content" id="frostContent">
+            Ładowanie danych o przymrozkach...
         </div>
     </div>
+</div>
+	
+	
     <div class="container">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
             <h1 style="margin: 0;">EMoji Weather by OrfeusEife</h1>
@@ -2055,138 +2286,7 @@ function translateWeatherCondition(code, isDay) {
     return isDay ? translation.day : translation.night;
 }
 		
-async function fetchTvpWarnings() {
-    try {
-        // Linki do komunikatów w formacie XML
-        const meteoUrl = 'https://komunikaty.tvp.pl/komunikaty/wszystkie/meteorologiczne/0?_format=xml';
-        const hydroUrl = 'https://komunikaty.tvp.pl/komunikaty/wszystkie/hydrologiczne/0?_format=xml';
-        
-        // Pobieramy oba typy ostrzeżeń równolegle
-        const [meteoResponse, hydroResponse] = await Promise.all([
-            fetch(meteoUrl, { headers: { 'Accept': 'application/xml' } }),
-            fetch(hydroUrl, { headers: { 'Accept': 'application/xml' } })
-        ]);
-        
-        if (!meteoResponse.ok) throw new Error('Błąd pobierania ostrzeżeń meteorologicznych');
-        if (!hydroResponse.ok) throw new Error('Błąd pobierania ostrzeżeń hydrologicznych');
-        
-        const meteoXml = await meteoResponse.text();
-        const hydroXml = await hydroResponse.text();
-        
-        const parser = new DOMParser();
-        const meteoDoc = parser.parseFromString(meteoXml, "text/xml");
-        const hydroDoc = parser.parseFromString(hydroXml, "text/xml");
-        
-        // Parsujemy oba typy ostrzeżeń
-        const meteoWarnings = parseTvpXml(meteoDoc, 'meteo');
-        const hydroWarnings = parseTvpXml(hydroDoc, 'hydro');
-        
-        // Łączymy i zwracamy wyniki
-        return [...meteoWarnings, ...hydroWarnings];
-    } catch (error) {
-        console.error('Błąd pobierania ostrzeżeń TVP:', error);
-        return [];
-    }
-}
 
-function parseTvpXml(xmlDoc, type = 'meteo') {
-    const newsItems = xmlDoc.getElementsByTagName('news');
-    const warnings = [];
-    
-    for (let item of newsItems) {
-        try {
-            const title = item.getElementsByTagName('title')[0]?.textContent || '';
-            const shortcut = item.getElementsByTagName('shortcut')[0]?.textContent || '';
-            const content = item.getElementsByTagName('content')[0]?.textContent || '';
-            const validFrom = item.getElementsByTagName('valid_from')[0]?.textContent || '';
-            const validTo = item.getElementsByTagName('valid_to')[0]?.textContent || '';
-            const rsoAlarm = parseInt(item.getElementsByTagName('rso_alarm')[0]?.textContent || '0');
-            const link = `https://komunikaty.tvp.pl/komunikaty/${type === 'hydro' ? 'hydrologiczne' : 'meteorologiczne'}`;
-            
-            // Określamy ważność ostrzeżenia na podstawie rso_alarm
-            let severity = 'yellow';
-            let emoji = '⚠️';
-            
-            if (type === 'hydro') {
-                severity = 'red';
-                emoji = '🌊';
-            } else {
-                if (rsoAlarm >= 2) {
-                    severity = 'red';
-                    emoji = '🔴';
-                } else if (rsoAlarm === 1) {
-                    severity = 'orange';
-                    emoji = '🟠';
-                }
-                
-                // Dodatkowe określenie typu na podstawie tytułu
-                if (title.includes('burz') || title.includes('Burz')) {
-                    emoji = '⛈️';
-                    severity = 'orange';
-                } else if (title.includes('mróz') || title.includes('przymrozki')) {
-                    emoji = '❄️';
-                } else if (title.includes('upał')) {
-                    emoji = '🔥';
-                    severity = 'orange';
-                } else if (title.includes('wiatr')) {
-                    emoji = '💨';
-                }
-            }
-            
-            warnings.push({
-                headline: title,
-                description: `${shortcut}\n\n${content}`,
-                effective: validFrom,
-                expires: validTo,
-                severity: severity,
-                type: type,
-                emoji: emoji,
-                source: 'IMGW via TVP',
-                link: link,
-                rsoAlarm: rsoAlarm
-            });
-        } catch (e) {
-            console.error('Błąd parsowania ostrzeżenia TVP:', e);
-        }
-    }
-    
-    return warnings;
-}
-
-async function renderTvpWarning(alert) {
-    const severity = alert.severity || 'yellow';
-    const effectiveDate = alert.effective ? new Date(alert.effective).toLocaleString('pl-PL') : 'Nieznana';
-    const expiresDate = alert.expires ? new Date(alert.expires).toLocaleString('pl-PL') : 'Nieznana';
-    
-    // Dodatkowe informacje o stopniu zagrożenia
-    let alarmLevel = '';
-    if (alert.rsoAlarm > 0) {
-        alarmLevel = `<div class="warning-severity">Stopień zagrożenia: ${alert.rsoAlarm}</div>`;
-    }
-    
-    return `
-        <div class="warning-card ${severity} ${alert.type === 'hydro' ? 'hydro' : ''}">
-            <div class="warning-header">
-                <span class="warning-icon">${alert.emoji}</span>
-                <div>
-                    <div class="warning-title">${alert.headline}</div>
-                    ${alarmLevel}
-                </div>
-            </div>
-            <div class="warning-details">
-                ${alert.description.replace(/\n/g, '<br>')}
-                ${alert.link ? `<br><a href="${alert.link}" target="_blank" style="color: var(--primary);">Czytaj więcej na tvp.pl</a>` : ''}
-            </div>
-            <div class="warning-time">
-                <strong>Ważne od:</strong> ${effectiveDate}<br>
-                <strong>Ważne do:</strong> ${expiresDate}
-            </div>
-            <div class="warning-footer" style="font-size:0.7em; margin-top:0.5rem; opacity:0.7;">
-                Ostrzeżenie ${alert.type === 'hydro' ? 'hydrologiczne' : 'meteorologiczne'} IMGW-PIB przekazane przez TVP
-            </div>
-        </div>
-    `;
-}
 
         function detectWarningLanguage(text) {
             if (!text) return 'en';
@@ -2491,24 +2591,7 @@ async function renderWarning(alert) {
     }
 	
 	
-	// Specjalna obsługa ostrzeżeń TVP
-    if (alert.source === 'TVP') {
-        return `
-            <div class="warning-card ${alert.severity}">
-                <div class="warning-header">
-                    <span class="warning-icon">${alert.emoji}</span>
-                    <span class="warning-title">${alert.headline} (IMGW via TVP)</span>
-                </div>
-                <div class="warning-details">
-                    ${alert.description.replace(/\n/g, '<br>')}
-                    ${alert.link ? `<br><a href="${alert.link}" target="_blank" style="color: var(--primary);">Czytaj więcej na tvp.pl</a>` : ''}
-                </div>
-                <div class="warning-time">
-                    <strong>Opublikowano:</strong> ${new Date(alert.effective).toLocaleString('pl-PL')}
-                </div>
-            </div>
-        `;
-    }
+	
 
 return `
         <div class="warning-card ${severity}">
@@ -2565,6 +2648,270 @@ return `
                        [1087, 1273, 1276, 1279, 1282].includes(hour.condition?.code);
             });
         }
+		
+		// Funkcja do aktualizacji ostrzeżenia o przymrozkach
+// Zaktualizowana funkcja do aktualizacji widgetu przymrozków
+function updateFrostWidget(hourlyForecast, alerts) {
+    const container = document.getElementById('frostContent');
+    
+    // Sprawdź alerty IMGW o niskiej temperaturze
+    const frostAlerts = alerts?.alert?.filter(alert => {
+        const headline = alert.headline?.toLowerCase() || '';
+        const description = alert.description?.toLowerCase() || '';
+        const event = alert.event?.toLowerCase() || '';
+        
+        return headline.includes('przymrozk') || 
+               headline.includes('mróz') ||
+               headline.includes('niską temperaturą') ||
+               description.includes('przymrozk') ||
+               description.includes('mróz') ||
+               description.includes('niską temperaturą') ||
+               event.includes('frost') ||
+               event.includes('freeze') ||
+               event.includes('low temperature');
+    }) || [];
+
+    // Sprawdź prognozę godzinową pod kątem temperatur <= 2°C
+    const now = new Date();
+    const frostHours = [];
+    
+    if (hourlyForecast) {
+        hourlyForecast.forEach(hour => {
+            const hourTime = new Date(hour.time);
+            if (hourTime > now && hour.temp_c <= 2) {
+                frostHours.push({
+                    time: hourTime,
+                    temp: hour.temp_c
+                });
+            }
+        });
+    }
+
+    // Jeśli są alerty lub prognozowane przymrozki
+    if (frostAlerts.length > 0 || frostHours.length > 0) {
+        let html = '<div class="frost-warning">❄️ Aktywne ostrzeżenie o przymrozkach</div>';
+        
+        // Dodaj szczegóły z alertów IMGW
+        frostAlerts.forEach(alert => {
+            const effective = alert.effective ? new Date(alert.effective).toLocaleString('pl-PL', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }) : 'brak danych';
+            
+            const expires = alert.expires ? new Date(alert.expires).toLocaleString('pl-PL', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }) : 'brak danych';
+            
+            const severity = alert.severity ? translateSeverity(alert.severity) : 'nieokreślony';
+            
+            html += `
+                <div class="frost-alert">
+                    <strong>${alert.headline || 'Ostrzeżenie IMGW'}</strong><br>
+                    <span style="font-size:0.9em;">Stopień: ${severity}</span><br>
+                    <span style="font-size:0.9em;">⏰ Obowiązuje: ${effective} - ${expires}</span>
+                </div>
+            `;
+        });
+
+        // Dodaj informacje z prognozy godzinowej
+        if (frostHours.length > 0) {
+            const minTemp = Math.min(...frostHours.map(h => h.temp)).toFixed(1);
+            const periods = getFrostPeriods(frostHours);
+            
+            html += `
+                <div class="frost-details">
+                    <strong>Prognoza:</strong><br>
+                    Najniższa temperatura: ${minTemp}°C<br>
+                    Spodziewane okresy: ${periods.join(', ')}
+                </div>
+            `;
+        }
+
+        // Dodaj porady
+        html += `
+            <div class="frost-advice">
+                <strong>Zalecenia:</strong><br>
+                - Osłoń rośliny wrażliwe na mróz<br>
+                - Zabezpiecz instalacje wodne przed zamarznięciem<br>
+                - Rozważ cieplejsze ubranie w godzinach porannych<br>
+                - Sprawdź prognozę przed wyjściem
+            </div>
+        `;
+
+        container.innerHTML = html;
+    } else {
+        container.innerHTML = 'Brak aktywnych ostrzeżeń o przymrozkach';
+    }
+}
+
+// Funkcja pomocnicza do tłumaczenia stopnia zagrożenia
+function translateSeverity(severity) {
+    const translations = {
+        'minor': 'niskie',
+        'moderate': 'umiarkowane',
+        'severe': 'silne',
+        'extreme': 'ekstremalne',
+        'major': 'poważne'
+    };
+    return translations[severity.toLowerCase()] || severity;
+}
+
+// Funkcja określająca okresy przymrozków
+function getFrostPeriods(frostHours) {
+    const periods = [];
+    const now = new Date();
+    
+    // Grupuj przymrozki w okresy
+    let currentPeriod = null;
+    
+    frostHours.forEach(hour => {
+        const hourTime = new Date(hour.time);
+        const hourOfDay = hourTime.getHours();
+        
+        // Określ porę dnia
+        let period;
+        if (hourOfDay >= 22 || hourOfDay < 5) period = 'noc';
+        else if (hourOfDay >= 5 && hourOfDay < 10) period = 'ranek';
+        else if (hourOfDay >= 10 && hourOfDay < 18) period = 'dzień';
+        else period = 'wieczór';
+        
+        // Sprawdź czy to nowy okres
+        if (!currentPeriod || currentPeriod.period !== period) {
+            if (currentPeriod) periods.push(currentPeriod);
+            currentPeriod = {
+                period: period,
+                start: hourTime,
+                end: hourTime,
+                minTemp: hour.temp_c
+            };
+        } else {
+            currentPeriod.end = hourTime;
+            currentPeriod.minTemp = Math.min(currentPeriod.minTemp, hour.temp_c);
+        }
+    });
+    
+    if (currentPeriod) periods.push(currentPeriod);
+    
+    // Formatuj okresy do wyświetlenia
+    return periods.map(p => {
+        const startTime = p.start.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
+        const endTime = p.end.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
+        return `${p.period} (${startTime}-${endTime}, min ${p.minTemp.toFixed(1)}°C)`;
+    });
+}
+
+// Funkcja pomocnicza do określania okresu przymrozków
+function getTimePeriod(hours) {
+    const periods = {
+        night: { name: 'w nocy', hours: [20, 21, 22, 23, 0, 1, 2, 3, 4, 5] },
+        morning: { name: 'nad ranem', hours: [6, 7, 8, 9] },
+        day: { name: 'w ciągu dnia', hours: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }
+    };
+
+    let activePeriods = [];
+    
+    // Sprawdź które okresy mają przymrozki
+    for (const [period, data] of Object.entries(periods)) {
+        const hasFrost = hours.some(h => 
+            data.hours.includes(new Date(h.time).getHours())
+        );
+        if (hasFrost) activePeriods.push(data.name);
+    }
+
+    return activePeriods.join(', ');
+}
+
+// Funkcja do rysowania wykresu temperatury
+let temperatureChart = null;
+
+function renderTemperatureChart(hourlyForecast) {
+    const ctx = document.getElementById('temperatureChart').getContext('2d');
+    const now = new Date();
+    const next24Hours = hourlyForecast
+        .filter(hour => new Date(hour.time) >= now)
+        .slice(0, 24);
+    
+    const labels = next24Hours.map(hour => 
+        new Date(hour.time).toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit', hour12: false})
+    );
+    const temps = next24Hours.map(hour => hour.temp_c);
+    
+    if (temperatureChart) temperatureChart.destroy();
+    
+    temperatureChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Temperatura (°C)',
+                data: temps,
+                borderColor: '#e74c3c',
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { title: { display: true, text: '°C' } },
+                x: { grid: { display: false } }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.parsed.y}°C`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+		
+		
+		
+		// Obsługa przewijania widgetów
+function handleWidgetScroll() {
+    const widgetsContainer = document.querySelector('.widgets-container');
+    const container = document.querySelector('.container');
+    
+    if (!widgetsContainer || !container) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const scrollPosition = window.scrollY;
+    const containerTop = containerRect.top + scrollPosition;
+    const containerBottom = containerTop + containerRect.height;
+
+    if (scrollPosition < containerTop) {
+        // Przed kontenerem - widgety na górze
+        widgetsContainer.style.position = 'absolute';
+        widgetsContainer.style.top = '20px';
+        widgetsContainer.style.bottom = 'auto';
+    } else if (scrollPosition + window.innerHeight > containerBottom) {
+        // Po kontenerze - widgety na dole
+        widgetsContainer.style.position = 'absolute';
+        widgetsContainer.style.top = 'auto';
+        widgetsContainer.style.bottom = '20px';
+    } else {
+        // W trakcie przewijania kontenera - widgety przyklejone
+        widgetsContainer.style.position = 'fixed';
+        widgetsContainer.style.top = '20px';
+        widgetsContainer.style.bottom = 'auto';
+    }
+}
+
 		
 		function toggleWidgets() {
     const container = document.querySelector('.widgets-container');
@@ -3094,6 +3441,8 @@ function toggleThemePanel() {
             setTheme(THEMES[nextIndex].value);
         }
 		
+		
+		
 		// Funkcje do aktualizacji widgetów
         async function updateCurrentWeatherWidget(data) {
     if (!data) return;
@@ -3195,7 +3544,250 @@ function toggleThemePanel() {
                 document.getElementById('moonPhaseIcon').textContent = phaseIcon;
             }
         }
+		
+		
 
+// Ulepszona funkcja dla widgetu opadów
+function updatePrecipitationWidget(hourlyForecast) {
+    const summary = document.getElementById('precipitationSummary');
+    
+    if (!hourlyForecast || hourlyForecast.length === 0) {
+        summary.innerHTML = 'Brak danych o opadach';
+        return;
+    }
+
+    const now = new Date();
+    const next24Hours = hourlyForecast
+        .filter(hour => new Date(hour.time) >= now)
+        .slice(0, 24);
+
+    // Sprawdź czy są znaczące opady
+    const hasSignificantPrecip = next24Hours.some(hour => 
+        hour.precip_mm > 0.5 || hour.chance_of_rain > 30 || hour.chance_of_snow > 30
+    );
+
+    if (!hasSignificantPrecip) {
+        summary.innerHTML = 'Brak znaczących opadów w najbliższych 24 godzinach';
+        return;
+    }
+
+    // Jeśli są opady, wygeneruj wykres i szczegóły
+    renderPrecipitationChart(hourlyForecast);
+}
+
+// Ulepszona funkcja dla widgetu burzowego
+function updateStormWidget(hourlyForecast, alerts) {
+    const container = document.getElementById('stormContent');
+    container.innerHTML = 'Brak burz w prognozie';
+    
+    if (!hourlyForecast || hourlyForecast.length === 0) return;
+
+    const now = new Date();
+    let stormPeriods = [];
+    let hasActiveAlert = false;
+
+    // Sprawdź alerty IMGW
+    if (alerts && alerts.alert) {
+        hasActiveAlert = alerts.alert.some(alert => 
+            alert.headline.toLowerCase().includes('burz') || 
+            alert.event.toLowerCase().includes('storm')
+        );
+    }
+
+    // Znajdź okresy burzowe w prognozie
+    hourlyForecast.forEach(hour => {
+        const hourTime = new Date(hour.time);
+        const isStormHour = hour.condition.text.toLowerCase().includes('burz') || 
+                          [1087, 1273, 1276, 1279, 1282].includes(hour.condition.code);
+        
+        if (isStormHour && hourTime > now) {
+            stormPeriods.push(hourTime);
+        }
+    });
+
+    if (stormPeriods.length > 0 || hasActiveAlert) {
+        let html = '<div class="storm-warning">📢 prognozowane są burze 🌩️</div>';
+        
+        if (stormPeriods.length > 0) {
+            const startTime = stormPeriods[0].toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
+            const endTime = stormPeriods[stormPeriods.length-1].toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
+            
+            // Określ stopień zagrożenia
+            let severity = 'niski';
+            const maxWind = Math.max(...hourlyForecast
+                .filter(h => stormPeriods.some(s => s.getTime() === new Date(h.time).getTime()))
+                .map(h => h.wind_kph)
+            );
+            
+            if (maxWind > 50) severity = 'wysoki';
+            else if (maxWind > 30) severity = 'umiarkowany';
+
+            html += `
+                <div style="margin: 0.5rem 0;">
+                    Burze możliwe w godzinach ${startTime}-${endTime}<br>
+                    Stopień zagrożenia: ${severity}
+                </div>
+            `;
+        }
+
+        if (hasActiveAlert) {
+            html += `<div style="margin: 0.5rem 0; font-weight: 600;">⚠️ Aktywne ostrzeżenie  IMGW, Severe-Weather, MeteoAlarm, NWS!!! Sprawdź szczegóły w sekcji "ostrzeżenia pogodowe"</div>`;
+        }
+
+        html += `
+            <div style="font-size: 0.8rem; margin-top: 0.5rem;">
+                🛡️ Zalecenia: zamknij okna, zabezpiecz przedmioty na balkonie, unikaj otwartej przestrzeni.
+            </div>
+        `;
+
+        container.innerHTML = html;
+    }
+}
+let precipitationChart = null;
+
+function renderPrecipitationChart(hourlyForecast) {
+    const ctx = document.getElementById('precipitationChart').getContext('2d');
+    const now = new Date();
+    const next24Hours = hourlyForecast
+        .filter(hour => new Date(hour.time) >= now)
+        .slice(0, 24);
+    
+    // Przygotuj dane
+    const labels = next24Hours.map(hour => 
+        new Date(hour.time).toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit', hour12: false})
+    );
+    
+    const data = next24Hours.map(hour => hour.precip_mm);
+    const precipTypes = next24Hours.map(hour => {
+        if (hour.chance_of_snow > hour.chance_of_rain) return 'śnieg';
+        if (hour.chance_of_snow > 0 && hour.chance_of_rain > 0) return 'deszcz ze śniegiem';
+        if (hour.chance_of_rain > 0) return 'deszcz';
+        return 'brak';
+    });
+
+    // Grupuj okresy opadów
+    let precipitationPeriods = [];
+    let currentPeriod = null;
+
+    next24Hours.forEach((hour, index) => {
+        const precipType = hour.chance_of_snow > hour.chance_of_rain ? 'śnieg' : 'deszcz';
+        const precipIntensity = getPrecipitationIntensity(hour.precip_mm, precipType);
+        
+        if (precipIntensity !== 'brak') {
+            if (!currentPeriod || 
+                currentPeriod.type !== precipType || 
+                currentPeriod.intensity !== precipIntensity) {
+                if (currentPeriod) precipitationPeriods.push(currentPeriod);
+                currentPeriod = {
+                    start: index,
+                    end: index,
+                    type: precipType,
+                    intensity: precipIntensity
+                };
+            } else {
+                currentPeriod.end = index;
+            }
+        } else if (currentPeriod) {
+            precipitationPeriods.push(currentPeriod);
+            currentPeriod = null;
+        }
+    });
+
+    if (currentPeriod) precipitationPeriods.push(currentPeriod);
+
+    // Aktualizuj podsumowanie
+    updatePrecipitationSummary(precipitationPeriods, labels);
+
+    // Utwórz wykres
+    if (precipitationChart) precipitationChart.destroy();
+    
+    precipitationChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Opady (mm)',
+                data: data,
+                backgroundColor: precipTypes.map(type => {
+                    if (type === 'śnieg') return '#a0d8f3';
+                    if (type === 'deszcz ze śniegiem') return '#7db1d5';
+                    return '#3498db';
+                }),
+                borderColor: '#2980b9',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'mm' } },
+                x: { grid: { display: false } }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const hour = next24Hours[context.dataIndex];
+                            const type = hour.chance_of_snow > hour.chance_of_rain ? 'śnieg' : 'deszcz';
+                            return [
+                                `Opad: ${context.raw} mm`,
+                                `Typ: ${precipTypes[context.dataIndex]}`,
+                                `Intensywność: ${getPrecipitationIntensity(hour.precip_mm, type)}`
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function getPrecipitationIntensity(amount, type) {
+    if (type === 'śnieg') {
+        if (amount < 0.5) return 'słabe opady śniegu';
+        if (amount < 2) return 'umiarkowany śnieg';
+        return 'intensywny śnieg';
+    } else {
+        if (amount < 1) return 'przelotny deszcz';
+        if (amount < 2) return 'słaby deszcz';
+        if (amount < 5) return 'deszcz';
+        if (amount < 10) return 'umiarkowany deszcz';
+        return 'ulewa';
+    }
+}
+
+function updatePrecipitationSummary(periods, labels) {
+    const summary = document.getElementById('precipitationSummary');
+    
+    if (periods.length === 0) {
+        summary.innerHTML = 'Brak znaczących opadów w najbliższych 24 godzinach';
+        return;
+    }
+    
+    let html = periods.map(period => {
+        const startTime = labels[period.start];
+        const endTime = labels[period.end];
+        return `
+            <div class="precipitation-period">
+                <strong>${formatPrecipType(period.type)}</strong> (${period.intensity}): 
+                ${startTime} - ${endTime}
+            </div>
+        `;
+    }).join('');
+    
+    summary.innerHTML = html;
+}
+
+function formatPrecipType(type) {
+    const types = {
+        'deszcz': 'Deszcz',
+        'śnieg': 'Śnieg',
+        'deszcz ze śniegiem': 'Deszcz ze śniegiem'
+    };
+    return types[type] || type;
+}
         // W funkcji updateAlertsWidget() zmień na:
 function updateAlertsWidget(alerts) {
     const alertsContainer = document.getElementById('widgetAlerts');
@@ -3284,6 +3876,16 @@ function updateAlertsWidget(alerts) {
                     setThemeBasedOnTime(sunrise, sunset, location.tz_id);
                 }
             }
+			
+			
+    
+     if (data.forecast?.forecastday?.[0]?.hour) {
+         renderPrecipitationChart(data.forecast.forecastday[0].hour);
+        updateStormWidget(data.forecast.forecastday[0].hour, data.alerts);
+        updateFrostWidget(data.forecast.forecastday[0].hour, data.alerts);
+		updatePrecipitationWidget(data.forecast.forecastday[0].hour);
+        renderTemperatureChart(data.forecast.forecastday[0].hour);
+    }
 
             if (current.air_quality) {
                 const aqi = current.air_quality['us-epa-index'] || 0;
@@ -3556,7 +4158,9 @@ if (data.alerts) {
             const savedTheme = localStorage.getItem('weatherAppTheme');
             if (savedTheme) {
                 setTheme(savedTheme);
+				
             }
+			
 
             
             // Create theme selector
@@ -3564,6 +4168,7 @@ if (data.alerts) {
             
             // Set up theme toggle
             weatherElements.themeToggle.addEventListener('click', toggleTheme);
+			
 			
 			function initWarningCards() {
     document.addEventListener('click', function(e) {
