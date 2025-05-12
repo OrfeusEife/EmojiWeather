@@ -98,34 +98,132 @@
     height: 100%;
     object-fit: contain;
 }
+.moon-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.moon-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.moon-phase-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.moon-phase-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.moon-times {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+}
+
+.moon-time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.moon-time span:first-child {
+    opacity: 0.7;
+    margin-bottom: 0.2rem;
+}
+
+.sun-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+	height:auto;
+    padding: 10px;
+    background: linear-gradient(135deg, #87CEEB, #1E90FF);
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.sun-timeline {
+    height: 30px;
+    background: linear-gradient(to right, #000428, #004e92, #000428);
+    border-radius: 15px;
+    position: relative;
+    margin: 20px 0;
+}
+
+.sun-progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, #FF8C00, #FFD700);
+    border-radius: 15px;
+    transition: width 0.5s;
+}
+
+.sun-icon {
+    position: absolute;
+    top: -15px;
+    left: 0%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    transition: left 0.5s;
+}
+
+.time-marks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.day-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
 
         .widget {
-            background: var(--glass);
-            backdrop-filter: blur(12px) saturate(180%);
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: var(--transition);
-        }
+    background: var(--glass);
+    backdrop-filter: blur(12px) saturate(180%);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+    color: var(--text-color-day);
+}
 
-        body.night-mode .widget,
-        body.dark-mode .widget,
-        body.galaxy-mode .widget,
-        body.space-mode .widget {
-            background: var(--glass-dark);
-            box-shadow: var(--shadow-dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+body.night-mode .widget,
+body.dark-mode .widget,
+body.galaxy-mode .widget,
+body.space-mode .widget {
+    background: var(--glass-dark);
+    box-shadow: var(--shadow-dark);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-color-night);
+}
 
         .widget-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--primary); /* Domyślny kolor dla trybu jasnego */
+}
+
+body.night-mode .widget-header,
+body.dark-mode .widget-header,
+body.galaxy-mode .widget-header,
+body.space-mode .widget-header,
+#body.rainy-day-mode .widget-header {
+    color: white !important; /* Biały kolor dla trybów ciemnych */
+}
 
         .widget-content {
             font-size: 0.9rem;
@@ -1644,6 +1742,8 @@ body.night-mode .frost-advice {
     height: 150px;
     margin-bottom: 5px;
 }
+
+
     </style>
 </head>
 <body>
@@ -1674,48 +1774,40 @@ body.night-mode .frost-advice {
             </div>
         </div>
 
-        <div class="widget" id="sunWidget">
-            <div class="widget-header">
-                <span>☀️</span>
-                <span>Słońce</span>
-            </div>
-            <div class="widget-content">
-                <div class="widget-row">
-                    <span class="widget-label">Wschód:</span>
-                    <span class="widget-value" id="widgetSunrise">-</span>
-                </div>
-                <div class="widget-row">
-                    <span class="widget-label">Zachód:</span>
-                    <span class="widget-value" id="widgetSunset">-</span>
-                </div>
-                <div class="widget-row">
-                    <span class="widget-label">Długość dnia:</span>
-                    <span class="widget-value" id="widgetDayLength">-</span>
-                </div>
-            </div>
+        <div class="sun-widget">
+                <span>☀️ Długość dnia</span>
+    <div class="sun-timeline">
+       <div class="sun-progress" id="sunPosition"></div>
+        <div class="sun-icon">☀️</div>
+        <div class="time-marks">
+            <span class="sunrise-mark"><span class="time-label">Wschód:</span> <span id="widgetSunrise">-</span></span>
+            <span class="sunset-mark"><span class="time-label">Zachód:</span> <span id="widgetSunset">-</span></span>
         </div>
+    </div>
+    <div class="day-info">
+        <span id="widgetDayLength">-</span>
+        <span id="dayDifference">-</span>
+    </div>
+</div>
 
-        <div class="widget" id="moonWidget">
-            <div class="widget-header">
-                <span>🌙</span>
-                <span>Księżyc</span>
-            </div>
-            <div class="widget-content">
-                <div class="moon-phase-icon" id="moonPhaseIcon">🌑</div>
-                <div class="widget-row">
-                    <span class="widget-label">Faza:</span>
-                    <span class="widget-value" id="moonPhase">-</span>
-                </div>
-                <div class="widget-row">
-                    <span class="widget-label">Wschód:</span>
-                    <span class="widget-value" id="moonrise">-</span>
-                </div>
-                <div class="widget-row">
-                    <span class="widget-label">Zachód:</span>
-                    <span class="widget-value" id="moonset">-</span>
-                </div>
-            </div>
+        <div class="widget moon-widget">
+		<span>Faza Księżyca 🌙</span>
+    <div class="moon-header">
+        <div class="moon-phase-icon" id="moonPhaseIcon"></div>
+        <div class="moon-phase-name" id="moonPhase"></div>
+    </div>
+    <div class="moon-times">
+        <div class="moon-time">
+            <span>Wschód</span>
+            <span id="moonrise">-</span>
         </div>
+        <div class="moon-time">
+            <span>Zachód</span>
+            <span id="moonset">-</span>
+        </div>
+    </div>
+</div>
+
 
         
 	   
@@ -3516,27 +3608,86 @@ function toggleThemePanel() {
     }
 }
 
-        function updateSunWidget(astroData) {
-            if (!astroData) return;
+      function updateSunWidget(astroData, shortestDay, longestDay) {
+    if (!astroData || !astroData.sunrise || !astroData.sunset) return;
+    
+    const sunriseTime = parseSunTime(astroData.sunrise) || '-';
+    const sunsetTime = parseSunTime(astroData.sunset) || '-';
+    
+    document.getElementById('widgetSunrise').textContent = sunriseTime;
+    document.getElementById('widgetSunset').textContent = sunsetTime;
+    
+    const sunrise = parseSunTime(astroData.sunrise);
+    const sunset = parseSunTime(astroData.sunset);
+    
+    if (sunrise && sunset) {
+        // Oblicz długość dnia
+        const [sunriseH, sunriseM] = sunrise.split(':').map(Number);
+        const [sunsetH, sunsetM] = sunset.split(':').map(Number);
+        const dayMinutes = (sunsetH * 60 + sunsetM) - (sunriseH * 60 + sunriseM);
+        const hours = Math.floor(dayMinutes / 60);
+        const minutes = dayMinutes % 60;
+        document.getElementById('widgetDayLength').textContent = `Długość dnia: ${hours}h ${minutes}m`;
+        
+        // Oblicz pozycję słońca na osi czasu
+        const now = new Date();
+        const nowMinutes = now.getHours() * 60 + now.getMinutes();
+        const sunriseMinutes = sunriseH * 60 + sunriseM;
+        const sunsetMinutes = sunsetH * 60 + sunsetM;
+        
+        let sunPosition = 0;
+        if (nowMinutes >= sunriseMinutes && nowMinutes <= sunsetMinutes) {
+            sunPosition = ((nowMinutes - sunriseMinutes) / (sunsetMinutes - sunriseMinutes)) * 100;
+        }
+        
+        document.querySelector('.sun-progress').style.width = `${sunPosition}%`;
+        document.querySelector('.sun-icon').style.left = `${sunPosition}%`;
+        
+        // Oblicz różnicę względem najkrótszego/najdłuższego dnia
+        if (shortestDay && longestDay && shortestDay.h !== undefined && longestDay.h !== undefined) {
+            const shortestMinutes = shortestDay.h * 60 + shortestDay.m;
+            const longestMinutes = longestDay.h * 60 + longestDay.m;
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
             
-            document.getElementById('widgetSunrise').textContent = parseSunTime(astroData.sunrise) || '-';
-            document.getElementById('widgetSunset').textContent = parseSunTime(astroData.sunset) || '-';
+            // Dokładniejsze daty przesileń
+            const summerSolstice = new Date(currentYear, 5, 21); // 21 czerwca
+            const winterSolstice = new Date(currentYear, 11, 21); // 21 grudnia
             
-            if (astroData.sunrise && astroData.sunset) {
-                const sunrise = parseSunTime(astroData.sunrise);
-                const sunset = parseSunTime(astroData.sunset);
-                
-                if (sunrise && sunset) {
-                    const [sunriseH, sunriseM] = sunrise.split(':').map(Number);
-                    const [sunsetH, sunsetM] = sunset.split(':').map(Number);
-                    
-                    const dayMinutes = (sunsetH * 60 + sunsetM) - (sunriseH * 60 + sunriseM);
-                    const hours = Math.floor(dayMinutes / 60);
-                    const minutes = dayMinutes % 60;
-                    document.getElementById('widgetDayLength').textContent = `${hours}h ${minutes}m`;
+            let differenceText = '';
+            
+            // Sprawdź czy dzisiaj jest przesilenie letnie (z tolerancją +/- 1 dzień)
+            if (Math.abs(currentDate - summerSolstice) <= 86400000) { // 86400000 ms = 1 dzień
+                differenceText = ", najdłuższy dzień w roku! ";
+            } 
+            // Sprawdź czy dzisiaj jest przesilenie zimowe (z tolerancją +/- 1 dzień)
+            else if (Math.abs(currentDate - winterSolstice) <= 86400000) {
+                differenceText = ", najkrótszy dzień w roku! ";
+            } 
+            // Okres od przesilenia zimowego do letniego - dni się wydłużają
+            else if ((currentDate > winterSolstice && currentDate < summerSolstice) || 
+                    (currentDate.getMonth() < 5 || currentDate.getMonth() > 11)) {
+                const diff = dayMinutes - shortestMinutes;
+                if (diff > 0) {
+                    const diffH = Math.floor(diff / 60);
+                    const diffM = diff % 60;
+                    differenceText = `, dłuższy od najkrótszego o ${diffH}h ${diffM}m`;
+                }
+            } 
+            // Okres od przesilenia letniego do zimowego - dni się skracają
+            else {
+                const diff = longestMinutes - dayMinutes;
+                if (diff > 0) {
+                    const diffH = Math.floor(diff / 60);
+                    const diffM = diff % 60;
+                    differenceText = `, krótszy od najdłuższego o ${diffH}h ${diffM}m`;
                 }
             }
+            
+            document.getElementById('dayDifference').textContent = differenceText || "Brak różnicy";
         }
+    }
+}
 
         function updateMoonWidget(astroData) {
             if (!astroData) return;
@@ -3897,8 +4048,19 @@ function updateAlertsWidget(alerts) {
         alertsContainer.appendChild(moreElement);
     }
 }
+function calculateSolsticeTimes(year) {
+    // Uproszczone obliczenia przesileń (dokładne wymagają bardziej złożonych obliczeń)
+    // Przesilenie zimowe ~21 grudnia
+    const winterSolstice = new Date(year, 11, 21);
+    // Przesilenie letnie ~21 czerwca
+    const summerSolstice = new Date(year, 5, 21);
+    
+    return { winterSolstice, summerSolstice };
+}
 
         async function updateUI(data) {
+		
+		
             if (!data || !data.location || !data.current || !data.forecast) {
                 console.error('Nieprawidłowe dane:', data);
                 weatherElements.weatherWarnings.innerHTML = `
@@ -3927,16 +4089,25 @@ function updateAlertsWidget(alerts) {
             await updateCurrentWeatherIcon(current.condition?.code || 1000, isDay);
 
             if (forecast.forecastday?.[0]?.astro) {
-                const sunrise = parseSunTime(forecast.forecastday[0].astro.sunrise);
-                const sunset = parseSunTime(forecast.forecastday[0].astro.sunset);
-                weatherElements.sunriseTime.textContent = sunrise;
-                weatherElements.sunsetTime.textContent = sunset;
-                
-                // Aktualizuj motyw tylko jeśli jest w trybie auto
-                if (themeMode === 'auto') {
-                    setThemeBasedOnTime(sunrise, sunset, location.tz_id);
-                }
+    const sunrise = parseSunTime(forecast.forecastday[0].astro.sunrise);
+    const sunset = parseSunTime(forecast.forecastday[0].astro.sunset);
+    weatherElements.sunriseTime.textContent = sunrise;
+    weatherElements.sunsetTime.textContent = sunset;
+    
+    // Aktualizuj motyw tylko jeśli jest w trybie auto
+    if (themeMode === 'auto') {
+        setThemeBasedOnTime(sunrise, sunset, location.tz_id);
+    }
+
+    // DODAJ TUTAJ NOWY KOD //
+    // Oblicz najkrótszy i najdłuższy dzień w roku
+    const currentYear = new Date().getFullYear();
+    const shortestDay = { h: 7, m: 42 }; // 21 grudnia
+    const longestDay = { h: 16, m: 48 }; // 21 czerwca
+	updateSunWidget(forecast.forecastday[0].astro, shortestDay, longestDay);
             }
+			
+			
 			
 			
     
@@ -3963,6 +4134,7 @@ function updateAlertsWidget(alerts) {
                 // Update AQI color
                 weatherElements.aqiItem.className = `parameter-item aqi-${aqi}`;
             }
+			
 			
         
 
