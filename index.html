@@ -23,6 +23,8 @@
             --shadow-dark: 0 12px 40px rgba(0, 0, 0, 0.4);
             --border-radius: 16px;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+			--alert-bg: #f8f9fa;
+
             
             /* Air quality colors */
             --aqi-1: rgba(0, 228, 0, 0.25);
@@ -36,6 +38,7 @@
             --glow: 0 0 8px rgba(0, 153, 255, 0.5);
             --glow-hover: 0 0 15px rgba(0, 153, 255, 0.8);
         }
+
 
         @font-face {
             font-family: 'Futuristic';
@@ -1377,7 +1380,7 @@
                 padding: 1rem;
             }
 			.widgets-container {
-        position: flex;
+        position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
@@ -2651,21 +2654,16 @@ return `
 		
 		// Funkcja do aktualizacji ostrzeżenia o przymrozkach
 // Zaktualizowana funkcja do aktualizacji widgetu przymrozków
+// Zaktualizowana funkcja do aktualizacji widgetu przymrozków
 function updateFrostWidget(hourlyForecast, alerts) {
     const container = document.getElementById('frostContent');
     if (!container) return;
 
-    // 1. Sprawdź alerty IMGW dotyczące niskich temperatur i przymrozków
     const frostWarnings = checkForFrostWarnings(alerts);
-    
-    // 2. Sprawdź prognozę godzinową pod kątem przymrozków (temp <= 2°C)
     const forecastFrostPeriods = getFrostPeriodsFromForecast(hourlyForecast);
-    
-    // 3. Przygotuj treść widgetu na podstawie zebranych danych
     container.innerHTML = generateFrostWidgetContent(frostWarnings, forecastFrostPeriods);
 }
 
-// Funkcja sprawdzająca alerty IMGW
 function checkForFrostWarnings(alerts) {
     if (!alerts || !alerts.alert) return [];
     
@@ -2676,7 +2674,6 @@ function checkForFrostWarnings(alerts) {
     ];
     
     return alerts.alert.filter(alert => {
-        // Sprawdź czy alert dotyczy niskich temperatur
         const isFrostAlert = frostKeywords.some(keyword => 
             (alert.headline && alert.headline.toLowerCase().includes(keyword)) ||
             (alert.event && alert.event.toLowerCase().includes(keyword))
@@ -2684,7 +2681,6 @@ function checkForFrostWarnings(alerts) {
         
         if (!isFrostAlert) return false;
         
-        // Sprawdź okres obowiązywania alertu
         const start = alert.effective ? new Date(alert.effective) : null;
         const end = alert.expires ? new Date(alert.expires) : null;
         
@@ -2695,7 +2691,28 @@ function checkForFrostWarnings(alerts) {
     });
 }
 
-// Funkcja analizująca prognozę godzinową
+function getTimeOfDay(date) {
+    const hours = date.getHours();
+    if (hours >= 5 && hours < 10) return 'rano';
+    if (hours >= 10 && hours < 12) return 'przedpołudniem';
+    if (hours >= 12 && hours < 18) return 'południem';
+    if (hours >= 18 && hours < 23) return 'wieczorem';
+    return 'w nocy';
+}
+
+function getSeverityLevel(temp) {
+    if (temp > 0 && temp <= 2) {
+        return { level: 'niski', description: 'możliwość wystąpienia lokalnych przymrozków', color: '#3498db' };
+    } else if (temp <= 0 && temp > -2) {
+        return { level: 'umiarkowany', description: 'słabe i lekkie przymrozki', color: '#f39c12' };
+    } else if (temp <= -2 && temp > -4) {
+        return { level: 'silny', description: 'silne przymrozki', color: '#e74c3c' };
+    } else if (temp <= -4) {
+        return { level: 'ekstremalny', description: 'ekstremalne przymrozki (mróz)', color: '#9b59b6' };
+    }
+    return { level: 'brak', description: 'brak przymrozków', color: '#2ecc71' };
+}
+
 function getFrostPeriodsFromForecast(hourlyForecast) {
     if (!hourlyForecast || !hourlyForecast.length) return [];
     
@@ -2715,11 +2732,13 @@ function getFrostPeriodsFromForecast(hourlyForecast) {
                     start: hourTime,
                     end: hourTime,
                     minTemp: hour.temp_c,
-                    conditions: hour.condition?.text || ''
+                    conditions: hour.condition?.text || '',
+                    severity: getSeverityLevel(hour.temp_c)
                 };
             } else {
                 currentPeriod.end = hourTime;
                 currentPeriod.minTemp = Math.min(currentPeriod.minTemp, hour.temp_c);
+                currentPeriod.severity = getSeverityLevel(currentPeriod.minTemp);
             }
         } else if (currentPeriod) {
             frostPeriods.push(currentPeriod);
@@ -2731,24 +2750,17 @@ function getFrostPeriodsFromForecast(hourlyForecast) {
     return frostPeriods;
 }
 
-// Funkcja generująca treść widgetu
 function generateFrostWidgetContent(warnings, forecastPeriods) {
     const now = new Date();
-    
-    // 1. Sprawdź aktywne alerty
     const activeWarnings = warnings.filter(w => w.isActive);
-    
-    // 2. Sprawdź przyszłe alerty
     const futureWarnings = warnings.filter(w => w.isFuture);
     
-    // 3. Przygotuj zawartość HTML
     if (activeWarnings.length > 0 || forecastPeriods.length > 0) {
         let html = '<div class="frost-header" style="color:#d35400; font-weight:bold; margin-bottom:0.5rem;">❄️ AKTYWNE OSTRZEŻENIE O PRZYMROZKACH</div>';
         
-        // Dodaj informacje o alertach
         activeWarnings.forEach(warning => {
             html += `
-                <div class="frost-alert" style="background-color:#f8f9fa; padding:0.5rem; border-radius:0.25rem; margin-bottom:0.5rem;">
+                <div class="frost-alert" style="background-color:var(--alert-bg); padding:0.5rem; border-radius:0.25rem; margin-bottom:0.5rem;">
                     <div style="font-weight:bold;">${warning.headline || 'Ostrzeżenie IMGW'}</div>
                     <div style="font-size:0.9rem; margin-top:0.3rem;">
                         <strong>Okres obowiązywania:</strong><br>
@@ -2762,16 +2774,39 @@ function generateFrostWidgetContent(warnings, forecastPeriods) {
             `;
         });
         
-        // Dodaj informacje o prognozowanych przymrozkach
         if (forecastPeriods.length > 0) {
             html += '<div class="frost-forecast" style="margin-top:0.5rem;">';
             html += '<div style="font-weight:bold;">Prognozowane okresy przymrozków:</div>';
             
+            const groupedPeriods = {};
             forecastPeriods.forEach(period => {
+                const dateStr = period.start.toLocaleDateString('pl-PL');
+                const timeOfDay = getTimeOfDay(period.start);
+                const key = `${dateStr} ${timeOfDay}`;
+                
+                if (!groupedPeriods[key]) {
+                    groupedPeriods[key] = {
+                        date: period.start,
+                        timeOfDay: timeOfDay,
+                        minTemp: period.minTemp,
+                        conditions: period.conditions,
+                        severity: period.severity
+                    };
+                } else {
+                    groupedPeriods[key].minTemp = Math.min(groupedPeriods[key].minTemp, period.minTemp);
+                    groupedPeriods[key].severity = getSeverityLevel(groupedPeriods[key].minTemp);
+                }
+            });
+            
+            Object.values(groupedPeriods).forEach(period => {
+                const dateStr = period.date.toLocaleDateString('pl-PL');
                 html += `
-                    <div style="margin-top:0.3rem; font-size:0.9rem;">
-                        <strong>${formatPeriod(period.start, period.end)}</strong><br>
-                        Minimalna temperatura: ${period.minTemp.toFixed(1)}°C<br>
+                    <div style="margin-top:0.5rem; padding:0.5rem; border-radius:0.25rem; 
+                         background-color:${period.severity.color}20; border-left:3px solid ${period.severity.color};">
+                        <strong>${dateStr} ${period.timeOfDay}</strong><br>
+                        Minimalna temperatura: <strong>${period.minTemp.toFixed(1)}°C</strong><br>
+                        Stopień zagrożenia: <strong style="color:${period.severity.color}">${period.severity.level}</strong><br>
+                        <small>${period.severity.description}</small><br>
                         Warunki: ${period.conditions}
                     </div>
                 `;
@@ -2780,17 +2815,16 @@ function generateFrostWidgetContent(warnings, forecastPeriods) {
             html += '</div>';
         }
         
-        // Dodaj zalecenia
         html += `
-            <div class="frost-advice" style="margin-top:1rem; padding:0.5rem; background-color:#e6f7ff; border-radius:0.25rem;">
+            <div class="frost-advice" style="margin-top:1rem; padding:0.5rem; 
+                 background-color:var(--advice-bg); border-radius:0.25rem; color:var(--text-color);">
                 <div style="font-weight:bold;">Zalecenia:</div>
                 <ul style="margin-top:0.3rem; padding-left:1rem; font-size:0.9rem;">
                     <li>Osłoń rośliny wrażliwe na mróz, agrowłókniną lub słomą</li>
-					<li>Zabezpiecz zwierzęta hodowlane</li>
+                    <li>Zabezpiecz zwierzęta hodowlane</li>
                     <li>Zabezpiecz instalacje wodne przed zamarznięciem</li>
-					<li>Rano załóż ciepłe ubranie</li>
-					<li>Uważaj na śliskie powierzchnie</li>
-                    
+                    <li>Rano załóż ciepłe ubranie</li>
+                    <li>Uważaj na śliskie powierzchnie</li>
                 </ul>
             </div>
         `;
@@ -2815,11 +2849,10 @@ function generateFrostWidgetContent(warnings, forecastPeriods) {
         return html;
     }
     else {
-        return '<div style="text-align:center; padding:0.5rem; color:#7f8c8d;">Brak aktywnych ostrzeżeń o przymrozkach</div>';
+        return '<div style="text-align:center; padding:0.5rem; color:var(--text-secondary);">Brak aktywnych ostrzeżeń o przymrozkach</div>';
     }
 }
 
-// Funkcje pomocnicze do formatowania czasu
 function formatAlertPeriod(startStr, endStr) {
     try {
         const start = startStr ? new Date(startStr) : null;
@@ -2831,13 +2864,6 @@ function formatAlertPeriod(startStr, endStr) {
     } catch (e) {
         return 'Błędny format daty';
     }
-}
-
-function formatPeriod(start, end) {
-    if (start.toDateString() === end.toDateString()) {
-        return `${start.toLocaleDateString('pl-PL')} ${start.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'})} - ${end.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'})}`;
-    }
-    return `${start.toLocaleString('pl-PL')} - ${end.toLocaleString('pl-PL')}`;
 }
 
 // Funkcja do rysowania wykresu temperatury
@@ -3621,9 +3647,21 @@ function updateStormWidget(hourlyForecast, alerts) {
         let html = '<div class="storm-warning">📢 prognozowane są burze 🌩️</div>';
         
         if (stormPeriods.length > 0) {
-            const startTime = stormPeriods[0].toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
-            const endTime = stormPeriods[stormPeriods.length-1].toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
+            // Grupuj godziny burzowe w przedziały czasowe
+            let timeRanges = [];
+            let currentRange = {start: stormPeriods[0], end: stormPeriods[0]};
             
+            for (let i = 1; i < stormPeriods.length; i++) {
+                const diffHours = (stormPeriods[i] - currentRange.end) / (1000 * 60 * 60);
+                if (diffHours <= 2) { // Grupuj jeśli przerwa mniejsza niż 2 godziny
+                    currentRange.end = stormPeriods[i];
+                } else {
+                    timeRanges.push(currentRange);
+                    currentRange = {start: stormPeriods[i], end: stormPeriods[i]};
+                }
+            }
+            timeRanges.push(currentRange);
+
             // Określ stopień zagrożenia
             let severity = 'niski';
             const maxWind = Math.max(...hourlyForecast
@@ -3634,16 +3672,27 @@ function updateStormWidget(hourlyForecast, alerts) {
             if (maxWind > 50) severity = 'wysoki';
             else if (maxWind > 30) severity = 'umiarkowany';
 
-            html += `
-                <div style="margin: 0.5rem 0;">
-                    Burze możliwe w godzinach ${startTime}-${endTime}<br>
-                    Stopień zagrożenia: ${severity}
-                </div>
-            `;
+            // Wygeneruj komunikaty o burzach
+            if (timeRanges.length === 1 && timeRanges[0].start.getTime() === timeRanges[0].end.getTime()) {
+                // Pojedyncza godzina
+                const time = timeRanges[0].start.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
+                html += `<div style="margin: 0.5rem 0;">Burze możliwe o ${time}</div>`;
+            } else {
+                // Przedział czasowy
+                const rangesText = timeRanges.map(range => {
+                    const start = range.start.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
+                    const end = range.end.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
+                    return start === end ? `o ${start}` : `od ${start} do ${end}`;
+                }).join(', ');
+                
+                html += `<div style="margin: 0.5rem 0;">Burze możliwe ${rangesText}</div>`;
+            }
+
+            html += `<div style="margin: 0.5rem 0;">Stopień zagrożenia: ${severity}</div>`;
         }
 
         if (hasActiveAlert) {
-            html += `<div style="margin: 0.5rem 0; font-weight: 600;">⚠️ Aktywne ostrzeżenie  IMGW, Severe-Weather, MeteoAlarm, NWS!!! Sprawdź szczegóły w sekcji "ostrzeżenia pogodowe"</div>`;
+            html += `<div style="margin: 0.5rem 0; font-weight: 600;">⚠️ Aktywne ostrzeżenie IMGW, Severe-Weather, MeteoAlarm, NWS!!! Sprawdź szczegóły w sekcji "ostrzeżenia pogodowe"</div>`;
         }
 
         html += `
