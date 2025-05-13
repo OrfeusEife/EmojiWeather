@@ -139,15 +139,26 @@
 }
 
 .sun-widget {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-	height:auto;
+    background: var(--glass);
+    backdrop-filter: blur(12px) saturate(180%);
+    border-radius: var(--border-radius);
     padding: 1rem;
-    background: linear-gradient(135deg, #87CEEB, #1E90FF);
-    border-radius: 10px;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+    color: var(--text-color-day);
+	gap: 0.5rem;
+	line-height: 24px;
+}
+
+body.night-mode .sun-widget,
+body.dark-mode .sun-widget,
+body.galaxy-mode .sun-widget,
+body.space-mode .sun-widget {
+    background: var(--glass-dark);
+    box-shadow: var(--shadow-dark);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-color-night);
 }
 
 .sun-timeline {
@@ -184,7 +195,7 @@
 .day-info {
     display: flex;
     justify-content: start;
-    font-size: 12px;
+    font-size: 11px;
 }
 
         .widget {
@@ -1785,9 +1796,8 @@ body.night-mode .frost-advice {
         </div>
     </div>
     <div class="day-info">
-        <span id="widgetDayLength">-</span>
-        <span id="dayDifference">-</span>
-    </div>
+    <span id="widgetDayLength">-</span>
+</div>
 </div>
 
         <div class="widget moon-widget">
@@ -2975,6 +2985,17 @@ function renderTemperatureChart(hourlyForecast) {
     
     if (temperatureChart) temperatureChart.destroy();
     
+    // Ustal kolory w zależności od motywu
+    const isDarkMode = document.body.classList.contains('night-mode') || 
+                      document.body.classList.contains('dark-mode') ||
+                      document.body.classList.contains('matrix-mode') ||
+                      document.body.classList.contains('neon-mode') ||
+					  document.body.classList.contains('space-mode') ||
+                      document.body.classList.contains('galaxy-mode');
+    
+    const textColor = isDarkMode ? '#ffffff' : '#666666';
+    const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+    
     temperatureChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -2993,8 +3014,27 @@ function renderTemperatureChart(hourlyForecast) {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: { title: { display: true, text: '°C' } },
-                x: { grid: { display: false } }
+                y: { 
+                    title: { 
+                        display: true, 
+                        text: '°C',
+                        color: textColor
+                    },
+                    ticks: {
+                        color: textColor
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                x: { 
+                    grid: { 
+                        display: false 
+                    },
+                    ticks: {
+                        color: textColor
+                    }
+                }
             },
             plugins: {
                 legend: { display: false },
@@ -3515,23 +3555,31 @@ function toggleThemePanel() {
 				'dzik': 'dzik-mode'
             };
             
-            if (theme !== 'auto' && themeClasses[theme]) {
-                document.body.classList.add(themeClasses[theme]);
-            } else {
-                // Auto mode - sprawdź porę dnia dla aktualnej lokalizacji
-                if (lastWeatherData) {
-                    const sunrise = parseSunTime(lastWeatherData.forecast.forecastday[0].astro.sunrise);
-                    const sunset = parseSunTime(lastWeatherData.forecast.forecastday[0].astro.sunset);
-                    setThemeBasedOnTime(sunrise, sunset, lastWeatherData.location.tz_id);
-                }
-            }
-            
-            localStorage.setItem('weatherAppTheme', theme);
-            
-            // Update toggle button icon
-            const currentTheme = THEMES.find(t => t.value === theme) || THEMES[0];
-            weatherElements.themeToggle.textContent = currentTheme.emoji;
+             if (theme !== 'auto' && themeClasses[theme]) {
+        document.body.classList.add(themeClasses[theme]);
+    } else {
+        // Auto mode - sprawdź porę dnia dla aktualnej lokalizacji
+        if (lastWeatherData) {
+            const sunrise = parseSunTime(lastWeatherData.forecast.forecastday[0].astro.sunrise);
+            const sunset = parseSunTime(lastWeatherData.forecast.forecastday[0].astro.sunset);
+            setThemeBasedOnTime(sunrise, sunset, lastWeatherData.location.tz_id);
         }
+    }
+    
+    localStorage.setItem('weatherAppTheme', theme);
+    
+    // Update toggle button icon
+    const currentTheme = THEMES.find(t => t.value === theme) || THEMES[0];
+    weatherElements.themeToggle.textContent = currentTheme.emoji;
+    
+    // Aktualizuj wykresy jeśli istnieją
+    if (lastWeatherData) {
+        if (lastWeatherData.forecast?.forecastday?.[0]?.hour) {
+            renderPrecipitationChart(lastWeatherData.forecast.forecastday[0].hour);
+            renderTemperatureChart(lastWeatherData.forecast.forecastday[0].hour);
+        }
+    }
+}
 
         function setThemeBasedOnTime(sunrise, sunset, timezone) {
             if (!sunrise || !sunset || !timezone) return;
@@ -3608,7 +3656,7 @@ function toggleThemePanel() {
     }
 }
 
-      function updateSunWidget(astroData, shortestDay, longestDay) {
+     function updateSunWidget(astroData, shortestDay, longestDay) {
     if (!astroData || !astroData.sunrise || !astroData.sunset) return;
     
     const sunriseTime = parseSunTime(astroData.sunrise) || '-';
@@ -3621,15 +3669,50 @@ function toggleThemePanel() {
     const sunset = parseSunTime(astroData.sunset);
     
     if (sunrise && sunset) {
-        // Oblicz długość dnia
         const [sunriseH, sunriseM] = sunrise.split(':').map(Number);
         const [sunsetH, sunsetM] = sunset.split(':').map(Number);
         const dayMinutes = (sunsetH * 60 + sunsetM) - (sunriseH * 60 + sunriseM);
         const hours = Math.floor(dayMinutes / 60);
         const minutes = dayMinutes % 60;
-        document.getElementById('widgetDayLength').textContent = `Długość dnia: ${hours}h ${minutes}m`;
         
-        // Oblicz pozycję słońca na osi czasu
+        // Oblicz różnicę względem najkrótszego/najdłuższego dnia
+        let differenceText = '';
+        if (shortestDay && longestDay && shortestDay.h !== undefined && longestDay.h !== undefined) {
+            const shortestMinutes = shortestDay.h * 60 + shortestDay.m;
+            const longestMinutes = longestDay.h * 60 + longestDay.m;
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            
+            const summerSolstice = new Date(currentYear, 5, 21);
+            const winterSolstice = new Date(currentYear, 11, 21);
+            
+            if (Math.abs(currentDate - summerSolstice) <= 86400000) {
+                differenceText = ", najdłuższy dzień w roku!";
+            } else if (Math.abs(currentDate - winterSolstice) <= 86400000) {
+                differenceText = ", najkrótszy dzień w roku!";
+            } else if ((currentDate > winterSolstice && currentDate < summerSolstice) || 
+                      (currentDate.getMonth() < 5 || currentDate.getMonth() > 11)) {
+                const diff = dayMinutes - shortestMinutes;
+                if (diff > 0) {
+                    const diffH = Math.floor(diff / 60);
+                    const diffM = diff % 60;
+                    differenceText = `, dłuższy od najkrótszego o ${diffH}h ${diffM}m`;
+                }
+            } else {
+                const diff = longestMinutes - dayMinutes;
+                if (diff > 0) {
+                    const diffH = Math.floor(diff / 60);
+                    const diffM = diff % 60;
+                    differenceText = `, krótszy od najdłuższego o ${diffH}h ${diffM}m`;
+                }
+            }
+        }
+        
+        // Wyświetl połączony komunikat
+        document.getElementById('widgetDayLength').textContent = 
+            `Długość dnia: ${hours}h ${minutes}m${differenceText}`;
+        
+        // Oblicz pozycję słońca
         const now = new Date();
         const nowMinutes = now.getHours() * 60 + now.getMinutes();
         const sunriseMinutes = sunriseH * 60 + sunriseM;
@@ -3642,50 +3725,6 @@ function toggleThemePanel() {
         
         document.querySelector('.sun-progress').style.width = `${sunPosition}%`;
         document.querySelector('.sun-icon').style.left = `${sunPosition}%`;
-        
-        // Oblicz różnicę względem najkrótszego/najdłuższego dnia
-        if (shortestDay && longestDay && shortestDay.h !== undefined && longestDay.h !== undefined) {
-            const shortestMinutes = shortestDay.h * 60 + shortestDay.m;
-            const longestMinutes = longestDay.h * 60 + longestDay.m;
-            const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            
-            // Dokładniejsze daty przesileń
-            const summerSolstice = new Date(currentYear, 5, 21); // 21 czerwca
-            const winterSolstice = new Date(currentYear, 11, 21); // 21 grudnia
-            
-            let differenceText = '';
-            
-            // Sprawdź czy dzisiaj jest przesilenie letnie (z tolerancją +/- 1 dzień)
-            if (Math.abs(currentDate - summerSolstice) <= 86400000) { // 86400000 ms = 1 dzień
-                differenceText = ", najdłuższy dzień w roku! ";
-            } 
-            // Sprawdź czy dzisiaj jest przesilenie zimowe (z tolerancją +/- 1 dzień)
-            else if (Math.abs(currentDate - winterSolstice) <= 86400000) {
-                differenceText = ", najkrótszy dzień w roku! ";
-            } 
-            // Okres od przesilenia zimowego do letniego - dni się wydłużają
-            else if ((currentDate > winterSolstice && currentDate < summerSolstice) || 
-                    (currentDate.getMonth() < 5 || currentDate.getMonth() > 11)) {
-                const diff = dayMinutes - shortestMinutes;
-                if (diff > 0) {
-                    const diffH = Math.floor(diff / 60);
-                    const diffM = diff % 60;
-                    differenceText = `, dłuższy od najkrótszego o ${diffH}h ${diffM}m`;
-                }
-            } 
-            // Okres od przesilenia letniego do zimowego - dni się skracają
-            else {
-                const diff = longestMinutes - dayMinutes;
-                if (diff > 0) {
-                    const diffH = Math.floor(diff / 60);
-                    const diffM = diff % 60;
-                    differenceText = `, krótszy od najdłuższego o ${diffH}h ${diffM}m`;
-                }
-            }
-            
-            document.getElementById('dayDifference').textContent = differenceText || "Brak różnicy";
-        }
     }
 }
 
@@ -3864,6 +3903,17 @@ function renderPrecipitationChart(hourlyForecast) {
         .filter(hour => new Date(hour.time) >= now)
         .slice(0, 24);
     
+    // Ustal kolory w zależności od motywu
+    const isDarkMode = document.body.classList.contains('night-mode') || 
+                      document.body.classList.contains('dark-mode') ||
+                      document.body.classList.contains('matrix-mode') ||
+                      document.body.classList.contains('neon-mode') ||
+					  document.body.classList.contains('space-mode') ||
+                      document.body.classList.contains('galaxy-mode');
+    
+    const textColor = isDarkMode ? '#ffffff' : '#666666';
+    const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
     // Przygotuj dane
     const labels = next24Hours.map(hour => 
         new Date(hour.time).toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit', hour12: false})
@@ -3876,39 +3926,6 @@ function renderPrecipitationChart(hourlyForecast) {
         if (hour.chance_of_rain > 0) return 'deszcz';
         return 'brak';
     });
-
-    // Grupuj okresy opadów
-    let precipitationPeriods = [];
-    let currentPeriod = null;
-
-    next24Hours.forEach((hour, index) => {
-        const precipType = hour.chance_of_snow > hour.chance_of_rain ? 'śnieg' : 'deszcz';
-        const precipIntensity = getPrecipitationIntensity(hour.precip_mm, precipType);
-        
-        if (precipIntensity !== 'brak') {
-            if (!currentPeriod || 
-                currentPeriod.type !== precipType || 
-                currentPeriod.intensity !== precipIntensity) {
-                if (currentPeriod) precipitationPeriods.push(currentPeriod);
-                currentPeriod = {
-                    start: index,
-                    end: index,
-                    type: precipType,
-                    intensity: precipIntensity
-                };
-            } else {
-                currentPeriod.end = index;
-            }
-        } else if (currentPeriod) {
-            precipitationPeriods.push(currentPeriod);
-            currentPeriod = null;
-        }
-    });
-
-    if (currentPeriod) precipitationPeriods.push(currentPeriod);
-
-    // Aktualizuj podsumowanie
-    updatePrecipitationSummary(precipitationPeriods, labels);
 
     // Utwórz wykres
     if (precipitationChart) precipitationChart.destroy();
@@ -3933,8 +3950,28 @@ function renderPrecipitationChart(hourlyForecast) {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: { beginAtZero: true, title: { display: true, text: 'mm' } },
-                x: { grid: { display: false } }
+                y: { 
+                    beginAtZero: true, 
+                    title: { 
+                        display: true, 
+                        text: 'mm',
+                        color: textColor
+                    },
+                    ticks: {
+                        color: textColor
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                x: { 
+                    grid: { 
+                        display: false 
+                    },
+                    ticks: {
+                        color: textColor
+                    }
+                }
             },
             plugins: {
                 legend: { display: false },
@@ -4164,8 +4201,9 @@ function calculateSolsticeTimes(year) {
 			// Aktualizacja widgetów
 updateCurrentWeatherWidget(data.current);
 
-if (data.forecast.forecastday?.[0]?.astro) {
-    updateSunWidget(data.forecast.forecastday[0].astro);
+if (data.forecast.forecastday?.[0]?.astro) { const shortestDay = { h: 7, m: 42 }; // 21 grudnia
+    const longestDay = { h: 16, m: 48 }; // 21 czerwca
+    updateSunWidget(data.forecast.forecastday[0].astro, shortestDay, longestDay);
     updateMoonWidget(data.forecast.forecastday[0].astro);
 }
 
