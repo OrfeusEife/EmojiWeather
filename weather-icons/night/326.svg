@@ -1,132 +1,155 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- (c) ammap.com | SVG weather icons -->
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-.24684" y="-.26897" width="1.4937" height="1.6759">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-      <feOffset dx="0" dy="4" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear" />
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <!-- TŁO: NOCNY RADIALNY GRADIENT ZANIKAJĄCY DO PRZEZROCZYSTOŚCI -->
+    <radialGradient id="bgNight" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#0D1B2A" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#1A237E" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#283593" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#64B5F6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- CHMURA NOCNA: CIEMNIEJSZA, SREBRZYSTO-GRANATOWA -->
+    <radialGradient id="cloudNight" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#E0E7FF"/>
+      <stop offset="45%" stop-color="#9FABC9"/>
+      <stop offset="80%" stop-color="#5C6A92"/>
+      <stop offset="100%" stop-color="#2C3A5E"/>
+    </radialGradient>
+
+    <!-- PŁATEK ŚNIEGU NOCNY – BIAŁY Z NIEBIESKIM CIENIEM -->
+    <radialGradient id="snowflakeNight" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#C0D8F0" stop-opacity="0.6"/>
+    </radialGradient>
+
+    <!-- FILTRY -->
+    <filter id="cloudShadowNight" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0A1128" flood-opacity="0.5"/>
     </filter>
-    <style type="text/css">
-      <![CDATA[
-      /*
-** CLOUDS
-*/
-      @keyframes am-weather-cloud-2 {
-        0% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-
-        50% {
-          -webkit-transform: translate(2px, 0px);
-          -moz-transform: translate(2px, 0px);
-          -ms-transform: translate(2px, 0px);
-          transform: translate(2px, 0px);
-        }
-
-        100% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-      }
-
-      .am-weather-cloud-2 {
-        -webkit-animation-name: am-weather-cloud-2;
-        -moz-animation-name: am-weather-cloud-2;
-        animation-name: am-weather-cloud-2;
-        -webkit-animation-duration: 3s;
-        -moz-animation-duration: 3s;
-        animation-duration: 3s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      /*
-** SNOW
-*/
-      @keyframes am-weather-snow {
-        0% {
-          -webkit-transform: translate(0.0px, 0);
-          -moz-transform: translate(0.0px, 0);
-          -ms-transform: translate(0.0px, 0);
-          transform: translate(0.0px, 0);
-        }
-
-        33.33% {
-          -webkit-transform: translate(-1.2px, 2px);
-          -moz-transform: translate(-1.2px, 2px);
-          -ms-transform: translate(-1.2px, 2px);
-          transform: translate(-1.2px, 2px);
-        }
-
-        66.66% {
-          -webkit-transform: translate(1.4px, 4px);
-          -moz-transform: translate(1.4px, 4px);
-          -ms-transform: translate(1.4px, 4px);
-          transform: translate(1.4px, 4px);
-          opacity: 1;
-        }
-
-        100% {
-          -webkit-transform: translate(-1.6px, 6px);
-          -moz-transform: translate(-1.6px, 6px);
-          -ms-transform: translate(-1.6px, 6px);
-          transform: translate(-1.6px, 6px);
-          opacity: 0;
-        }
-      }
-
-      .am-weather-snow-1 {
-        -webkit-animation-name: am-weather-snow;
-        -moz-animation-name: am-weather-snow;
-        -ms-animation-name: am-weather-snow;
-        animation-name: am-weather-snow;
-        -webkit-animation-duration: 2s;
-        -moz-animation-duration: 2s;
-        -ms-animation-duration: 2s;
-        animation-duration: 2s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-      ]]>
-    </style>
+    <filter id="snowGlowNight" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="0.5"/>
+    </filter>
+    <filter id="snowShadowNight" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0.5" dy="0.5" stdDeviation="0.5" flood-color="#0A1128" flood-opacity="0.5"/>
+    </filter>
   </defs>
-  <g transform="translate(16,-2)" filter="url(#blur)">
-    <g class="am-weather-cloud-3"
-      style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud-2;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud-2;-webkit-animation-timing-function:linear">
-      <path transform="translate(-20,-11)"
-        d="m47.7 35.4c0-4.6-3.7-8.2-8.2-8.2-1 0-1.9 0.2-2.8 0.5-0.3-3.4-3.1-6.2-6.6-6.2-3.7 0-6.7 3-6.7 6.7 0 0.8 0.2 1.6 0.4 2.3-0.3-0.1-0.7-0.1-1-0.1-3.7 0-6.7 3-6.7 6.7 0 3.6 2.9 6.6 6.5 6.7h17.2c4.4-0.5 7.9-4 7.9-8.4z"
-        fill="#57a0ee" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" />
-    </g>
-    <g class="am-weather-snow-1"
-      style="-moz-animation-duration:2s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-snow;-moz-animation-timing-function:linear;-ms-animation-duration:2s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-snow;-ms-animation-timing-function:linear;-webkit-animation-duration:2s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-snow;-webkit-animation-timing-function:linear">
-      <g transform="translate(11,28)" fill="none" stroke="#57a0ee" stroke-linecap="round">
-        <line transform="translate(0,9)" y1="-2.5" y2="2.5" stroke-width="1.2" />
-        <line transform="rotate(45,-10.864,4.5)" y1="-2.5" y2="2.5" />
-        <line transform="rotate(90,-4.5,4.5)" y1="-2.5" y2="2.5" />
-        <line transform="rotate(135,-1.864,4.5)" y1="-2.5" y2="2.5" />
-      </g>
-    </g>
+
+  <style>
+    .bgLayerNight {
+      animation: bgPulseNight 8s ease-in-out infinite;
+    }
+    .cloudMoveNight {
+      animation: cloudFloatNight 6s ease-in-out infinite;
+    }
+    .snowflakeNight {
+      animation: fallLightSnowNight 4s ease-in-out infinite;
+      filter: url(#snowShadowNight);
+    }
+    .twinkleStar { animation: twinkle 3s ease-in-out infinite; }
+    .twinkleStarSlow { animation: twinkle 5s ease-in-out infinite; }
+    
+    /* Opóźnienia dla rzadkich płatków – zachowane */
+    .s1 { animation-delay: 0s; }
+    .s2 { animation-delay: 0.6s; }
+    .s3 { animation-delay: 1.2s; }
+    .s4 { animation-delay: 1.8s; }
+    .s5 { animation-delay: 2.4s; }
+    .s6 { animation-delay: 3.0s; }
+    .s7 { animation-delay: 0.3s; }
+    .s8 { animation-delay: 0.9s; }
+    .s9 { animation-delay: 1.5s; }
+    .s10 { animation-delay: 2.1s; }
+    .s11 { animation-delay: 2.7s; }
+    .s12 { animation-delay: 3.3s; }
+    .s13 { animation-delay: 0.5s; }
+    .s14 { animation-delay: 1.1s; }
+    .s15 { animation-delay: 1.7s; }
+    .s16 { animation-delay: 2.3s; }
+    .s17 { animation-delay: 2.9s; }
+    .s18 { animation-delay: 3.5s; }
+
+    @keyframes bgPulseNight {
+      0%,100% { opacity: 0.85; }
+      50% { opacity: 1; }
+    }
+    @keyframes cloudFloatNight {
+      0%,100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(-3px) translateY(-2px); }
+    }
+    @keyframes fallLightSnowNight {
+      0% { transform: translateY(-15px) translateX(0) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.7; }
+      100% { transform: translateY(50px) translateX(-5px) rotate(180deg); opacity: 0; }
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+  </style>
+
+  <!-- TŁO NOCNE -->
+  <rect width="233" height="200" fill="url(#bgNight)" class="bgLayerNight"/>
+
+  <!-- GWIAZDY -->
+  <g fill="#FFFFFF">
+    <circle cx="25" cy="30" r="1.2" class="twinkleStar" style="animation-delay: 0s"/>
+    <circle cx="60" cy="15" r="0.8" class="twinkleStarSlow" style="animation-delay: 0.5s"/>
+    <circle cx="100" cy="45" r="1" class="twinkleStar" style="animation-delay: 1.2s"/>
+    <circle cx="160" cy="20" r="1.3" class="twinkleStar" style="animation-delay: 2s"/>
+    <circle cx="210" cy="30" r="0.9" class="twinkleStarSlow" style="animation-delay: 0.8s"/>
+    <circle cx="195" cy="65" r="1.1" class="twinkleStar" style="animation-delay: 1.5s"/>
+    <circle cx="35" cy="80" r="0.7" class="twinkleStar" style="animation-delay: 2.5s"/>
+    <circle cx="15" cy="130" r="1" class="twinkleStarSlow" style="animation-delay: 0.3s"/>
+    <circle cx="50" cy="170" r="0.9" class="twinkleStar" style="animation-delay: 1.8s"/>
+    <circle cx="90" cy="185" r="1.2" class="twinkleStar" style="animation-delay: 2.2s"/>
+    <circle cx="140" cy="170" r="0.8" class="twinkleStarSlow" style="animation-delay: 0.6s"/>
+    <circle cx="180" cy="185" r="1" class="twinkleStar" style="animation-delay: 1.1s"/>
+    <circle cx="215" cy="140" r="1.3" class="twinkleStar" style="animation-delay: 2.8s"/>
+    <circle cx="175" cy="105" r="0.9" class="twinkleStarSlow" style="animation-delay: 1.4s"/>
+    <circle cx="55" cy="105" r="0.6" class="twinkleStar" style="animation-delay: 3s"/>
+    <circle cx="135" cy="55" r="1.1" class="twinkleStar" style="animation-delay: 0.9s"/>
+    <circle cx="80" cy="65" r="0.8" class="twinkleStarSlow" style="animation-delay: 1.7s"/>
+    <circle cx="200" cy="95" r="0.7" class="twinkleStar" style="animation-delay: 2.3s"/>
   </g>
+
+  <!-- CHMURA NOCNA -->
+  <g class="cloudMoveNight" filter="url(#cloudShadowNight)">
+    <path d="M 50,115 
+             C 50,95 70,85 85,90 
+             C 95,70 125,65 140,80 
+             C 155,75 175,85 180,105 
+             C 195,105 200,115 195,125 
+             C 190,135 170,135 160,130 
+             L 70,130 
+             C 55,130 45,125 50,115 Z" 
+          fill="url(#cloudNight)"/>
+    <path d="M 70,105 C 80,90 105,85 125,93 C 135,88 152,92 158,106 C 165,102 175,108 172,118 C 168,126 148,128 135,124 L 85,126 C 73,127 66,120 70,105 Z" 
+          fill="#D0D8F0" opacity="0.3"/>
+  </g>
+
+  <!-- PŁATKI NOCNEGO ŚNIEGU – LEKKIE, RZADKIE, MAŁE -->
+  <g filter="url(#snowGlowNight)">
+    <circle class="snowflakeNight s1" cx="90" cy="138" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s2" cx="120" cy="142" r="2.5" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s3" cx="145" cy="136" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s4" cx="105" cy="148" r="2.5" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s5" cx="135" cy="145" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s6" cx="80" cy="152" r="2.5" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s7" cx="155" cy="150" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s8" cx="100" cy="160" r="2.5" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s9" cx="125" cy="158" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s10" cx="150" cy="165" r="2.5" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s11" cx="70" cy="168" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s12" cx="115" cy="172" r="2.5" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s13" cx="140" cy="170" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s14" cx="95" cy="178" r="2.5" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s15" cx="130" cy="180" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s16" cx="160" cy="175" r="2.5" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s17" cx="85" cy="185" r="2" fill="url(#snowflakeNight)"/>
+    <circle class="snowflakeNight s18" cx="110" cy="188" r="2.5" fill="url(#snowflakeNight)"/>
+  </g>
+
+  <!-- DYSKRETNA ŚNIEŻNA MGIEŁKA NOCNA PRZY PODŁOŻU -->
+  <ellipse cx="115" cy="190" rx="70" ry="5" fill="#90CAF9" opacity="0.15" filter="url(#snowGlowNight)"/>
 </svg>

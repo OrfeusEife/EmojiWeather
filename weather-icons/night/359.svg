@@ -1,256 +1,231 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <style type="text/css">
-      <![CDATA[
-      /*
-** CLOUDS
-*/
-      @keyframes am-weather-cloud-2 {
-        0% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
+    <!-- TŁO: NOCNY RADIALNY GRADIENT ZANIKAJĄCY DO PRZEZROCZYSTOŚCI -->
+    <radialGradient id="bgNight" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#0D1B2A" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#1A237E" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#283593" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#64B5F6" stop-opacity="0"/>
+    </radialGradient>
 
-        50% {
-          -webkit-transform: translate(2px, 0px);
-          -moz-transform: translate(2px, 0px);
-          -ms-transform: translate(2px, 0px);
-          transform: translate(2px, 0px);
-        }
+    <!-- CHMURA NOCNA: CIEMNIEJSZA, SREBRZYSTO-GRANATOWA -->
+    <radialGradient id="cloudNight" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#E0E7FF"/>
+      <stop offset="45%" stop-color="#9FABC9"/>
+      <stop offset="80%" stop-color="#5C6A92"/>
+      <stop offset="100%" stop-color="#2C3A5E"/>
+    </radialGradient>
 
-        100% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-      }
+    <!-- SMUGA DESZCZU NOCNA (DŁUGA, PRZEŹROCZYSTA) -->
+    <linearGradient id="rainStreakNight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B0C4DE" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#607D8B" stop-opacity="0.2"/>
+    </linearGradient>
 
-      .am-weather-cloud-2 {
-        -webkit-animation-name: am-weather-cloud-2;
-        -moz-animation-name: am-weather-cloud-2;
-        animation-name: am-weather-cloud-2;
-        -webkit-animation-duration: 3s;
-        -moz-animation-duration: 3s;
-        animation-duration: 3s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
+    <!-- KROPLA DESZCZU NOCNA -->
+    <linearGradient id="rainDropNight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B0C4DE"/>
+      <stop offset="100%" stop-color="#607D8B"/>
+    </linearGradient>
 
-      /*
-** MOON
-*/
-      @keyframes am-weather-moon {
-        0% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-
-        50% {
-          -webkit-transform: rotate(15deg);
-          -moz-transform: rotate(15deg);
-          -ms-transform: rotate(15deg);
-          transform: rotate(15deg);
-        }
-
-        100% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-      }
-
-      .am-weather-moon {
-        -webkit-animation-name: am-weather-moon;
-        -moz-animation-name: am-weather-moon;
-        -ms-animation-name: am-weather-moon;
-        animation-name: am-weather-moon;
-        -webkit-animation-duration: 6s;
-        -moz-animation-duration: 6s;
-        -ms-animation-duration: 6s;
-        animation-duration: 6s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-        -webkit-transform-origin: 12.5px 15.15px 0;
-        /* TODO FF CENTER ISSUE */
-        -moz-transform-origin: 12.5px 15.15px 0;
-        /* TODO FF CENTER ISSUE */
-        -ms-transform-origin: 12.5px 15.15px 0;
-        /* TODO FF CENTER ISSUE */
-        transform-origin: 12.5px 15.15px 0;
-        /* TODO FF CENTER ISSUE */
-      }
-
-      @keyframes am-weather-moon-star-1 {
-        0% {
-          opacity: 0;
-        }
-
-        100% {
-          opacity: 1;
-        }
-      }
-
-      .am-weather-moon-star-1 {
-        -webkit-animation-name: am-weather-moon-star-1;
-        -moz-animation-name: am-weather-moon-star-1;
-        -ms-animation-name: am-weather-moon-star-1;
-        animation-name: am-weather-moon-star-1;
-        -webkit-animation-delay: 3s;
-        -moz-animation-delay: 3s;
-        -ms-animation-delay: 3s;
-        animation-delay: 3s;
-        -webkit-animation-duration: 5s;
-        -moz-animation-duration: 5s;
-        -ms-animation-duration: 5s;
-        animation-duration: 5s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: 1;
-        -moz-animation-iteration-count: 1;
-        -ms-animation-iteration-count: 1;
-        animation-iteration-count: 1;
-      }
-
-      @keyframes am-weather-moon-star-2 {
-        0% {
-          opacity: 0;
-        }
-
-        100% {
-          opacity: 1;
-        }
-      }
-
-      .am-weather-moon-star-2 {
-        -webkit-animation-name: am-weather-moon-star-2;
-        -moz-animation-name: am-weather-moon-star-2;
-        -ms-animation-name: am-weather-moon-star-2;
-        animation-name: am-weather-moon-star-2;
-        -webkit-animation-delay: 5s;
-        -moz-animation-delay: 5s;
-        -ms-animation-delay: 5s;
-        animation-delay: 5s;
-        -webkit-animation-duration: 4s;
-        -moz-animation-duration: 4s;
-        -ms-animation-duration: 4s;
-        animation-duration: 4s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: 1;
-        -moz-animation-iteration-count: 1;
-        -ms-animation-iteration-count: 1;
-        animation-iteration-count: 1;
-      }
-
-      /*
-** RAIN
-*/
-      @keyframes am-weather-rain {
-        0% {
-          stroke-dashoffset: 0;
-        }
-
-        100% {
-          stroke-dashoffset: -100;
-        }
-      }
-
-      .am-weather-rain-1 {
-        -webkit-animation-name: am-weather-rain;
-        -moz-animation-name: am-weather-rain;
-        -ms-animation-name: am-weather-rain;
-        animation-name: am-weather-rain;
-        -webkit-animation-duration: 8s;
-        -moz-animation-duration: 8s;
-        -ms-animation-duration: 8s;
-        animation-duration: 8s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      .am-weather-rain-2 {
-        -webkit-animation-name: am-weather-rain;
-        -moz-animation-name: am-weather-rain;
-        -ms-animation-name: am-weather-rain;
-        animation-name: am-weather-rain;
-        -webkit-animation-delay: 0.25s;
-        -moz-animation-delay: 0.25s;
-        -ms-animation-delay: 0.25s;
-        animation-delay: 0.25s;
-        -webkit-animation-duration: 8s;
-        -moz-animation-duration: 8s;
-        -ms-animation-duration: 8s;
-        animation-duration: 8s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-      ]]>
-    </style>
+    <!-- FILTRY -->
+    <filter id="cloudShadowNight" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0A1128" flood-opacity="0.6"/>
+    </filter>
+    <filter id="motionBlurNight" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="0 3"/>
+    </filter>
   </defs>
-  <g class="layer" transform="translate(16,-2)">
-    <g transform="matrix(.8 0 0 .8 16 4)">
-      <g class="am-weather-moon-star-1"
-        style="-moz-animation-delay:3s;-moz-animation-duration:5s;-moz-animation-iteration-count:1;-moz-animation-name:am-weather-moon-star-1;-moz-animation-timing-function:linear;-ms-animation-delay:3s;-ms-animation-duration:5s;-ms-animation-iteration-count:1;-ms-animation-name:am-weather-moon-star-1;-ms-animation-timing-function:linear;-webkit-animation-delay:3s;-webkit-animation-duration:5s;-webkit-animation-iteration-count:1;-webkit-animation-name:am-weather-moon-star-1;-webkit-animation-timing-function:linear">
-        <polygon points="4 4 3.3 5.2 2.7 4 1.5 3.3 2.7 2.7 3.3 1.5 4 2.7 5.2 3.3" fill="#ffa500"
-          stroke-miterlimit="10" />
-      </g>
-      <g class="am-weather-moon-star-2"
-        style="-moz-animation-delay:5s;-moz-animation-duration:4s;-moz-animation-iteration-count:1;-moz-animation-name:am-weather-moon-star-2;-moz-animation-timing-function:linear;-ms-animation-delay:5s;-ms-animation-duration:4s;-ms-animation-iteration-count:1;-ms-animation-name:am-weather-moon-star-2;-ms-animation-timing-function:linear;-webkit-animation-delay:5s;-webkit-animation-duration:4s;-webkit-animation-iteration-count:1;-webkit-animation-name:am-weather-moon-star-2;-webkit-animation-timing-function:linear">
-        <polygon transform="translate(20,10)" points="4 4 3.3 5.2 2.7 4 1.5 3.3 2.7 2.7 3.3 1.5 4 2.7 5.2 3.3"
-          fill="#ffa500" stroke-miterlimit="10" />
-      </g>
-      <g class="am-weather-moon"
-        style="-moz-animation-duration:6s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-moon;-moz-animation-timing-function:linear;-moz-transform-origin:12.5px 15.15px 0;-ms-animation-duration:6s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-moon;-ms-animation-timing-function:linear;-ms-transform-origin:12.5px 15.15px 0;-webkit-animation-duration:6s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-moon;-webkit-animation-timing-function:linear;-webkit-transform-origin:12.5px 15.15px 0">
-        <path
-          d="m14.5 13.2c0-3.7 2-6.9 5-8.7-1.5-0.9-3.2-1.3-5-1.3-5.5 0-10 4.5-10 10s4.5 10 10 10c1.8 0 3.5-0.5 5-1.3-3-1.7-5-5-5-8.7z"
-          fill="#ffa500" stroke="#ffa500" stroke-linejoin="round" stroke-width="2" />
-      </g>
-    </g>
-    <g class="am-weather-cloud-3"
-      style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud-2;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud-2;-webkit-animation-timing-function:linear">
-      <path transform="translate(-20,-11)"
-        d="m47.7 35.4c0-4.6-3.7-8.2-8.2-8.2-1 0-1.9 0.2-2.8 0.5-0.3-3.4-3.1-6.2-6.6-6.2-3.7 0-6.7 3-6.7 6.7 0 0.8 0.2 1.6 0.4 2.3-0.3-0.1-0.7-0.1-1-0.1-3.7 0-6.7 3-6.7 6.7 0 3.6 2.9 6.6 6.5 6.7h17.2c4.4-0.5 7.9-4 7.9-8.4z"
-        fill="#57a0ee" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" />
-    </g>
-    <g class="am-weather-rain-2" transform="translate(-20,-10) rotate(10,34,46)" fill="none" stroke="#91c0f8"
-      stroke-dasharray="4, 7" stroke-linecap="round" stroke-width="2">
-      <line class="am-weather-rain-1" transform="translate(-6,1)" x1="34" x2="34" y1="46" y2="54"
-        style="-moz-animation-duration:8s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-rain;-moz-animation-timing-function:linear;-ms-animation-duration:8s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-rain;-ms-animation-timing-function:linear;-webkit-animation-duration:8s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-rain;-webkit-animation-timing-function:linear" />
-      <line class="am-weather-rain-2" transform="translate(0,-1)" x1="34" x2="34" y1="46" y2="54"
-        style="-moz-animation-delay:0.25s;-moz-animation-duration:8s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-rain;-moz-animation-timing-function:linear;-ms-animation-delay:0.25s;-ms-animation-duration:8s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-rain;-ms-animation-timing-function:linear;-webkit-animation-delay:0.25s;-webkit-animation-duration:8s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-rain;-webkit-animation-timing-function:linear" />
-    </g>
+
+  <style>
+    .bgLayerNight {
+      animation: bgPulseNight 4s ease-in-out infinite;
+    }
+    .cloudMoveNight {
+      animation: cloudFloatNight 4s ease-in-out infinite;
+    }
+    /* Smugi – bardzo szybkie, z rozmyciem */
+    .streakNight {
+      animation: streakFallNight 0.8s linear infinite;
+      filter: url(#motionBlurNight);
+    }
+    /* Krople – nieco wolniejsze */
+    .dropNight {
+      animation: dropFallNight 1.0s linear infinite;
+    }
+    .twinkleStar { animation: twinkle 3s ease-in-out infinite; }
+    .twinkleStarSlow { animation: twinkle 5s ease-in-out infinite; }
+
+    /* Opóźnienia dla smug (30 smug) – zachowane */
+    .s1 { animation-delay: 0.00s; }
+    .s2 { animation-delay: 0.05s; }
+    .s3 { animation-delay: 0.10s; }
+    .s4 { animation-delay: 0.15s; }
+    .s5 { animation-delay: 0.20s; }
+    .s6 { animation-delay: 0.25s; }
+    .s7 { animation-delay: 0.30s; }
+    .s8 { animation-delay: 0.35s; }
+    .s9 { animation-delay: 0.40s; }
+    .s10 { animation-delay: 0.45s; }
+    .s11 { animation-delay: 0.50s; }
+    .s12 { animation-delay: 0.55s; }
+    .s13 { animation-delay: 0.60s; }
+    .s14 { animation-delay: 0.65s; }
+    .s15 { animation-delay: 0.70s; }
+    .s16 { animation-delay: 0.75s; }
+    .s17 { animation-delay: 0.02s; }
+    .s18 { animation-delay: 0.07s; }
+    .s19 { animation-delay: 0.12s; }
+    .s20 { animation-delay: 0.17s; }
+    .s21 { animation-delay: 0.22s; }
+    .s22 { animation-delay: 0.27s; }
+    .s23 { animation-delay: 0.32s; }
+    .s24 { animation-delay: 0.37s; }
+    .s25 { animation-delay: 0.42s; }
+    .s26 { animation-delay: 0.47s; }
+    .s27 { animation-delay: 0.52s; }
+    .s28 { animation-delay: 0.57s; }
+    .s29 { animation-delay: 0.62s; }
+    .s30 { animation-delay: 0.67s; }
+    /* Opóźnienia dla kropel (15 kropel) */
+    .d1 { animation-delay: 0.03s; }
+    .d2 { animation-delay: 0.13s; }
+    .d3 { animation-delay: 0.23s; }
+    .d4 { animation-delay: 0.33s; }
+    .d5 { animation-delay: 0.43s; }
+    .d6 { animation-delay: 0.53s; }
+    .d7 { animation-delay: 0.63s; }
+    .d8 { animation-delay: 0.73s; }
+    .d9 { animation-delay: 0.08s; }
+    .d10 { animation-delay: 0.18s; }
+    .d11 { animation-delay: 0.28s; }
+    .d12 { animation-delay: 0.38s; }
+    .d13 { animation-delay: 0.48s; }
+    .d14 { animation-delay: 0.58s; }
+    .d15 { animation-delay: 0.68s; }
+
+    @keyframes bgPulseNight {
+      0%,100% { opacity: 0.85; }
+      50% { opacity: 1; }
+    }
+    @keyframes cloudFloatNight {
+      0%,100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(-5px) translateY(-3px); }
+    }
+    @keyframes streakFallNight {
+      0% { transform: translateY(-40px) translateX(0); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(60px) translateX(-15px); opacity: 0; }
+    }
+    @keyframes dropFallNight {
+      0% { transform: translateY(-30px) translateX(0); opacity: 0; }
+      20% { opacity: 0.7; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(55px) translateX(-8px); opacity: 0; }
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+  </style>
+
+  <!-- TŁO NOCNE -->
+  <rect width="233" height="200" fill="url(#bgNight)" class="bgLayerNight"/>
+
+  <!-- GWIAZDY -->
+  <g fill="#FFFFFF">
+    <circle cx="25" cy="30" r="1.2" class="twinkleStar" style="animation-delay: 0s"/>
+    <circle cx="60" cy="15" r="0.8" class="twinkleStarSlow" style="animation-delay: 0.5s"/>
+    <circle cx="100" cy="45" r="1" class="twinkleStar" style="animation-delay: 1.2s"/>
+    <circle cx="160" cy="20" r="1.3" class="twinkleStar" style="animation-delay: 2s"/>
+    <circle cx="210" cy="30" r="0.9" class="twinkleStarSlow" style="animation-delay: 0.8s"/>
+    <circle cx="195" cy="65" r="1.1" class="twinkleStar" style="animation-delay: 1.5s"/>
+    <circle cx="35" cy="80" r="0.7" class="twinkleStar" style="animation-delay: 2.5s"/>
+    <circle cx="15" cy="130" r="1" class="twinkleStarSlow" style="animation-delay: 0.3s"/>
+    <circle cx="50" cy="170" r="0.9" class="twinkleStar" style="animation-delay: 1.8s"/>
+    <circle cx="90" cy="185" r="1.2" class="twinkleStar" style="animation-delay: 2.2s"/>
+    <circle cx="140" cy="170" r="0.8" class="twinkleStarSlow" style="animation-delay: 0.6s"/>
+    <circle cx="180" cy="185" r="1" class="twinkleStar" style="animation-delay: 1.1s"/>
+    <circle cx="215" cy="140" r="1.3" class="twinkleStar" style="animation-delay: 2.8s"/>
+    <circle cx="175" cy="105" r="0.9" class="twinkleStarSlow" style="animation-delay: 1.4s"/>
+    <circle cx="55" cy="105" r="0.6" class="twinkleStar" style="animation-delay: 3s"/>
+    <circle cx="135" cy="55" r="1.1" class="twinkleStar" style="animation-delay: 0.9s"/>
+    <circle cx="80" cy="65" r="0.8" class="twinkleStarSlow" style="animation-delay: 1.7s"/>
+    <circle cx="200" cy="95" r="0.7" class="twinkleStar" style="animation-delay: 2.3s"/>
   </g>
+
+  <!-- CHMURA NOCNA – CIEMNA, BURZOWA, BEZ KSIĘŻYCA -->
+  <g class="cloudMoveNight" filter="url(#cloudShadowNight)">
+    <path d="M 40,115 
+             C 40,95 60,82 78,88 
+             C 88,68 120,60 138,75 
+             C 152,68 175,76 182,96 
+             C 198,98 205,110 198,124 
+             C 192,136 170,138 158,132 
+             L 65,134 
+             C 48,136 38,130 40,115 Z" 
+          fill="url(#cloudNight)"/>
+    <path d="M 70,105 C 80,88 105,82 125,90 C 135,85 152,90 158,104 C 165,100 175,106 172,118 C 168,126 148,128 135,124 L 85,126 C 73,127 66,120 70,105 Z" 
+          fill="#D0D8F0" opacity="0.2"/>
+  </g>
+
+  <!-- SMUGI NOCNEGO DESZCZU – 30 długich linii ukośnych -->
+  <g>
+    <rect class="streakNight s1" x="80" y="130" width="2" height="18" fill="url(#rainStreakNight)" transform="rotate(15, 81, 139)"/>
+    <rect class="streakNight s2" x="100" y="125" width="2" height="20" fill="url(#rainStreakNight)" transform="rotate(12, 101, 135)"/>
+    <rect class="streakNight s3" x="120" y="135" width="2" height="16" fill="url(#rainStreakNight)" transform="rotate(18, 121, 143)"/>
+    <rect class="streakNight s4" x="140" y="128" width="2" height="19" fill="url(#rainStreakNight)" transform="rotate(10, 141, 137)"/>
+    <rect class="streakNight s5" x="160" y="132" width="2" height="17" fill="url(#rainStreakNight)" transform="rotate(14, 161, 140)"/>
+    <rect class="streakNight s6" x="90" y="140" width="2" height="18" fill="url(#rainStreakNight)" transform="rotate(16, 91, 149)"/>
+    <rect class="streakNight s7" x="110" y="138" width="2" height="20" fill="url(#rainStreakNight)" transform="rotate(11, 111, 148)"/>
+    <rect class="streakNight s8" x="130" y="142" width="2" height="16" fill="url(#rainStreakNight)" transform="rotate(13, 131, 150)"/>
+    <rect class="streakNight s9" x="150" y="136" width="2" height="19" fill="url(#rainStreakNight)" transform="rotate(17, 151, 145)"/>
+    <rect class="streakNight s10" x="170" y="145" width="2" height="17" fill="url(#rainStreakNight)" transform="rotate(12, 171, 153)"/>
+
+    <rect class="streakNight s11" x="75" y="150" width="2" height="18" fill="url(#rainStreakNight)" transform="rotate(14, 76, 159)"/>
+    <rect class="streakNight s12" x="95" y="148" width="2" height="20" fill="url(#rainStreakNight)" transform="rotate(15, 96, 158)"/>
+    <rect class="streakNight s13" x="115" y="152" width="2" height="16" fill="url(#rainStreakNight)" transform="rotate(11, 116, 160)"/>
+    <rect class="streakNight s14" x="135" y="147" width="2" height="19" fill="url(#rainStreakNight)" transform="rotate(18, 136, 156)"/>
+    <rect class="streakNight s15" x="155" y="155" width="2" height="17" fill="url(#rainStreakNight)" transform="rotate(13, 156, 163)"/>
+    <rect class="streakNight s16" x="175" y="150" width="2" height="18" fill="url(#rainStreakNight)" transform="rotate(16, 176, 159)"/>
+    <rect class="streakNight s17" x="85" y="158" width="2" height="20" fill="url(#rainStreakNight)" transform="rotate(12, 86, 168)"/>
+    <rect class="streakNight s18" x="105" y="160" width="2" height="16" fill="url(#rainStreakNight)" transform="rotate(15, 106, 168)"/>
+    <rect class="streakNight s19" x="125" y="155" width="2" height="19" fill="url(#rainStreakNight)" transform="rotate(14, 126, 164)"/>
+    <rect class="streakNight s20" x="145" y="162" width="2" height="17" fill="url(#rainStreakNight)" transform="rotate(17, 146, 170)"/>
+
+    <rect class="streakNight s21" x="82" y="135" width="2" height="18" fill="url(#rainStreakNight)" transform="rotate(13, 83, 144)"/>
+    <rect class="streakNight s22" x="102" y="130" width="2" height="20" fill="url(#rainStreakNight)" transform="rotate(16, 103, 140)"/>
+    <rect class="streakNight s23" x="122" y="140" width="2" height="16" fill="url(#rainStreakNight)" transform="rotate(11, 123, 148)"/>
+    <rect class="streakNight s24" x="142" y="133" width="2" height="19" fill="url(#rainStreakNight)" transform="rotate(15, 143, 142)"/>
+    <rect class="streakNight s25" x="162" y="138" width="2" height="17" fill="url(#rainStreakNight)" transform="rotate(14, 163, 146)"/>
+    <rect class="streakNight s26" x="92" y="145" width="2" height="18" fill="url(#rainStreakNight)" transform="rotate(17, 93, 154)"/>
+    <rect class="streakNight s27" x="112" y="143" width="2" height="20" fill="url(#rainStreakNight)" transform="rotate(12, 113, 153)"/>
+    <rect class="streakNight s28" x="132" y="148" width="2" height="16" fill="url(#rainStreakNight)" transform="rotate(16, 133, 156)"/>
+    <rect class="streakNight s29" x="152" y="140" width="2" height="19" fill="url(#rainStreakNight)" transform="rotate(13, 153, 149)"/>
+    <rect class="streakNight s30" x="172" y="147" width="2" height="17" fill="url(#rainStreakNight)" transform="rotate(15, 173, 155)"/>
+  </g>
+
+  <!-- KROPLE NOCNEGO DESZCZU – 15 sztuk -->
+  <g>
+    <path class="dropNight d1" d="M88 138 C88 138 84 145 84 148 C84 151 86 153 88 153 C90 153 92 151 92 148 C92 145 88 138 88 138Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d2" d="M108 142 C108 142 104 149 104 152 C104 155 106 157 108 157 C110 157 112 155 112 152 C112 149 108 142 108 142Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d3" d="M128 136 C128 136 124 143 124 146 C124 149 126 151 128 151 C130 151 132 149 132 146 C132 143 128 136 128 136Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d4" d="M148 140 C148 140 144 147 144 150 C144 153 146 155 148 155 C150 155 152 153 152 150 C152 147 148 140 148 140Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d5" d="M168 144 C168 144 164 151 164 154 C164 157 166 159 168 159 C170 159 172 157 172 154 C172 151 168 144 168 144Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d6" d="M98 148 C98 148 94 155 94 158 C94 161 96 163 98 163 C100 163 102 161 102 158 C102 155 98 148 98 148Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d7" d="M118 152 C118 152 114 159 114 162 C114 165 116 167 118 167 C120 167 122 165 122 162 C122 159 118 152 118 152Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d8" d="M138 146 C138 146 134 153 134 156 C134 159 136 161 138 161 C140 161 142 159 142 156 C142 153 138 146 138 146Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d9" d="M158 150 C158 150 154 157 154 160 C154 163 156 165 158 165 C160 165 162 163 162 160 C162 157 158 150 158 150Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d10" d="M78 145 C78 145 74 152 74 155 C74 158 76 160 78 160 C80 160 82 158 82 155 C82 152 78 145 78 145Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d11" d="M178 148 C178 148 174 155 174 158 C174 161 176 163 178 163 C180 163 182 161 182 158 C182 155 178 148 178 148Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d12" d="M103 155 C103 155 99 162 99 165 C99 168 101 170 103 170 C105 170 107 168 107 165 C107 162 103 155 103 155Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d13" d="M123 158 C123 158 119 165 119 168 C119 171 121 173 123 173 C125 173 127 171 127 168 C127 165 123 158 123 158Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d14" d="M143 162 C143 162 139 169 139 172 C139 175 141 177 143 177 C145 177 147 175 147 172 C147 169 143 162 143 162Z" fill="url(#rainDropNight)"/>
+    <path class="dropNight d15" d="M163 158 C163 158 159 165 159 168 C159 171 161 173 163 173 C165 173 167 171 167 168 C167 165 163 158 163 158Z" fill="url(#rainDropNight)"/>
+  </g>
+
+  <!-- ROZPYLONA WODA / MGIEŁKA NOCNA PRZY PODŁOŻU -->
+  <ellipse cx="115" cy="188" rx="95" ry="8" fill="#90CAF9" opacity="0.2" filter="url(#cloudShadowNight)"/>
+  <ellipse cx="115" cy="193" rx="70" ry="5" fill="#B0C4DE" opacity="0.15" filter="url(#cloudShadowNight)"/>
 </svg>

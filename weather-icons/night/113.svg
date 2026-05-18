@@ -1,159 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- (c) ammap.com | SVG weather icons -->
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-.3038" y="-.3318" width="1.6076" height="1.894">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-      <feOffset dx="0" dy="4" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear" />
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <!-- TŁO: NOCNY GRADIENT ZANIKAJĄCY DO PRZEZROCZYSTOŚCI -->
+    <radialGradient id="bgNightGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#0D1B2A" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#1A237E" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#283593" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#64B5F6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- KSIĘŻYC: SREBRZYSTA POŚWIATA -->
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E3F2FD" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#90CAF9" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#1A237E" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="moonCore" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#E3F2FD"/>
+      <stop offset="100%" stop-color="#B0BEC5"/>
+    </linearGradient>
+
+    <!-- FILTRY -->
+    <filter id="moonGlowFilter" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="0"/>
     </filter>
-    <style type="text/css">
-      <![CDATA[
-      /*
-** MOON
-*/
-      @keyframes am-weather-moon {
-        0% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-
-        50% {
-          -webkit-transform: rotate(15deg);
-          -moz-transform: rotate(15deg);
-          -ms-transform: rotate(15deg);
-          transform: rotate(15deg);
-        }
-
-        100% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-      }
-
-      .am-weather-moon {
-        -webkit-animation-name: am-weather-moon;
-        -moz-animation-name: am-weather-moon;
-        -ms-animation-name: am-weather-moon;
-        animation-name: am-weather-moon;
-        -webkit-animation-duration: 6s;
-        -moz-animation-duration: 6s;
-        -ms-animation-duration: 6s;
-        animation-duration: 6s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-        -webkit-transform-origin: 12.5px 15.15px 0;
-        /* TODO FF CENTER ISSUE */
-        -moz-transform-origin: 12.5px 15.15px 0;
-        /* TODO FF CENTER ISSUE */
-        -ms-transform-origin: 12.5px 15.15px 0;
-        /* TODO FF CENTER ISSUE */
-        transform-origin: 12.5px 15.15px 0;
-        /* TODO FF CENTER ISSUE */
-      }
-
-      @keyframes am-weather-moon-star-1 {
-        0% {
-          opacity: 0;
-        }
-
-        100% {
-          opacity: 1;
-        }
-      }
-
-      .am-weather-moon-star-1 {
-        -webkit-animation-name: am-weather-moon-star-1;
-        -moz-animation-name: am-weather-moon-star-1;
-        -ms-animation-name: am-weather-moon-star-1;
-        animation-name: am-weather-moon-star-1;
-        -webkit-animation-delay: 3s;
-        -moz-animation-delay: 3s;
-        -ms-animation-delay: 3s;
-        animation-delay: 3s;
-        -webkit-animation-duration: 5s;
-        -moz-animation-duration: 5s;
-        -ms-animation-duration: 5s;
-        animation-duration: 5s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: 1;
-        -moz-animation-iteration-count: 1;
-        -ms-animation-iteration-count: 1;
-        animation-iteration-count: 1;
-      }
-
-      @keyframes am-weather-moon-star-2 {
-        0% {
-          opacity: 0;
-        }
-
-        100% {
-          opacity: 1;
-        }
-      }
-
-      .am-weather-moon-star-2 {
-        -webkit-animation-name: am-weather-moon-star-2;
-        -moz-animation-name: am-weather-moon-star-2;
-        -ms-animation-name: am-weather-moon-star-2;
-        animation-name: am-weather-moon-star-2;
-        -webkit-animation-delay: 5s;
-        -moz-animation-delay: 5s;
-        -ms-animation-delay: 5s;
-        animation-delay: 5s;
-        -webkit-animation-duration: 4s;
-        -moz-animation-duration: 4s;
-        -ms-animation-duration: 4s;
-        animation-duration: 4s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: 1;
-        -moz-animation-iteration-count: 1;
-        -ms-animation-iteration-count: 1;
-        animation-iteration-count: 1;
-      }
-      ]]>
-    </style>
   </defs>
-  <g id="night" transform="translate(-4,-18)" filter="url(#blur)">
-    <g transform="matrix(.8 0 0 .78534 36 20.022)" stroke-width="1.2616">
-      <g class="am-weather-moon-star-1"
-        style="-moz-animation-delay:3s;-moz-animation-duration:5s;-moz-animation-iteration-count:1;-moz-animation-name:am-weather-moon-star-1;-moz-animation-timing-function:linear;-ms-animation-delay:3s;-ms-animation-duration:5s;-ms-animation-iteration-count:1;-ms-animation-name:am-weather-moon-star-1;-ms-animation-timing-function:linear;-webkit-animation-delay:3s;-webkit-animation-duration:5s;-webkit-animation-iteration-count:1;-webkit-animation-name:am-weather-moon-star-1;-webkit-animation-timing-function:linear">
-        <polygon points="4 2.7 5.2 3.3 4 4 3.3 5.2 2.7 4 1.5 3.3 2.7 2.7 3.3 1.5" fill="#ffa500" stroke-miterlimit="10"
-          stroke-width="1.4105" />
-      </g>
-      <g class="am-weather-moon-star-2"
-        style="-moz-animation-delay:5s;-moz-animation-duration:4s;-moz-animation-iteration-count:1;-moz-animation-name:am-weather-moon-star-2;-moz-animation-timing-function:linear;-ms-animation-delay:5s;-ms-animation-duration:4s;-ms-animation-iteration-count:1;-ms-animation-name:am-weather-moon-star-2;-ms-animation-timing-function:linear;-webkit-animation-delay:5s;-webkit-animation-duration:4s;-webkit-animation-iteration-count:1;-webkit-animation-name:am-weather-moon-star-2;-webkit-animation-timing-function:linear">
-        <polygon transform="translate(20,10)" points="4 2.7 5.2 3.3 4 4 3.3 5.2 2.7 4 1.5 3.3 2.7 2.7 3.3 1.5"
-          fill="#ffa500" stroke-miterlimit="10" stroke-width="1.4105" />
-      </g>
-      <g class="am-weather-moon"
-        style="-moz-animation-duration:6s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-moon;-moz-animation-timing-function:linear;-moz-transform-origin:12.5px 15.15px 0;-ms-animation-duration:6s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-moon;-ms-animation-timing-function:linear;-ms-transform-origin:12.5px 15.15px 0;-webkit-animation-duration:6s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-moon;-webkit-animation-timing-function:linear;-webkit-transform-origin:12.5px 15.15px 0">
-        <path
-          d="m14.5 13.2c0-3.7 2-6.9 5-8.7-1.5-0.9-3.2-1.3-5-1.3-5.5 0-10 4.5-10 10s4.5 10 10 10c1.8 0 3.5-0.5 5-1.3-3-1.7-5-5-5-8.7z"
-          fill="#ffa500" stroke="#ffa500" stroke-linejoin="round" stroke-width="2.5232" />
-      </g>
-    </g>
+
+  <style>
+    .moonPulse {
+      animation: moonPulseNight 4s ease-in-out infinite;
+      transform-origin: 116px 100px;
+    }
+    .twinkleStar {
+      animation: twinkle 3s ease-in-out infinite;
+    }
+    .twinkleStarSlow {
+      animation: twinkle 5s ease-in-out infinite;
+    }
+
+    @keyframes moonPulseNight {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+  </style>
+
+  <!-- TŁO NOCNE Z PRZEZROCZYSTYMI KRAWĘDZIAMI -->
+  <rect width="233" height="200" fill="url(#bgNightGlow)"/>
+
+  <!-- GWIAZDY TŁA (ROZPROSZONE) -->
+  <g fill="#FFFFFF">
+    <circle cx="25" cy="30" r="1" class="twinkleStar" style="animation-delay: 0s"/>
+    <circle cx="55" cy="15" r="0.8" class="twinkleStarSlow" style="animation-delay: 0.5s"/>
+    <circle cx="90" cy="40" r="1.2" class="twinkleStar" style="animation-delay: 1.2s"/>
+    <circle cx="150" cy="20" r="1" class="twinkleStar" style="animation-delay: 2s"/>
+    <circle cx="200" cy="35" r="1.3" class="twinkleStarSlow" style="animation-delay: 0.8s"/>
+    <circle cx="215" cy="70" r="0.9" class="twinkleStar" style="animation-delay: 1.5s"/>
+    <circle cx="30" cy="80" r="1.1" class="twinkleStar" style="animation-delay: 2.5s"/>
+    <circle cx="15" cy="130" r="0.8" class="twinkleStarSlow" style="animation-delay: 0.3s"/>
+    <circle cx="45" cy="170" r="1" class="twinkleStar" style="animation-delay: 1.8s"/>
+    <circle cx="80" cy="185" r="0.9" class="twinkleStar" style="animation-delay: 2.2s"/>
+    <circle cx="130" cy="175" r="1.2" class="twinkleStarSlow" style="animation-delay: 0.6s"/>
+    <circle cx="170" cy="190" r="0.7" class="twinkleStar" style="animation-delay: 1.1s"/>
+    <circle cx="210" cy="160" r="1" class="twinkleStar" style="animation-delay: 2.8s"/>
+    <circle cx="195" cy="120" r="0.8" class="twinkleStarSlow" style="animation-delay: 1.4s"/>
+    <circle cx="65" cy="110" r="0.6" class="twinkleStar" style="animation-delay: 3s"/>
+    <circle cx="180" cy="80" r="1.1" class="twinkleStar" style="animation-delay: 0.9s"/>
+  </g>
+
+  <!-- POŚWIATA KSIĘŻYCA -->
+  <circle cx="116" cy="100" r="55" fill="url(#moonGlow)" filter="url(#moonGlowFilter)"/>
+
+  <!-- KSIĘŻYC -->
+  <g class="moonPulse">
+    <circle cx="116" cy="100" r="30" fill="url(#moonCore)" filter="url(#moonGlowFilter)" opacity="0.95"/>
+    <circle cx="116" cy="100" r="26" fill="url(#moonCore)"/>
+
+    <!-- KRATERY -->
+    <circle cx="106" cy="90" r="5" fill="#CFD8DC" opacity="0.35"/>
+    <circle cx="124" cy="108" r="4.5" fill="#CFD8DC" opacity="0.3"/>
+    <circle cx="112" cy="115" r="3" fill="#CFD8DC" opacity="0.4"/>
+    <circle cx="130" cy="86" r="2.5" fill="#CFD8DC" opacity="0.25"/>
+    <circle cx="100" cy="108" r="2" fill="#CFD8DC" opacity="0.35"/>
+    <circle cx="120" cy="92" r="2" fill="#CFD8DC" opacity="0.3"/>
+
+    <!-- ODBLASKI -->
+    <circle cx="103" cy="94" r="3" fill="#FFFFFF" opacity="0.6"/>
+    <circle cx="125" cy="100" r="2.5" fill="#FFFFFF" opacity="0.4"/>
+    <circle cx="114" cy="84" r="2" fill="#FFFFFF" opacity="0.5"/>
+  </g>
+
+  <!-- JASKRAWE GWIAZDY PIERWSZEGO PLANU -->
+  <g fill="#FFFFFF" opacity="0.9">
+    <path d="M40,50 L41.5,55 L46.5,55 L42.5,58 L44,63 L40,60 L36,63 L37.5,58 L33.5,55 L38.5,55 Z" class="twinkleStar" style="animation-delay: 0.4s"/>
+    <path d="M190,145 L191.5,150 L196.5,150 L192.5,153 L194,158 L190,155 L186,158 L187.5,153 L183.5,150 L188.5,150 Z" class="twinkleStarSlow" style="animation-delay: 1.6s"/>
+    <path d="M70,170 L71.5,175 L76.5,175 L72.5,178 L74,183 L70,180 L66,183 L67.5,178 L63.5,175 L68.5,175 Z" class="twinkleStar" style="animation-delay: 2.3s"/>
+    <path d="M205,50 L206.5,55 L211.5,55 L207.5,58 L209,63 L205,60 L201,63 L202.5,58 L198.5,55 L203.5,55 Z" class="twinkleStar" style="animation-delay: 1s"/>
+    <path d="M145,30 L146,33 L149,33 L147,35 L148,38 L145,36 L142,38 L143,35 L141,33 L144,33 Z" class="twinkleStarSlow" style="animation-delay: 2.7s"/>
   </g>
 </svg>
