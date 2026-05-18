@@ -1,172 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- (c) ammap.com | SVG weather icons -->
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-.20655" y="-.21122" width="1.403" height="1.4997">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-      <feOffset dx="0" dy="4" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear" />
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#B0E0FF" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#80C0E0" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5F9EA0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="darkCloudGrad" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#B0C4DE"/>
+      <stop offset="40%" stop-color="#8CAEC8"/>
+      <stop offset="80%" stop-color="#5A7A9A"/>
+      <stop offset="100%" stop-color="#4A6A8A"/>
+    </radialGradient>
+    <radialGradient id="lightCloudGrad" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#E8F2FA"/>
+      <stop offset="80%" stop-color="#B8D4E8"/>
+      <stop offset="100%" stop-color="#8EB8D4"/>
+    </radialGradient>
+    <filter id="cloudShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#2A4A6A" flood-opacity="0.4"/>
     </filter>
-    <style type="text/css">
-      <![CDATA[
-      /*
-** FOG
-*/
-      @keyframes am-weather-fog-1 {
-        0% {
-          transform: translate(0px, 0px)
-        }
-
-        50% {
-          transform: translate(7px, 0px)
-        }
-
-        100% {
-          transform: translate(0px, 0px)
-        }
-      }
-
-      .am-weather-fog-1 {
-        -webkit-animation-name: am-weather-fog-1;
-        -moz-animation-name: am-weather-fog-1;
-        -ms-animation-name: am-weather-fog-1;
-        animation-name: am-weather-fog-1;
-        -webkit-animation-duration: 8s;
-        -moz-animation-duration: 8s;
-        -ms-animation-duration: 8s;
-        animation-duration: 8s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      @keyframes am-weather-fog-2 {
-        0% {
-          transform: translate(0px, 0px)
-        }
-
-        21.05% {
-          transform: translate(-6px, 0px)
-        }
-
-        78.95% {
-          transform: translate(9px, 0px)
-        }
-
-        100% {
-          transform: translate(0px, 0px)
-        }
-      }
-
-      .am-weather-fog-2 {
-        -webkit-animation-name: am-weather-fog-2;
-        -moz-animation-name: am-weather-fog-2;
-        -ms-animation-name: am-weather-fog-2;
-        animation-name: am-weather-fog-2;
-        -webkit-animation-duration: 20s;
-        -moz-animation-duration: 20s;
-        -ms-animation-duration: 20s;
-        animation-duration: 20s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      @keyframes am-weather-fog-3 {
-        0% {
-          transform: translate(0px, 0px)
-        }
-
-        25% {
-          transform: translate(4px, 0px)
-        }
-
-        75% {
-          transform: translate(-4px, 0px)
-        }
-
-        100% {
-          transform: translate(0px, 0px)
-        }
-      }
-
-      .am-weather-fog-3 {
-        -webkit-animation-name: am-weather-fog-3;
-        -moz-animation-name: am-weather-fog-3;
-        -ms-animation-name: am-weather-fog-3;
-        animation-name: am-weather-fog-3;
-        -webkit-animation-duration: 6s;
-        -moz-animation-duration: 6s;
-        -ms-animation-duration: 6s;
-        animation-duration: 6s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      @keyframes am-weather-fog-4 {
-        0% {
-          transform: translate(0px, 0px)
-        }
-
-        50% {
-          transform: translate(-4px, 0px)
-        }
-
-        100% {
-          transform: translate(0px, 0px)
-        }
-      }
-
-      .am-weather-fog-4 {
-        -webkit-animation-name: am-weather-fog-4;
-        -moz-animation-name: am-weather-fog-4;
-        -ms-animation-name: am-weather-fog-4;
-        animation-name: am-weather-fog-4;
-        -webkit-animation-duration: 6s;
-        -moz-animation-duration: 6s;
-        -ms-animation-duration: 6s;
-        animation-duration: 6s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-      ]]>
-    </style>
+    <filter id="cloudShadowLight" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#3A5C8C" flood-opacity="0.3"/>
+    </filter>
   </defs>
-  <g transform="translate(16,-2)" filter="url(#blur)">
-    <g class="am-weather-fog" transform="translate(-10,20)" fill="none" stroke="#c6deff" stroke-linecap="round"
-      stroke-width="2">
-      <line class="am-weather-fog-1" y1="0" y2="0" x1="1" x2="37" stroke-dasharray="3, 5, 17, 5, 7" />
-      <line class="am-weather-fog-2" y1="5" y2="5" x1="9" x2="33" stroke-dasharray="11, 7, 15" />
-      <line class="am-weather-fog-3" y1="10" y2="10" x1="5" x2="40" stroke-dasharray="11, 7, 3, 5, 9" />
-      <line class="am-weather-fog-4" y1="15" y2="15" x1="7" x2="42" stroke-dasharray="13, 5, 9, 5, 3" />
-    </g>
+
+  <style>
+    .bgLayer { animation: bgPulse 6s ease-in-out infinite; }
+    .darkCloud { animation: darkCloudMove 8s ease-in-out infinite; }
+    .lightCloudLeft { animation: lightCloudMove1 7s ease-in-out infinite; }
+    .lightCloudRight { animation: lightCloudMove2 6s ease-in-out infinite; }
+    
+    /* DODANE: animacja dla poziomych kresek */
+    .horizontalLine {
+      animation: moveLeftRight 12s ease-in-out infinite;
+    }
+
+    @keyframes bgPulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; } }
+    @keyframes darkCloudMove { 0%,100% { transform: translateX(0) translateY(0); } 50% { transform: translateX(-5px) translateY(-3px); } }
+    @keyframes lightCloudMove1 { 0%,100% { transform: translateX(0) translateY(0); } 50% { transform: translateX(-3px) translateY(-2px); } }
+    @keyframes lightCloudMove2 { 0%,100% { transform: translateX(0) translateY(0); } 50% { transform: translateX(4px) translateY(-2px); } }
+    
+    /* DODANE: klatki kluczowe dla przesuwania kresek w lewo i prawo */
+    @keyframes moveLeftRight {
+      0% { transform: translateX(-20px); }
+      50% { transform: translateX(20px); }
+      100% { transform: translateX(-20px); }
+    }
+  </style>
+
+  <rect width="233" height="200" fill="url(#bgGlow)" class="bgLayer"/>
+
+  <!-- DUŻA CIEMNA CHMURA -->
+  <g class="darkCloud" filter="url(#cloudShadow)">
+    <path d="M 40,115 C 40,90 70,75 95,82 C 115,65 155,60 175,78 C 195,72 220,85 222,108 C 225,118 220,135 208,140 C 195,148 160,145 140,138 L 60,138 C 45,138 35,130 40,115 Z" fill="url(#darkCloudGrad)"/>
+  </g>
+
+  <!-- LEWA JASNA CHMURKA -->
+  <g class="lightCloudLeft" filter="url(#cloudShadowLight)">
+    <path d="M 20,102 C 20,90 33,82 45,86 C 55,75 70,73 80,81 C 89,77 99,84 101,95 C 105,101 103,111 95,115 C 87,119 75,117 65,114 L 30,114 C 23,114 20,108 20,102 Z" fill="url(#lightCloudGrad)"/>
+  </g>
+
+  <!-- PRAWA JASNA CHMURKA (większa, bliżej środka, cała widoczna) -->
+  <g class="lightCloudRight" filter="url(#cloudShadowLight)">
+    <path d="M 145,138 C 145,125 158,117 170,121 C 180,110 195,108 205,115 C 212,118 215,126 212,132 C 208,137 198,136 188,134 L 155,134 C 147,134 145,130 145,138 Z" fill="url(#lightCloudGrad)"/>
+  </g>
+
+  <!-- DŁUGIE POZIOME KRESKI (pod chmurą) – TERAZ BĘDĄ SIĘ PRZESUWAĆ -->
+  <g stroke="#778899" stroke-width="3.5" stroke-dasharray="30 18 20 8" opacity="0.5">
+    <line class="horizontalLine" x1="30" y1="155" x2="220" y2="155" style="animation-duration: 4s; animation-delay: -5s;" />
+    <line class="horizontalLine" x1="40" y1="170" x2="230" y2="170" style="animation-duration: 6s; animation-delay: -2s;" />
+    <line class="horizontalLine" x1="25" y1="185" x2="215" y2="185" style="animation-duration: 9s; animation-delay: -1s;" />
   </g>
 </svg>

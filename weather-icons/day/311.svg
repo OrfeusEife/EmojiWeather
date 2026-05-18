@@ -1,141 +1,172 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- (c) ammap.com | SVG weather icons -->
-<!-- Mix of Rain and Sleet | Contributed by hsoJ95 on GitHub: https://github.com/hsoj95 -->
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-.24684" y="-.22776" width="1.4937" height="1.5756">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-      <feOffset dx="0" dy="4" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear" />
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <!-- TŁO: RADIALNY GRADIENT ZANIKAJĄCY DO PRZEZROCZYSTOŚCI -->
+<radialGradient id="bgGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#B0E0FF" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#80C0E0" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5F9EA0" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- CHMURA: JASNA, PUSZYSTA -->
+    <radialGradient id="cloudGrad" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#E8F2FA"/>
+      <stop offset="80%" stop-color="#B8D4E8"/>
+      <stop offset="100%" stop-color="#8EB8D4"/>
+    </radialGradient>
+
+    <!-- KRYSTYDEK LODU (RÓMB) – BIAŁO-NIEBIESKI -->
+    <linearGradient id="iceDiamond" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#C0E8FF"/>
+      <stop offset="100%" stop-color="#2984D1"/>
+    </linearGradient>
+
+    <!-- FILTRY -->
+    <filter id="cloudShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#3A5C8C" flood-opacity="0.35"/>
     </filter>
-    <style type="text/css">
-      <![CDATA[
-      /*
-** RAIN
-*/
-      @keyframes am-weather-rain {
-        0% {
-          stroke-dashoffset: 0;
-        }
-
-        100% {
-          stroke-dashoffset: -100;
-        }
-      }
-
-      .am-weather-rain-1 {
-        -webkit-animation-name: am-weather-rain;
-        -moz-animation-name: am-weather-rain;
-        -ms-animation-name: am-weather-rain;
-        animation-name: am-weather-rain;
-        -webkit-animation-duration: 8s;
-        -moz-animation-duration: 8s;
-        -ms-animation-duration: 8s;
-        animation-duration: 8s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      .am-weather-rain-2 {
-        -webkit-animation-name: am-weather-rain;
-        -moz-animation-name: am-weather-rain;
-        -ms-animation-name: am-weather-rain;
-        animation-name: am-weather-rain;
-        -webkit-animation-delay: 0.25s;
-        -moz-animation-delay: 0.25s;
-        -ms-animation-delay: 0.25s;
-        animation-delay: 0.25s;
-        -webkit-animation-duration: 8s;
-        -moz-animation-duration: 8s;
-        -ms-animation-duration: 8s;
-        animation-duration: 8s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      /*
-** CLOUDS
-*/
-      @keyframes am-weather-cloud-3 {
-        0% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-
-        50% {
-          -webkit-transform: translate(2px, 0px);
-          -moz-transform: translate(2px, 0px);
-          -ms-transform: translate(2px, 0px);
-          transform: translate(2px, 0px);
-        }
-
-        100% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-      }
-
-      .am-weather-cloud-3 {
-        -webkit-animation-name: am-weather-cloud-3;
-        -moz-animation-name: am-weather-cloud-3;
-        animation-name: am-weather-cloud-3;
-        -webkit-animation-duration: 3s;
-        -moz-animation-duration: 3s;
-        animation-duration: 3s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-      ]]>
-    </style>
+    <filter id="iceGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="0.2"/>
+    </filter>
   </defs>
-  <g transform="translate(16,-2)" filter="url(#blur)">
-    <g class="am-weather-cloud-3"
-      style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud-3;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud-3;-webkit-animation-timing-function:linear">
-      <path transform="translate(-20,-11)"
-        d="m47.7 35.4c0-4.6-3.7-8.2-8.2-8.2-1 0-1.9 0.2-2.8 0.5-0.3-3.4-3.1-6.2-6.6-6.2-3.7 0-6.7 3-6.7 6.7 0 0.8 0.2 1.6 0.4 2.3-0.3-0.1-0.7-0.1-1-0.1-3.7 0-6.7 3-6.7 6.7 0 3.6 2.9 6.6 6.5 6.7h17.2c4.4-0.5 7.9-4 7.9-8.4z"
-        fill="#57a0ee" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" />
-    </g>
-    <g class="am-weather-sleet-2" transform="translate(-20,-10) rotate(10,-247.39,200.17)" fill="none" stroke="#91c0f8"
-      stroke-linecap="round">
-      <line class="am-weather-rain-1" transform="translate(-5,1)" y2="8" stroke-dasharray="0.1, 7" stroke-width="2"
-        style="-moz-animation-duration:8s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-rain;-moz-animation-timing-function:linear;-ms-animation-duration:8s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-rain;-ms-animation-timing-function:linear;-webkit-animation-duration:8s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-rain;-webkit-animation-timing-function:linear" />
-      <line class="am-weather-rain-1" transform="translate(5)" y2="8" stroke-dasharray="0.1, 7" stroke-width="2"
-        style="-moz-animation-duration:8s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-rain;-moz-animation-timing-function:linear;-ms-animation-duration:8s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-rain;-ms-animation-timing-function:linear;-webkit-animation-duration:8s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-rain;-webkit-animation-timing-function:linear" />
-    </g>
-    <g class="am-weather-rain-3" transform="translate(-20,-10) rotate(10,-245.89,217.31)" fill="none" stroke="#91c0f8"
-      stroke-dasharray="4, 7" stroke-linecap="round" stroke-width="2">
-      <line class="am-weather-rain-1" transform="translate(-13,1)" y2="8"
-        style="-moz-animation-duration:8s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-rain;-moz-animation-timing-function:linear;-ms-animation-duration:8s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-rain;-ms-animation-timing-function:linear;-webkit-animation-duration:8s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-rain;-webkit-animation-timing-function:linear" />
-      <line class="am-weather-rain-1" transform="translate(-3,2)" y2="8"
-        style="-moz-animation-duration:8s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-rain;-moz-animation-timing-function:linear;-ms-animation-duration:8s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-rain;-ms-animation-timing-function:linear;-webkit-animation-duration:8s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-rain;-webkit-animation-timing-function:linear" />
-      <line class="am-weather-rain-2" transform="translate(7,-1)" y2="8"
-        style="-moz-animation-delay:0.25s;-moz-animation-duration:8s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-rain;-moz-animation-timing-function:linear;-ms-animation-delay:0.25s;-ms-animation-duration:8s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-rain;-ms-animation-timing-function:linear;-webkit-animation-delay:0.25s;-webkit-animation-duration:8s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-rain;-webkit-animation-timing-function:linear" />
-    </g>
+
+  <style>
+    .bgLayer {
+      animation: bgPulse 6s ease-in-out infinite;
+    }
+    .cloudMove {
+      animation: cloudFloat 6s ease-in-out infinite;
+    }
+    /* Każda kropla ma własną, niezależną animację */
+    .ice1 { animation: fallIce1 3.2s ease-in-out infinite; }
+    .ice2 { animation: fallIce2 3.5s ease-in-out infinite; animation-delay: 0.6s; }
+    .ice3 { animation: fallIce3 3.0s ease-in-out infinite; animation-delay: 1.2s; }
+    .ice4 { animation: fallIce4 3.8s ease-in-out infinite; animation-delay: 0.2s; }
+    .ice5 { animation: fallIce5 3.3s ease-in-out infinite; animation-delay: 1.8s; }
+    .ice6 { animation: fallIce6 2.9s ease-in-out infinite; animation-delay: 0.9s; }
+    .ice7 { animation: fallIce7 3.6s ease-in-out infinite; animation-delay: 2.1s; }
+    .ice8 { animation: fallIce8 3.1s ease-in-out infinite; animation-delay: 1.5s; }
+    .ice9 { animation: fallIce9 3.4s ease-in-out infinite; animation-delay: 0.4s; }
+    .ice10 { animation: fallIce10 3.7s ease-in-out infinite; animation-delay: 2.4s; }
+
+    /* Różne ścieżki – lekko ukośne, żeby nie padały idealnie pionowo */
+    @keyframes fallIce1 {
+      0% { transform: translate(0px, -20px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(8px, 50px); opacity: 0; }
+    }
+    @keyframes fallIce2 {
+      0% { transform: translate(0px, -25px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(-5px, 55px); opacity: 0; }
+    }
+    @keyframes fallIce3 {
+      0% { transform: translate(0px, -15px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(12px, 45px); opacity: 0; }
+    }
+    @keyframes fallIce4 {
+      0% { transform: translate(0px, -30px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(-8px, 60px); opacity: 0; }
+    }
+    @keyframes fallIce5 {
+      0% { transform: translate(0px, -18px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(5px, 48px); opacity: 0; }
+    }
+    @keyframes fallIce6 {
+      0% { transform: translate(0px, -22px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(-10px, 52px); opacity: 0; }
+    }
+    @keyframes fallIce7 {
+      0% { transform: translate(0px, -28px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(6px, 58px); opacity: 0; }
+    }
+    @keyframes fallIce8 {
+      0% { transform: translate(0px, -16px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(-6px, 46px); opacity: 0; }
+    }
+    @keyframes fallIce9 {
+      0% { transform: translate(0px, -26px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(10px, 56px); opacity: 0; }
+    }
+    @keyframes fallIce10 {
+      0% { transform: translate(0px, -32px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(-4px, 62px); opacity: 0; }
+    }
+
+    @keyframes bgPulse {
+      0%,100% { opacity: 0.85; }
+      50% { opacity: 1; }
+    }
+    @keyframes cloudFloat {
+      0%,100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(-3px) translateY(-2px); }
+    }
+  </style>
+
+  <!-- TŁO -->
+  <rect width="233" height="200" fill="url(#bgGlow)" class="bgLayer"/>
+
+  <!-- CHMURA (PRZESUNIĘTA NA CENTRUM, X OD 50 DO 200) -->
+  <g class="cloudMove" filter="url(#cloudShadow)">
+    <path d="M 50,115 
+             C 50,95 70,85 85,90 
+             C 95,70 125,65 140,80 
+             C 155,75 175,85 180,105 
+             C 195,105 200,115 195,125 
+             C 190,135 170,135 160,130 
+             L 70,130 
+             C 55,130 45,125 50,115 Z" 
+          fill="url(#cloudGrad)"/>
+    <path d="M 70,105 C 80,90 105,85 125,93 C 135,88 152,92 158,106 C 165,102 175,108 172,118 C 168,126 148,128 135,124 L 85,126 C 73,127 66,120 70,105 Z" 
+          fill="#FFFFFF" opacity="0.4"/>
   </g>
+
+  <!-- KROPLE MARZNĄCEGO DESZCZU – ROMBY, ROZMIESZCZONE POD CHMURĄ -->
+  <!-- Każdy romb ma swój punkt startowy (x, y) pod chmurą, potem animacja przesuwa go w dół i lekko w bok -->
+
+  <g filter="url(#iceGlow)">
+    <!-- Romb 1 (x=95, y=138) -->
+    <polygon points="95,134 100,140 95,146 90,140" fill="url(#iceDiamond)" class="ice1" style="transform-origin: 95px 140px;"/>
+    <!-- Romb 2 (x=120, y=142) -->
+    <polygon points="120,138 125,144 120,150 115,144" fill="url(#iceDiamond)" class="ice2" style="transform-origin: 120px 144px;"/>
+    <!-- Romb 3 (x=145, y=136) -->
+    <polygon points="145,132 150,138 145,144 140,138" fill="url(#iceDiamond)" class="ice3" style="transform-origin: 145px 138px;"/>
+    <!-- Romb 4 (x=105, y=148) -->
+    <polygon points="105,144 110,150 105,156 100,150" fill="url(#iceDiamond)" class="ice4" style="transform-origin: 105px 150px;"/>
+    <!-- Romb 5 (x=135, y=145) -->
+    <polygon points="135,141 140,147 135,153 130,147" fill="url(#iceDiamond)" class="ice5" style="transform-origin: 135px 147px;"/>
+    <!-- Romb 6 (x=85, y=150) -->
+    <polygon points="85,146 90,152 85,158 80,152" fill="url(#iceDiamond)" class="ice6" style="transform-origin: 85px 152px;"/>
+    <!-- Romb 7 (x=155, y=140) -->
+    <polygon points="155,136 160,142 155,148 150,142" fill="url(#iceDiamond)" class="ice7" style="transform-origin: 155px 142px;"/>
+    <!-- Romb 8 (x=110, y=155) -->
+    <polygon points="110,151 115,157 110,163 105,157" fill="url(#iceDiamond)" class="ice8" style="transform-origin: 110px 157px;"/>
+    <!-- Romb 9 (x=130, y=132) -->
+    <polygon points="130,128 135,134 130,140 125,134" fill="url(#iceDiamond)" class="ice9" style="transform-origin: 130px 134px;"/>
+    <!-- Romb 10 (x=100, y=160) -->
+    <polygon points="100,156 105,162 100,168 95,162" fill="url(#iceDiamond)" class="ice10" style="transform-origin: 100px 162px;"/>
+  </g>
+
+  <!-- SZADŹ / LODOWA MGIEŁKA PRZY PODŁOŻU -->
+  <ellipse cx="115" cy="188" rx="80" ry="6" fill="#C0E0FF" opacity="0.25" filter="url(#iceGlow)"/>
+  <ellipse cx="115" cy="193" rx="55" ry="3" fill="#FFFFFF" opacity="0.15" filter="url(#iceGlow)"/>
 </svg>

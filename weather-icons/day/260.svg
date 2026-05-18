@@ -1,130 +1,112 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- (c) ammap.com | SVG weather icons -->
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-.20655" y="-.21122" width="1.403" height="1.4997">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-      <feOffset dx="0" dy="4" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear" />
-      </feComponentTransfer>
+    <!-- TŁO (zimowy, lekko niebieski gradient) -->
+   <radialGradient id="bgGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#B0E0FF" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#80C0E0" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5F9EA0" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- FILTR DO PŁATKÓW (miękka poświata) -->
+    <filter id="snowGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.2" result="blur"/>
       <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <style type="text/css">
-      <![CDATA[
-      /*
-** FROST
-*/
-      @keyframes am-weather-frost {
-        0% {
-          -webkit-transform: translate(0.0px, 0.0px);
-          -moz-transform: translate(0.0px, 0.0px);
-          -ms-transform: translate(0.0px, 0.0px);
-          transform: translate(0.0px, 0.0px);
-        }
 
-        1% {
-          -webkit-transform: translate(0.3px, 0.0px);
-          -moz-transform: translate(0.3px, 0.0px);
-          -ms-transform: translate(0.3px, 0.0px);
-          transform: translate(0.3px, 0.0px);
-        }
-
-        3% {
-          -webkit-transform: translate(-0.3px, 0.0px);
-          -moz-transform: translate(-0.3px, 0.0px);
-          -ms-transform: translate(-0.3px, 0.0px);
-          transform: translate(-0.3px, 0.0px);
-        }
-
-        5% {
-          -webkit-transform: translate(0.3px, 0.0px);
-          -moz-transform: translate(0.3px, 0.0px);
-          -ms-transform: translate(0.3px, 0.0px);
-          transform: translate(0.3px, 0.0px);
-        }
-
-        7% {
-          -webkit-transform: translate(-0.3px, 0.0px);
-          -moz-transform: translate(-0.3px, 0.0px);
-          -ms-transform: translate(-0.3px, 0.0px);
-          transform: translate(-0.3px, 0.0px);
-        }
-
-        9% {
-          -webkit-transform: translate(0.3px, 0.0px);
-          -moz-transform: translate(0.3px, 0.0px);
-          -ms-transform: translate(0.3px, 0.0px);
-          transform: translate(0.3px, 0.0px);
-        }
-
-        11% {
-          -webkit-transform: translate(-0.3px, 0.0px);
-          -moz-transform: translate(-0.3px, 0.0px);
-          -ms-transform: translate(-0.3px, 0.0px);
-          transform: translate(-0.3px, 0.0px);
-        }
-
-        13% {
-          -webkit-transform: translate(0.3px, 0.0px);
-          -moz-transform: translate(0.3px, 0.0px);
-          -ms-transform: translate(0.3px, 0.0px);
-          transform: translate(0.3px, 0.0px);
-        }
-
-        15% {
-          -webkit-transform: translate(-0.3px, 0.0px);
-          -moz-transform: translate(-0.3px, 0.0px);
-          -ms-transform: translate(-0.3px, 0.0px);
-          transform: translate(-0.3px, 0.0px);
-        }
-
-        16% {
-          -webkit-transform: translate(0.0px, 0.0px);
-          -moz-transform: translate(0.0px, 0.0px);
-          -ms-transform: translate(0.0px, 0.0px);
-          transform: translate(0.0px, 0.0px);
-        }
-
-        100% {
-          -webkit-transform: translate(0.0px, 0.0px);
-          -moz-transform: translate(0.0px, 0.0px);
-          -ms-transform: translate(0.0px, 0.0px);
-          transform: translate(0.0px, 0.0px);
-        }
-      }
-
-      .am-weather-frost {
-        -webkit-animation-name: am-weather-frost;
-        -moz-animation-name: am-weather-frost;
-        animation-name: am-weather-frost;
-        -webkit-animation-duration: 1.11s;
-        -moz-animation-duration: 1.11s;
-        animation-duration: 1.11s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-      ]]>
-    </style>
+    <!-- SYMBOL PŁATKA ŚNIEGU (środek w 0,0) -->
+    <g id="snowflake" fill="none" stroke="#8EC5FF" stroke-width="1.8" stroke-linecap="round">
+      <!-- 6 ramion (co 60°) -->
+      <g>
+        <line x1="0" y1="0" x2="0" y2="-38" />
+        <line x1="0" y1="-25" x2="-6" y2="-32" />
+        <line x1="0" y1="-25" x2="6" y2="-32" />
+        <line x1="0" y1="-12" x2="-6" y2="-15" />
+        <line x1="0" y1="-12" x2="6" y2="-15" />
+      </g>
+      <g transform="rotate(60)">
+        <line x1="0" y1="0" x2="0" y2="-38" />
+        <line x1="0" y1="-25" x2="-6" y2="-32" />
+        <line x1="0" y1="-25" x2="6" y2="-32" />
+        <line x1="0" y1="-12" x2="-6" y2="-15" />
+        <line x1="0" y1="-12" x2="6" y2="-15" />
+      </g>
+      <g transform="rotate(120)">
+        <line x1="0" y1="0" x2="0" y2="-38" />
+        <line x1="0" y1="-25" x2="-6" y2="-32" />
+        <line x1="0" y1="-25" x2="6" y2="-32" />
+        <line x1="0" y1="-12" x2="-6" y2="-15" />
+        <line x1="0" y1="-12" x2="6" y2="-15" />
+      </g>
+      <g transform="rotate(180)">
+        <line x1="0" y1="0" x2="0" y2="-38" />
+        <line x1="0" y1="-25" x2="-6" y2="-32" />
+        <line x1="0" y1="-25" x2="6" y2="-32" />
+        <line x1="0" y1="-12" x2="-6" y2="-15" />
+        <line x1="0" y1="-12" x2="6" y2="-15" />
+      </g>
+      <g transform="rotate(240)">
+        <line x1="0" y1="0" x2="0" y2="-38" />
+        <line x1="0" y1="-25" x2="-6" y2="-32" />
+        <line x1="0" y1="-25" x2="6" y2="-32" />
+        <line x1="0" y1="-12" x2="-6" y2="-15" />
+        <line x1="0" y1="-12" x2="6" y2="-15" />
+      </g>
+      <g transform="rotate(300)">
+        <line x1="0" y1="0" x2="0" y2="-38" />
+        <line x1="0" y1="-25" x2="-6" y2="-32" />
+        <line x1="0" y1="-25" x2="6" y2="-32" />
+        <line x1="0" y1="-12" x2="-6" y2="-15" />
+        <line x1="0" y1="-12" x2="6" y2="-15" />
+      </g>
+      <!-- Środkowa kropka i akcenty -->
+      <circle cx="0" cy="0" r="2.5" fill="#E8F0FF" stroke="none"/>
+      <circle cx="0" cy="-32" r="1.5" fill="#E8F0FF" stroke="none"/>
+      <circle cx="0" cy="-18" r="1" fill="#E8F0FF" stroke="none"/>
+    </g>
   </defs>
-  <g transform="translate(0,2)" filter="url(#blur)">
-    <g class="am-weather-frost" stroke="#57a0ee" transform="translate(0,2)" fill="none" stroke-width="2"
-      stroke-linecap="round"
-      style="-moz-animation-duration:1.11s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-frost;-moz-animation-timing-function:linear;-webkit-animation-duration:1.11s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-frost;-webkit-animation-timing-function:linear">
-      <path d="M11,32H45" />
-      <path d="M15.5,37H40.5" />
-      <path d="M22.5,42H33.5" />
+
+  <style>
+    .bgLayer { animation: bgPulse 6s ease-in-out infinite; }
+    .horizontalLine { animation: moveLeftRight 12s ease-in-out infinite; }
+    
+    /* Animacje dla płatków – każdy ma inny czas i opóźnienie */
+    .sf1 { animation: rotateSnow 6s linear infinite; }
+    .sf2 { animation: rotateSnow 5s linear infinite; }
+    .sf3 { animation: rotateSnow 4s linear infinite; }
+    .sf4 { animation: rotateSnow 7s linear infinite; }
+    
+    @keyframes bgPulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; } }
+    @keyframes moveLeftRight {
+      0% { transform: translateX(-20px); }
+      50% { transform: translateX(20px); }
+      100% { transform: translateX(-20px); }
+    }
+    @keyframes rotateSnow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <!-- TŁO -->
+  <rect width="233" height="200" fill="url(#bgGlow)" class="bgLayer"/>
+
+  <!-- PŁATKI ŚNIEGU (zamiast chmur) -->
+  <!-- Duży płatek centralnie (w miejscu głównej chmury) -->
+  <g transform="translate(116, 100)">
+    <g class="sf1" filter="url(#snowGlow)">
+      <use href="#snowflake" transform="scale(1.3)"/>
     </g>
-    <g>
-      <path stroke="#57a0ee" transform="translate(0,0)" fill="none" stroke-width="2" stroke-linecap="round"
-        d="M28,31V9M28,22l11,-3.67M34,20l2,-4M34,20l4,2M28,22l-11,-3.67M22,20l-2,-4M22,20l-4,2M28,14.27l3.01,-3.02M28,14.27l-3.01,-3.02" />
-    </g>
+  </g>
+
+  
+
+  <!-- POZIOME KRESKI (symbolizujące wiatr lub śnieg) – BEZ ZMIAN -->
+  <g stroke="#778899" stroke-width="2.5" stroke-dasharray="30 18 20 8" opacity="0.5">
+    <line class="horizontalLine" x1="30" y1="155" x2="220" y2="155" style="animation-duration: 4s; animation-delay: -5s;" />
+    <line class="horizontalLine" x1="40" y1="170" x2="230" y2="170" style="animation-duration: 6s; animation-delay: -2s;" />
+    <line class="horizontalLine" x1="25" y1="185" x2="215" y2="185" style="animation-duration: 9s; animation-delay: -1s;" />
   </g>
 </svg>

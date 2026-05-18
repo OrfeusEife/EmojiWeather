@@ -1,178 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- (c) ammap.com | SVG weather icons -->
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-.20655" y="-.28472" width="1.403" height="1.6944">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-      <feOffset dx="0" dy="4" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear" />
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <!-- TŁO -->
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#00BFFF" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#008B8B" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5F9EA0" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- SŁOŃCE -->
+    <radialGradient id="sunGlowHard" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE566" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#FFB820" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF8C00" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="sunCoreHard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF176"/>
+      <stop offset="100%" stop-color="#FF9800"/>
+    </linearGradient>
+
+    <!-- CHMURKA (gradient bez zmian) -->
+    <radialGradient id="cloudGrad" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#E8F2FA"/>
+      <stop offset="80%" stop-color="#B8D4E8"/>
+      <stop offset="100%" stop-color="#8EB8D4"/>
+    </radialGradient>
+
+    <!-- FILTRY -->
+    <filter id="glowHard" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
     </filter>
-    <style type="text/css">
-      <![CDATA[
-      /*
-** CLOUDS
-*/
-      @keyframes am-weather-cloud-2 {
-        0% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-
-        50% {
-          -webkit-transform: translate(2px, 0px);
-          -moz-transform: translate(2px, 0px);
-          -ms-transform: translate(2px, 0px);
-          transform: translate(2px, 0px);
-        }
-
-        100% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-      }
-
-      .am-weather-cloud-2 {
-        -webkit-animation-name: am-weather-cloud-2;
-        -moz-animation-name: am-weather-cloud-2;
-        animation-name: am-weather-cloud-2;
-        -webkit-animation-duration: 3s;
-        -moz-animation-duration: 3s;
-        animation-duration: 3s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      /*
-** SUN
-*/
-      @keyframes am-weather-sun {
-        0% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-
-        100% {
-          -webkit-transform: rotate(360deg);
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-
-      .am-weather-sun {
-        -webkit-animation-name: am-weather-sun;
-        -moz-animation-name: am-weather-sun;
-        -ms-animation-name: am-weather-sun;
-        animation-name: am-weather-sun;
-        -webkit-animation-duration: 9s;
-        -moz-animation-duration: 9s;
-        -ms-animation-duration: 9s;
-        animation-duration: 9s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      @keyframes am-weather-sun-shiny {
-        0% {
-          stroke-dasharray: 3px 10px;
-          stroke-dashoffset: 0px;
-        }
-
-        50% {
-          stroke-dasharray: 0.1px 10px;
-          stroke-dashoffset: -1px;
-        }
-
-        100% {
-          stroke-dasharray: 3px 10px;
-          stroke-dashoffset: 0px;
-        }
-      }
-
-      .am-weather-sun-shiny line {
-        -webkit-animation-name: am-weather-sun-shiny;
-        -moz-animation-name: am-weather-sun-shiny;
-        -ms-animation-name: am-weather-sun-shiny;
-        animation-name: am-weather-sun-shiny;
-        -webkit-animation-duration: 2s;
-        -moz-animation-duration: 2s;
-        -ms-animation-duration: 2s;
-        animation-duration: 2s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-      ]]>
-    </style>
+    <filter id="cloudShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#3A5C8C" flood-opacity="0.3"/>
+    </filter>
   </defs>
-  <g transform="translate(16,-2)" filter="url(#blur)">
-    <g transform="translate(0,16)">
-      <g class="am-weather-sun"
-        style="-moz-animation-duration:9s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-sun;-moz-animation-timing-function:linear;-ms-animation-duration:9s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-sun;-ms-animation-timing-function:linear;-webkit-animation-duration:9s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-sun;-webkit-animation-timing-function:linear">
-        <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round" stroke-width="2" />
-        <g transform="rotate(45)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(90)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(135)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="scale(-1)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(225)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(-90)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(-45)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <circle r="5" fill="#ffa500" stroke="#ffa500" stroke-width="2" />
-      </g>
-    </g>
-    <g class="am-weather-cloud-2"
-      style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud-2;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud-2;-webkit-animation-timing-function:linear">
-      <path transform="translate(-20,-11)"
-        d="m47.7 35.4c0-4.6-3.7-8.2-8.2-8.2-1 0-1.9 0.2-2.8 0.5-0.3-3.4-3.1-6.2-6.6-6.2-3.7 0-6.7 3-6.7 6.7 0 0.8 0.2 1.6 0.4 2.3-0.3-0.1-0.7-0.1-1-0.1-3.7 0-6.7 3-6.7 6.7 0 3.6 2.9 6.6 6.5 6.7h17.2c4.4-0.5 7.9-4 7.9-8.4z"
-        fill="#c6deff" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" />
-    </g>
+
+  <style>
+    .bgLayer { animation: bgPulse 6s ease-in-out infinite; }
+    .sunPulseHard { animation: pulseHard 3.5s ease-in-out infinite; transform-origin: 116px 100px; }
+    .sunGlowHardAnim { animation: glowHardPulse 3.5s ease-in-out infinite; transform-origin: 116px 100px; }
+    .cloudMove { animation: cloudFloat 6s ease-in-out infinite; }
+
+    @keyframes bgPulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; } }
+    @keyframes pulseHard { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+    @keyframes glowHardPulse { 0%,100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.14); opacity: 1; } }
+    @keyframes cloudFloat { 0%,100% { transform: translateX(0) translateY(0); } 50% { transform: translateX(-2px) translateY(-2px); } }
+  </style>
+
+  <!-- TŁO -->
+  <rect width="233" height="200" fill="url(#bgGlow)" class="bgLayer"/>
+
+  <!-- SŁOŃCE -->
+  <circle cx="116" cy="100" r="52" fill="url(#sunGlowHard)" filter="url(#glowHard)" class="sunGlowHardAnim"/>
+  <g class="sunPulseHard">
+    <circle cx="116" cy="100" r="32" fill="url(#sunCoreHard)" filter="url(#glowHard)" opacity="0.9"/>
+    <circle cx="116" cy="100" r="28" fill="url(#sunCoreHard)"/>
+    <circle cx="106" cy="88" r="6" fill="#FFF9C4" opacity="0.9"/>
+    <circle cx="126" cy="104" r="5" fill="#FFF9C4" opacity="0.8"/>
+    <circle cx="108" cy="112" r="4" fill="#FFF9C4" opacity="0.7"/>
+  </g>
+
+  <!-- CHMURKA W ODBICIU LUSTRZANYM W POZIOMIE (flipped), NACHODZĄCA NA SŁOŃCE Z PRAWEJ STRONY -->
+  <g class="cloudMove" filter="url(#cloudShadow)" transform="translate(240, 0) scale(-1, 1)">
+    <path d="M 125,115 
+             C 125,100 140,92 152,96 
+             C 160,82 178,80 188,90 
+             C 196,86 208,92 210,105 
+             C 215,108 216,118 210,125 
+             C 205,130 190,128 180,125 
+             L 135,125 
+             C 125,125 120,120 125,115 Z"
+          fill="url(#cloudGrad)"/>
   </g>
 </svg>

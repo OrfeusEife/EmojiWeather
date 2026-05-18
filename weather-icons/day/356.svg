@@ -1,179 +1,124 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- (c) ammap.com | SVG weather icons -->
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-.20655" y="-.21122" width="1.403" height="1.4997">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-      <feOffset dx="0" dy="4" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear" />
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <!-- TŁO: MOCNY GRADIENT ZANIKAJĄCY DO PRZEZROCZYSTOŚCI -->
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#00BFFF" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#008B8B" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5F9EA0" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- SŁOŃCE: JASNE, MOCNE ŻÓŁCIE I POMARAŃCZE -->
+    <radialGradient id="sunGlowHard" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE566" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#FFB820" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF8C00" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="sunCoreHard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF176"/>
+      <stop offset="100%" stop-color="#FF9800"/>
+    </linearGradient>
+
+    <!-- CHMURA: JEDEN KSZTAŁT Z NATURALNYM, RADIALNYM CIENIOWANIEM -->
+    <radialGradient id="cloudGrad" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#E8F2FA"/>
+      <stop offset="80%" stop-color="#B8D4E8"/>
+      <stop offset="100%" stop-color="#8EB8D4"/>
+    </radialGradient>
+
+    <!-- DESZCZ: INTENSYWNY NIEBIESKI -->
+    <linearGradient id="rainHard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#40C4FF"/>
+      <stop offset="100%" stop-color="#1A73E8"/>
+    </linearGradient>
+
+    <!-- FILTRY -->
+    <filter id="glowHard" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
     </filter>
-    <style type="text/css">
-      <![CDATA[
-      /*
-** SUN
-*/
-      @keyframes am-weather-sun {
-        0% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-
-        100% {
-          -webkit-transform: rotate(360deg);
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-
-      .am-weather-sun {
-        -webkit-animation-name: am-weather-sun;
-        -moz-animation-name: am-weather-sun;
-        -ms-animation-name: am-weather-sun;
-        animation-name: am-weather-sun;
-        -webkit-animation-duration: 9s;
-        -moz-animation-duration: 9s;
-        -ms-animation-duration: 9s;
-        animation-duration: 9s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      /*
-** CLOUDS
-*/
-      @keyframes am-weather-cloud-2 {
-        0% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-
-        50% {
-          -webkit-transform: translate(2px, 0px);
-          -moz-transform: translate(2px, 0px);
-          -ms-transform: translate(2px, 0px);
-          transform: translate(2px, 0px);
-        }
-
-        100% {
-          -webkit-transform: translate(0px, 0px);
-          -moz-transform: translate(0px, 0px);
-          -ms-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-        }
-      }
-
-      .am-weather-cloud-2 {
-        -webkit-animation-name: am-weather-cloud-2;
-        -moz-animation-name: am-weather-cloud-2;
-        animation-name: am-weather-cloud-2;
-        -webkit-animation-duration: 3s;
-        -moz-animation-duration: 3s;
-        animation-duration: 3s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-
-      /*
-** RAIN
-*/
-      @keyframes am-weather-rain {
-        0% {
-          stroke-dashoffset: 0;
-        }
-
-        100% {
-          stroke-dashoffset: -100;
-        }
-      }
-
-      .am-weather-rain-1 {
-        -webkit-animation-name: am-weather-rain;
-        -moz-animation-name: am-weather-rain;
-        -ms-animation-name: am-weather-rain;
-        animation-name: am-weather-rain;
-        -webkit-animation-duration: 8s;
-        -moz-animation-duration: 8s;
-        -ms-animation-duration: 8s;
-        animation-duration: 8s;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-      }
-      ]]>
-    </style>
+    <filter id="cloudShadowHard" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#3A5C8C" flood-opacity="0.35"/>
+    </filter>
   </defs>
-  <g transform="translate(16,-2)" filter="url(#blur)">
-    <g transform="translate(0,16)">
-      <g class="am-weather-sun"
-        style="-moz-animation-duration:9s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-sun;-moz-animation-timing-function:linear;-ms-animation-duration:9s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-sun;-ms-animation-timing-function:linear;-webkit-animation-duration:9s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-sun;-webkit-animation-timing-function:linear">
-        <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round" stroke-width="2" />
-        <g transform="rotate(45)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(90)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(135)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="scale(-1)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(225)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(-90)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <g transform="rotate(-45)">
-          <line transform="translate(0,9)" y2="3" fill="none" stroke="#ffa500" stroke-linecap="round"
-            stroke-width="2" />
-        </g>
-        <circle r="5" fill="#ffa500" stroke="#ffa500" stroke-width="2" />
-      </g>
-    </g>
-    <g class="am-weather-cloud-3"
-      style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud-2;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud-2;-webkit-animation-timing-function:linear">
-      <path transform="translate(-20,-11)"
-        d="m47.7 35.4c0-4.6-3.7-8.2-8.2-8.2-1 0-1.9 0.2-2.8 0.5-0.3-3.4-3.1-6.2-6.6-6.2-3.7 0-6.7 3-6.7 6.7 0 0.8 0.2 1.6 0.4 2.3-0.3-0.1-0.7-0.1-1-0.1-3.7 0-6.7 3-6.7 6.7 0 3.6 2.9 6.6 6.5 6.7h17.2c4.4-0.5 7.9-4 7.9-8.4z"
-        fill="#57a0ee" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" />
-    </g>
-    <g class="am-weather-rain-1" transform="translate(-20,-10) rotate(10,-238.68,233.96)">
-      <line class="am-weather-rain-1" transform="translate(-6,1)" y2="8" fill="none" stroke="#91c0f8"
-        stroke-dasharray="4, 7" stroke-linecap="round" stroke-width="2"
-        style="-moz-animation-duration:8s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-rain;-moz-animation-timing-function:linear;-ms-animation-duration:8s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-rain;-ms-animation-timing-function:linear;-webkit-animation-duration:8s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-rain;-webkit-animation-timing-function:linear" />
-    </g>
+
+  <style>
+    .bgLayer {
+      animation: bgPulse 6s ease-in-out infinite;
+    }
+    /* NOWA ANIMACJA SŁOŃCA: wychodzi i chowa się za chmurą */
+    .sunMove {
+      animation: slideBehindCloud 8s ease-in-out infinite alternate;
+      transform-origin: 78px 70px;
+    }
+    .cloudMoveHard {
+      animation: cloudMove 5s ease-in-out infinite;
+    }
+    .rainDropHard {
+      animation: fallHard 1.2s linear infinite;
+    }
+    .rd2h { animation-delay: 0.4s; }
+    .rd3h { animation-delay: 0.7s; }
+    .rd4h { animation-delay: 0.2s; }
+    .rd5h { animation-delay: 0.9s; }
+
+    @keyframes bgPulse {
+      0%,100% { opacity: 0.85; }
+      50% { opacity: 1; }
+    }
+    @keyframes slideBehindCloud {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(72px); }
+    }
+    @keyframes cloudMove {
+      0%,100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(-3px) translateY(-2px); }
+    }
+    @keyframes fallHard {
+      0% { transform: translateY(-15px); opacity: 0; }
+      30% { opacity: 1; }
+      70% { opacity: 0.9; }
+      100% { transform: translateY(38px); opacity: 0; }
+    }
+  </style>
+
+  <!-- TŁO – TYLKO POD ZJAWISKIEM, ZANIKA NA KRAWĘDZIACH -->
+  <rect width="233" height="200" fill="url(#bgGlow)" class="bgLayer"/>
+
+  <!-- SŁOŃCE – TERAZ RUCHOME, BEZ PULSOWANIA -->
+  <g class="sunMove">
+    <!-- Poświata -->
+    <circle cx="78" cy="70" r="40" fill="url(#sunGlowHard)" filter="url(#glowHard)"/>
+    <!-- Tarcza słoneczna -->
+    <circle cx="78" cy="70" r="26" fill="url(#sunCoreHard)" filter="url(#glowHard)" opacity="0.9"/>
+    <circle cx="78" cy="70" r="22" fill="url(#sunCoreHard)"/>
+    <!-- Ostre akcenty -->
+    <circle cx="70" cy="62" r="5" fill="#FFF9C4" opacity="0.9"/>
+    <circle cx="86" cy="74" r="4" fill="#FFF9C4" opacity="0.8"/>
+    <circle cx="72" cy="80" r="3" fill="#FFF9C4" opacity="0.7"/>
   </g>
+
+  <!-- CHMURA – JEDEN KSZTAŁT, NATURALNIE CIENIOWANA -->
+  <path class="cloudMoveHard" filter="url(#cloudShadowHard)"
+        d="M 50,115 
+           C 50,95 70,85 85,90 
+           C 95,70 125,65 140,80 
+           C 155,75 175,85 180,105 
+           C 195,105 200,115 195,125 
+           C 190,135 170,135 160,130 
+           L 70,130 
+           C 55,130 45,125 50,115 Z"
+        fill="url(#cloudGrad)"/>
+
+  <!-- KROPLE DESZCZU -->
+  <g>
+    <path class="rainDropHard" d="M85 135 C85 135 81 142 81 145 C81 148 83 150 85 150 C87 150 89 148 89 145 C89 142 85 135 85 135Z" fill="url(#rainHard)"/>
+    <path class="rainDropHard rd2h" d="M115 140 C115 140 111 147 111 150 C111 153 113 155 115 155 C117 155 119 153 119 150 C119 147 115 140 115 140Z" fill="url(#rainHard)"/>
+    <path class="rainDropHard rd3h" d="M145 132 C145 132 141 139 141 142 C141 145 143 147 145 147 C147 147 149 145 149 142 C149 139 145 132 145 132Z" fill="url(#rainHard)"/>
+    <path class="rainDropHard rd4h" d="M65 148 C65 148 61 155 61 158 C61 161 63 163 65 163 C67 163 69 161 69 158 C69 155 65 148 65 148Z" fill="url(#rainHard)"/>
+    <path class="rainDropHard rd5h" d="M155 145 C155 145 151 152 151 155 C151 158 153 160 155 160 C157 160 159 158 159 155 C159 152 155 145 155 145Z" fill="url(#rainHard)"/>
+  </g>
+
+  <!-- WILGOTNE ODBLYSKI NA DOLE -->
+  <ellipse cx="115" cy="186" rx="70" ry="5" fill="#40C4FF" opacity="0.2" filter="url(#glowHard)"/>
 </svg>

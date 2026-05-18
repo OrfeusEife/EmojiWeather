@@ -1,160 +1,146 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- (c) ammap.com | SVG weather icons -->
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
- <defs>
-  <filter id="blur" x="-.24684" y="-.26897" width="1.4937" height="1.6759">
-   <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-   <feOffset dx="0" dy="4" result="offsetblur"/>
-   <feComponentTransfer>
-    <feFuncA slope="0.05" type="linear"/>
-   </feComponentTransfer>
-   <feMerge>
-    <feMergeNode/>
-    <feMergeNode in="SourceGraphic"/>
-   </feMerge>
-  </filter>
-  <style type="text/css"><![CDATA[
-/*
-** CLOUDS
-*/
-@keyframes am-weather-cloud-2 {
-  0% {
-    -webkit-transform: translate(0px,0px);
-       -moz-transform: translate(0px,0px);
-        -ms-transform: translate(0px,0px);
-            transform: translate(0px,0px);
-  }
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- TŁO: RADIALNY GRADIENT ZANIKAJĄCY DO PRZEZROCZYSTOŚCI -->
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#4A9FD8" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#2E7DBC" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#1A5A8A" stop-opacity="0"/>
+    </radialGradient>
 
-  50% {
-    -webkit-transform: translate(2px,0px);
-       -moz-transform: translate(2px,0px);
-        -ms-transform: translate(2px,0px);
-            transform: translate(2px,0px);
-  }
+    <!-- CHMURA: JASNA, PUSZYSTA -->
+    <radialGradient id="cloudGrad" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#F0F4F8"/>
+      <stop offset="80%" stop-color="#D0E0EC"/>
+      <stop offset="100%" stop-color="#A0B8CC"/>
+    </radialGradient>
 
-  100% {
-    -webkit-transform: translate(0px,0px);
-       -moz-transform: translate(0px,0px);
-        -ms-transform: translate(0px,0px);
-            transform: translate(0px,0px);
-  }
-}
+    <!-- PŁATEK ŚNIEGU -->
+    <radialGradient id="snowflake" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#D0E8FF" stop-opacity="0.6"/>
+    </radialGradient>
 
-.am-weather-cloud-2 {
-  -webkit-animation-name: am-weather-cloud-2;
-     -moz-animation-name: am-weather-cloud-2;
-          animation-name: am-weather-cloud-2;
-  -webkit-animation-duration: 3s;
-     -moz-animation-duration: 3s;
-          animation-duration: 3s;
-  -webkit-animation-timing-function: linear;
-     -moz-animation-timing-function: linear;
-          animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-     -moz-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-}
+    <!-- FILTRY -->
+    <filter id="cloudShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#3A6A8A" flood-opacity="0.3"/>
+    </filter>
+    <filter id="snowGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="0.5"/>
+    </filter>
+    <filter id="snowShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0.5" dy="0.5" stdDeviation="0.5" flood-color="#1A4A6A" flood-opacity="0.4"/>
+    </filter>
+  </defs>
 
-/*
-** SNOW
-*/
-@keyframes am-weather-snow {
-  0% {
-    -webkit-transform: translateX(0) translateY(0);
-       -moz-transform: translateX(0) translateY(0);
-        -ms-transform: translateX(0) translateY(0);
-            transform: translateX(0) translateY(0);
-  }
+  <style>
+    .bgLayer {
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+    .cloudMove {
+      animation: cloudFloat 6s ease-in-out infinite;
+    }
+    .snowflake {
+      animation: fallModerateSnow 3.5s ease-in-out infinite;
+      filter: url(#snowShadow);
+    }
+    /* Opóźnienia – umiarkowana gęstość (co ~0,2–0,3s) */
+    .s1 { animation-delay: 0s; }
+    .s2 { animation-delay: 0.25s; }
+    .s3 { animation-delay: 0.50s; }
+    .s4 { animation-delay: 0.75s; }
+    .s5 { animation-delay: 1.00s; }
+    .s6 { animation-delay: 1.25s; }
+    .s7 { animation-delay: 1.50s; }
+    .s8 { animation-delay: 1.75s; }
+    .s9 { animation-delay: 2.00s; }
+    .s10 { animation-delay: 2.25s; }
+    .s11 { animation-delay: 2.50s; }
+    .s12 { animation-delay: 2.75s; }
+    .s13 { animation-delay: 3.00s; }
+    .s14 { animation-delay: 3.25s; }
+    .s15 { animation-delay: 0.15s; }
+    .s16 { animation-delay: 0.40s; }
+    .s17 { animation-delay: 0.65s; }
+    .s18 { animation-delay: 0.90s; }
+    .s19 { animation-delay: 1.15s; }
+    .s20 { animation-delay: 1.40s; }
+    .s21 { animation-delay: 1.65s; }
+    .s22 { animation-delay: 1.90s; }
+    .s23 { animation-delay: 2.15s; }
+    .s24 { animation-delay: 2.40s; }
+    .s25 { animation-delay: 2.65s; }
+    .s26 { animation-delay: 2.90s; }
+    .s27 { animation-delay: 3.15s; }
+    .s28 { animation-delay: 3.40s; }
 
-  33.33% {
-    -webkit-transform: translateX(-1.2px) translateY(2px);
-       -moz-transform: translateX(-1.2px) translateY(2px);
-        -ms-transform: translateX(-1.2px) translateY(2px);
-            transform: translateX(-1.2px) translateY(2px);
-  }
+    @keyframes bgPulse {
+      0%,100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+    @keyframes cloudFloat {
+      0%,100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(-3px) translateY(-2px); }
+    }
+    @keyframes fallModerateSnow {
+      0% { transform: translateY(-15px) translateX(0) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translateY(55px) translateX(-8px) rotate(360deg); opacity: 0; }
+    }
+  </style>
 
-  66.66% {
-    -webkit-transform: translateX(1.4px) translateY(4px);
-       -moz-transform: translateX(1.4px) translateY(4px);
-        -ms-transform: translateX(1.4px) translateY(4px);
-            transform: translateX(1.4px) translateY(4px);
-    opacity: 1;
-  }
+  <!-- TŁO -->
+  <rect width="233" height="200" fill="url(#bgGlow)" class="bgLayer"/>
 
-  100% {
-    -webkit-transform: translateX(-1.6px) translateY(6px);
-       -moz-transform: translateX(-1.6px) translateY(6px);
-        -ms-transform: translateX(-1.6px) translateY(6px);
-            transform: translateX(-1.6px) translateY(6px);
-    opacity: 0;
-  }
-}
-
-.am-weather-snow-1 {
-  -webkit-animation-name: am-weather-snow;
-     -moz-animation-name: am-weather-snow;
-      -ms-animation-name: am-weather-snow;
-          animation-name: am-weather-snow;
-  -webkit-animation-duration: 2s;
-     -moz-animation-duration: 2s;
-      -ms-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-timing-function: linear;
-     -moz-animation-timing-function: linear;
-      -ms-animation-timing-function: linear;
-          animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-     -moz-animation-iteration-count: infinite;
-      -ms-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-}
-
-.am-weather-snow-2 {
-  -webkit-animation-name: am-weather-snow;
-     -moz-animation-name: am-weather-snow;
-      -ms-animation-name: am-weather-snow;
-          animation-name: am-weather-snow;
-  -webkit-animation-delay: 1.2s;
-     -moz-animation-delay: 1.2s;
-      -ms-animation-delay: 1.2s;
-          animation-delay: 1.2s;
-  -webkit-animation-duration: 2s;
-     -moz-animation-duration: 2s;
-      -ms-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-timing-function: linear;
-     -moz-animation-timing-function: linear;
-      -ms-animation-timing-function: linear;
-          animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-     -moz-animation-iteration-count: infinite;
-      -ms-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-}
-
-        ]]></style>
- </defs>
- <g transform="translate(-4,-12)" filter="url(#blur)">
-  <g transform="translate(20,10)">
-   <g class="am-weather-cloud-2" style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud-2;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud-2;-webkit-animation-timing-function:linear">
-    <path transform="translate(-20,-11)" d="m47.7 35.4c0-4.6-3.7-8.2-8.2-8.2-1 0-1.9 0.2-2.8 0.5-0.3-3.4-3.1-6.2-6.6-6.2-3.7 0-6.7 3-6.7 6.7 0 0.8 0.2 1.6 0.4 2.3-0.3-0.1-0.7-0.1-1-0.1-3.7 0-6.7 3-6.7 6.7 0 3.6 2.9 6.6 6.5 6.7h17.2c4.4-0.5 7.9-4 7.9-8.4z" fill="#57a0ee" stroke="#fff" stroke-linejoin="round" stroke-width="1.2"/>
-   </g>
-   <g class="am-weather-snow-1" style="-moz-animation-duration:2s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-snow;-moz-animation-timing-function:linear;-ms-animation-duration:2s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-snow;-ms-animation-timing-function:linear;-webkit-animation-duration:2s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-snow;-webkit-animation-timing-function:linear">
-    <g transform="translate(7,28)" fill="none" stroke="#57a0ee" stroke-linecap="round">
-     <line transform="translate(0,9)" y1="-2.5" y2="2.5" stroke-width="1.2"/>
-     <line transform="rotate(45,-10.864,4.5)" y1="-2.5" y2="2.5"/>
-     <line transform="rotate(90,-4.5,4.5)" y1="-2.5" y2="2.5"/>
-     <line transform="rotate(135,-1.864,4.5)" y1="-2.5" y2="2.5"/>
-    </g>
-   </g>
-   <g class="am-weather-snow-2" style="-moz-animation-delay:1.2s;-moz-animation-duration:2s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-snow;-moz-animation-timing-function:linear;-ms-animation-delay:1.2s;-ms-animation-duration:2s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-snow;-ms-animation-timing-function:linear;-webkit-animation-delay:1.2s;-webkit-animation-duration:2s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-snow;-webkit-animation-timing-function:linear">
-    <g transform="translate(16,28)" fill="none" stroke="#57a0ee" stroke-linecap="round">
-     <line transform="translate(0,9)" y1="-2.5" y2="2.5" stroke-width="1.2"/>
-     <line transform="rotate(45,-10.864,4.5)" y1="-2.5" y2="2.5"/>
-     <line transform="rotate(90,-4.5,4.5)" y1="-2.5" y2="2.5"/>
-     <line transform="rotate(135,-1.864,4.5)" y1="-2.5" y2="2.5"/>
-    </g>
-   </g>
+  <!-- CHMURA -->
+  <g class="cloudMove" filter="url(#cloudShadow)">
+    <path d="M 50,115 
+             C 50,95 70,85 85,90 
+             C 95,70 125,65 140,80 
+             C 155,75 175,85 180,105 
+             C 195,105 200,115 195,125 
+             C 190,135 170,135 160,130 
+             L 70,130 
+             C 55,130 45,125 50,115 Z" 
+          fill="url(#cloudGrad)"/>
+    <path d="M 70,105 C 80,90 105,85 125,93 C 135,88 152,92 158,106 C 165,102 175,108 172,118 C 168,126 148,128 135,124 L 85,126 C 73,127 66,120 70,105 Z" 
+          fill="#FFFFFF" opacity="0.5"/>
   </g>
- </g>
+
+  <!-- PŁATKI ŚNIEGU – UMIARKOWANE (28 sztuk, średnia gęstość) -->
+  <g filter="url(#snowGlow)">
+    <circle class="snowflake s1" cx="85" cy="138" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s2" cx="110" cy="142" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s3" cx="135" cy="136" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s4" cx="160" cy="140" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s5" cx="100" cy="148" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s6" cx="125" cy="145" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s7" cx="150" cy="150" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s8" cx="75" cy="152" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s9" cx="95" cy="158" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s10" cx="120" cy="162" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s11" cx="145" cy="165" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s12" cx="170" cy="155" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s13" cx="90" cy="168" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s14" cx="115" cy="172" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s15" cx="140" cy="170" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s16" cx="80" cy="178" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s17" cx="105" cy="182" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s18" cx="130" cy="180" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s19" cx="155" cy="185" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s20" cx="70" cy="188" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s21" cx="100" cy="190" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s22" cx="125" cy="192" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s23" cx="150" cy="195" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s24" cx="85" cy="192" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s25" cx="110" cy="195" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s26" cx="135" cy="198" r="3" fill="url(#snowflake)"/>
+    <circle class="snowflake s27" cx="160" cy="190" r="2.5" fill="url(#snowflake)"/>
+    <circle class="snowflake s28" cx="95" cy="198" r="3" fill="url(#snowflake)"/>
+  </g>
+
+  <!-- ŚNIEŻNA MGIEŁKA PRZY PODŁOŻU -->
+  <ellipse cx="115" cy="190" rx="80" ry="6" fill="#C0E0FF" opacity="0.25" filter="url(#snowGlow)"/>
+  <ellipse cx="115" cy="195" rx="50" ry="3" fill="#D0E8FF" opacity="0.15" filter="url(#snowGlow)"/>
 </svg>

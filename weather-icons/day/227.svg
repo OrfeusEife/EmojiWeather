@@ -1,32 +1,228 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="233" height="200" viewBox="0 0 233 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-.24684" y="-.27097" width="1.4937" height="1.6939">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-      <feOffset dx="0" dy="4" result="offsetblur" />
-      <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear" />
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <!-- TŁO: BURZOWY GRADIENT ZANIKAJĄCY DO PRZEZROCZYSTOŚCI -->
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#4A6E8C" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#2C4A64" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#142E42" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- CHMURA: CIEMNA, ZIMOWA -->
+    <radialGradient id="cloudGrad" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#8898A8"/>
+      <stop offset="45%" stop-color="#606E7E"/>
+      <stop offset="80%" stop-color="#405060"/>
+      <stop offset="100%" stop-color="#2A3A4A"/>
+    </radialGradient>
+
+    <!-- PŁATEK ŚNIEGU -->
+    <radialGradient id="snowDot" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#B0D0FF" stop-opacity="0.3"/>
+    </radialGradient>
+
+    <!-- PODMUD WIATRU: FALUJĄCA SMUGA Z GRADIENTEM -->
+    <linearGradient id="gustGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#E0F0FF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="gustGrad2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+      <stop offset="40%" stop-color="#C0E0FF" stop-opacity="0.7"/>
+      <stop offset="80%" stop-color="#90C0E0" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- FILTRY -->
+    <filter id="cloudShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0A1A2A" flood-opacity="0.5"/>
+    </filter>
+    <filter id="snowGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="0.8"/>
+    </filter>
+    <filter id="gustBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1 3"/>
+    </filter>
+    <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5"/>
     </filter>
   </defs>
-  <g transform="translate(16 -2)" filter="url(#blur)">
-    <g class="am-weather-wind" transform="translate(-16,10)" fill="none" stroke="#57A0EE" stroke-linecap="round"
-      stroke-width="2">
-      <path stroke-dasharray="150 10" d="M25.5 5A4 4 0 1 1 29 11H10">
-        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0s" />
-      </path>
-      <path stroke-dasharray="144 16"
-        d="M39.5 11A4 4 0 1 1 43 17H6">
-        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0.5s" />
-      </path>
-      <path stroke-dasharray="150 10"
-        d="M28.5 29A4 4 0 1 0 32 23H15">
-        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0.25s" />
-      </path>
-    </g>
+
+  <style>
+    .bgLayer { animation: bgPulse 6s ease-in-out infinite; }
+    .cloudMove { animation: cloudFloat 5s ease-in-out infinite; }
+    
+    /* PODMUCHY WIATRU – falujące ścieżki */
+    .gust {
+      animation: gustBlow 3s ease-in-out infinite;
+      filter: url(#gustBlur);
+    }
+    .gustFast {
+      animation: gustFastBlow 2s ease-in-out infinite;
+      filter: url(#gustBlur);
+    }
+    .gustSlow {
+      animation: gustSlowBlow 4s ease-in-out infinite;
+      filter: url(#gustBlur);
+    }
+    
+    /* PŁATKI ŚNIEGU (wirowane) */
+    .flurry {
+      animation: snowFlurry 2.5s ease-in-out infinite;
+    }
+    
+    /* Opóźnienia dla podmuchów */
+    .g1 { animation-delay: 0.0s; }
+    .g2 { animation-delay: 0.4s; }
+    .g3 { animation-delay: 0.8s; }
+    .g4 { animation-delay: 1.2s; }
+    .g5 { animation-delay: 1.6s; }
+    .g6 { animation-delay: 0.2s; }
+    .g7 { animation-delay: 0.6s; }
+    .g8 { animation-delay: 1.0s; }
+    .g9 { animation-delay: 1.4s; }
+    .g10 { animation-delay: 1.8s; }
+    
+    /* Opóźnienia dla płatków (30 sztuk) */
+    .f1 { animation-delay: 0.0s; }
+    .f2 { animation-delay: 0.15s; }
+    .f3 { animation-delay: 0.30s; }
+    .f4 { animation-delay: 0.45s; }
+    .f5 { animation-delay: 0.60s; }
+    .f6 { animation-delay: 0.75s; }
+    .f7 { animation-delay: 0.90s; }
+    .f8 { animation-delay: 1.05s; }
+    .f9 { animation-delay: 1.20s; }
+    .f10 { animation-delay: 1.35s; }
+    .f11 { animation-delay: 1.50s; }
+    .f12 { animation-delay: 1.65s; }
+    .f13 { animation-delay: 1.80s; }
+    .f14 { animation-delay: 1.95s; }
+    .f15 { animation-delay: 2.10s; }
+    .f16 { animation-delay: 0.08s; }
+    .f17 { animation-delay: 0.23s; }
+    .f18 { animation-delay: 0.38s; }
+    .f19 { animation-delay: 0.53s; }
+    .f20 { animation-delay: 0.68s; }
+    .f21 { animation-delay: 0.83s; }
+    .f22 { animation-delay: 0.98s; }
+    .f23 { animation-delay: 1.13s; }
+    .f24 { animation-delay: 1.28s; }
+    .f25 { animation-delay: 1.43s; }
+    .f26 { animation-delay: 1.58s; }
+    .f27 { animation-delay: 1.73s; }
+    .f28 { animation-delay: 1.88s; }
+    .f29 { animation-delay: 2.03s; }
+    .f30 { animation-delay: 2.18s; }
+
+    @keyframes bgPulse {
+      0%,100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+    @keyframes cloudFloat {
+      0%,100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(-5px) translateY(-3px); }
+    }
+    
+    /* Podmuchy – przelot od prawej do lewej z falowaniem */
+    @keyframes gustBlow {
+      0% { transform: translateX(80px) translateY(-20px) scaleX(0.8); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.6; }
+      100% { transform: translateX(-120px) translateY(30px) scaleX(1.2); opacity: 0; }
+    }
+    @keyframes gustFastBlow {
+      0% { transform: translateX(60px) translateY(-10px) scaleX(0.7); opacity: 0; }
+      20% { opacity: 0.9; }
+      80% { opacity: 0.5; }
+      100% { transform: translateX(-140px) translateY(40px) scaleX(1.3); opacity: 0; }
+    }
+    @keyframes gustSlowBlow {
+      0% { transform: translateX(100px) translateY(-30px) scaleX(0.9); opacity: 0; }
+      20% { opacity: 0.7; }
+      80% { opacity: 0.5; }
+      100% { transform: translateX(-100px) translateY(20px) scaleX(1.1); opacity: 0; }
+    }
+    
+    /* Płatki śniegu – unoszone wiatrem */
+    @keyframes snowFlurry {
+      0% { transform: translateX(40px) translateY(-20px) rotate(0deg); opacity: 0; }
+      25% { opacity: 0.9; }
+      75% { opacity: 0.7; }
+      100% { transform: translateX(-60px) translateY(60px) rotate(540deg); opacity: 0; }
+    }
+  </style>
+
+  <rect width="233" height="200" fill="url(#bgGlow)" class="bgLayer"/>
+
+  <!-- CHMURA -->
+  <g class="cloudMove" filter="url(#cloudShadow)">
+    <path d="M 40,115 C 40,95 60,82 78,88 C 88,68 120,60 138,75 C 152,68 175,76 182,96 C 198,98 205,110 198,124 C 192,136 170,138 158,132 L 65,134 C 48,136 38,130 40,115 Z" fill="url(#cloudGrad)"/>
+    <path d="M 70,105 C 80,88 105,82 125,90 C 135,85 152,90 158,104 C 165,100 175,106 172,118 C 168,126 148,128 135,124 L 85,126 C 73,127 66,120 70,105 Z" fill="#FFFFFF" opacity="0.15"/>
   </g>
+
+  <!-- PODMUCHY WIATRU (falujące smugi) -->
+  <!-- Warstwa 1: szybsze podmuchy -->
+  <g class="gustFast">
+    <!-- Kształt fali: użycie krzywej Beziera jako smugi -->
+    <path class="gustFast g1" d="M 20,130 Q 60,125 100,135 T 180,130" fill="none" stroke="url(#gustGrad)" stroke-width="4" stroke-linecap="round"/>
+    <path class="gustFast g2" d="M 0,145 Q 50,140 110,155 T 200,145" fill="none" stroke="url(#gustGrad2)" stroke-width="3" stroke-linecap="round"/>
+    <path class="gustFast g3" d="M 30,160 Q 70,150 120,165 T 190,155" fill="none" stroke="url(#gustGrad)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Warstwa 2: wolniejsze, bardziej rozległe -->
+  <g class="gustSlow">
+    <path class="gustSlow g4" d="M 10,140 Q 80,130 140,150 T 210,135" fill="none" stroke="url(#gustGrad2)" stroke-width="6" stroke-linecap="round"/>
+    <path class="gustSlow g5" d="M -10,155 Q 60,145 120,165 T 220,150" fill="none" stroke="url(#gustGrad)" stroke-width="4" stroke-linecap="round"/>
+    <path class="gustSlow g6" d="M 20,170 Q 90,160 150,180 T 200,165" fill="none" stroke="url(#gustGrad2)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Warstwa 3: średnie, zróżnicowane -->
+  <g class="gust">
+    <path class="gust g7" d="M 40,125 Q 100,120 150,135 T 210,128" fill="none" stroke="url(#gustGrad)" stroke-width="3" stroke-linecap="round"/>
+    <path class="gust g8" d="M 5,150 Q 70,140 130,160 T 195,148" fill="none" stroke="url(#gustGrad2)" stroke-width="4" stroke-linecap="round"/>
+    <path class="gust g9" d="M 25,165 Q 80,155 140,175 T 205,160" fill="none" stroke="url(#gustGrad)" stroke-width="5" stroke-linecap="round"/>
+    <path class="gust g10" d="M 50,135 Q 110,125 160,145 T 215,132" fill="none" stroke="url(#gustGrad2)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- PŁATKI ŚNIEGU (30 sztuk, unoszone przez wiatr) -->
+  <g filter="url(#snowGlow)">
+    <circle class="flurry f1" cx="30" cy="130" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f2" cx="60" cy="145" r="2.5" fill="url(#snowDot)"/>
+    <circle class="flurry f3" cx="90" cy="125" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f4" cx="120" cy="140" r="3" fill="url(#snowDot)"/>
+    <circle class="flurry f5" cx="150" cy="135" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f6" cx="180" cy="150" r="2.5" fill="url(#snowDot)"/>
+    <circle class="flurry f7" cx="25" cy="160" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f8" cx="55" cy="170" r="2.5" fill="url(#snowDot)"/>
+    <circle class="flurry f9" cx="85" cy="155" r="3" fill="url(#snowDot)"/>
+    <circle class="flurry f10" cx="115" cy="165" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f11" cx="145" cy="175" r="2.5" fill="url(#snowDot)"/>
+    <circle class="flurry f12" cx="175" cy="160" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f13" cx="40" cy="180" r="3" fill="url(#snowDot)"/>
+    <circle class="flurry f14" cx="70" cy="185" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f15" cx="100" cy="175" r="2.5" fill="url(#snowDot)"/>
+    <circle class="flurry f16" cx="130" cy="188" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f17" cx="160" cy="182" r="3" fill="url(#snowDot)"/>
+    <circle class="flurry f18" cx="190" cy="170" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f19" cx="15" cy="190" r="2.5" fill="url(#snowDot)"/>
+    <circle class="flurry f20" cx="45" cy="195" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f21" cx="75" cy="192" r="3" fill="url(#snowDot)"/>
+    <circle class="flurry f22" cx="105" cy="198" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f23" cx="135" cy="195" r="2.5" fill="url(#snowDot)"/>
+    <circle class="flurry f24" cx="165" cy="190" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f25" cx="195" cy="185" r="3" fill="url(#snowDot)"/>
+    <circle class="flurry f26" cx="35" cy="138" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f27" cx="65" cy="148" r="2.5" fill="url(#snowDot)"/>
+    <circle class="flurry f28" cx="95" cy="142" r="2" fill="url(#snowDot)"/>
+    <circle class="flurry f29" cx="125" cy="152" r="3" fill="url(#snowDot)"/>
+    <circle class="flurry f30" cx="155" cy="145" r="2" fill="url(#snowDot)"/>
+  </g>
+
+  <!-- ROZPYLONY ŚNIEG PRZY PODŁOŻU -->
+  <ellipse cx="115" cy="192" rx="100" ry="8" fill="#A0C8E8" opacity="0.2" filter="url(#softBlur)"/>
+  <ellipse cx="115" cy="197" rx="70" ry="4" fill="#C0DCF0" opacity="0.15" filter="url(#softBlur)"/>
 </svg>
