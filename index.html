@@ -2238,7 +2238,7 @@
         let currentLat = null;
         let currentLon = null;
         let lastWeatherData = null;
-        let themeMode = 'auto';
+        let themeMode = 'dark';
         let precipitationChart = null;
         let temperatureChart = null;
 
@@ -3154,10 +3154,7 @@ img.style.height = 'auto';
                 try {
                     const icon = await getWeatherIcon(weatherCode, isDay);
                     iconContainer.innerHTML = '';
-                    if (icon.tagName === 'IMG' || icon.tagName === 'svg') {
-                        icon.style.width = '70px';
-                        icon.style.height = '60px';
-                    }
+                   
                     iconContainer.appendChild(icon);
                 } catch (error) {
                     console.error('Błąd ładowania ikony:', error);
@@ -3703,9 +3700,9 @@ img.style.height = 'auto';
         }
 
         function init() {
-            const savedTheme = localStorage.getItem('weatherAppTheme');
-            if (savedTheme) setTheme(savedTheme);
-            createThemeSelector();
+             const savedTheme = localStorage.getItem('weatherAppTheme');
+    setTheme(savedTheme || 'dark');   // <- kluczowa zmiana
+    createThemeSelector();
             weatherElements.themeToggle.addEventListener('click', toggleTheme);
             if (navigator.geolocation) {
                 getLocation();
