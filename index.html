@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MeteoRun – inteligentna prognoza dla biegaczy</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -10,6 +10,7 @@
             --primary: #0066cc;
             --secondary: #0099ff;
             --glass: rgba(255, 255, 255, 0.92);
+            --glass-card: rgba(255, 255, 255, 0.92);
             --glass-dark: rgba(20, 20, 32, 0.92);
             --warning: #ff4757;
             --warning-bg: rgba(255, 71, 87, 0.15);
@@ -30,6 +31,12 @@
         @font-face {
             font-family: 'Futuristic';
             src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -37,32 +44,46 @@
             background: var(--background-day);
             background-attachment: fixed;
             min-height: 100vh;
-            padding: 1rem;
+            padding: 1.5rem;
             color: var(--text-color-day);
             transition: var(--transition);
             line-height: 1.6;
-            margin-right: 390px;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* GŁÓWNY UKŁAD STRONY (JEDNO WSPÓLNE PRZEWIJANIE) */
+        .app-layout {
             display: flex;
             justify-content: center;
             align-items: flex-start;
+            gap: 1.8rem;
+            max-width: 1540px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        .mobile-buttons {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
+        .container {
+            flex: 1 1 1080px;
+            max-width: 1080px;
+            min-width: 0;
+            background: var(--glass);
+            backdrop-filter: blur(14px) saturate(180%);
+            border-radius: var(--border-radius);
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
+        /* PANEL BOCZNY: BRAK OSOBNEGO SCROLLBARA, NATURALNE PRZEWIJANIE ZE STRONĄ */
         .widgets-container {
-            position: absolute;
-            top: 20px;
-            right: 20px;
             width: 360px;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            z-index: 999;
-            transition: transform 0.3s ease;
+            gap: 1.1rem;
+            z-index: 2;
         }
 
         /* DUŻE IKONY SVG W WIDGETACH */
@@ -212,21 +233,6 @@
         .widget-label { opacity: 0.8; }
         .widget-value { font-weight: 600; }
 
-        .widget-toggle {
-            display: none;
-            position: fixed;
-            bottom: 15px;
-            left: 15px;
-            background: var(--primary);
-            color: white;
-            padding: 10px 16px;
-            border-radius: 30px;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            font-weight: 600;
-            cursor: pointer;
-        }
-
         /* PRZYCISKI PŁYWAJĄCE I PANEL MOTYWÓW */
         .theme-toggle, .anim-toggle {
             position: fixed;
@@ -251,12 +257,12 @@
             position: fixed;
             bottom: 75px;
             right: 20px;
-            width: 250px;
+            width: 260px;
             background: var(--glass);
             backdrop-filter: blur(16px);
             border-radius: var(--border-radius);
             padding: 1.2rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
             z-index: 1002;
             max-height: 65vh;
             overflow-y: auto;
@@ -264,7 +270,6 @@
             transform: translateY(20px) scale(0.95);
             opacity: 0;
             pointer-events: none;
-            display: block;
             color: var(--text-color-day);
         }
 
@@ -292,7 +297,7 @@
             padding: 0.55rem 0.8rem;
             cursor: pointer;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
             font-size: 0.9rem;
             display: flex;
             align-items: center;
@@ -307,10 +312,8 @@
         }
 
         /* ========================================================
-           MOTYWY CSS & GWARANCJA CIEMNYCH ELEMENTÓW
+           MOTYWY CSS (25 KOMPLETNYCH MOTYWÓW)
            ======================================================== */
-        
-        /* 1. MOTYW JASNY */
         body.light-mode {
             --primary: #0284c7;
             --secondary: #0ea5e9;
@@ -329,7 +332,6 @@
             box-shadow: 0 8px 24px rgba(14, 165, 233, 0.1) !important;
         }
 
-        /* 2. GRUPA CIEMNYCH MOTYWÓW */
         body.night-mode { background: var(--background-night); color: var(--text-color-night); }
         body.dark-mode { background: #121212; color: #e0e0e0; --glass: rgba(30, 30, 30, 0.9); }
 
@@ -340,9 +342,7 @@
         body.night-mode .theme-toggle, body.dark-mode .theme-toggle, body.matrix-mode .theme-toggle,
         body.space-mode .theme-toggle, body.galaxy-mode .theme-toggle, body.neon-mode .theme-toggle,
         body.night-mode .anim-toggle, body.dark-mode .anim-toggle, body.matrix-mode .anim-toggle,
-        body.space-mode .anim-toggle, body.galaxy-mode .anim-toggle, body.neon-mode .anim-toggle,
-        body.night-mode .widget-toggle, body.dark-mode .widget-toggle, body.matrix-mode .widget-toggle,
-        body.space-mode .widget-toggle, body.galaxy-mode .widget-toggle, body.neon-mode .widget-toggle {
+        body.space-mode .anim-toggle, body.galaxy-mode .anim-toggle, body.neon-mode .anim-toggle {
             background: rgba(18, 18, 30, 0.92) !important;
             color: var(--text-color-night) !important;
             border: 1px solid rgba(255, 255, 255, 0.18) !important;
@@ -401,12 +401,6 @@
             color: var(--text-color-night) !important;
         }
 
-        body.night-mode .runner-hub-card, body.dark-mode .runner-hub-card, body.matrix-mode .runner-hub-card,
-        body.space-mode .runner-hub-card, body.galaxy-mode .runner-hub-card, body.neon-mode .runner-hub-card {
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.25), rgba(46, 204, 113, 0.15)) !important;
-            border: 2px solid var(--primary);
-        }
-
         body.night-mode .gear-box, body.dark-mode .gear-box, body.matrix-mode .gear-box,
         body.space-mode .gear-box, body.galaxy-mode .gear-box, body.neon-mode .gear-box,
         body.night-mode .parameter-item, body.dark-mode .parameter-item, body.matrix-mode .parameter-item,
@@ -425,7 +419,7 @@
             border-color: var(--primary);
         }
 
-        /* 3. MATRIX */
+        /* MATRIX */
         body.matrix-mode {
             --primary: #00ff41;
             --secondary: #00cc33;
@@ -437,98 +431,29 @@
             color: #00ff41 !important;
             font-family: 'Orbitron', monospace;
         }
-        body.matrix-mode .container,
-        body.matrix-mode .card,
-        body.matrix-mode .widget,
-        body.matrix-mode .sun-widget,
-        body.matrix-mode .runner-hub-card,
-        body.matrix-mode .runner-tip,
-        body.matrix-mode .weather-summary,
-        body.matrix-mode .gear-box,
-        body.matrix-mode .parameter-item,
-        body.matrix-mode .hour-item,
-        body.matrix-mode .theme-panel {
+        body.matrix-mode .container, body.matrix-mode .card, body.matrix-mode .widget,
+        body.matrix-mode .sun-widget, body.matrix-mode .runner-hub-card, body.matrix-mode .runner-tip,
+        body.matrix-mode .weather-summary, body.matrix-mode .gear-box, body.matrix-mode .parameter-item,
+        body.matrix-mode .hour-item, body.matrix-mode .theme-panel {
             background: rgba(0, 18, 0, 0.96) !important;
             border: 1px solid #00ff41 !important;
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.3) !important;
             color: #00ff41 !important;
         }
-        body.matrix-mode .theme-toggle, body.matrix-mode .anim-toggle, body.matrix-mode .widget-toggle {
+        body.matrix-mode .theme-toggle, body.matrix-mode .anim-toggle {
             background: #001200 !important;
             color: #00ff41 !important;
             border: 1px solid #00ff41 !important;
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) !important;
         }
-        body.matrix-mode .theme-option {
-            background: rgba(0, 35, 0, 0.8) !important;
-            color: #00ff41 !important;
-            border: 1px solid rgba(0, 255, 65, 0.3) !important;
-        }
-        body.matrix-mode h1, body.matrix-mode h2, body.matrix-mode h3,
-        body.matrix-mode strong, body.matrix-mode .parameter-value {
-            color: #00ff41 !important;
-            text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
-        }
-        body.matrix-mode input {
-            background: #001100 !important;
-            color: #00ff41 !important;
-            border: 1px solid #00ff41 !important;
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-        }
-        body.matrix-mode button {
-            background: #00ff41 !important;
-            color: #000 !important;
-            box-shadow: 0 0 15px #00ff41 !important;
-            font-weight: 700;
-        }
-
-        /* 4. KOSMOS */
-        body.space-mode {
-            --primary: #9d4edd;
-            --secondary: #48bfe3;
-            background: linear-gradient(135deg, #02010a, #0b092b, #10002b) !important;
-            color: #e2e8f0 !important;
-        }
-        body.space-mode .container, body.space-mode .card, body.space-mode .widget, body.space-mode .sun-widget {
-            background: rgba(12, 10, 36, 0.92) !important;
-            border: 1px solid rgba(157, 78, 221, 0.35) !important;
-            color: #e2e8f0 !important;
-        }
-        body.space-mode h1, body.space-mode h2, body.space-mode h3 { color: #c77dff !important; }
-
-        /* 5. NEON */
-        body.neon-mode {
-            --primary: #00ff9d;
-            --secondary: #00b8ff;
-            background: #040814 !important;
-            color: #00ff9d !important;
-            font-family: 'Orbitron', monospace;
-        }
-        body.neon-mode .container, body.neon-mode .card, body.neon-mode .widget, body.neon-mode .sun-widget {
-            background: rgba(4, 12, 28, 0.94) !important;
-            border: 1px solid #00ff9d !important;
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3) !important;
-            color: #00ff9d !important;
-        }
-        body.neon-mode h1, body.neon-mode h2, body.neon-mode h3 { color: #00ff9d !important; text-shadow: 0 0 8px #00ff9d; }
-
-        /* 6. GALAKTYKA */
-        body.galaxy-mode {
-            --primary: #b388ff;
-            --secondary: #80d8ff;
-            background: linear-gradient(135deg, #090014, #12002b, #03001e) !important;
-            color: #e0e0ff !important;
-            font-family: 'Orbitron', monospace;
-        }
-        body.galaxy-mode .container, body.galaxy-mode .card, body.galaxy-mode .widget, body.galaxy-mode .sun-widget {
-            background: rgba(20, 8, 40, 0.92) !important;
-            border: 1px solid rgba(179, 136, 255, 0.4) !important;
-            box-shadow: 0 0 20px rgba(147, 112, 219, 0.35) !important;
-            color: #e0e0ff !important;
-        }
-        body.galaxy-mode h1, body.galaxy-mode h2, body.galaxy-mode h3 { color: #b388ff !important; }
 
         /* POZOSTAŁE */
+        body.space-mode { --primary: #9d4edd; --secondary: #48bfe3; background: linear-gradient(135deg, #02010a, #0b092b, #10002b) !important; color: #e2e8f0 !important; }
+        body.space-mode .container, body.space-mode .card, body.space-mode .widget, body.space-mode .sun-widget { background: rgba(12, 10, 36, 0.92) !important; border: 1px solid rgba(157, 78, 221, 0.35) !important; color: #e2e8f0 !important; }
+        body.neon-mode { --primary: #00ff9d; --secondary: #00b8ff; background: #040814 !important; color: #00ff9d !important; font-family: 'Orbitron', monospace; }
+        body.neon-mode .container, body.neon-mode .card, body.neon-mode .widget, body.neon-mode .sun-widget { background: rgba(4, 12, 28, 0.94) !important; border: 1px solid #00ff9d !important; box-shadow: 0 0 15px rgba(0, 255, 157, 0.3) !important; color: #00ff9d !important; }
+        body.galaxy-mode { --primary: #b388ff; --secondary: #80d8ff; background: linear-gradient(135deg, #090014, #12002b, #03001e) !important; color: #e0e0ff !important; font-family: 'Orbitron', monospace; }
+        body.galaxy-mode .container, body.galaxy-mode .card, body.galaxy-mode .widget, body.galaxy-mode .sun-widget { background: rgba(20, 8, 40, 0.92) !important; border: 1px solid rgba(179, 136, 255, 0.4) !important; box-shadow: 0 0 20px rgba(147, 112, 219, 0.35) !important; color: #e0e0ff !important; }
         body.hubba-bubba-mode { --primary: #ff69b4; --secondary: #ff1493; background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493); }
         body.forest-mode { --primary: #2e8b57; --secondary: #3cb371; background: linear-gradient(135deg, #a8e6cf, #dcedc1, #6b8e23); }
         body.desert-mode { --primary: #cd853f; --secondary: #d2691e; background: linear-gradient(135deg, #f5deb3, #d2b48c, #cd853f); }
@@ -548,27 +473,7 @@
         body.monochrome-mode { --primary: #555; --secondary: #999; background: linear-gradient(135deg, #eee, #ccc, #aaa); }
         body.amber-mode { --primary: #ff7f50; --secondary: #ff6347; background: linear-gradient(135deg, #ff7f50, #ff8c00, #ff6347); }
 
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            background: var(--glass);
-            backdrop-filter: blur(14px) saturate(180%);
-            border-radius: var(--border-radius);
-            padding: 1.8rem;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            position: relative;
-            z-index: 1;
-        }
-
-        h1, h2, h3 {
-            color: var(--primary);
-            margin-bottom: 1.2rem;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
+        /* WYSZUKIWARKA I KARTY */
         .search-box {
             display: flex;
             gap: 0.8rem;
@@ -595,6 +500,12 @@
             border-color: var(--secondary);
         }
 
+        .mobile-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
         button {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
@@ -609,6 +520,7 @@
             gap: 0.5rem;
             box-shadow: var(--glow);
             font-size: 0.95rem;
+            min-height: 44px;
         }
 
         button:hover {
@@ -628,7 +540,6 @@
             overflow: hidden;
         }
 
-        /* HUB BIEGACZA PRO */
         .runner-hub-card {
             background: linear-gradient(135deg, rgba(0, 102, 204, 0.08), rgba(46, 204, 113, 0.08));
             border: 2px solid var(--primary);
@@ -708,23 +619,25 @@
             background: rgba(255, 255, 255, 0.75);
         }
 
-        /* UKŁAD PROGNOZY GODZINOWEJ */
+        /* PROGNOZA GODZINOWA: PŁYNNE PRZEWIJANIE W POZIOMIE */
         .hourly-forecast {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+            display: flex;
             gap: 1.1rem;
             margin: 1.5rem 0;
             overflow-x: auto;
-            padding-bottom: 0.8rem;
+            padding-bottom: 0.9rem;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
         }
 
         .hour-item {
+            flex: 0 0 155px;
+            scroll-snap-align: start;
             padding: 1.2rem 0.9rem;
             border-radius: var(--border-radius);
             background: rgba(255, 255, 255, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.3);
             text-align: center;
-            min-width: 145px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -740,7 +653,7 @@
             margin-top: 1.5rem;
         }
 
-        /* KARTY OSTRZEŻEŃ */
+        /* OSTRZEŻENIA */
         .warning-card {
             border-radius: var(--border-radius);
             padding: 1.5rem;
@@ -749,7 +662,6 @@
             background: rgba(255, 255, 255, 0.55);
             box-shadow: 0 4px 15px rgba(0,0,0,0.06);
         }
-
         .warning-card.yellow { border-left-color: #f1c40f; background: rgba(241, 196, 15, 0.15); }
         .warning-card.orange { border-left-color: #e67e22; background: rgba(230, 126, 34, 0.15); }
         .warning-card.red    { border-left-color: #e74c3c; background: rgba(231, 76, 60, 0.18); }
@@ -760,7 +672,6 @@
             gap: 1rem;
             margin-bottom: 0.8rem;
         }
-
         .warning-icon { font-size: 2.3rem; }
         .warning-title { font-size: 1.25rem; font-weight: 700; line-height: 1.3; }
         .warning-severity { font-size: 0.88rem; font-style: italic; opacity: 0.9; margin-top: 2px; }
@@ -777,17 +688,14 @@
             font-weight: 500;
         }
 
-        body.night-mode .warning-time, body.dark-mode .warning-time, body.matrix-mode .warning-time {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* TŁO POGODOWE */
+        /* ANIMACJE TŁA (AKCELERACJA SPRZĘTOWA) */
         .weather-bg {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
+            will-change: transform;
         }
 
         .weather-bg .layer {
@@ -812,39 +720,34 @@
             background-image:
                 radial-gradient(1.5px 1.5px at 40px 60px, #fff, transparent),
                 radial-gradient(2px 2px at 150px 120px, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 240px 180px, #fff, transparent),
-                radial-gradient(2px 2px at 320px 70px, #fff, transparent);
+                radial-gradient(1.5px 1.5px at 240px 180px, #fff, transparent);
             background-size: 350px 350px;
-            animation: stars-twinkle 3s ease-in-out infinite alternate;
         }
-        @keyframes stars-twinkle { from { opacity: 0.3; } to { opacity: 0.95; } }
 
         .weather-bg .clouds {
             background-image: 
                 radial-gradient(ellipse 260px 85px at 20% 25%, rgba(255,255,255,0.6), transparent 65%),
-                radial-gradient(ellipse 320px 95px at 60% 18%, rgba(255,255,255,0.5), transparent 65%),
-                radial-gradient(ellipse 280px 85px at 85% 45%, rgba(255,255,255,0.55), transparent 65%);
+                radial-gradient(ellipse 320px 95px at 60% 18%, rgba(255,255,255,0.5), transparent 65%);
             background-size: 1300px 900px;
             animation: clouds-drift 80s linear infinite;
         }
-        @keyframes clouds-drift { from { background-position: 0 0; } to { background-position: -1300px 0; } }
+        @keyframes clouds-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-1300px, 0, 0); } }
 
         .weather-bg .rain {
             background-image: linear-gradient(180deg, transparent 0%, rgba(150, 210, 255, 0.9) 100%);
             background-size: 2px 28px;
             animation: rain-fall 0.45s linear infinite;
         }
-        @keyframes rain-fall { from { background-position: 0 0; } to { background-position: 0 28px; } }
+        @keyframes rain-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 28px, 0); } }
 
         .weather-bg .snow {
             background-image: 
                 radial-gradient(3px 3px at 30px 40px, #fff, transparent),
-                radial-gradient(2px 2px at 120px 90px, rgba(255,255,255,0.85), transparent),
-                radial-gradient(3.5px 3.5px at 220px 160px, #fff, transparent);
+                radial-gradient(2px 2px at 120px 90px, rgba(255,255,255,0.85), transparent);
             background-size: 250px 250px;
             animation: snow-fall 11s linear infinite;
         }
-        @keyframes snow-fall { from { background-position: 0 0; } to { background-position: 50px 250px; } }
+        @keyframes snow-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(50px, 250px, 0); } }
 
         body.weather-clear .sun { opacity: 1; }
         body.weather-clear-night .stars { opacity: 1; }
@@ -862,11 +765,93 @@
         }
         .tile-anim { animation: tileIn 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
 
-        @media (max-width: 992px) {
-            body { margin-right: 0; padding-bottom: 110px; }
-            .widgets-container { position: relative; width: 100%; top: auto; right: auto; margin-top: 1.5rem; }
-            .widget-toggle { display: block; }
-            .anim-toggle { right: auto; left: 15px; bottom: 65px; }
+        /* ========================================================
+           RESPONSYWNOŚĆ: NATURALNY UKŁAD (TABLETY I SMARTFONY)
+           ======================================================== */
+        @media (max-width: 1024px) {
+            body {
+                padding: 1rem;
+                padding-bottom: 80px;
+            }
+
+            .app-layout {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1.5rem;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 1.4rem;
+            }
+
+            /* Na tabletach widgety układają się w czytelną siatkę pod spodem */
+            .widgets-container {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1.2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0.6rem;
+                padding-bottom: 80px;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.1rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            input, .mobile-buttons, button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .main-weather-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem !important;
+            }
+
+            .parameter-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.7rem;
+            }
+
+            .forecast-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .widgets-container {
+                grid-template-columns: 1fr;
+            }
+
+            .theme-toggle {
+                right: 15px;
+                bottom: 15px;
+                padding: 0.65rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .anim-toggle {
+                right: auto;
+                left: 15px;
+                bottom: 15px;
+                padding: 0.65rem 1rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -880,242 +865,239 @@
     <div class="layer snow"></div>
 </div>
 
-<!-- PANEL BOCZNY WIDGETÓW -->
-<div class="widgets-container" id="widgetsPanel">
-    <div class="widget" id="currentWeatherWidget">
-        <div class="widget-header"><span>⛅</span><span>Aktualna pogoda</span></div>
-        <div class="widget-content">
-            <center><div class="widget-icon-container" id="widgetIcon"></div></center>
-            <div class="widget-row"><span class="widget-label">Warunki:</span><span class="widget-value" id="widgetCondition">-</span></div>
-            <div class="widget-row"><span class="widget-label">Temperatura:</span><span class="widget-value" id="widgetTemp">-</span></div>
-            <div class="widget-row"><span class="widget-label">Wiatr:</span><span class="widget-value" id="widgetWind">-</span></div>
-            <div class="widget-row"><span class="widget-label">Wilgotność:</span><span class="widget-value" id="widgetHumidity">-</span></div>
-        </div>
-    </div>
-
-    <!-- DŁUGOŚĆ DNIA (SYNCHRONIZOWANA Z CZASEM MIASTA I MOTYWEM) -->
-    <div class="sun-widget">
-        <div class="widget-header" style="margin: 0;"><span>☀️</span><span>Długość dnia</span></div>
-        <div class="sun-timeline">
-            <div class="sun-progress" id="sunPosition"></div>
-            <div class="sun-icon">☀️</div>
-        </div>
-        <div class="time-marks">
-            <span>Wschód: <strong id="widgetSunrise">-</strong></span>
-            <span>Zachód: <strong id="widgetSunset">-</strong></span>
-        </div>
-        <div class="day-info" id="widgetDayLength">Ładowanie...</div>
-    </div>
-
-    <!-- FAZA KSIĘŻYCA -->
-    <div class="widget moon-widget">
-        <div class="widget-header"><span>🌙</span><span>Faza Księżyca</span></div>
-        <div class="moon-header">
-            <div class="moon-phase-icon" id="moonPhaseIcon">🌑</div>
-            <div class="moon-phase-name" id="moonPhase">Ładowanie...</div>
-        </div>
-        <div class="moon-times">
-            <div class="moon-time"><span>Wschód</span><strong id="moonrise">-</strong></div>
-            <div class="moon-time"><span>Zachód</span><strong id="moonset">-</strong></div>
-        </div>
-    </div>
-
-    <!-- PUNKT ROSY & ODPAROWYWANIE POTU -->
-    <div class="widget" id="dewPointWidget">
-        <div class="widget-header"><span>💧</span><span>Punkt Rosy & Termoregulacja</span></div>
-        <div class="widget-content">
-            <div class="widget-row"><span class="widget-label">Punkt rosy:</span><span class="widget-value" id="widgetDewVal">-</span></div>
-            <div class="widget-row"><span class="widget-label">Odparowywanie:</span><span class="widget-value" id="widgetDewStatus">-</span></div>
-            <div id="widgetDewDesc" style="font-size:0.83rem; margin-top:5px; line-height:1.4; opacity:0.9;">Ładowanie analizy potu...</div>
-        </div>
-    </div>
-
-    <!-- KOREKTA TEMPA DLA BIEGACZY -->
-    <div class="widget" id="paceWidget">
-        <div class="widget-header"><span>⏱️</span><span>Korekta tempa biegu</span></div>
-        <div class="widget-content">
-            <div class="widget-row"><span class="widget-label">Wpływ pogody:</span><span class="widget-value" id="paceAdjustmentVal">0 s / km</span></div>
-            <div id="paceAdvice" style="font-size:0.83rem; margin-top:5px; line-height:1.4;">Ładowanie analizy tempa...</div>
-        </div>
-    </div>
-
-    <!-- INDEKS UV & OCHRONA SŁONECZNA -->
-    <div class="widget" id="uvWidget">
-        <div class="widget-header"><span>🧴</span><span>Indeks UV i Ochrona</span></div>
-        <div class="widget-content">
-            <div class="widget-row"><span class="widget-label">Poziom UV:</span><span class="widget-value" id="uvIndexVal">-</span></div>
-            <div id="uvAdvice" style="font-size:0.83rem; margin-top:5px; line-height:1.4;">Ładowanie...</div>
-        </div>
-    </div>
-
-    <div class="widget" id="precipitationWidget">
-        <div class="widget-header"><span>🌧️</span><span>Prognoza opadów (24h)</span></div>
-        <div class="widget-content">
-            <div style="height: 120px; position:relative;"><canvas id="precipitationChart"></canvas></div>
-            <div id="precipitationSummary" style="font-size:0.85rem; margin-top:8px;">Ładowanie...</div>
-        </div>
-    </div>
-    
-    <div class="widget" id="temperatureWidget">
-        <div class="widget-header"><span>🌡️</span><span>Prognoza Temperatury (24h)</span></div>
-        <div class="widget-content">
-            <div style="height: 140px; position:relative;"><canvas id="temperatureChart"></canvas></div>
-        </div>
-    </div>
-
-    <div class="widget" id="stormWidget">
-        <div class="widget-header"><span>⚡</span><span>Ostrzeżenie burzowe</span></div>
-        <div class="widget-content" id="stormContent">Brak burz w prognozie</div>
-    </div>
-
-    <div class="widget" id="frostWidget">
-        <div class="widget-header"><span>❄️</span><span>Ostrzeżenie o przymrozkach</span></div>
-        <div class="widget-content" id="frostContent">Ładowanie danych o przymrozkach...</div>
-    </div>
-</div>
-
-<div class="container">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem;">
-        <h1 style="margin: 0;">🏃‍♂️ MeteoRun <span style="font-size: 0.75rem; opacity: 0.7;">by OrFeUsEiFe</span></h1>
-    </div>
-    
-    <div class="search-box">
-        <input type="text" id="locationInput" placeholder="Wpisz miasto (np. Warszawa, Kraków, Zakopane)..." onkeypress="if(event.key === 'Enter') searchLocation()">
-        <div class="mobile-buttons">
-            <button onclick="searchLocation()">🔍 Szukaj</button>
-            <button onclick="getLocation()">🌍 Moja lokalizacja</button>
-        </div>
-        <div id="loadingIndicator" style="display:none; align-items:center; gap:0.5rem; font-weight:600;">
-            <span>⏳ Pobieranie prognozy...</span>
-        </div>
-    </div>
-
-    <!-- KOMUNIKAT METEO SYNOPTYKA -->
-    <div id="weatherSummary" class="weather-summary" style="display: none;">
-        <h3 style="margin: 0 0 0.5rem 0;">📋 Komunikat meteo</h3>
-        <div id="weatherSummaryText" style="font-size: 0.95rem; line-height: 1.6;"></div>
-    </div>
-
-    <!-- HUB DLA BIEGACZY PRO -->
-    <div class="card runner-hub-card">
-        <h3>🏃 Centrum Biegacza </h3>
-        
-        <div id="runnerScoreBadge" class="runner-score-badge" style="background: #27ae60;">
-            <span>Indeks Warunków:</span> <span id="runnerScoreVal">--/10</span>
+<div class="app-layout">
+    <!-- GŁÓWNA KOLUMNA APLIKACJI -->
+    <main class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem;">
+            <h1 style="margin: 0; font-size: clamp(1.4rem, 4vw, 2rem);">🏃‍♂️ MeteoRun <span style="font-size: 0.75rem; opacity: 0.7;">by OrFeUsEiFe</span></h1>
         </div>
         
-        <div id="goldenWindow" class="golden-window-box">
-            Analizowanie optymalnego okna treningowego...
-        </div>
-
-        <div class="gear-container">
-            <div class="gear-box">
-                <div class="gear-title">👕 Góra stroju</div>
-                <div id="gearTop" style="font-size:0.95rem; font-weight:500;">-</div>
+        <div class="search-box">
+            <input type="text" id="locationInput" placeholder="Wpisz miasto (np. Warszawa, Kraków, Zakopane)..." onkeypress="if(event.key === 'Enter') searchLocation()">
+            <div class="mobile-buttons">
+                <button onclick="searchLocation()">🔍 Szukaj</button>
+                <button onclick="getLocation()">🌍 Moja lokalizacja</button>
             </div>
-            <div class="gear-box">
-                <div class="gear-title">🩳 Dół stroju</div>
-                <div id="gearBottom" style="font-size:0.95rem; font-weight:500;">-</div>
-            </div>
-            <div class="gear-box">
-                <div class="gear-title">🧢 Akcesoria & Ochrona</div>
-                <div id="gearAccessories" style="font-size:0.95rem; font-weight:500;">-</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SZCZEGÓŁOWA PORADA DLA BIEGACZA + REGENERACJA / ROLOWANIE -->
-    <div id="runnerTip" class="runner-tip" style="display: none;">
-        <h3 id="runnerTipTitle" style="margin: 0 0 0.5rem 0;">💡 Porada dla biegacza & Regeneracja</h3>
-        <div id="runnerTipText" style="font-size: 0.95rem; line-height: 1.6;"></div>
-    </div>
-
-    <!-- GŁÓWNA KARTA POGODY (Z BARDZO DUŻĄ IKONĄ SVG) -->
-    <div class="card">
-        <div style="display:flex; align-items:center; gap:1.6rem; flex-wrap:wrap;">
-            <div id="mainWeatherIcon" style="width:150px; height:150px; display:flex; align-items:center; justify-content:center;"></div>
-            <div>
-                <h2 id="currentCity" style="margin:0;">Ładowanie lokalizacji...</h2>
-                <div id="currentCondition" style="font-size:1.4rem; font-weight:600; color:var(--primary);">-</div>
+            <div id="loadingIndicator" style="display:none; align-items:center; gap:0.5rem; font-weight:600;">
+                <span>⏳ Pobieranie prognozy...</span>
             </div>
         </div>
 
-        <div class="parameter-grid">
-            <div class="parameter-item">
-                <span class="parameter-label">🌡️ Temperatura</span>
-                <span class="parameter-value" id="tempNow">-</span>
+        <!-- KOMUNIKAT METEO SYNOPTYKA -->
+        <div id="weatherSummary" class="weather-summary" style="display: none;">
+            <h3 style="margin: 0 0 0.5rem 0;">📋 Komunikat meteo</h3>
+            <div id="weatherSummaryText" style="font-size: 0.95rem; line-height: 1.6;"></div>
+        </div>
+
+        <!-- HUB DLA BIEGACZY PRO -->
+        <div class="card runner-hub-card">
+            <h3>🏃 Centrum Biegacza</h3>
+            
+            <div id="runnerScoreBadge" class="runner-score-badge" style="background: #27ae60;">
+                <span>Indeks Warunków:</span> <span id="runnerScoreVal">--/10</span>
             </div>
-            <div class="parameter-item">
-                <span class="parameter-label">💧 Punkt Rosy (Dew Point)</span>
-                <span class="parameter-value" id="dewPointNow">-</span>
-                <small id="dewComfort" style="font-size:0.75rem; font-weight:600; margin-top:2px;">-</small>
+            
+            <div id="goldenWindow" class="golden-window-box">
+                Analizowanie optymalnego okna treningowego...
             </div>
-            <div class="parameter-item">
-                <span class="parameter-label">💨 Wiatr i porywy</span>
-                <span class="parameter-value" id="windNow">-</span>
-            </div>
-            <div class="parameter-item">
-                <span class="parameter-label">🎚️ Ciśnienie</span>
-                <span class="parameter-value" id="pressureNow">-</span>
+
+            <div class="gear-container">
+                <div class="gear-box">
+                    <div class="gear-title">👕 Góra stroju</div>
+                    <div id="gearTop" style="font-size:0.95rem; font-weight:500;">-</div>
+                </div>
+                <div class="gear-box">
+                    <div class="gear-title">🩳 Dół stroju</div>
+                    <div id="gearBottom" style="font-size:0.95rem; font-weight:500;">-</div>
+                </div>
+                <div class="gear-box">
+                    <div class="gear-title">🧢 Akcesoria & Ochrona</div>
+                    <div id="gearAccessories" style="font-size:0.95rem; font-weight:500;">-</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- JAKOŚĆ POWIETRZA -->
-    <div class="card">
-        <h3>🌫️ Jakość powietrza (Air Quality)</h3>
-        <div class="parameter-grid">
-            <div class="parameter-item" id="aqiItem">
-                <span class="parameter-label">Indeks US AQI</span>
-                <span class="parameter-value" id="aqiValue">-</span>
+        <!-- SZCZEGÓŁOWA PORADA DLA BIEGACZA + REGENERACJA / ROLOWANIE -->
+        <div id="runnerTip" class="runner-tip" style="display: none;">
+            <h3 id="runnerTipTitle" style="margin: 0 0 0.5rem 0;">💡 Porada dla biegacza & Regeneracja</h3>
+            <div id="runnerTipText" style="font-size: 0.95rem; line-height: 1.6;"></div>
+        </div>
+
+        <!-- GŁÓWNA KARTA POGODY (PEŁNA IKONA 150PX NA DESKTOPIE) -->
+        <div class="card">
+            <div class="main-weather-row" style="display:flex; align-items:center; gap:1.6rem; flex-wrap:wrap;">
+                <div id="mainWeatherIcon" style="width:150px; height:150px; display:flex; align-items:center; justify-content:center; flex-shrink: 0;"></div>
+                <div>
+                    <h2 id="currentCity" style="margin:0;">Ładowanie lokalizacji...</h2>
+                    <div id="currentCondition" style="font-size:1.4rem; font-weight:600; color:var(--primary);">-</div>
+                </div>
             </div>
-            <div class="parameter-item">
-                <span class="parameter-label">Pył PM 2.5</span>
-                <span class="parameter-value" id="pm25Value">-</span>
-            </div>
-            <div class="parameter-item">
-                <span class="parameter-label">Pył PM 10</span>
-                <span class="parameter-value" id="pm10Value">-</span>
+
+            <div class="parameter-grid">
+                <div class="parameter-item">
+                    <span class="parameter-label">🌡️ Temperatura</span>
+                    <span class="parameter-value" id="tempNow">-</span>
+                </div>
+                <div class="parameter-item">
+                    <span class="parameter-label">💧 Punkt Rosy (Dew Point)</span>
+                    <span class="parameter-value" id="dewPointNow">-</span>
+                    <small id="dewComfort" style="font-size:0.75rem; font-weight:600; margin-top:2px;">-</small>
+                </div>
+                <div class="parameter-item">
+                    <span class="parameter-label">💨 Wiatr i porywy</span>
+                    <span class="parameter-value" id="windNow">-</span>
+                </div>
+                <div class="parameter-item">
+                    <span class="parameter-label">🎚️ Ciśnienie</span>
+                    <span class="parameter-value" id="pressureNow">-</span>
+                </div>
             </div>
         </div>
-        <div id="airQualityAdvice" style="font-size:0.95rem;"></div>
-    </div>
 
-    <!-- PROGNOZA NA NAJBLIŻSZE GODZINY Z DUŻYMI IKONAMI I OPISAMI POD SPODEM -->
-    <div class="card">
-        <h3>⏱️ Prognoza na najbliższe godziny</h3>
-        <div class="hourly-forecast" id="hourlyForecast"></div>
-    </div>
+        <!-- JAKOŚĆ POWIETRZA -->
+        <div class="card">
+            <h3>🌫️ Jakość powietrza (Air Quality)</h3>
+            <div class="parameter-grid">
+                <div class="parameter-item" id="aqiItem">
+                    <span class="parameter-label">Indeks US AQI</span>
+                    <span class="parameter-value" id="aqiValue">-</span>
+                </div>
+                <div class="parameter-item">
+                    <span class="parameter-label">Pył PM 2.5</span>
+                    <span class="parameter-value" id="pm25Value">-</span>
+                </div>
+                <div class="parameter-item">
+                    <span class="parameter-label">Pył PM 10</span>
+                    <span class="parameter-value" id="pm10Value">-</span>
+                </div>
+            </div>
+            <div id="airQualityAdvice" style="font-size:0.95rem;"></div>
+        </div>
 
-    <!-- PROGNOZA NA KOLEJNE DNI (DUŻE IKONY) -->
-    <div class="card">
-        <h3>📅 Prognoza na kolejne dni</h3>
-        <div class="forecast-container" id="forecast"></div>
-    </div>
+        <!-- PROGNOZA GODZINOWA -->
+        <div class="card">
+            <h3>⏱️ Prognoza na najbliższe godziny</h3>
+            <div class="hourly-forecast" id="hourlyForecast"></div>
+        </div>
 
-    <!-- REGIONALNE OSTRZEŻENIA METEOROLOGICZNE (PEŁNE TŁUMACZENIE) -->
-    <div class="card">
-        <h3>⚠️ Regionalne Ostrzeżenia Meteorologiczne</h3>
-        <div id="weatherWarnings">Brak aktywnych ostrzeżeń dla tego regionu.</div>
-    </div>
+        <!-- PROGNOZA WIELODNIOWA -->
+        <div class="card">
+            <h3>📅 Prognoza na kolejne dni</h3>
+            <div class="forecast-container" id="forecast"></div>
+        </div>
+
+        <!-- REGIONALNE OSTRZEŻENIA METEOROLOGICZNE -->
+        <div class="card">
+            <h3>⚠️ Regionalne Ostrzeżenia Meteorologiczne</h3>
+            <div id="weatherWarnings">Brak aktywnych ostrzeżeń dla tego regionu.</div>
+        </div>
+    </main>
+
+    <!-- PANEL WIDGETÓW (JEDNOLITY Z GŁÓWNYM PRZEWIJANIEM STRONY) -->
+    <aside class="widgets-container" id="widgetsPanel">
+        <div class="widget" id="currentWeatherWidget">
+            <div class="widget-header"><span>⛅</span><span>Teraz</span></div>
+            <div class="widget-content">
+                <center><div class="widget-icon-container" id="widgetIcon"></div></center>
+                <div class="widget-row"><span class="widget-label">Warunki:</span><span class="widget-value" id="widgetCondition">-</span></div>
+                <div class="widget-row"><span class="widget-label">Temperatura:</span><span class="widget-value" id="widgetTemp">-</span></div>
+                <div class="widget-row"><span class="widget-label">Wiatr:</span><span class="widget-value" id="widgetWind">-</span></div>
+                <div class="widget-row"><span class="widget-label">Wilgotność:</span><span class="widget-value" id="widgetHumidity">-</span></div>
+            </div>
+        </div>
+
+        <div class="sun-widget">
+            <div class="widget-header" style="margin: 0;"><span>☀️</span><span>Długość dnia</span></div>
+            <div class="sun-timeline">
+                <div class="sun-progress" id="sunPosition"></div>
+                <div class="sun-icon">☀️</div>
+            </div>
+            <div class="time-marks">
+                <span>Wschód: <strong id="widgetSunrise">-</strong></span>
+                <span>Zachód: <strong id="widgetSunset">-</strong></span>
+            </div>
+            <div class="day-info" id="widgetDayLength">Ładowanie...</div>
+        </div>
+
+        <div class="widget moon-widget">
+            <div class="widget-header"><span>🌙</span><span>Faza Księżyca</span></div>
+            <div class="moon-header">
+                <div class="moon-phase-icon" id="moonPhaseIcon">🌑</div>
+                <div class="moon-phase-name" id="moonPhase">Ładowanie...</div>
+            </div>
+            <div class="moon-times">
+                <div class="moon-time"><span>Wschód</span><strong id="moonrise">-</strong></div>
+                <div class="moon-time"><span>Zachód</span><strong id="moonset">-</strong></div>
+            </div>
+        </div>
+
+        <div class="widget" id="dewPointWidget">
+            <div class="widget-header"><span>💧</span><span>Punkt Rosy & Termoregulacja</span></div>
+            <div class="widget-content">
+                <div class="widget-row"><span class="widget-label">Punkt rosy:</span><span class="widget-value" id="widgetDewVal">-</span></div>
+                <div class="widget-row"><span class="widget-label">Odparowywanie:</span><span class="widget-value" id="widgetDewStatus">-</span></div>
+                <div id="widgetDewDesc" style="font-size:0.83rem; margin-top:5px; line-height:1.4; opacity:0.9;">Ładowanie analizy potu...</div>
+            </div>
+        </div>
+
+        <div class="widget" id="paceWidget">
+            <div class="widget-header"><span>⏱️</span><span>Korekta tempa biegu</span></div>
+            <div class="widget-content">
+                <div class="widget-row"><span class="widget-label">Wpływ pogody:</span><span class="widget-value" id="paceAdjustmentVal">0 s / km</span></div>
+                <div id="paceAdvice" style="font-size:0.83rem; margin-top:5px; line-height:1.4;">Ładowanie analizy tempa...</div>
+            </div>
+        </div>
+
+        <div class="widget" id="uvWidget">
+            <div class="widget-header"><span>🧴</span><span>Indeks UV i Ochrona</span></div>
+            <div class="widget-content">
+                <div class="widget-row"><span class="widget-label">Poziom UV:</span><span class="widget-value" id="uvIndexVal">-</span></div>
+                <div id="uvAdvice" style="font-size:0.83rem; margin-top:5px; line-height:1.4;">Ładowanie...</div>
+            </div>
+        </div>
+
+        <div class="widget" id="precipitationWidget">
+            <div class="widget-header"><span>🌧️</span><span>Prognoza opadów (24h)</span></div>
+            <div class="widget-content">
+                <div style="height: 120px; position:relative;"><canvas id="precipitationChart"></canvas></div>
+                <div id="precipitationSummary" style="font-size:0.85rem; margin-top:8px;">Ładowanie...</div>
+            </div>
+        </div>
+        
+        <div class="widget" id="temperatureWidget">
+            <div class="widget-header"><span>🌡️</span><span>Prognoza Temperatury (24h)</span></div>
+            <div class="widget-content">
+                <div style="height: 140px; position:relative;"><canvas id="temperatureChart"></canvas></div>
+            </div>
+        </div>
+
+        <div class="widget" id="stormWidget">
+            <div class="widget-header"><span>⚡</span><span>Ostrzeżenie burzowe</span></div>
+            <div class="widget-content" id="stormContent">Brak burz w prognozie</div>
+        </div>
+
+        <div class="widget" id="frostWidget">
+            <div class="widget-header"><span>❄️</span><span>Ostrzeżenie o przymrozkach</span></div>
+            <div class="widget-content" id="frostContent">Ładowanie danych o przymrozkach...</div>
+        </div>
+    </aside>
 </div>
 
+<!-- KONTROLKI PŁYWAJĄCE -->
 <div class="anim-toggle" id="animToggle" onclick="toggleBackgroundAnim()">✨ Efekty tła: WŁ</div>
 <div class="theme-toggle" id="themeToggle" onclick="toggleThemePanel()">🎨 Motyw</div>
 
-<!-- PANEL MOTYWÓW: DOMYŚLNIE ZWINIĘTY -->
+<!-- PANEL WYBORU MOTYWÓW -->
 <div class="theme-panel" id="themePanel">
     <h3>Wybierz motyw</h3>
     <div class="theme-options" id="themeOptionsList"></div>
 </div>
 
-<div class="widget-toggle" onclick="toggleWidgetsPanel()">📊 Widgety</div>
-
 <script>
     const API_KEY = 'd0c0831962dc429f91771349242705';
     const TRANSLATE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznFB7otJiVr5HS-L1il3FiWEYNsWxDypy5MxAU47UA1-RAkDmvuvsoPQj9J8MiikR0PQ/exec';
 
-    // 25 MOTYWÓW
+    // 25 KOMPLETNYCH MOTYWÓW
     const THEMES = [
         { name: 'Domyślny (Auto)', value: 'auto', emoji: '🌓' },
         { name: 'Jasny', value: 'light', emoji: '☀️' },
@@ -1144,7 +1126,6 @@
         { name: 'Bursztyn', value: 'amber', emoji: '🟠' }
     ];
 
-    // ORYGINALNE DUŻE IKONY SVG - Z POPRAWIONYMI KODAMI MGŁY (1135 -> 248.svg, 1147 -> 260.svg, 1030 -> 143.svg)
     const WEATHER_ICONS = {
         1000: { day: '113.svg', night: '113.svg' },
         1003: { day: '116.svg', night: '116.svg' },
@@ -1208,7 +1189,6 @@
         'waning crescent': { name: 'Ubywający sierp', icon: '🌘' }
     };
 
-    // KOMPLETNA BAZA 48 KODÓW POGODOWYCH
     const WEATHER_CODE_TRANSLATIONS = {
         1000: { day: "Słonecznie", night: "Bezchmurnie" },
         1003: { day: "Częściowe zachmurzenie", night: "Częściowe zachmurzenie" },
@@ -1266,7 +1246,6 @@
     let currentThemeMode = 'auto';
     let lastAstroData = null;
 
-    // Funkcja tworzenia dużych ikon SVG z bezpiecznym ładowaniem mgły
     function createWeatherIconElement(code, isDay, remoteCdnUrl = '', customSize = null) {
         const img = document.createElement('img');
         const iconData = WEATHER_ICONS[code] || WEATHER_ICONS[1000];
@@ -1286,7 +1265,6 @@
         img.style.objectFit = 'contain';
 
         img.onerror = function() {
-            // Bezpieczne sprawdzanie alternatywnych plików dla mgły
             if (code === 1135 && !this.dataset.triedAlt) {
                 this.dataset.triedAlt = '1';
                 this.src = `weather-icons/${isDay ? 'day' : 'night'}/501.svg`;
@@ -1309,7 +1287,6 @@
         return img;
     }
 
-    // TŁUMACZENIE CZASU I STATUSÓW
     function parseSunTime(timeStr) {
         if (!timeStr) return '--:--';
         const raw = timeStr.trim().toLowerCase();
@@ -1340,11 +1317,9 @@
 
     function translateMoon(phase) {
         if (!phase) return { name: 'Brak danych', icon: '🌙' };
-        const key = phase.toLowerCase().trim();
-        return MOON_PHASES[key] || { name: phase, icon: '🌙' };
+        return MOON_PHASES[phase.toLowerCase().trim()] || { name: phase, icon: '🌙' };
     }
 
-    // ANALIZA PUNKTU ROSY I ODPAROWYWANIA POTU
     function getDewPointAnalysis(dewPoint) {
         if (dewPoint < 10) {
             return {
@@ -1405,7 +1380,6 @@
         return Math.max(1, Math.min(10, Math.round(score * 10) / 10));
     }
 
-    // KOREKTA TEMPA BIEGU
     function calculatePaceAdjustment(temp, windKph, dewPoint, precipMm) {
         let adjustSec = 0;
         if (temp > 15) adjustSec += Math.round((temp - 15) * 1.6);
@@ -1520,7 +1494,6 @@
         return `⭐ <strong>Złote Okno Treningowe:</strong> ${tStart} – ${tEnd} (Ocena: <strong>${bestScore.toFixed(1)}/10</strong>, ${bestHour.temp_c}°C, wiatr ${bestHour.wind_kph} km/h, opady ${bestHour.precip_mm} mm)`;
     }
 
-    // PRZELICZNIK JEDNOSTEK (m/s -> km/h)
     function convertSpeedUnits(text) {
         if (!text) return '';
         return text.replace(/(\d+(?:[.,]\d+)?)\s*(?:m\/s|mps)/gi, (match, p1) => {
@@ -1530,7 +1503,6 @@
         });
     }
 
-    // ZAAWANSOWANY SILNIK TŁUMACZEŃ OSTRZEŻEŃ (GTX + GOOGLE APPS SCRIPT + SŁOWNIK)
     async function translateWarningTextAsync(rawText) {
         if (!rawText) return '';
         let cleanText = convertSpeedUnits(rawText);
@@ -1545,9 +1517,7 @@
                 const data = await res.json();
                 if (data && data[0]) {
                     const translated = data[0].map(item => item[0]).join('');
-                    if (translated && translated.trim().length > 0) {
-                        return translated;
-                    }
+                    if (translated && translated.trim().length > 0) return translated;
                 }
             }
         } catch (e) {
@@ -1558,9 +1528,7 @@
             const resGas = await fetch(`${TRANSLATE_SCRIPT_URL}?text=${encodeURIComponent(cleanText)}&source=auto&target=pl`);
             if (resGas.ok) {
                 const txt = await resGas.text();
-                if (txt && txt.trim().length > 0) {
-                    return txt.replace(/<[^>]*>/g, '');
-                }
+                if (txt && txt.trim().length > 0) return txt.replace(/<[^>]*>/g, '');
             }
         } catch (e) {
             console.warn('GAS Translator fallback:', e);
@@ -1586,14 +1554,7 @@
             [/moderate/gi, 'Umiarkowane'],
             [/severe/gi, 'Silne / Poważne'],
             [/extreme/gi, 'Ekstremalne'],
-            [/minor/gi, 'Niskie'],
-            [/Viento del Noreste de (\d+) a (\d+) km\/h/gi, 'Wiatr północno-wschodni od $1 do $2 km/h'],
-            [/olas de (\d+) a (\d+) m/gi, 'fale o wysokości od $1 do $2 m'],
-            [/Pueden ir acompañadas de granizo y rachas fuertes/gi, 'Mogą im towarzyszyć opady gradu i silne porywy wiatru'],
-            [/One-hour accumulated precipitation: (\d+) mm/gi, 'Jednogodzinna suma opadów: $1 mm'],
-            [/Twelve-hours accumulated precipitation: (\d+) mm/gi, 'Dwunastogodzinna suma opadów: $1 mm'],
-            [/Be aware, keep up to date with the latest weather forecast/gi, 'Zachowaj czujność, śledź najnowsze komunikaty pogodowe'],
-            [/Moderate damages to people and properties may occur/gi, 'Mogą wystąpić umiarkowane szkody materialne oraz utrudnienia na zewnątrz']
+            [/minor/gi, 'Niskie']
         ];
 
         phraseMap.forEach(([regex, repl]) => {
@@ -1603,7 +1564,6 @@
         return fallbackText;
     }
 
-    // TŁUMACZENIE I RENDEROWANIE OSTRZEŻEŃ
     async function renderWeatherWarnings(alerts) {
         const warnEl = document.getElementById('weatherWarnings');
         if (!alerts || !alerts.alert || alerts.alert.length === 0) {
@@ -1624,10 +1584,10 @@
             let icon = '⚠️';
             const textCheck = (headline + ' ' + (a.event || '')).toLowerCase();
 
-            if (textCheck.includes('storm') || textCheck.includes('burz') || textCheck.includes('wyładowaniami')) icon = '⛈️';
-            else if (textCheck.includes('wind') || textCheck.includes('wiatr') || textCheck.includes('gale') || textCheck.includes('viento')) icon = '💨';
-            else if (textCheck.includes('rain') || textCheck.includes('deszcz') || textCheck.includes('opad') || textCheck.includes('lluvia')) icon = '🌧️';
-            else if (textCheck.includes('snow') || textCheck.includes('śnieg') || textCheck.includes('blizzard')) icon = '❄️';
+            if (textCheck.includes('storm') || textCheck.includes('burz')) icon = '⛈️';
+            else if (textCheck.includes('wind') || textCheck.includes('wiatr') || textCheck.includes('gale')) icon = '💨';
+            else if (textCheck.includes('rain') || textCheck.includes('deszcz') || textCheck.includes('opad')) icon = '🌧️';
+            else if (textCheck.includes('snow') || textCheck.includes('śnieg')) icon = '❄️';
             else if (textCheck.includes('coastal') || textCheck.includes('przybrzeż')) icon = '🌊';
             else if (textCheck.includes('frost') || textCheck.includes('freeze') || textCheck.includes('mróz')) icon = '🥶';
             else if (textCheck.includes('heat') || textCheck.includes('upał')) icon = '🔥';
@@ -1669,7 +1629,6 @@
         warnEl.innerHTML = renderedAlerts.join('');
     }
 
-    // POBIERANIE POGODY I GŁÓWNA AKTUALIZACJA
     async function getWeatherData(query) {
         try {
             document.getElementById('loadingIndicator').style.display = 'flex';
@@ -1686,7 +1645,6 @@
         }
     }
 
-    // ZINTEGROWANA FUNKCJA: SYNCHRONIZACJA MOTYWU + SUWAKA SŁOŃCA ZE STREFĄ MIASTA
     function syncSunAndTheme() {
         if (!lastAstroData) return;
 
@@ -1697,7 +1655,6 @@
             const [sH, sM] = sunrise.split(':').map(Number);
             const [eH, eM] = sunset.split(':').map(Number);
 
-            // 1. Dokładny czas lokalny dla sprawdzanego miasta
             let nowHours, nowMinutes;
             try {
                 const cityTimeStr = new Date().toLocaleTimeString('pl-PL', {
@@ -1717,12 +1674,10 @@
             const sMins = sH * 60 + sM;
             const eMins = eH * 60 + eM;
 
-            // Długość dnia w minutach
             const dayMinutes = (eMins - sMins);
             const dayH = Math.floor(dayMinutes / 60);
             const dayM = dayMinutes % 60;
 
-            // 2. Pozycja słońca na osi czasu dla danego miasta
             let progress = 0;
             let dayStatus = `Długość dnia: ${dayH}h ${dayM}m`;
             const isNight = nowMins < sMins || nowMins >= eMins;
@@ -1739,7 +1694,6 @@
                 dayStatus += ` (Przed wschodem)`;
             }
 
-            // Aktualizacja suwaka w widgecie
             const sunPosEl = document.getElementById('sunPosition');
             const sunIconEl = document.querySelector('.sun-icon');
             const dayLenEl = document.getElementById('widgetDayLength');
@@ -1748,12 +1702,9 @@
             if (sunIconEl) sunIconEl.style.left = `${progress}%`;
             if (dayLenEl) dayLenEl.textContent = dayStatus;
 
-            // 3. Automatyczne przełączanie motywu
             if (currentThemeMode === 'auto') {
                 document.body.className = '';
-                if (isNight) {
-                    document.body.classList.add('night-mode');
-                }
+                if (isNight) document.body.classList.add('night-mode');
                 if (!bgAnimActive) document.body.classList.add('no-anim');
             }
         }
@@ -1782,12 +1733,10 @@
         document.getElementById('widgetWind').textContent = `${current.wind_kph} km/h`;
         document.getElementById('widgetHumidity').textContent = `${current.humidity}%`;
         
-        // WŁASNE IKONY SVG W WIDGETACH
         const widgetIconContainer = document.getElementById('widgetIcon');
         widgetIconContainer.innerHTML = '';
         widgetIconContainer.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon));
 
-        // GŁÓWNA KARTA - BARDZO DUŻA IKONA SVG (150px)
         document.getElementById('currentCity').textContent = `${location.name}, ${location.region || location.country}`;
         document.getElementById('currentCondition').textContent = condText;
         const mainIconContainer = document.getElementById('mainWeatherIcon');
@@ -1798,35 +1747,28 @@
         document.getElementById('windNow').textContent = `${current.wind_kph} km/h (porywy ${current.gust_kph || current.wind_kph} km/h)`;
         document.getElementById('pressureNow').textContent = `${current.pressure_mb} hPa`;
 
-        // PUNKT ROSY
         const dewPoint = current.dewpoint_c ?? Math.round(current.temp_c - ((100 - current.humidity) / 5));
         const dewAnalysis = getDewPointAnalysis(dewPoint);
         document.getElementById('dewPointNow').textContent = `${dewPoint.toFixed(1)}°C`;
         document.getElementById('dewComfort').textContent = dewAnalysis.status;
 
-        // WIDGET PUNKTU ROSY W PANELU BOCZNYM
         document.getElementById('widgetDewVal').textContent = `${dewPoint.toFixed(1)}°C`;
         const widgetDewStatusEl = document.getElementById('widgetDewStatus');
         widgetDewStatusEl.textContent = dewAnalysis.status;
         widgetDewStatusEl.style.color = dewAnalysis.color;
         document.getElementById('widgetDewDesc').textContent = dewAnalysis.desc;
 
-        // DŁUGOŚĆ DNIA: Wschód i Zachód
         const astro = forecast.forecastday[0].astro;
         document.getElementById('widgetSunrise').textContent = parseSunTime(astro.sunrise);
         document.getElementById('widgetSunset').textContent = parseSunTime(astro.sunset);
-
-        // Synchronizacja słońca i motywu ze strefą czasową
         syncSunAndTheme();
 
-        // FAZA KSIĘŻYCA
         const moon = translateMoon(astro.moon_phase);
         document.getElementById('moonPhase').textContent = moon.name;
         document.getElementById('moonPhaseIcon').textContent = moon.icon;
         document.getElementById('moonrise').textContent = parseSunTime(astro.moonrise);
         document.getElementById('moonset').textContent = parseSunTime(astro.moonset);
 
-        // KOREKTA TEMPA BIEGU
         const paceSec = calculatePaceAdjustment(current.temp_c, current.wind_kph, dewPoint, current.precip_mm);
         const paceEl = document.getElementById('paceAdjustmentVal');
         const paceAdv = document.getElementById('paceAdvice');
@@ -1838,7 +1780,6 @@
             paceAdv.innerHTML = `Dla tempa bazowego <strong>5:00 min/km</strong> biegnij dziś na <strong>5:${(paceSec < 10 ? '0' : '') + paceSec} min/km</strong>, by utrzymać to samo tętno.`;
         }
 
-        // INDEKS UV
         const uv = current.uv || 0;
         document.getElementById('uvIndexVal').textContent = `${uv} / 11+`;
         let uvText = 'Brak potrzeby stosowania kremów z filtrem.';
@@ -1847,14 +1788,12 @@
         else if (uv >= 3) uvText = '⛅ Umiarkowane UV. Przydatna czapka z daszkiem podczas dłuższego biegu.';
         document.getElementById('uvAdvice').textContent = uvText;
 
-        // KOMUNIKAT METEO & PORADY BIEGACZA
         document.getElementById('weatherSummary').style.display = 'block';
         document.getElementById('weatherSummaryText').innerHTML = generateWeatherSummaryText(forecast.forecastday[0]);
 
         document.getElementById('runnerTip').style.display = 'block';
         document.getElementById('runnerTipText').innerHTML = generateDetailedRunnerTip(condText, current.temp_c, current.wind_kph, current.precip_mm);
 
-        // HUB BIEGACZA PRO
         const aqi = current.air_quality ? (current.air_quality['us-epa-index'] || 1) : 1;
         const runningScore = calculateRunningScore(current.temp_c, current.wind_kph, current.precip_mm, dewPoint, aqi);
         const scoreBadge = document.getElementById('runnerScoreBadge');
@@ -1871,7 +1810,6 @@
         document.getElementById('gearBottom').textContent = gear.bottom;
         document.getElementById('gearAccessories').textContent = gear.accessories;
 
-        // Jakość powietrza
         document.getElementById('aqiValue').textContent = aqi;
         document.getElementById('pm25Value').textContent = current.air_quality?.pm2_5 ? `${current.air_quality.pm2_5.toFixed(1)} µg/m³` : '-';
         document.getElementById('pm10Value').textContent = current.air_quality?.pm10 ? `${current.air_quality.pm10.toFixed(1)} µg/m³` : '-';
@@ -1879,7 +1817,6 @@
             ? '✅ Jakość powietrza bardzo dobra. Możesz trenować bezpiecznie.'
             : '⚠️ Podwyższone stężenie pyłów. Osoby z astmą powinny zmniejszyć intensywność.';
 
-        // Wykresy i widgety dodatkowe
         renderCharts(next24Hours);
         renderHourly(next24Hours);
         renderDaily(forecast.forecastday);
@@ -1930,7 +1867,6 @@
             : 'Brak znaczących opadów w najbliższych 24h.';
     }
 
-    // PROGNOZA NA NAJBLIŻSZE GODZINY - DUŻE IKONY 88px I OPISY POD SPODEM
     function renderHourly(hours) {
         const container = document.getElementById('hourlyForecast');
         container.innerHTML = '';
@@ -1954,7 +1890,6 @@
         });
     }
 
-    // PROGNOZA WIELODNIOWA - DUŻE IKONY 96px
     function renderDaily(days) {
         const container = document.getElementById('forecast');
         container.innerHTML = '';
@@ -2045,7 +1980,6 @@
         }
     }
 
-    // OBSŁUGA MOTYWÓW
     function toggleThemePanel() {
         document.getElementById('themePanel').classList.toggle('active');
     }
@@ -2068,12 +2002,8 @@
     function toggleBackgroundAnim() {
         bgAnimActive = !bgAnimActive;
         document.body.classList.toggle('no-anim', !bgAnimActive);
-        document.getElementById('animToggle').textContent = bgAnimActive ? '✨ Tło: WŁ' : '⚡ Tło: WYŁ';
+        document.getElementById('animToggle').textContent = bgAnimActive ? '✨ Efekty tła: WŁ' : '⚡ Efekty tła: WYŁ';
         localStorage.setItem('meteoBgAnim', bgAnimActive ? '1' : '0');
-    }
-
-    function toggleWidgetsPanel() {
-        document.getElementById('widgetsPanel').classList.toggle('visible');
     }
 
     function init() {
@@ -2092,7 +2022,6 @@
         const savedTheme = localStorage.getItem('meteoTheme') || 'auto';
         setTheme(savedTheme);
 
-        // Cykliczne sprawdzanie czasu co 60 sekund: płynny ruch słońca + przełączanie motywu na żywo
         setInterval(syncSunAndTheme, 60000);
 
         const lastCity = localStorage.getItem('meteoLastCity');
