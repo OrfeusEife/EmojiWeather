@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -15,11 +16,11 @@
             --warning: #ff4757;
             --warning-bg: rgba(255, 71, 87, 0.15);
             --background-day: linear-gradient(135deg, #a9dfbf, #f9e79f, #f1948a, #5dade2);
-            --background-night: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            --background-night: linear-gradient(135deg, #0b0f19, #111827, #1e293b);
             --text-color-day: #222;
-            --text-color-night: #f0f0f0;
+            --text-color-night: #f1f5f9;
             --shadow: 0 12px 40px rgba(0, 102, 204, 0.2);
-            --shadow-dark: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --shadow-dark: 0 12px 40px rgba(0, 0, 0, 0.65);
             --border-radius: 16px;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             --alert-bg: #f8f9fa;
@@ -52,7 +53,7 @@
             overflow-x: hidden;
         }
 
-        /* GŁÓWNY UKŁAD STRONY (JEDNO WSPÓLNE PRZEWIJANIE) */
+        /* GŁÓWNY UKŁAD STRONY */
         .app-layout {
             display: flex;
             justify-content: center;
@@ -76,7 +77,7 @@
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
-        /* PANEL BOCZNY: BRAK OSOBNEGO SCROLLBARA, NATURALNE PRZEWIJANIE ZE STRONĄ */
+        /* PANEL BOCZNY */
         .widgets-container {
             width: 360px;
             flex-shrink: 0;
@@ -86,7 +87,7 @@
             z-index: 2;
         }
 
-        /* DUŻE IKONY SVG W WIDGETACH */
+        /* IKONY W WIDGETACH */
         .widget-icon-container {
             display: inline-flex;
             align-items: center;
@@ -233,71 +234,145 @@
         .widget-label { opacity: 0.8; }
         .widget-value { font-weight: 600; }
 
-        /* PRZYCISKI PŁYWAJĄCE I PANEL MOTYWÓW */
-        .theme-toggle, .anim-toggle {
+        /* JEDNOLITY PRZYCISK I ZINTEGROWANE MENU USTAWIEŃ */
+        .settings-toggle {
             position: fixed;
+            bottom: 22px;
+            right: 22px;
             background: var(--glass);
-            backdrop-filter: blur(14px);
-            border-radius: var(--border-radius);
-            padding: 0.75rem 1.2rem;
+            backdrop-filter: blur(16px);
+            border-radius: 30px;
+            padding: 0.75rem 1.35rem;
             cursor: pointer;
             z-index: 1001;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.25);
-            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 700;
             user-select: none;
             color: var(--text-color-day);
             transition: var(--transition);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .theme-toggle { bottom: 20px; right: 20px; }
-        .anim-toggle { bottom: 20px; right: 145px; }
+        .settings-toggle:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: var(--glow-hover);
+        }
 
-        .theme-panel {
+        .settings-panel {
             position: fixed;
-            bottom: 75px;
-            right: 20px;
-            width: 260px;
+            bottom: 80px;
+            right: 22px;
+            width: 320px;
+            max-width: calc(100vw - 44px);
             background: var(--glass);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(18px) saturate(180%);
             border-radius: var(--border-radius);
-            padding: 1.2rem;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            padding: 1.3rem;
+            box-shadow: 0 16px 45px rgba(0,0,0,0.28);
             z-index: 1002;
-            max-height: 65vh;
+            max-height: 72vh;
             overflow-y: auto;
             transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.3s ease;
             transform: translateY(20px) scale(0.95);
             opacity: 0;
             pointer-events: none;
             color: var(--text-color-day);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .theme-panel.active {
+        .settings-panel.active {
             transform: translateY(0) scale(1);
             opacity: 1;
             pointer-events: all;
         }
 
-        .theme-panel h3 {
-            margin: 0 0 0.8rem 0;
-            font-size: 1.05rem;
-            text-align: center;
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.9rem;
             border-bottom: 1px solid rgba(0,0,0,0.1);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.6rem;
+        }
+
+        .settings-header h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            color: var(--primary);
+        }
+
+        .settings-close {
+            background: transparent;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.2rem 0.5rem;
+            color: inherit;
+            opacity: 0.7;
+            box-shadow: none;
+            min-height: auto;
+        }
+
+        .settings-close:hover {
+            opacity: 1;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .settings-section {
+            margin-bottom: 1.1rem;
+        }
+
+        .settings-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+
+        .settings-sub-btn {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(0, 102, 204, 0.25);
+            color: var(--text-color-day);
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            min-height: auto;
+            box-shadow: none;
+        }
+
+        .settings-sub-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: var(--glow);
         }
 
         .theme-options {
             display: grid;
             grid-template-columns: 1fr;
             gap: 0.4rem;
+            margin-top: 0.4rem;
         }
 
         .theme-option {
             padding: 0.55rem 0.8rem;
             cursor: pointer;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             font-size: 0.9rem;
             display: flex;
             align-items: center;
@@ -312,7 +387,7 @@
         }
 
         /* ========================================================
-           MOTYWY CSS (25 KOMPLETNYCH MOTYWÓW)
+           MOTYWY CSS & CZYTELNOŚĆ W TRYBIE CIEMNYM
            ======================================================== */
         body.light-mode {
             --primary: #0284c7;
@@ -332,55 +407,103 @@
             box-shadow: 0 8px 24px rgba(14, 165, 233, 0.1) !important;
         }
 
-        body.night-mode { background: var(--background-night); color: var(--text-color-night); }
-        body.dark-mode { background: #121212; color: #e0e0e0; --glass: rgba(30, 30, 30, 0.9); }
+        body.night-mode { 
+            --primary: #38bdf8; 
+            --secondary: #818cf8;
+            --glass: rgba(17, 24, 39, 0.92);
+            --glass-dark: rgba(15, 23, 42, 0.95);
+            --text-color-day: #f1f5f9;
+            --text-color-night: #f1f5f9;
+            background: var(--background-night) !important; 
+            color: #f1f5f9 !important; 
+        }
+
+        body.dark-mode { 
+            --primary: #38bdf8; 
+            --secondary: #60a5fa;
+            --glass: rgba(17, 24, 39, 0.92);
+            --glass-dark: rgba(15, 23, 42, 0.95);
+            --text-color-day: #f1f5f9;
+            --text-color-night: #f1f5f9;
+            background: #090d16 !important; 
+            color: #f1f5f9 !important; 
+        }
 
         body.night-mode, body.dark-mode, body.matrix-mode, body.space-mode, body.galaxy-mode, body.neon-mode {
             color: var(--text-color-night);
         }
 
-        body.night-mode .theme-toggle, body.dark-mode .theme-toggle, body.matrix-mode .theme-toggle,
-        body.space-mode .theme-toggle, body.galaxy-mode .theme-toggle, body.neon-mode .theme-toggle,
-        body.night-mode .anim-toggle, body.dark-mode .anim-toggle, body.matrix-mode .anim-toggle,
-        body.space-mode .anim-toggle, body.galaxy-mode .anim-toggle, body.neon-mode .anim-toggle {
-            background: rgba(18, 18, 30, 0.92) !important;
-            color: var(--text-color-night) !important;
-            border: 1px solid rgba(255, 255, 255, 0.18) !important;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+        body.night-mode .parameter-value, body.dark-mode .parameter-value,
+        body.night-mode .widget-header, body.dark-mode .widget-header,
+        body.night-mode .gear-title, body.dark-mode .gear-title,
+        body.night-mode #currentCondition, body.dark-mode #currentCondition,
+        body.night-mode .day-info, body.dark-mode .day-info,
+        body.night-mode .settings-header h3, body.dark-mode .settings-header h3 {
+            color: #38bdf8 !important;
         }
 
-        body.night-mode .theme-panel, body.dark-mode .theme-panel,
-        body.space-mode .theme-panel, body.galaxy-mode .theme-panel, body.neon-mode .theme-panel {
-            background: rgba(16, 16, 28, 0.96) !important;
-            border: 1px solid rgba(255, 255, 255, 0.16) !important;
-            color: var(--text-color-night) !important;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.7) !important;
+        body.night-mode .parameter-label, body.dark-mode .parameter-label,
+        body.night-mode .widget-label, body.dark-mode .widget-label {
+            color: #94a3b8 !important;
+            opacity: 1 !important;
         }
 
-        body.night-mode .theme-panel h3, body.dark-mode .theme-panel h3,
-        body.space-mode .theme-panel h3, body.galaxy-mode .theme-panel h3, body.neon-mode .theme-panel h3 {
-            border-bottom-color: rgba(255, 255, 255, 0.15) !important;
-            color: var(--secondary) !important;
+        body.night-mode .card h2, body.dark-mode .card h2,
+        body.night-mode .card h3, body.dark-mode .card h3 {
+            color: #ffffff !important;
+        }
+
+        body.night-mode .settings-toggle, body.dark-mode .settings-toggle, body.matrix-mode .settings-toggle,
+        body.space-mode .settings-toggle, body.galaxy-mode .settings-toggle, body.neon-mode .settings-toggle {
+            background: rgba(15, 23, 42, 0.94) !important;
+            color: #f1f5f9 !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7) !important;
+        }
+
+        body.night-mode .settings-panel, body.dark-mode .settings-panel,
+        body.space-mode .settings-panel, body.galaxy-mode .settings-panel, body.neon-mode .settings-panel {
+            background: rgba(15, 23, 42, 0.98) !important;
+            border: 1px solid rgba(56, 189, 248, 0.25) !important;
+            color: #f1f5f9 !important;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.8) !important;
+        }
+
+        body.night-mode .settings-header, body.dark-mode .settings-header,
+        body.space-mode .settings-header, body.galaxy-mode .settings-header, body.neon-mode .settings-header {
+            border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        body.night-mode .settings-sub-btn, body.dark-mode .settings-sub-btn,
+        body.space-mode .settings-sub-btn, body.galaxy-mode .settings-sub-btn, body.neon-mode .settings-sub-btn {
+            background: rgba(56, 189, 248, 0.12) !important;
+            border-color: rgba(56, 189, 248, 0.35) !important;
+            color: #f1f5f9 !important;
+        }
+
+        body.night-mode .settings-sub-btn:hover, body.dark-mode .settings-sub-btn:hover {
+            background: #38bdf8 !important;
+            color: #0b0f19 !important;
         }
 
         body.night-mode .theme-option, body.dark-mode .theme-option,
         body.space-mode .theme-option, body.galaxy-mode .theme-option, body.neon-mode .theme-option {
-            background: rgba(255, 255, 255, 0.08) !important;
-            color: var(--text-color-night) !important;
+            background: rgba(255, 255, 255, 0.06) !important;
+            color: #f1f5f9 !important;
         }
 
         body.night-mode .container, body.dark-mode .container, body.matrix-mode .container,
         body.space-mode .container, body.galaxy-mode .container, body.neon-mode .container {
             background: var(--glass-dark);
             box-shadow: var(--shadow-dark);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         body.night-mode .card, body.dark-mode .card, body.matrix-mode .card,
         body.space-mode .card, body.galaxy-mode .card, body.neon-mode .card {
-            background: linear-gradient(145deg, rgba(20, 20, 32, 0.88), rgba(30, 30, 48, 0.88));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-color-night);
+            background: linear-gradient(145deg, rgba(20, 27, 45, 0.88), rgba(15, 23, 42, 0.88));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #f1f5f9;
         }
 
         body.night-mode .widget, body.dark-mode .widget, body.matrix-mode .widget,
@@ -388,17 +511,33 @@
         body.night-mode .sun-widget, body.dark-mode .sun-widget, body.matrix-mode .sun-widget,
         body.space-mode .sun-widget, body.galaxy-mode .sun-widget, body.neon-mode .sun-widget {
             background: var(--glass-dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-color-night);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #f1f5f9;
         }
 
         body.night-mode .weather-summary, body.dark-mode .weather-summary, body.matrix-mode .weather-summary,
         body.space-mode .weather-summary, body.galaxy-mode .weather-summary, body.neon-mode .weather-summary,
         body.night-mode .runner-tip, body.dark-mode .runner-tip, body.matrix-mode .runner-tip,
         body.space-mode .runner-tip, body.galaxy-mode .runner-tip, body.neon-mode .runner-tip {
-            background: rgba(15, 15, 28, 0.88) !important;
-            border-left-color: var(--primary);
-            color: var(--text-color-night) !important;
+            background: rgba(15, 23, 42, 0.88) !important;
+            border-left-color: var(--primary) !important;
+            color: #f1f5f9 !important;
+        }
+
+        body.night-mode .weather-summary h3, body.dark-mode .weather-summary h3,
+        body.night-mode .runner-tip h3, body.dark-mode .runner-tip h3 {
+            color: #38bdf8 !important;
+        }
+
+        body.night-mode .golden-window-box, body.dark-mode .golden-window-box {
+            background: rgba(245, 158, 11, 0.12) !important;
+            color: #fde68a !important;
+            border-left-color: #f59e0b !important;
+        }
+
+        body.night-mode .runner-hub-card, body.dark-mode .runner-hub-card {
+            background: rgba(15, 23, 42, 0.85) !important;
+            border: 1px solid rgba(56, 189, 248, 0.35) !important;
         }
 
         body.night-mode .gear-box, body.dark-mode .gear-box, body.matrix-mode .gear-box,
@@ -407,16 +546,21 @@
         body.space-mode .parameter-item, body.galaxy-mode .parameter-item, body.neon-mode .parameter-item,
         body.night-mode .hour-item, body.dark-mode .hour-item, body.matrix-mode .hour-item,
         body.space-mode .hour-item, body.galaxy-mode .hour-item, body.neon-mode .hour-item {
-            background: rgba(0, 0, 0, 0.5) !important;
+            background: rgba(0, 0, 0, 0.45) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            color: var(--text-color-night) !important;
+            color: #f1f5f9 !important;
         }
 
         body.night-mode input, body.dark-mode input, body.matrix-mode input,
         body.space-mode input, body.galaxy-mode input, body.neon-mode input {
-            background: rgba(10, 10, 25, 0.8);
-            color: var(--text-color-night);
+            background: rgba(15, 23, 42, 0.9);
+            color: #f1f5f9;
             border-color: var(--primary);
+        }
+
+        body.dark-mode button, body.night-mode button {
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            color: #ffffff;
         }
 
         /* MATRIX */
@@ -434,20 +578,19 @@
         body.matrix-mode .container, body.matrix-mode .card, body.matrix-mode .widget,
         body.matrix-mode .sun-widget, body.matrix-mode .runner-hub-card, body.matrix-mode .runner-tip,
         body.matrix-mode .weather-summary, body.matrix-mode .gear-box, body.matrix-mode .parameter-item,
-        body.matrix-mode .hour-item, body.matrix-mode .theme-panel {
+        body.matrix-mode .hour-item, body.matrix-mode .settings-panel {
             background: rgba(0, 18, 0, 0.96) !important;
             border: 1px solid #00ff41 !important;
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.3) !important;
             color: #00ff41 !important;
         }
-        body.matrix-mode .theme-toggle, body.matrix-mode .anim-toggle {
+        body.matrix-mode .settings-toggle, body.matrix-mode .settings-sub-btn {
             background: #001200 !important;
             color: #00ff41 !important;
             border: 1px solid #00ff41 !important;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) !important;
+            box-shadow: 0 0 12px rgba(0, 255, 65, 0.4) !important;
         }
 
-        /* POZOSTAŁE */
         body.space-mode { --primary: #9d4edd; --secondary: #48bfe3; background: linear-gradient(135deg, #02010a, #0b092b, #10002b) !important; color: #e2e8f0 !important; }
         body.space-mode .container, body.space-mode .card, body.space-mode .widget, body.space-mode .sun-widget { background: rgba(12, 10, 36, 0.92) !important; border: 1px solid rgba(157, 78, 221, 0.35) !important; color: #e2e8f0 !important; }
         body.neon-mode { --primary: #00ff9d; --secondary: #00b8ff; background: #040814 !important; color: #00ff9d !important; font-family: 'Orbitron', monospace; }
@@ -619,15 +762,64 @@
             background: rgba(255, 255, 255, 0.75);
         }
 
-        /* PROGNOZA GODZINOWA: PŁYNNE PRZEWIJANIE W POZIOMIE */
+        /* PROGNOZA GODZINOWA: SCROLLBAR */
         .hourly-forecast {
             display: flex;
             gap: 1.1rem;
             margin: 1.5rem 0;
             overflow-x: auto;
-            padding-bottom: 0.9rem;
+            padding-bottom: 1.2rem;
             -webkit-overflow-scrolling: touch;
             scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+            scrollbar-color: var(--secondary) rgba(0, 102, 204, 0.08);
+        }
+
+        .hourly-forecast::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .hourly-forecast::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 20px;
+            margin: 0 6px;
+        }
+
+        .hourly-forecast::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            box-shadow: 0 1px 4px rgba(0, 102, 204, 0.3);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .hourly-forecast::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(90deg, var(--secondary), #66c2ff);
+            box-shadow: 0 0 10px rgba(0, 153, 255, 0.75);
+        }
+
+        body.night-mode .hourly-forecast,
+        body.dark-mode .hourly-forecast,
+        body.space-mode .hourly-forecast,
+        body.galaxy-mode .hourly-forecast {
+            scrollbar-color: var(--secondary) rgba(255, 255, 255, 0.08);
+        }
+        body.night-mode .hourly-forecast::-webkit-scrollbar-track,
+        body.dark-mode .hourly-forecast::-webkit-scrollbar-track,
+        body.space-mode .hourly-forecast::-webkit-scrollbar-track,
+        body.galaxy-mode .hourly-forecast::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        body.matrix-mode .hourly-forecast {
+            scrollbar-color: #00ff41 rgba(0, 255, 65, 0.1);
+        }
+        body.matrix-mode .hourly-forecast::-webkit-scrollbar-track {
+            background: rgba(0, 255, 65, 0.1);
+        }
+        body.matrix-mode .hourly-forecast::-webkit-scrollbar-thumb {
+            background: #00ff41;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
         }
 
         .hour-item {
@@ -653,111 +845,165 @@
             margin-top: 1.5rem;
         }
 
-        /* OSTRZEŻENIA */
+        /* OSTRZEŻENIA METEOROLOGICZNE W WIDGETACH */
+        .warnings-widget {
+            position: relative;
+        }
+
+        .warnings-scroll-container {
+            transition: max-height 0.3s ease;
+            padding-right: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: #ef4444 rgba(0, 0, 0, 0.06);
+        }
+
+        .warnings-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .warnings-scroll-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 10px;
+        }
+        .warnings-scroll-container::-webkit-scrollbar-thumb {
+            background: #ef4444;
+            border-radius: 10px;
+        }
+
+        body.night-mode .warnings-scroll-container::-webkit-scrollbar-track,
+        body.dark-mode .warnings-scroll-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
         .warning-card {
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 1.4rem;
-            border-left: 6px solid #f39c12;
-            background: rgba(255, 255, 255, 0.55);
+            border-radius: 12px;
+            padding: 0.95rem 1rem;
+            margin-bottom: 0.8rem;
+            border-left: 5px solid #f39c12;
+            background: rgba(255, 255, 255, 0.65);
             box-shadow: 0 4px 15px rgba(0,0,0,0.06);
         }
-        .warning-card.yellow { border-left-color: #f1c40f; background: rgba(241, 196, 15, 0.15); }
-        .warning-card.orange { border-left-color: #e67e22; background: rgba(230, 126, 34, 0.15); }
+        .warning-card:last-child { margin-bottom: 0; }
+        .warning-card.yellow { border-left-color: #f1c40f; background: rgba(241, 196, 15, 0.16); }
+        .warning-card.orange { border-left-color: #e67e22; background: rgba(230, 126, 34, 0.16); }
         .warning-card.red    { border-left-color: #e74c3c; background: rgba(231, 76, 60, 0.18); }
+
+        body.night-mode .warning-card, body.dark-mode .warning-card {
+            background: rgba(15, 23, 42, 0.75);
+            color: #f1f5f9;
+        }
+        body.night-mode .warning-card.yellow, body.dark-mode .warning-card.yellow { background: rgba(241, 196, 15, 0.12); }
+        body.night-mode .warning-card.orange, body.dark-mode .warning-card.orange { background: rgba(230, 126, 34, 0.15); }
+        body.night-mode .warning-card.red, body.dark-mode .warning-card.red { background: rgba(231, 76, 60, 0.2); }
 
         .warning-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.8rem;
+            gap: 0.65rem;
+            margin-bottom: 0.4rem;
         }
-        .warning-icon { font-size: 2.3rem; }
-        .warning-title { font-size: 1.25rem; font-weight: 700; line-height: 1.3; }
-        .warning-severity { font-size: 0.88rem; font-style: italic; opacity: 0.9; margin-top: 2px; }
-        .warning-details { font-size: 1rem; line-height: 1.6; margin: 0.8rem 0; white-space: pre-line; }
+        .warning-icon { font-size: 1.7rem; line-height: 1; flex-shrink: 0; }
+        .warning-title { font-size: 1rem; font-weight: 700; line-height: 1.25; }
+        .warning-severity { font-size: 0.78rem; font-style: italic; opacity: 0.9; margin-top: 1px; }
+        .warning-details { font-size: 0.86rem; line-height: 1.5; margin: 0.5rem 0; white-space: pre-line; word-break: break-word; }
         .warning-time {
-            font-size: 0.88rem;
+            font-size: 0.76rem;
             background: rgba(0, 0, 0, 0.08);
-            padding: 0.6rem 0.9rem;
+            padding: 0.4rem 0.65rem;
             border-radius: 8px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            margin-top: 0.8rem;
+            flex-direction: column;
+            gap: 0.2rem;
+            margin-top: 0.5rem;
             font-weight: 500;
         }
+        body.night-mode .warning-time, body.dark-mode .warning-time {
+            background: rgba(0, 0, 0, 0.35);
+            color: #cbd5e1;
+        }
 
-        /* ANIMACJE TŁA (AKCELERACJA SPRZĘTOWA) */
+        /* ========================================================
+           NOWOCZESNE TŁO: AMBIENT GLOW & PARTICLES CANVAS
+           ======================================================== */
         .weather-bg {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            will-change: transform;
-        }
-
-        .weather-bg .layer {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 1.2s ease;
         }
 
         body.no-anim .weather-bg { display: none !important; }
 
-        .weather-bg .sun {
-            background: radial-gradient(circle at 82% 16%, rgba(255, 230, 120, 0.8) 0%, rgba(255, 180, 50, 0.3) 14%, rgba(255, 140, 20, 0.08) 28%, transparent 55%);
-            animation: sun-pulse 6s ease-in-out infinite;
-        }
-        @keyframes sun-pulse {
-            0%, 100% { transform: scale(1); filter: brightness(1); }
-            50% { transform: scale(1.08); filter: brightness(1.2); }
-        }
-
-        .weather-bg .stars {
-            background-image:
-                radial-gradient(1.5px 1.5px at 40px 60px, #fff, transparent),
-                radial-gradient(2px 2px at 150px 120px, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 240px 180px, #fff, transparent);
-            background-size: 350px 350px;
+        .ambient-glow {
+            position: absolute;
+            inset: -20%;
+            filter: blur(85px);
+            opacity: 0.65;
+            transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
         }
 
-        .weather-bg .clouds {
-            background-image: 
-                radial-gradient(ellipse 260px 85px at 20% 25%, rgba(255,255,255,0.6), transparent 65%),
-                radial-gradient(ellipse 320px 95px at 60% 18%, rgba(255,255,255,0.5), transparent 65%);
-            background-size: 1300px 900px;
-            animation: clouds-drift 80s linear infinite;
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+            animation: floatGlow 22s infinite alternate ease-in-out;
         }
-        @keyframes clouds-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-1300px, 0, 0); } }
 
-        .weather-bg .rain {
-            background-image: linear-gradient(180deg, transparent 0%, rgba(150, 210, 255, 0.9) 100%);
-            background-size: 2px 28px;
-            animation: rain-fall 0.45s linear infinite;
+        body.night-mode .glow-orb,
+        body.dark-mode .glow-orb,
+        body.space-mode .glow-orb,
+        body.galaxy-mode .glow-orb,
+        body.matrix-mode .glow-orb {
+            mix-blend-mode: screen;
         }
-        @keyframes rain-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 28px, 0); } }
 
-        .weather-bg .snow {
-            background-image: 
-                radial-gradient(3px 3px at 30px 40px, #fff, transparent),
-                radial-gradient(2px 2px at 120px 90px, rgba(255,255,255,0.85), transparent);
-            background-size: 250px 250px;
-            animation: snow-fall 11s linear infinite;
+        .orb-1 {
+            width: 55vw; height: 55vw;
+            top: -10vw; left: -10vw;
+            background: radial-gradient(circle, #ffeaa7 0%, #fab1a0 60%, transparent 80%);
         }
-        @keyframes snow-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(50px, 250px, 0); } }
 
-        body.weather-clear .sun { opacity: 1; }
-        body.weather-clear-night .stars { opacity: 1; }
-        body.weather-partly .sun { opacity: 0.7; }
-        body.weather-partly .clouds { opacity: 0.5; }
-        body.weather-cloudy .clouds { opacity: 0.95; }
-        body.weather-rain .clouds { opacity: 0.9; filter: brightness(0.7); }
-        body.weather-rain .rain { opacity: 0.85; }
-        body.weather-snow .clouds { opacity: 0.95; }
-        body.weather-snow .snow { opacity: 1; }
+        .orb-2 {
+            width: 60vw; height: 60vw;
+            bottom: -15vw; right: -10vw;
+            background: radial-gradient(circle, #74b9ff 0%, #a29bfe 60%, transparent 80%);
+            animation-duration: 28s;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 45vw; height: 45vw;
+            top: 35%; left: 30%;
+            background: radial-gradient(circle, #55efc4 0%, #81ecec 60%, transparent 80%);
+            animation-duration: 24s;
+            animation-delay: -12s;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6vw, 4vh) scale(1.08); }
+            100% { transform: translate(-4vw, -5vh) scale(0.95); }
+        }
+
+        body.weather-rain .orb-1 { background: radial-gradient(circle, #4a69bd 0%, #1e3799 70%, transparent 80%); }
+        body.weather-rain .orb-2 { background: radial-gradient(circle, #6a89cc 0%, #0c2461 70%, transparent 80%); }
+        body.weather-rain .orb-3 { background: radial-gradient(circle, #82ccdd 0%, #38ada9 70%, transparent 80%); }
+
+        body.weather-cloudy .orb-1 { background: radial-gradient(circle, #d2dae2 0%, #808e9b 70%, transparent 80%); }
+        body.weather-cloudy .orb-2 { background: radial-gradient(circle, #a4b0be 0%, #747d8c 70%, transparent 80%); }
+        body.weather-cloudy .orb-3 { background: radial-gradient(circle, #ced6e0 0%, #57606f 70%, transparent 80%); }
+
+        body.weather-snow .orb-1 { background: radial-gradient(circle, #dff9fb 0%, #c7ecee 70%, transparent 80%); }
+        body.weather-snow .orb-2 { background: radial-gradient(circle, #dfe4ea 0%, #a4b0be 70%, transparent 80%); }
+        body.weather-snow .orb-3 { background: radial-gradient(circle, #f1f2f6 0%, #ced6e0 70%, transparent 80%); }
+
+        #particlesCanvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0.75;
+        }
 
         @keyframes tileIn {
             from { opacity: 0; transform: translateY(18px) scale(0.98); }
@@ -765,104 +1011,38 @@
         }
         .tile-anim { animation: tileIn 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
 
-        /* ========================================================
-           RESPONSYWNOŚĆ: NATURALNY UKŁAD (TABLETY I SMARTFONY)
-           ======================================================== */
         @media (max-width: 1024px) {
-            body {
-                padding: 1rem;
-                padding-bottom: 80px;
-            }
-
-            .app-layout {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1.5rem;
-            }
-
-            .container {
-                max-width: 100%;
-                padding: 1.4rem;
-            }
-
-            /* Na tabletach widgety układają się w czytelną siatkę pod spodem */
-            .widgets-container {
-                width: 100%;
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 1.2rem;
-            }
+            body { padding: 1rem; padding-bottom: 90px; }
+            .app-layout { flex-direction: column; align-items: stretch; gap: 1.5rem; }
+            .container { max-width: 100%; padding: 1.4rem; }
+            .widgets-container { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
         }
 
         @media (max-width: 640px) {
-            body {
-                padding: 0.6rem;
-                padding-bottom: 80px;
-            }
-
-            .container {
-                padding: 1rem;
-            }
-
-            .card {
-                padding: 1.1rem;
-            }
-
-            .search-box {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            input, .mobile-buttons, button {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .main-weather-row {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.8rem !important;
-            }
-
-            .parameter-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.7rem;
-            }
-
-            .forecast-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.8rem;
-            }
-
-            .widgets-container {
-                grid-template-columns: 1fr;
-            }
-
-            .theme-toggle {
-                right: 15px;
-                bottom: 15px;
-                padding: 0.65rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            .anim-toggle {
-                right: auto;
-                left: 15px;
-                bottom: 15px;
-                padding: 0.65rem 1rem;
-                font-size: 0.85rem;
-            }
+            body { padding: 0.6rem; padding-bottom: 85px; }
+            .container { padding: 1rem; }
+            .card { padding: 1.1rem; }
+            .search-box { flex-direction: column; align-items: stretch; }
+            input, .mobile-buttons, button { width: 100%; justify-content: center; }
+            .main-weather-row { flex-direction: column; text-align: center; gap: 0.8rem !important; }
+            .parameter-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+            .forecast-container { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+            .widgets-container { grid-template-columns: 1fr; }
+            .settings-toggle { bottom: 15px; right: 15px; padding: 0.65rem 1.1rem; font-size: 0.9rem; }
+            .settings-panel { bottom: 70px; right: 15px; left: 15px; width: auto; max-width: none; }
         }
     </style>
 </head>
 <body>
 
+<!-- NOWOCZESNE TŁO AMBIENT + CANVAS -->
 <div class="weather-bg" id="weatherBg" aria-hidden="true">
-    <div class="layer stars"></div>
-    <div class="layer sun"></div>
-    <div class="layer clouds"></div>
-    <div class="layer rain"></div>
-    <div class="layer snow"></div>
+    <div class="ambient-glow">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+    <canvas id="particlesCanvas"></canvas>
 </div>
 
 <div class="app-layout">
@@ -883,10 +1063,10 @@
             </div>
         </div>
 
-        <!-- KOMUNIKAT METEO SYNOPTYKA -->
+        <!-- KOMUNIKAT METEO LOKALNEGO SYNOPTYKA -->
         <div id="weatherSummary" class="weather-summary" style="display: none;">
-            <h3 style="margin: 0 0 0.5rem 0;">📋 Komunikat meteo</h3>
-            <div id="weatherSummaryText" style="font-size: 0.95rem; line-height: 1.6;"></div>
+            <h3 style="margin: 0 0 0.5rem 0;">📻 Lokalna prognoza pogody</h3>
+            <div id="weatherSummaryText" style="font-size: 0.95rem; line-height: 1.65;"></div>
         </div>
 
         <!-- HUB DLA BIEGACZY PRO -->
@@ -919,11 +1099,11 @@
 
         <!-- SZCZEGÓŁOWA PORADA DLA BIEGACZA + REGENERACJA / ROLOWANIE -->
         <div id="runnerTip" class="runner-tip" style="display: none;">
-            <h3 id="runnerTipTitle" style="margin: 0 0 0.5rem 0;">💡 Porada dla biegacza & Regeneracja</h3>
+            <h3 id="runnerTipTitle" style="margin: 0 0 0.5rem 0;">💡 Wskazówka na dziś & Regeneracja</h3>
             <div id="runnerTipText" style="font-size: 0.95rem; line-height: 1.6;"></div>
         </div>
 
-        <!-- GŁÓWNA KARTA POGODY (PEŁNA IKONA 150PX NA DESKTOPIE) -->
+        <!-- GŁÓWNA KARTA POGODY -->
         <div class="card">
             <div class="main-weather-row" style="display:flex; align-items:center; gap:1.6rem; flex-wrap:wrap;">
                 <div id="mainWeatherIcon" style="width:150px; height:150px; display:flex; align-items:center; justify-content:center; flex-shrink: 0;"></div>
@@ -985,15 +1165,9 @@
             <h3>📅 Prognoza na kolejne dni</h3>
             <div class="forecast-container" id="forecast"></div>
         </div>
-
-        <!-- REGIONALNE OSTRZEŻENIA METEOROLOGICZNE -->
-        <div class="card">
-            <h3>⚠️ Regionalne Ostrzeżenia Meteorologiczne</h3>
-            <div id="weatherWarnings">Brak aktywnych ostrzeżeń dla tego regionu.</div>
-        </div>
     </main>
 
-    <!-- PANEL WIDGETÓW (JEDNOLITY Z GŁÓWNYM PRZEWIJANIEM STRONY) -->
+    <!-- PANEL WIDGETÓW -->
     <aside class="widgets-container" id="widgetsPanel">
         <div class="widget" id="currentWeatherWidget">
             <div class="widget-header"><span>⛅</span><span>Teraz</span></div>
@@ -1005,6 +1179,8 @@
                 <div class="widget-row"><span class="widget-label">Wilgotność:</span><span class="widget-value" id="widgetHumidity">-</span></div>
             </div>
         </div>
+
+       
 
         <div class="sun-widget">
             <div class="widget-header" style="margin: 0;"><span>☀️</span><span>Długość dnia</span></div>
@@ -1070,6 +1246,20 @@
                 <div style="height: 140px; position:relative;"><canvas id="temperatureChart"></canvas></div>
             </div>
         </div>
+		
+		 <!-- NOWY WIDGET OSTRZEŻEŃ METEO W PANELU BOCZNYM -->
+        <div class="widget warnings-widget" id="warningsWidget">
+            <div class="widget-header" style="justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚠️</span><span>Ostrzeżenia Meteo</span>
+                </div>
+                <span id="warningsCountBadge" style="display: none; font-size: 0.75rem; background: #ef4444; color: #fff; padding: 2px 8px; border-radius: 12px; font-weight: 700;"></span>
+            </div>
+            <div class="widget-content">
+                <div id="weatherWarnings" class="warnings-scroll-container">Brak aktywnych ostrzeżeń dla tego regionu.</div>
+                <div id="warningsMoreIndicator" style="display: none; margin-top: 0.6rem; text-align: center; font-size: 0.78rem; font-weight: 700; padding: 0.4rem; background: rgba(239, 68, 68, 0.15); border-radius: 8px; color: #ef4444;"></div>
+            </div>
+        </div>
 
         <div class="widget" id="stormWidget">
             <div class="widget-header"><span>⚡</span><span>Ostrzeżenie burzowe</span></div>
@@ -1083,21 +1273,41 @@
     </aside>
 </div>
 
-<!-- KONTROLKI PŁYWAJĄCE -->
-<div class="anim-toggle" id="animToggle" onclick="toggleBackgroundAnim()">✨ Efekty tła: WŁ</div>
-<div class="theme-toggle" id="themeToggle" onclick="toggleThemePanel()">🎨 Motyw</div>
+<!-- JEDYNY, DYSKRETNY PRZYCISK USTAWIEŃ -->
+<div class="settings-toggle" id="settingsToggle" onclick="toggleSettingsPanel()">
+    <span>⚙️ Ustawienia</span>
+</div>
 
-<!-- PANEL WYBORU MOTYWÓW -->
-<div class="theme-panel" id="themePanel">
-    <h3>Wybierz motyw</h3>
-    <div class="theme-options" id="themeOptionsList"></div>
+<!-- ZINTEGROWANY PANEL USTAWIEŃ -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+        <h3>⚙️ Ustawienia aplikacji</h3>
+        <button class="settings-close" onclick="toggleSettingsPanel()" title="Zamknij">✕</button>
+    </div>
+
+    <!-- Opcje działania aplikacji -->
+    <div class="settings-section">
+        <div class="settings-row">
+            <span>🖼️ Zestaw ikon:</span>
+            <button class="settings-sub-btn" id="settingIconBtn" onclick="toggleIconMode()">Własne (SVG)</button>
+        </div>
+        <div class="settings-row">
+            <span>✨ Animacje tła:</span>
+            <button class="settings-sub-btn" id="settingAnimBtn" onclick="toggleBackgroundAnim()">Włączone</button>
+        </div>
+    </div>
+
+    <!-- Wybór motywu -->
+    <div class="settings-section">
+        <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; opacity: 0.9;">🎨 Wybierz motyw:</div>
+        <div class="theme-options" id="themeOptionsList"></div>
+    </div>
 </div>
 
 <script>
     const API_KEY = 'd0c0831962dc429f91771349242705';
     const TRANSLATE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznFB7otJiVr5HS-L1il3FiWEYNsWxDypy5MxAU47UA1-RAkDmvuvsoPQj9J8MiikR0PQ/exec';
 
-    // 25 KOMPLETNYCH MOTYWÓW
     const THEMES = [
         { name: 'Domyślny (Auto)', value: 'auto', emoji: '🌓' },
         { name: 'Jasny', value: 'light', emoji: '☀️' },
@@ -1244,17 +1454,130 @@
     let temperatureChart = null;
     let bgAnimActive = true;
     let currentThemeMode = 'auto';
+    let currentIconSet = localStorage.getItem('meteoIconSet') || 'local';
     let lastAstroData = null;
+    let lastWeatherData = null;
 
-    function createWeatherIconElement(code, isDay, remoteCdnUrl = '', customSize = null) {
+    /* SILNIK CZĄSTECZEK (CANVAS) DLA DESZCZU I ŚNIEGU */
+    const canvas = document.getElementById('particlesCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let currentPrecipMode = 'none';
+    let windAngleOffset = 0;
+
+    function resizeCanvas() {
+        if (!canvas) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function initParticles(type, count = 70) {
+        particles = [];
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                len: type === 'rain' ? 12 + Math.random() * 14 : 2 + Math.random() * 3,
+                speedY: type === 'rain' ? 14 + Math.random() * 10 : 1 + Math.random() * 2,
+                speedX: (Math.random() - 0.5) * 1.5,
+                opacity: 0.2 + Math.random() * 0.5,
+                swing: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    function renderParticles() {
+        if (!bgAnimActive || currentPrecipMode === 'none') {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(renderParticles);
+            return;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let p of particles) {
+            ctx.strokeStyle = currentPrecipMode === 'rain' ? `rgba(180, 215, 255, ${p.opacity})` : `rgba(255, 255, 255, ${p.opacity})`;
+            ctx.fillStyle = ctx.strokeStyle;
+
+            if (currentPrecipMode === 'rain') {
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p.x + windAngleOffset * 8, p.y + p.len);
+                ctx.stroke();
+
+                p.y += p.speedY;
+                p.x += windAngleOffset * 3;
+            } else if (currentPrecipMode === 'snow') {
+                p.swing += 0.03;
+                p.x += Math.sin(p.swing) * 1.2 + (windAngleOffset * 1.5);
+                p.y += p.speedY;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.len, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            if (p.y > canvas.height) {
+                p.y = -20;
+                p.x = Math.random() * canvas.width;
+            }
+            if (p.x > canvas.width) p.x = 0;
+            if (p.x < 0) p.x = canvas.width;
+        }
+
+        requestAnimationFrame(renderParticles);
+    }
+    requestAnimationFrame(renderParticles);
+
+    function getRandomItem(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    /* INTELIGENTNE MAPOWANIE IKON DLA ZADYMIENIA I MGŁY */
+    function getIconForCondition(code, isDay, conditionText = '', remoteCdnUrl = '') {
+        const textLower = (conditionText || '').toLowerCase();
+        const cdnLower = (remoteCdnUrl || '').toLowerCase();
+
+        if (textLower.includes('zadymien') || textLower.includes('smoke') || textLower.includes('haze') || textLower.includes('smog')) {
+            return { day: '248.svg', night: '248.svg' };
+        }
+        if (textLower.includes('mgł') || textLower.includes('fog') || textLower.includes('mist')) {
+            return { day: '248.svg', night: '248.svg' };
+        }
+        if (cdnLower.includes('248') || cdnLower.includes('143')) {
+            return { day: '248.svg', night: '248.svg' };
+        }
+
+        if (WEATHER_ICONS[code]) {
+            return WEATHER_ICONS[code];
+        }
+
+        if (textLower.includes('deszcz') || textLower.includes('rain') || textLower.includes('mżawk') || textLower.includes('drizzle')) {
+            return { day: '296.svg', night: '296.svg' };
+        }
+        if (textLower.includes('śnieg') || textLower.includes('snow')) {
+            return { day: '326.svg', night: '326.svg' };
+        }
+        if (textLower.includes('burz') || textLower.includes('thunder') || textLower.includes('storm')) {
+            return { day: '200.svg', night: '200.svg' };
+        }
+        if (textLower.includes('chmur') || textLower.includes('cloud') || textLower.includes('pochmurn')) {
+            return { day: '119.svg', night: '119.svg' };
+        }
+
+        return WEATHER_ICONS[1000];
+    }
+
+    function createWeatherIconElement(code, isDay, remoteCdnUrl = '', customSize = null, conditionText = '') {
         const img = document.createElement('img');
-        const iconData = WEATHER_ICONS[code] || WEATHER_ICONS[1000];
+        const iconData = getIconForCondition(code, isDay, conditionText, remoteCdnUrl);
         const iconFile = isDay ? iconData.day : iconData.night;
         const localPath = `weather-icons/${isDay ? 'day' : 'night'}/${iconFile}`;
+        const cdnFullUrl = remoteCdnUrl ? (remoteCdnUrl.startsWith('//') ? 'https:' + remoteCdnUrl : remoteCdnUrl) : '';
 
-        img.src = localPath;
-        img.alt = 'Ikona pogody';
-        
         if (customSize) {
             img.style.width = customSize;
             img.style.height = customSize;
@@ -1263,28 +1586,69 @@
             img.style.maxHeight = '100%';
         }
         img.style.objectFit = 'contain';
+        img.alt = conditionText || 'Ikona pogody';
 
-        img.onerror = function() {
-            if (code === 1135 && !this.dataset.triedAlt) {
-                this.dataset.triedAlt = '1';
-                this.src = `weather-icons/${isDay ? 'day' : 'night'}/501.svg`;
-                return;
-            }
-            if (code === 1147 && !this.dataset.triedAlt) {
-                this.dataset.triedAlt = '1';
-                this.src = `weather-icons/${isDay ? 'day' : 'night'}/502.svg`;
-                return;
-            }
-            if (remoteCdnUrl && !this.dataset.triedCdn) {
-                this.dataset.triedCdn = '1';
-                this.src = remoteCdnUrl.startsWith('//') ? 'https:' + remoteCdnUrl : remoteCdnUrl;
-                return;
-            }
-            this.onerror = null;
-            this.src = isDay ? 'weather-icons/day/113.svg' : 'weather-icons/night/113.svg';
-        };
+        if (currentIconSet === 'api' && cdnFullUrl) {
+            img.src = cdnFullUrl;
+            img.onerror = function() {
+                this.onerror = null;
+                this.src = localPath;
+            };
+        } else {
+            img.src = localPath;
+            img.onerror = function() {
+                if ((code === 1135 || iconFile === '248.svg') && !this.dataset.triedAlt) {
+                    this.dataset.triedAlt = '1';
+                    this.src = `weather-icons/${isDay ? 'day' : 'night'}/143.svg`;
+                    return;
+                }
+                if (code === 1147 && !this.dataset.triedAlt) {
+                    this.dataset.triedAlt = '1';
+                    this.src = `weather-icons/${isDay ? 'day' : 'night'}/502.svg`;
+                    return;
+                }
+                if (cdnFullUrl && !this.dataset.triedCdn) {
+                    this.dataset.triedCdn = '1';
+                    this.src = cdnFullUrl;
+                    return;
+                }
+                this.onerror = null;
+                this.src = isDay ? 'weather-icons/day/143.svg' : 'weather-icons/night/143.svg';
+            };
+        }
 
         return img;
+    }
+
+    function toggleSettingsPanel() {
+        document.getElementById('settingsPanel').classList.toggle('active');
+    }
+
+    function toggleIconMode() {
+        currentIconSet = currentIconSet === 'local' ? 'api' : 'local';
+        localStorage.setItem('meteoIconSet', currentIconSet);
+        updateSettingsControls();
+        if (lastWeatherData) {
+            updateUI(lastWeatherData);
+        }
+    }
+
+    function toggleBackgroundAnim() {
+        bgAnimActive = !bgAnimActive;
+        document.body.classList.toggle('no-anim', !bgAnimActive);
+        updateSettingsControls();
+        localStorage.setItem('meteoBgAnim', bgAnimActive ? '1' : '0');
+    }
+
+    function updateSettingsControls() {
+        const iconBtn = document.getElementById('settingIconBtn');
+        if (iconBtn) {
+            iconBtn.textContent = currentIconSet === 'local' ? 'Animowane ' : 'Statyczne';
+        }
+        const animBtn = document.getElementById('settingAnimBtn');
+        if (animBtn) {
+            animBtn.textContent = bgAnimActive ? 'Włączone' : 'Wyłączone';
+        }
     }
 
     function parseSunTime(timeStr) {
@@ -1309,6 +1673,11 @@
     }
 
     function translateWeatherCondition(code, isDay, fallbackText = '') {
+        const fb = (fallbackText || '').toLowerCase();
+        if (fb.includes('smoke') || fb.includes('zadymien')) return "Zadymienie";
+        if (fb.includes('haze')) return "Zamglenie (Haze)";
+        if (fb.includes('sand') || fb.includes('dust')) return "Pył / Piasek w powietrzu";
+
         const t = WEATHER_CODE_TRANSLATIONS[code];
         if (t) return isDay ? t.day : t.night;
         if (fallbackText) return fallbackText;
@@ -1325,31 +1694,31 @@
             return {
                 status: 'Błyskawiczne 👌',
                 color: '#2ecc71',
-                desc: 'Pot paruje natychmiastowo. Naturalny system chłodzenia organizmu działa ze 100% wydajnością.'
+                desc: 'Pot odparowuje w mgnieniu oka. Organizm chłodzi się bez najmniejszego problemu.'
             };
         } else if (dewPoint <= 15) {
             return {
                 status: 'Optymalne 👍',
                 color: '#3498db',
-                desc: 'Komfortowe warunki do biegania. Wilgoć łatwo odparowuje ze skóry, zapobiegając przegrzaniu.'
+                desc: 'Bardzo przyjemne warunki do biegania. Wilgoć ładnie schodzi ze skóry i nie ma zadyszki.'
             };
         } else if (dewPoint <= 18) {
             return {
                 status: 'Spowolnione 💧',
                 color: '#f39c12',
-                desc: 'Odczuwalna wilgotność. Skóra pozostaje mokra, pot odparowuje wolniej, tętno treningowe może lekko wzrosnąć.'
+                desc: 'Czuć już lekką wilgoć w powietrzu. Koszulka szybciej zrobi się mokra, a tętno może podskoczyć o parę uderzeń.'
             };
         } else if (dewPoint <= 21) {
             return {
                 status: 'Utrudnione ⚠️',
                 color: '#e67e22',
-                desc: 'Duchota. Pot spływa kroplami, zamiast odparowywać i chłodzić. Konieczne obniżenie tempa i częste picie.'
+                desc: 'Robi się parno i duszno! Pot zamiast parować spływa po plecach. Pij więcej wody i nie szalej z tempem.'
             };
         } else {
             return {
                 status: 'Zablokowane! 🚨',
                 color: '#e74c3c',
-                desc: 'Ekstremalna parność. Zablokowana termoregulacja potowa – wysokie ryzyko udaru cieplnego i przegrzania!'
+                desc: 'Prawdziwa sauna! Chłodzenie ciała prawie nie działa. Uważaj na przegrzanie i zawroty głowy!'
             };
         }
     }
@@ -1427,46 +1796,150 @@
         return { top, bottom, accessories: accessories.length ? accessories.join(', ') : 'Brak dodatkowych' };
     }
 
-    function generateDetailedRunnerTip(condition, temp, wind, precip) {
-        const c = condition.toLowerCase();
-        let specificTip = '';
-
-        if (c.includes('burz')) specificTip = "⛈️ <strong>Zagrożenie burzowe:</strong> Przełóż trening lub biegaj blisko schronienia. Unikaj otwartych przestrzeni i pojedynczych drzew.";
-        else if (precip > 5) specificTip = "🌧️ <strong>Ulewny deszcz:</strong> Śliska nawierzchnia. Załóż buty z dobrym bieżnikiem, a po powrocie natychmiast zdejmij przemoczoną odzież.";
-        else if (temp > 26) specificTip = "☀️ <strong>Wysoka temperatura:</strong> Trenuj w cieniu drzew, obniż tempo bazowe o 15–20 sek/km i pij wodę/izotonik małymi łykami co 15 minut.";
-        else if (temp < -6) specificTip = "❄️ <strong>Niski mróz:</strong> Wdychaj powietrze przez nos lub chustę buff. Zrezygnuj z interwałów beztlenowych na rzecz spokojnego wybiegania.";
-        else if (wind > 32) specificTip = "💨 <strong>Porywisty wiatr:</strong> Rozpocznij bieg pod wiatr, aby w drodze powrotnej nie tracić sił i uniknąć przewiania.";
-        else specificTip = "🚀 <strong>Dobre warunki biegowe:</strong> Przed biegiem zrób 5–8 minut rozgrzewki dynamicznej (wymachy, krążenia, podskoki).";
-
-        const recoveryAdvice = `
-            <div style="margin-top:0.8rem; padding-top:0.6rem; border-top:1px dashed rgba(255,255,255,0.2);">
-                🧘 <strong>Regeneracja powysiłkowa (obowiązkowo po biegu):</strong>
-                <ul style="margin: 0.3rem 0 0 1.2rem; padding: 0;">
-                    <li><strong>Schłodzenie (Cool down):</strong> 3–5 minut truchtu lub marszu dla uspokojenia tętna.</li>
-                    <li><strong>Rozciąganie statyczne:</strong> Delikatnie rozciągnij mięśnie czworogłowe, kulszowo-goleniowe, łydki i pośladki (przytrzymaj każdą pozycję bez pulsowania przez 25–30 sekund).</li>
-                    <li><strong>Rolowanie powięziowe (Foam rolling):</strong> Po prysznicu poświęć 5–10 minut na zrolowanie pasma biodrowo-piszczelowego (ITBS), pasm bocznych ud oraz łydek. Przyspiesza to odpływ metabolitów i zapobiega bolesnym przeciążeniom ścięgien!</li>
-                </ul>
-            </div>
-        `;
-
-        return specificTip + recoveryAdvice;
-    }
-
     function generateWeatherSummaryText(forecastDay) {
         if (!forecastDay) return '';
         const day = forecastDay.day;
-        const maxT = day.maxtemp_c.toFixed(1);
-        const minT = day.mintemp_c.toFixed(1);
-        const wind = day.maxwind_kph;
+        const maxT = Math.round(day.maxtemp_c);
+        const minT = Math.round(day.mintemp_c);
+        const wind = Math.round(day.maxwind_kph);
         const precip = day.totalprecip_mm;
-        
-        let text = `W ciągu doby temperatura maksymalna wyniesie <strong>${maxT}°C</strong>, a minimalna spadnie do <strong>${minT}°C</strong>. `;
-        if (precip > 0.5) text += `Spodziewane są opady (łącznie do <strong>${precip} mm</strong>). `;
-        else text += `Dzień zapowiada się przeważnie bezopadowy. `;
-        if (wind > 30) text += `Wiatr porywisty, osiągający w porywach do <strong>${wind} km/h</strong>. `;
-        else text += `Wiatr umiarkowany lub słaby (do ${wind} km/h). `;
-        text += `Średnia wilgotność powietrza wyniesie ${day.avghumidity}%.`;
-        return text;
+        const rainChance = day.daily_chance_of_rain || 0;
+        const condCode = day.condition?.code || 1000;
+        const condText = (day.condition?.text || '').toLowerCase();
+
+        let tempText = "";
+        if (maxT >= 26) {
+            tempText = `Czeka nas naprawdę gorący dzień! W najcieplejszym momencie termometry dobiją do <strong>${maxT}°C</strong>, a rano i wieczorem ochłodzi się do około <strong>${minT}°C</strong>. `;
+        } else if (maxT >= 18) {
+            tempText = `Za oknem przyjemne ciepełko – w ciągu dnia wyciągniemy około <strong>${maxT}°C</strong>, a o świcie i wieczorem będzie rześkie <strong>${minT}°C</strong>. `;
+        } else if (maxT >= 9) {
+            tempText = `Klasyczna, biegowa aura: w ciągu dnia termometry pokażą maksymalnie <strong>${maxT}°C</strong>, a rano i nocą temperatura spadnie do <strong>${minT}°C</strong>, więc przyda się cieplejsza warstwa. `;
+        } else if (maxT >= 1) {
+            tempText = `Zimno nie odpuszcza – w ciągu dnia zobaczymy góra <strong>${maxT}°C</strong>, a rano i wieczorem zaledwie <strong>${minT}°C</strong>. `;
+        } else {
+            tempText = `Trzyma mróz! Słupki rtęci nie przekroczą dzisiaj <strong>${maxT}°C</strong>, a najchłodniejszy moment doby przyniesie aż <strong>${minT}°C</strong>. `;
+        }
+
+        let skyText = "";
+        if (condText.includes('zadymien') || condText.includes('smoke') || condText.includes('haze')) {
+            skyText = `Uwaga: w powietrzu unosi się wyraźne zadymienie i zamglenie, które znacznie pogarsza jakość oraz przejrzystość powietrza. `;
+        } else if (precip >= 8) {
+            skyText = `Bez kurtki przeciwdeszczowej lepiej nie wychodzić – przejdzie porządna ulewa (może spaść nawet do <strong>${precip} mm</strong> wody, szansa opadów: <strong>${rainChance}%</strong>). `;
+        } else if (precip > 1.5) {
+            skyText = `Parasol albo wiatrówka pod ręką to dobry pomysł, bo prognozowane są przelotne opady (do <strong>${precip} mm</strong>, ryzyko około <strong>${rainChance}%</strong>). `;
+        } else if (precip > 0.2) {
+            skyText = `Może lokalnie pokropić, ale będą to raczej symboliczne krople niż ulewa (ryzyko opadów: <strong>${rainChance}%</strong>). `;
+        } else {
+            if ([1000].includes(condCode)) {
+                skyText = `Niebo będzie niemal bezchmurne, a słońca dziś nie zabraknie – o deszczu możecie całkowicie zapomnieć! `;
+            } else if ([1003].includes(condCode)) {
+                skyText = `Na niebie trochę chmur i sporo przejaśnień, ale dzień minie całkowicie sucho i przyjemnie. `;
+            } else if ([1006, 1009].includes(condCode)) {
+                skyText = `Choć nad głowami zawiśnie sporo szarych chmur, to deszczu z nich raczej nie będzie. `;
+            } else if ([1030, 1135, 1147].includes(condCode)) {
+                skyText = `Miejscami krajobraz spowiją mgły ograniczające widoczność, ale padać z tego nie powinno. `;
+            } else {
+                skyText = `Warunki stabilne, bez większych niespodzianek na niebie. `;
+            }
+        }
+
+        let windText = "";
+        if (wind > 45) {
+            windText = `Uważajcie na wiatr – porywy do <strong>${wind} km/h</strong> będą mocno urywać głowę i potęgować uczucie chłodu! `;
+        } else if (wind > 24) {
+            windText = `Będzie wyraźnie powiewać (w porywach do <strong>${wind} km/h</strong>), więc na otwartych przestrzeniach może chwilami spychać. `;
+        } else {
+            windText = `Wiatr spokojny, zaledwie do <strong>${wind} km/h</strong> – idealny spokój w powietrzu. `;
+        }
+
+        let summary = `Wilgotność powietrza to około <strong>${day.avghumidity}%</strong>, a indeks UV wynosi <strong>${day.uv}</strong>. Ogólnie: zbieraj ekipę albo wskakuj w buty samemu i ruszaj na trasę!`;
+
+        return tempText + skyText + windText + summary;
+    }
+
+    function generateDetailedRunnerTip(condition, temp, wind, precip, aqi = 1, dewPoint = 12) {
+        const c = condition.toLowerCase();
+        let runningTipsPool = [];
+
+        if (c.includes('burz')) {
+            runningTipsPool = [
+                "⛈️ <strong>Groźba wyładowań:</strong> Dziś lepiej odpuść dalekie pętle po lesie i otwartych polach. Zrób krótki trening blisko domu lub zamień bieganie na trenażer / siłownię.",
+                "⚡ <strong>Burzowa aura:</strong> Jeśli usłyszysz grzmoty, od razu skracaj trasę. Bezpieczeństwo jest ważniejsze niż zrobiony kilometraż!"
+            ];
+        } else if (c.includes('zadymien') || c.includes('smoke') || c.includes('smog') || aqi >= 4) {
+            runningTipsPool = [
+                "😷 <strong>Wyraźne zadymienie / smog:</strong> W powietrzu unosi się dym lub pył. Zrezygnuj z intensywnego treningu biegowego – przy głębokim oddechu płuca wchłoną zwielokrotnioną porcję zanieczyszczeń. Zrób trening w domu lub lekki bieg w głębi lasu.",
+                "🌫️ <strong>Zadymione powietrze:</strong> Jeśli musisz wyjść na trening, załóż maskę antysmogową z filtrem HEPA i trzymaj wyłącznie spokojne tempo tlenowe."
+            ];
+        } else if (precip > 4) {
+            runningTipsPool = [
+                "🌧️ <strong>Mokra trasa i kałuże:</strong> Załóż buty z pewniejszym bieżnikiem i czapkę z daszkiem, żeby krople nie zalewały oczu. Uważaj na śliskich pasach na asfalcie i liściach!",
+                "☔ <strong>Ulewna pogoda:</strong> Nie ubieraj się za grubo – przemoczona gruba bawełna waży tonę. Lepiej założyć lekką techniczną wiatrówkę i skarpety syntetyczne zapobiegające pęcherzom."
+            ];
+        } else if (temp > 24 || dewPoint > 19) {
+            runningTipsPool = [
+                "☀️ <strong>Upał / Zaduch:</strong> Nie forsuj tempa na siłę – zwolnij o 15–20 sek/km i biegaj według tętna, a nie zegarka. Koniecznie zabierz ze sobą bidon z elektrolitami!",
+                "🥤 <strong>Gorący asfalt:</strong> Wybierz trasę ocienioną drzewami, unikaj nagrzanego betonu. Pij małe łyki wody co 1,5–2 km, zanim poczujesz suchość w ustach.",
+                "🧢 <strong>Dużo słońca:</strong> Pamiętaj o czapce z daszkiem lub opasce, kremie z filtrem i okularach przeciwsłonecznych. Twoja głowa Ci za to podziękuje!"
+            ];
+        } else if (temp < -2) {
+            runningTipsPool = [
+                "❄️ <strong>Mróz trzyma:</strong> Rozgrzewkę dynamiczną (wymachy, krążenia, pajacyki) zrób jeszcze w ciepłym mieszkaniu, żeby nie marnować sił na mrozie.",
+                "🧣 <strong>Zimne powietrze:</strong> Wdychaj powietrze nosem lub przez chustę buff, aby ogrzać je przed dotarciem do płuc. Chroń ścięgna Achillesa wyższymi skarpetami!",
+                "🧊 <strong>Uwaga na śliski grunt:</strong> Pod cienką warstwą śniegu może kryć się lód. Skróć krok biegowy i zwiększ kadencję, aby zachować stabilność."
+            ];
+        } else if (wind > 30) {
+            runningTipsPool = [
+                "💨 <strong>Silne podmuchy:</strong> Rozpocznij trening biegnąc 'pod wiatr' – gdy masz jeszcze pełno sił. W powrotnej drodze wiatr w plecy pomoże Ci utrzymać rytm i nie wychłodzi spoconych pleców.",
+                "🌪️ <strong>Walka z wiatrem:</strong> Nie walcz nerwowo o idealne tempo pod wiatr. Pochyl lekko sylwetkę, pracuj rytmicznie ramionami i skup się na stałym wysiłku."
+            ];
+        } else if (temp >= 10 && temp <= 18) {
+            runningTipsPool = [
+                "🚀 <strong>Złota pogoda biegacza:</strong> Temperatura wręcz stworzona na szybkie bieganie! Idealny dzień na mocniejszy akcent: rytmy, interwały albo poprawienie rekordu na ulubionej pętli.",
+                "🎯 <strong>Perfekcyjne warunki:</strong> Pamiętaj o złotej zasadzie ubioru: ubierz się tak, jakby na zewnątrz było o 10 stopni więcej niż wskazuje termometr.",
+                "🏃‍♀️ <strong>Wymarzony dzień na trening:</strong> Wykorzystaj tę aurę na dłuższe wybieganie w tlenie. Zrób 5 minut rozgrzewki dynamicznej i ciesz się lekkim krokiem!"
+            ];
+        } else {
+            runningTipsPool = [
+                "👌 <strong>Stabilne warunki:</strong> Dobre okoliczności na regularny trening bazowy. Skup się na równej kadencji (ok. 170–180 kroków na minutę) i wyprostowanej sylwetce.",
+                "💪 <strong>Czysta głowa po pracy:</strong> Przed wybiegnięciem zrób kilka wymachów nóg i krążeń bioder, by obudzić pośladki po całym dniu siedzenia."
+            ];
+        }
+
+        let recoveryPool = [];
+
+        if (temp > 22 || dewPoint > 18) {
+            recoveryPool = [
+                "💧 <strong>Uzupełnienie płynów i soli:</strong> Wypij szklankę wody z plasterkiem cytryny i szczyptą soli kłodawskiej lub izotonik. Zimny prysznic na nogi pomoże obkurczyć naczynia i zatrzymać uczucie ciężkości.",
+                "🍉 <strong>Schłodzenie organizmu:</strong> Zjedz kawałek arbuza lub banana i zrób 5 minut leżenia z nogami opartymi o ścianę (tzw. legs up the wall) – genialnie przyspiesza odpływ chłonki i regenerację nóg."
+            ];
+        } else if (temp < 2 || precip > 2) {
+            recoveryPool = [
+                "☕ <strong>Rozgrzewka od środka:</strong> Natychmiast zdejmij wilgotne ciuchy, weź ciepły prysznic i zaparz herbatę z imbirem, miodem i cytryną. Mokre buty wypchaj gazetami – nie stawiaj ich bezpośrednio na kaloryferze!",
+                "🧦 <strong>Ciepło dla stóp:</strong> Po chłodnym lub mokrym biegu załóż ciepłe skarpety i poświęć 3 minuty na przetoczenie stóp na piłeczce tenisowej lub kauczukowej. Rozluźni to zesztywniałe rozcięgno podeszwowe."
+            ];
+        } else if (wind > 25) {
+            recoveryPool = [
+                "🧘 <strong>Ukojenie dla pleców i bioder:</strong> Walka z wiatrem mocno obciąża odcinek lędźwiowy i zginacze bioder. Zrób pozycję gołębia (pigeon pose) oraz delikatny skłon w siadzie, trzymając każdą pozycję bez szarpania przez 30 sekund.",
+                "💆 <strong>Rozluźnienie czwórogłowych:</strong> Przetocz wałkiem przód ud i pasmo biodrowo-piszczelowe (ITBS) – po zmaganiach z podmuchami mięśnie nóg potrzebują porządnego rozbicia powięzi."
+            ];
+        } else {
+            recoveryPool = [
+                "🥑 <strong>Białko i węglowodany:</strong> W ciągu 30–45 minut po biegu zjedz lekką przekąskę (jogurt grecki z owocami, koktajl bananowy lub jajka na tostach), by błyskawicznie odbudować glikogen w mięśniach.",
+                "🧘 <strong>Rolowanie powięziowe (Foam rolling):</strong> Po prysznicu poświęć 5–8 minut na zrolowanie łydek, pośladków i pasm bocznych ud. Zmniejszy to potreningową bolesność mięśni (DOMS) niemal do zera!",
+                "🦵 <strong>Statyczne rozciąganie:</strong> Pamiętaj o łydkach i mięśniach kulszowo-goleniowych (tył ud). Rozciągaj je tylko na ciepłych mięśniach, łagodnie oddychając i nie pulsując."
+            ];
+        }
+
+        const pickedTip = getRandomItem(runningTipsPool);
+        const pickedRecovery = getRandomItem(recoveryPool);
+
+        return `
+            <div>${pickedTip}</div>
+            <div style="margin-top:0.8rem; padding-top:0.6rem; border-top:1px dashed rgba(255,255,255,0.25);">
+                ${pickedRecovery}
+            </div>
+        `;
     }
 
     function findBestRunningWindow(hours) {
@@ -1564,14 +2037,28 @@
         return fallbackText;
     }
 
+    /* RENDEROWANIE OSTRZEŻEŃ W WIDGECIE (MAX 2 WIDOCZNE + SYGNALIZACJA KOLEJNYCH) */
     async function renderWeatherWarnings(alerts) {
         const warnEl = document.getElementById('weatherWarnings');
+        const badgeEl = document.getElementById('warningsCountBadge');
+        const moreIndicatorEl = document.getElementById('warningsMoreIndicator');
+
         if (!alerts || !alerts.alert || alerts.alert.length === 0) {
-            warnEl.innerHTML = '<div style="opacity:0.85; padding:0.5rem 0;">✅ Brak aktywnych ostrzeżeń pogodowych dla Twojego regionu. Warunki stabilne.</div>';
+            warnEl.innerHTML = '<div style="opacity:0.85; padding:0.4rem 0; font-size:0.88rem;">✅ Brak aktywnych ostrzeżeń dla Twojego regionu. Warunki stabilne.</div>';
+            warnEl.style.maxHeight = 'none';
+            warnEl.style.overflowY = 'visible';
+            if (badgeEl) badgeEl.style.display = 'none';
+            if (moreIndicatorEl) moreIndicatorEl.style.display = 'none';
             return;
         }
 
-        warnEl.innerHTML = '<div style="padding:1rem; opacity:0.8;">⏳ Trwa tłumaczenie ostrzeżeń meteorologicznych na język polski...</div>';
+        const totalAlerts = alerts.alert.length;
+        if (badgeEl) {
+            badgeEl.textContent = `${totalAlerts} ${totalAlerts === 1 ? 'aktywne' : (totalAlerts < 5 ? 'aktywne' : 'aktywnych')}`;
+            badgeEl.style.display = 'inline-block';
+        }
+
+        warnEl.innerHTML = '<div style="padding:0.6rem; opacity:0.8; font-size:0.85rem;">⏳ Sprawdzanie i tłumaczenie ostrzeżeń...</div>';
 
         const renderedAlerts = await Promise.all(alerts.alert.map(async a => {
             const headline = a.headline || a.event || 'Ostrzeżenie meteorologiczne';
@@ -1580,7 +2067,7 @@
             const translatedDesc = await translateWarningTextAsync(desc);
 
             let severity = 'orange';
-            let sevName = 'Umiarkowane (Stopień 2)';
+            let sevName = 'Umiarkowane (St. 2)';
             let icon = '⚠️';
             const textCheck = (headline + ' ' + (a.event || '')).toLowerCase();
 
@@ -1591,18 +2078,18 @@
             else if (textCheck.includes('coastal') || textCheck.includes('przybrzeż')) icon = '🌊';
             else if (textCheck.includes('frost') || textCheck.includes('freeze') || textCheck.includes('mróz')) icon = '🥶';
             else if (textCheck.includes('heat') || textCheck.includes('upał')) icon = '🔥';
-            else if (textCheck.includes('fog') || textCheck.includes('mgła')) icon = '🌫️';
+            else if (textCheck.includes('fog') || textCheck.includes('mgła') || textCheck.includes('zadymien') || textCheck.includes('smoke')) icon = '🌫️';
 
             const sevLower = (a.severity || '').toLowerCase();
             if (sevLower.includes('minor') || sevLower.includes('yellow')) {
                 severity = 'yellow';
-                sevName = 'Niskie (Stopień 1)';
+                sevName = 'Niskie (St. 1)';
             } else if (sevLower.includes('severe') || sevLower.includes('orange')) {
                 severity = 'orange';
-                sevName = 'Podwyższone (Stopień 2)';
+                sevName = 'Podwyższone (St. 2)';
             } else if (sevLower.includes('extreme') || sevLower.includes('red')) {
                 severity = 'red';
-                sevName = 'Ekstremalne (Stopień 3)';
+                sevName = 'Ekstremalne (St. 3)';
             }
 
             const effective = a.effective ? new Date(a.effective).toLocaleString('pl-PL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'Obecnie';
@@ -1614,7 +2101,7 @@
                         <span class="warning-icon">${icon}</span>
                         <div>
                             <div class="warning-title">${translatedHeadline}</div>
-                            <div class="warning-severity">Poziom zagrożenia: <strong>${sevName}</strong></div>
+                            <div class="warning-severity">Poziom: <strong>${sevName}</strong></div>
                         </div>
                     </div>
                     <div class="warning-details">${translatedDesc}</div>
@@ -1627,6 +2114,21 @@
         }));
 
         warnEl.innerHTML = renderedAlerts.join('');
+
+        // Aktywacja scrollbara i sygnalizacji gdy jest więcej niż 2 ostrzeżenia
+        if (totalAlerts > 2) {
+            warnEl.style.maxHeight = '370px';
+            warnEl.style.overflowY = 'auto';
+            const remaining = totalAlerts - 2;
+            if (moreIndicatorEl) {
+                moreIndicatorEl.innerHTML = `🔔 <strong>+${remaining} kolejne ostrzeżenie${remaining === 1 ? '' : (remaining < 5 ? 'a' : 'ń')}</strong> — przewiń listę w dół ⬇️`;
+                moreIndicatorEl.style.display = 'block';
+            }
+        } else {
+            warnEl.style.maxHeight = 'none';
+            warnEl.style.overflowY = 'visible';
+            if (moreIndicatorEl) moreIndicatorEl.style.display = 'none';
+        }
     }
 
     async function getWeatherData(query) {
@@ -1711,9 +2213,12 @@
     }
 
     function updateUI(data) {
+        lastWeatherData = data;
         const { current, forecast, location, alerts } = data;
         const now = new Date();
         const isDay = current.is_day !== 0;
+
+        windAngleOffset = Math.sin((current.wind_degree || 0) * Math.PI / 180) * (current.wind_kph / 25);
 
         lastAstroData = {
             sunrise: forecast.forecastday[0].astro.sunrise,
@@ -1735,13 +2240,13 @@
         
         const widgetIconContainer = document.getElementById('widgetIcon');
         widgetIconContainer.innerHTML = '';
-        widgetIconContainer.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon));
+        widgetIconContainer.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, null, condText));
 
         document.getElementById('currentCity').textContent = `${location.name}, ${location.region || location.country}`;
         document.getElementById('currentCondition').textContent = condText;
         const mainIconContainer = document.getElementById('mainWeatherIcon');
         mainIconContainer.innerHTML = '';
-        mainIconContainer.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, '150px'));
+        mainIconContainer.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, '150px', condText));
 
         document.getElementById('tempNow').textContent = `${current.temp_c.toFixed(1)}°C (odcz. ${current.feelslike_c.toFixed(1)}°C)`;
         document.getElementById('windNow').textContent = `${current.wind_kph} km/h (porywy ${current.gust_kph || current.wind_kph} km/h)`;
@@ -1791,10 +2296,11 @@
         document.getElementById('weatherSummary').style.display = 'block';
         document.getElementById('weatherSummaryText').innerHTML = generateWeatherSummaryText(forecast.forecastday[0]);
 
-        document.getElementById('runnerTip').style.display = 'block';
-        document.getElementById('runnerTipText').innerHTML = generateDetailedRunnerTip(condText, current.temp_c, current.wind_kph, current.precip_mm);
-
         const aqi = current.air_quality ? (current.air_quality['us-epa-index'] || 1) : 1;
+
+        document.getElementById('runnerTip').style.display = 'block';
+        document.getElementById('runnerTipText').innerHTML = generateDetailedRunnerTip(condText, current.temp_c, current.wind_kph, current.precip_mm, aqi, dewPoint);
+
         const runningScore = calculateRunningScore(current.temp_c, current.wind_kph, current.precip_mm, dewPoint, aqi);
         const scoreBadge = document.getElementById('runnerScoreBadge');
         document.getElementById('runnerScoreVal').textContent = `${runningScore} / 10`;
@@ -1814,15 +2320,15 @@
         document.getElementById('pm25Value').textContent = current.air_quality?.pm2_5 ? `${current.air_quality.pm2_5.toFixed(1)} µg/m³` : '-';
         document.getElementById('pm10Value').textContent = current.air_quality?.pm10 ? `${current.air_quality.pm10.toFixed(1)} µg/m³` : '-';
         document.getElementById('airQualityAdvice').innerHTML = aqi <= 2 
-            ? '✅ Jakość powietrza bardzo dobra. Możesz trenować bezpiecznie.'
-            : '⚠️ Podwyższone stężenie pyłów. Osoby z astmą powinny zmniejszyć intensywność.';
+            ? '✅ Powietrze jest czyste i świeże. Płuca będą Ci wdzięczne!'
+            : '⚠️ Wyczuwalny smog/pył w powietrzu. Lepiej odpuść ostre interwały na rzecz spokojnego biegu.';
 
         renderCharts(next24Hours);
         renderHourly(next24Hours);
         renderDaily(forecast.forecastday);
         updateStormAndFrost(next24Hours);
         renderWeatherWarnings(alerts);
-        setWeatherBg(current.condition.code, isDay);
+        setWeatherBg(current.condition.code, isDay, condText);
         animateTiles();
     }
 
@@ -1830,6 +2336,10 @@
         const labels = hours.map(h => new Date(h.time).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }));
         const temps = hours.map(h => h.temp_c);
         const precips = hours.map(h => h.precip_mm);
+
+        const isDark = document.body.classList.contains('dark-mode') || document.body.classList.contains('night-mode') || document.body.classList.contains('matrix-mode');
+        const axisColor = isDark ? '#94a3b8' : '#64748b';
+        const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
 
         if (temperatureChart) temperatureChart.destroy();
         const ctxT = document.getElementById('temperatureChart').getContext('2d');
@@ -1840,14 +2350,22 @@
                 datasets: [{
                     label: '°C',
                     data: temps,
-                    borderColor: '#e74c3c',
-                    backgroundColor: 'rgba(231, 76, 60, 0.15)',
+                    borderColor: '#38bdf8',
+                    backgroundColor: 'rgba(56, 189, 248, 0.18)',
                     fill: true,
                     tension: 0.35,
                     borderWidth: 2
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: axisColor }, grid: { color: gridColor } },
+                    y: { ticks: { color: axisColor }, grid: { color: gridColor } }
+                }
+            }
         });
 
         if (precipitationChart) precipitationChart.destroy();
@@ -1856,15 +2374,23 @@
             type: 'bar',
             data: {
                 labels,
-                datasets: [{ label: 'mm', data: precips, backgroundColor: '#3498db' }]
+                datasets: [{ label: 'mm', data: precips, backgroundColor: '#0ea5e9' }]
             },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: axisColor }, grid: { color: gridColor } },
+                    y: { ticks: { color: axisColor }, grid: { color: gridColor } }
+                }
+            }
         });
 
         const totalPrecip = precips.reduce((a, b) => a + b, 0);
         document.getElementById('precipitationSummary').textContent = totalPrecip > 0.2 
-            ? `Suma opadów w ciągu 24h: ${totalPrecip.toFixed(1)} mm`
-            : 'Brak znaczących opadów w najbliższych 24h.';
+            ? `Łącznie w ciągu 24h może spaść: ${totalPrecip.toFixed(1)} mm wody`
+            : 'W najbliższych 24h deszczu raczej nie uświadczysz.';
     }
 
     function renderHourly(hours) {
@@ -1876,7 +2402,7 @@
             item.className = 'hour-item';
             
             const condName = translateWeatherCondition(h.condition.code, h.is_day !== 0, h.condition.text);
-            const hourIcon = createWeatherIconElement(h.condition.code, h.is_day !== 0, h.condition.icon, '88px');
+            const hourIcon = createWeatherIconElement(h.condition.code, h.is_day !== 0, h.condition.icon, '75px', condName);
 
             item.innerHTML = `<div style="font-size:1rem; font-weight:700;">${time}</div>`;
             item.appendChild(hourIcon);
@@ -1884,7 +2410,7 @@
                 <div style="font-size:0.85rem; font-weight:600; line-height:1.25; min-height:2.6em; display:flex; align-items:center; justify-content:center;">${condName}</div>
                 <div style="font-weight:700; font-size:1.15rem; color:var(--primary);">${h.temp_c.toFixed(1)}°C</div>
                 <div style="font-size:0.8rem; opacity:0.85;">💨 ${h.wind_kph} km/h</div>
-                ${h.precip_mm > 0 ? `<div style="font-size:0.8rem; color:#3498db; font-weight:700;">☔ ${h.precip_mm.toFixed(1)} mm</div>` : ''}
+                ${h.precip_mm > 0 ? `<div style="font-size:0.8rem; color:#38bdf8; font-weight:700;">☔ ${h.precip_mm.toFixed(1)} mm</div>` : ''}
             `;
             container.appendChild(item);
         });
@@ -1906,17 +2432,17 @@
             item.style.gap = '0.5rem';
             
             const condName = translateWeatherCondition(d.day.condition.code, true, d.day.condition.text);
-            const dayIcon = createWeatherIconElement(d.day.condition.code, true, d.day.condition.icon, '96px');
+            const dayIcon = createWeatherIconElement(d.day.condition.code, true, d.day.condition.icon, '85px', condName);
 
             item.innerHTML = `<div style="font-weight:700; font-size:1.1rem;">${date}</div>`;
             item.appendChild(dayIcon);
             item.innerHTML += `
                 <div style="font-size:0.88rem; font-weight:600; min-height:2.4em; display:flex; align-items:center;">${condName}</div>
                 <div style="font-weight:700; font-size:1.15rem;">
-                    <span style="color:#e74c3c;">${d.day.maxtemp_c.toFixed(0)}°C</span> / 
-                    <span style="color:#3498db; opacity:0.85;">${d.day.mintemp_c.toFixed(0)}°C</span>
+                    <span style="color:#ef4444;">${d.day.maxtemp_c.toFixed(0)}°C</span> / 
+                    <span style="color:#38bdf8; opacity:0.9;">${d.day.mintemp_c.toFixed(0)}°C</span>
                 </div>
-                ${d.day.daily_chance_of_rain > 0 ? `<div style="font-size:0.82rem; color:#3498db; font-weight:600;">☔ ${d.day.daily_chance_of_rain}%</div>` : ''}
+                ${d.day.daily_chance_of_rain > 0 ? `<div style="font-size:0.82rem; color:#38bdf8; font-weight:600;">☔ ${d.day.daily_chance_of_rain}%</div>` : ''}
             `;
             container.appendChild(item);
         });
@@ -1927,28 +2453,47 @@
         const stormEl = document.getElementById('stormContent');
         if (stormHour) {
             const t = new Date(stormHour.time).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
-            stormEl.innerHTML = `<span style="color:#e74c3c; font-weight:700;">⚠️ Możliwe wyładowania ok. godz. ${t}!</span>`;
+            stormEl.innerHTML = `<span style="color:#ef4444; font-weight:700;">⚠️ Możliwe wyładowania ok. godz. ${t}! Lepiej nie biegać w lesie.</span>`;
         } else {
-            stormEl.textContent = 'Brak burz w prognozie na najbliższe godziny.';
+            stormEl.textContent = 'Spokojnie, brak burz na radarze w najbliższym czasie.';
         }
 
         const frostHour = hours.find(h => h.temp_c <= 2);
         const frostEl = document.getElementById('frostContent');
         if (frostHour) {
             const t = new Date(frostHour.time).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
-            frostEl.innerHTML = `<span style="color:#3498db; font-weight:700;">❄️ Ryzyko przymrozku (${frostHour.temp_c.toFixed(1)}°C ok. godz. ${t})</span>`;
+            frostEl.innerHTML = `<span style="color:#38bdf8; font-weight:700;">❄️ Ryzyko przymrozku (${frostHour.temp_c.toFixed(1)}°C ok. godz. ${t}). Uważaj na mostkach i zakrętach!</span>`;
         } else {
-            frostEl.textContent = 'Brak zagrożenia przymrozkami w najbliższym czasie.';
+            frostEl.textContent = 'Brak przymrozków – trasy powinny być wolne od lodu.';
         }
     }
 
-    function setWeatherBg(code, isDay) {
+    function setWeatherBg(code, isDay, conditionText = '') {
+        const condLower = (conditionText || '').toLowerCase();
         document.body.classList.remove('weather-clear', 'weather-clear-night', 'weather-partly', 'weather-cloudy', 'weather-rain', 'weather-snow');
-        if ([1000].includes(code)) document.body.classList.add(isDay ? 'weather-clear' : 'weather-clear-night');
-        else if ([1003].includes(code)) document.body.classList.add('weather-partly');
-        else if ([1006, 1009].includes(code)) document.body.classList.add('weather-cloudy');
-        else if ([1063, 1180, 1183, 1186, 1189, 1192, 1195, 1273, 1276].includes(code)) document.body.classList.add('weather-rain');
-        else if ([1066, 1114, 1210, 1213, 1216, 1219, 1222, 1225].includes(code)) document.body.classList.add('weather-snow');
+        
+        if ([1063, 1180, 1183, 1186, 1189, 1192, 1195, 1240, 1243, 1246, 1273, 1276].includes(code) || condLower.includes('deszcz') || condLower.includes('rain')) {
+            document.body.classList.add('weather-rain');
+            if (currentPrecipMode !== 'rain') {
+                currentPrecipMode = 'rain';
+                initParticles('rain', 75);
+            }
+        } 
+        else if ([1066, 1114, 1117, 1210, 1213, 1216, 1219, 1222, 1225, 1255, 1258].includes(code) || condLower.includes('śnieg') || condLower.includes('snow')) {
+            document.body.classList.add('weather-snow');
+            if (currentPrecipMode !== 'snow') {
+                currentPrecipMode = 'snow';
+                initParticles('snow', 55);
+            }
+        } 
+        else if ([1006, 1009, 1030, 1135, 1147].includes(code) || condLower.includes('mgł') || condLower.includes('zadymien') || condLower.includes('smoke') || condLower.includes('haze')) {
+            document.body.classList.add('weather-cloudy');
+            currentPrecipMode = 'none';
+        } 
+        else {
+            document.body.classList.add(isDay ? 'weather-clear' : 'weather-clear-night');
+            currentPrecipMode = 'none';
+        }
     }
 
     function animateTiles() {
@@ -1980,10 +2525,6 @@
         }
     }
 
-    function toggleThemePanel() {
-        document.getElementById('themePanel').classList.toggle('active');
-    }
-
     function setTheme(t) {
         currentThemeMode = t;
         document.body.className = '';
@@ -1996,15 +2537,26 @@
 
         if (!bgAnimActive) document.body.classList.add('no-anim');
         localStorage.setItem('meteoTheme', t);
-        document.getElementById('themePanel').classList.remove('active');
+        document.getElementById('settingsPanel').classList.remove('active');
+        
+        if (lastWeatherData) {
+            const next24 = [
+                ...(lastWeatherData.forecast.forecastday[0]?.hour || []),
+                ...(lastWeatherData.forecast.forecastday[1]?.hour || [])
+            ].filter(h => new Date(h.time) >= new Date()).slice(0, 24);
+            renderCharts(next24);
+        }
     }
 
-    function toggleBackgroundAnim() {
-        bgAnimActive = !bgAnimActive;
-        document.body.classList.toggle('no-anim', !bgAnimActive);
-        document.getElementById('animToggle').textContent = bgAnimActive ? '✨ Efekty tła: WŁ' : '⚡ Efekty tła: WYŁ';
-        localStorage.setItem('meteoBgAnim', bgAnimActive ? '1' : '0');
-    }
+    document.addEventListener('click', (e) => {
+        const panel = document.getElementById('settingsPanel');
+        const toggleBtn = document.getElementById('settingsToggle');
+        if (panel && panel.classList.contains('active')) {
+            if (!panel.contains(e.target) && !toggleBtn.contains(e.target)) {
+                panel.classList.remove('active');
+            }
+        }
+    });
 
     function init() {
         const themeList = document.getElementById('themeOptionsList');
@@ -2018,6 +2570,8 @@
 
         const savedAnim = localStorage.getItem('meteoBgAnim');
         if (savedAnim === '0') toggleBackgroundAnim();
+
+        updateSettingsControls();
 
         const savedTheme = localStorage.getItem('meteoTheme') || 'auto';
         setTheme(savedTheme);
