@@ -37,11 +37,7 @@
             color: var(--text-color); transition: var(--transition);
             line-height: 1.55; margin: 0; overflow-x: hidden;
         }
-        .weather-bg {
-            position: fixed !important; top: 0 !important; left: 0 !important;
-            width: 100vw !important; height: 100vh !important;
-            z-index: 0 !important; pointer-events: none !important; overflow: hidden !important;
-        }
+        .weather-bg { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 0 !important; pointer-events: none !important; overflow: hidden !important; }
         .weather-bg .layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease; pointer-events: none; }
         .weather-bg .sky-gradient { opacity: 0; transition: opacity 1.5s ease; }
         body.weather-rain .sky-gradient { opacity: 1; }
@@ -60,21 +56,8 @@
         body.weather-clear .sky-gradient { opacity: 1; background: radial-gradient(circle at 80% 20%, rgba(254, 240, 138, 0.35) 0%, rgba(186, 230, 253, 0.2) 40%, transparent 75%); }
         .weather-bg .sun { background: radial-gradient(circle at 82% 16%, rgba(255, 215, 0, 0.85) 0%, rgba(255, 160, 20, 0.45) 15%, rgba(255, 120, 0, 0.15) 30%, transparent 60%); animation: sunPulse 6s ease-in-out infinite; }
         @keyframes sunPulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.08); filter: brightness(1.25); } }
-        .weather-bg .stars {
-            background-image:
-                radial-gradient(1.5px 1.5px at 30px 40px, #ffffff, transparent),
-                radial-gradient(2px 2px at 140px 110px, #ffffff, transparent),
-                radial-gradient(1.5px 1.5px at 220px 170px, rgba(255,255,255,0.95), transparent),
-                radial-gradient(2.5px 2.5px at 320px 240px, #ffffff, transparent);
-            background-size: 350px 350px;
-        }
-        .weather-bg .clouds {
-            background-image:
-                radial-gradient(ellipse 320px 110px at 20% 20%, rgba(255,255,255,0.9) 0%, rgba(203, 213, 225, 0.6) 45%, transparent 70%),
-                radial-gradient(ellipse 380px 120px at 65% 15%, rgba(255,255,255,0.85) 0%, rgba(148, 163, 184, 0.55) 50%, transparent 70%);
-            background-size: 1300px 800px; filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.12));
-            animation: cloudsDrift 70s linear infinite;
-        }
+        .weather-bg .stars { background-image: radial-gradient(1.5px 1.5px at 30px 40px, #ffffff, transparent), radial-gradient(2px 2px at 140px 110px, #ffffff, transparent), radial-gradient(1.5px 1.5px at 220px 170px, rgba(255,255,255,0.95), transparent), radial-gradient(2.5px 2.5px at 320px 240px, #ffffff, transparent); background-size: 350px 350px; }
+        .weather-bg .clouds { background-image: radial-gradient(ellipse 320px 110px at 20% 20%, rgba(255,255,255,0.9) 0%, rgba(203, 213, 225, 0.6) 45%, transparent 70%), radial-gradient(ellipse 380px 120px at 65% 15%, rgba(255,255,255,0.85) 0%, rgba(148, 163, 184, 0.55) 50%, transparent 70%); background-size: 1300px 800px; filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.12)); animation: cloudsDrift 70s linear infinite; }
         @keyframes cloudsDrift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-1300px, 0, 0); } }
         body.weather-clear .sun { opacity: 1; }
         body.weather-clear-night .stars { opacity: 0.95; }
@@ -105,10 +88,23 @@
         .runner-score-badge { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.4rem 1.1rem; border-radius: 30px; font-weight: 700; font-size: 1.05rem; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
         .golden-window-box { background: rgba(255, 193, 7, 0.18); border-left: 5px solid #ff9800; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.9rem; font-size: 0.92rem; color: inherit; }
         .mileage-hub-box { background: var(--glass-subcard); border: 1px solid var(--glass-border); border-radius: 14px; padding: 0.9rem 1rem; margin-bottom: 0.9rem; color: var(--text-color); }
-        .mileage-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.65rem; margin-bottom: 0.7rem; }
-        .mileage-stat-card { background: var(--glass-subcard-solid); border-radius: 10px; padding: 0.6rem; text-align: center; border: 1px solid var(--glass-border); color: var(--text-color); }
-        .mileage-stat-val { font-size: 1.25rem; font-weight: 800; color: var(--primary); line-height: 1.2; }
-        .mileage-stat-lbl { font-size: 0.76rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+        .mileage-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.65rem; margin-bottom: 0; }
+        /* ✅ NOWE STYLE KART KILOMETRAŻU */
+        .mileage-stat-card {
+            background: var(--glass-subcard-solid); border-radius: 10px; padding: 0.6rem 0.8rem;
+            text-align: left; border: 1px solid var(--glass-border); color: var(--text-color);
+            display: flex; flex-direction: column; gap: 0.18rem; position: relative;
+            overflow: hidden; min-width: 0; transition: var(--transition);
+        }
+        .mileage-stat-card:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 4px 12px rgba(0, 102, 204, 0.12); }
+        .mileage-stat-top { display: flex; align-items: center; gap: 0.35rem; min-width: 0; line-height: 1.2; }
+        .mileage-stat-lbl { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; }
+        .mileage-stat-trend { margin-left: auto; font-size: 0.64rem; font-weight: 800; padding: 1px 5px; border-radius: 5px; white-space: nowrap; flex-shrink: 0; line-height: 1.3; font-variant-numeric: tabular-nums; }
+        .mileage-stat-trend.up { color: #16a34a; background: rgba(22, 163, 74, 0.14); }
+        .mileage-stat-trend.down { color: #dc2626; background: rgba(220, 38, 38, 0.14); }
+        .mileage-stat-trend.same { color: var(--text-muted); background: rgba(100, 116, 139, 0.1); }
+        .mileage-stat-val { font-size: 1.4rem; font-weight: 800; color: var(--primary); line-height: 1.1; font-variant-numeric: tabular-nums; }
+        .mileage-stat-meta { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
         .mileage-btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
         .mileage-btn-row button { padding: 0.45rem 0.85rem; font-size: 0.85rem; min-height: 35px; border-radius: 10px; }
         .race-predictor-box { background: var(--glass-subcard); border: 1px solid var(--glass-border); border-radius: 14px; padding: 0.95rem 1rem; margin-bottom: 0.9rem; color: var(--text-color); }
@@ -125,12 +121,6 @@
         .pred-state-values { display: flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; margin-left: auto; min-width: 0; }
         .pred-time { font-weight: 800; font-size: 1rem; color: var(--text-color); white-space: nowrap; font-variant-numeric: tabular-nums; }
         .pred-pace { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
-        .pred-state-today { background: rgba(0, 102, 204, 0.1); border: 1px solid var(--glass-border); }
-        body.dark-mode .pred-state-today, body.night-mode .pred-state-today, body.matrix-mode .pred-state-today, body.space-mode .pred-state-today, body.galaxy-mode .pred-state-today, body.neon-mode .pred-state-today { background: rgba(56, 189, 248, 0.12); }
-        .pred-state-today .pred-state-label { color: var(--primary); font-weight: 700; }
-        .pred-state-today .pred-time { color: var(--primary); font-size: 1.08rem; }
-        .pred-state-today .pred-pace { color: var(--primary); opacity: 0.85; }
-        .pred-penalty { font-size: 0.7rem; font-weight: 700; color: #ef4444; background: rgba(239, 68, 68, 0.12); padding: 1px 6px; border-radius: 4px; white-space: nowrap; border: 1px solid rgba(239, 68, 68, 0.2); }
         .pred-warn { font-size: 0.85rem; cursor: help; opacity: 0.8; }
         .pred-marathon-warn { font-size: 0.72rem; color: #dc2626; background: rgba(220, 38, 38, 0.08); padding: 0.4rem 0.5rem; border-radius: 6px; border: 1px solid rgba(220, 38, 38, 0.2); line-height: 1.35; margin-top: 0.15rem; }
         .pred-marathon-warn.speed { color: #ca8a04; background: rgba(234, 179, 8, 0.1); border-color: rgba(234, 179, 8, 0.3); }
@@ -207,13 +197,13 @@
         .theme-option:hover { background: var(--primary); color: white; transform: translateX(4px); }
         @keyframes tileFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .tile-anim { animation: tileFadeIn 0.4s ease both; }
-        body.light-mode { --primary: #0284c7; --secondary: #0ea5e9; --glass: rgba(255, 255, 255, 0.94); --glass-card: linear-gradient(145deg, #ffffff, #f8fafc); --glass-subcard: rgba(241, 245, 249, 0.85); --glass-subcard-solid: #ffffff; --glass-border: rgba(148, 163, 184, 0.25); --text-color: #0f172a; --text-muted: #64748b; --card-title-color: #0f172a; background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 50%, #e2e8f0 100%) !important; color: #0f172a !important; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%230284c7' stroke='%23ffffff' stroke-width='1.5' d='M3 3l6 16 3-6 6 6 2-2-6-6 6-3L3 3z'/%3E%3C/svg%3E"), auto; }
-        body.dark-mode, body.night-mode { --primary: #38bdf8; --secondary: #818cf8; --glass: rgba(15, 23, 42, 0.94); --glass-card: linear-gradient(145deg, rgba(20, 28, 48, 0.92), rgba(15, 23, 42, 0.92)); --glass-subcard: rgba(0, 0, 0, 0.45); --glass-subcard-solid: rgba(18, 26, 46, 0.85); --glass-border: rgba(255, 255, 255, 0.12); --text-color: #f1f5f9; --text-muted: #94a3b8; --card-title-color: #ffffff; background: #090d16 !important; color: #f1f5f9 !important; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%2338bdf8' stroke='%230f172a' stroke-width='1.5' d='M3 3l6 16 3-6 6 6 2-2-6-6 6-3L3 3z'/%3E%3C/svg%3E"), auto; }
+        body.light-mode { --primary: #0284c7; --secondary: #0ea5e9; --glass: rgba(255, 255, 255, 0.94); --glass-card: linear-gradient(145deg, #ffffff, #f8fafc); --glass-subcard: rgba(241, 245, 249, 0.85); --glass-subcard-solid: #ffffff; --glass-border: rgba(148, 163, 184, 0.25); --text-color: #0f172a; --text-muted: #64748b; --card-title-color: #0f172a; background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 50%, #e2e8f0 100%) !important; color: #0f172a !important; }
+        body.dark-mode, body.night-mode { --primary: #38bdf8; --secondary: #818cf8; --glass: rgba(15, 23, 42, 0.94); --glass-card: linear-gradient(145deg, rgba(20, 28, 48, 0.92), rgba(15, 23, 42, 0.92)); --glass-subcard: rgba(0, 0, 0, 0.45); --glass-subcard-solid: rgba(18, 26, 46, 0.85); --glass-border: rgba(255, 255, 255, 0.12); --text-color: #f1f5f9; --text-muted: #94a3b8; --card-title-color: #ffffff; background: #090d16 !important; color: #f1f5f9 !important; }
         body.night-mode { background: var(--background-night) !important; }
-        body.matrix-mode { --primary: #00ff41; --secondary: #00cc33; --glass: rgba(0, 14, 0, 0.96); --glass-card: rgba(0, 18, 0, 0.94); --glass-subcard: rgba(0, 28, 0, 0.7); --glass-subcard-solid: rgba(0, 24, 0, 0.9); --glass-border: rgba(0, 255, 65, 0.35); --text-color: #00ff41; --text-muted: #00cc33; --card-title-color: #00ff41; background: #000000 !important; color: #00ff41 !important; font-family: 'Orbitron', monospace; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%2300ff41' stroke='%23000000' stroke-width='1.5' d='M2 2l6 17 3-6 6 6 2-2-6-6 6-3L2 2z'/%3E%3C/svg%3E"), crosshair; }
-        body.neon-mode { --primary: #00ff9d; --secondary: #00b8ff; --glass: rgba(4, 14, 30, 0.96); --glass-card: rgba(6, 18, 38, 0.94); --glass-subcard: rgba(0, 24, 50, 0.7); --glass-subcard-solid: rgba(4, 16, 36, 0.9); --glass-border: rgba(0, 255, 157, 0.35); --text-color: #00ff9d; --text-muted: #67e8f9; --card-title-color: #ffffff; background: #040814 !important; color: #00ff9d !important; font-family: 'Orbitron', monospace; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%2300ff9d' stroke='%23002b1f' stroke-width='1.5' d='M3 3l6 16 3-6 6 6 2-2-6-6 6-3L3 3z'/%3E%3C/svg%3E"), pointer; }
-        body.space-mode { --primary: #9d4edd; --secondary: #48bfe3; --glass: rgba(14, 8, 42, 0.95); --glass-card: rgba(18, 10, 52, 0.92); --glass-subcard: rgba(28, 14, 70, 0.65); --glass-subcard-solid: rgba(20, 10, 56, 0.9); --glass-border: rgba(157, 78, 221, 0.35); --text-color: #e2e8f0; --text-muted: #cbd5e1; --card-title-color: #ffffff; background: linear-gradient(135deg, #02010a, #0b092b, #10002b) !important; color: #e2e8f0 !important; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%239d4edd' stroke='%23ffffff' stroke-width='1.5' d='M3 3l6 16 3-6 6 6 2-2-6-6 6-3L3 3z'/%3E%3C/svg%3E"), pointer; }
-        body.galaxy-mode { --primary: #b388ff; --secondary: #80d8ff; --glass: rgba(24, 8, 48, 0.95); --glass-card: rgba(28, 10, 56, 0.92); --glass-subcard: rgba(42, 14, 80, 0.65); --glass-subcard-solid: rgba(30, 10, 60, 0.9); --glass-border: rgba(179, 136, 255, 0.35); --text-color: #e0e0ff; --text-muted: #c4b5fd; --card-title-color: #ffffff; background: linear-gradient(135deg, #090014, #12002b, #03001e) !important; color: #e0e0ff !important; font-family: 'Orbitron', monospace; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23b388ff' stroke='%23ffffff' stroke-width='1.5' d='M3 3l6 16 3-6 6 6 2-2-6-6 6-3L3 3z'/%3E%3C/svg%3E"), pointer; }
+        body.matrix-mode { --primary: #00ff41; --secondary: #00cc33; --glass: rgba(0, 14, 0, 0.96); --glass-card: rgba(0, 18, 0, 0.94); --glass-subcard: rgba(0, 28, 0, 0.7); --glass-subcard-solid: rgba(0, 24, 0, 0.9); --glass-border: rgba(0, 255, 65, 0.35); --text-color: #00ff41; --text-muted: #00cc33; --card-title-color: #00ff41; background: #000000 !important; color: #00ff41 !important; font-family: 'Orbitron', monospace; }
+        body.neon-mode { --primary: #00ff9d; --secondary: #00b8ff; --glass: rgba(4, 14, 30, 0.96); --glass-card: rgba(6, 18, 38, 0.94); --glass-subcard: rgba(0, 24, 50, 0.7); --glass-subcard-solid: rgba(4, 16, 36, 0.9); --glass-border: rgba(0, 255, 157, 0.35); --text-color: #00ff9d; --text-muted: #67e8f9; --card-title-color: #ffffff; background: #040814 !important; color: #00ff9d !important; font-family: 'Orbitron', monospace; }
+        body.space-mode { --primary: #9d4edd; --secondary: #48bfe3; --glass: rgba(14, 8, 42, 0.95); --glass-card: rgba(18, 10, 52, 0.92); --glass-subcard: rgba(28, 14, 70, 0.65); --glass-subcard-solid: rgba(20, 10, 56, 0.9); --glass-border: rgba(157, 78, 221, 0.35); --text-color: #e2e8f0; --text-muted: #cbd5e1; --card-title-color: #ffffff; background: linear-gradient(135deg, #02010a, #0b092b, #10002b) !important; color: #e2e8f0 !important; }
+        body.galaxy-mode { --primary: #b388ff; --secondary: #80d8ff; --glass: rgba(24, 8, 48, 0.95); --glass-card: rgba(28, 10, 56, 0.92); --glass-subcard: rgba(42, 14, 80, 0.65); --glass-subcard-solid: rgba(30, 10, 60, 0.9); --glass-border: rgba(179, 136, 255, 0.35); --text-color: #e0e0ff; --text-muted: #c4b5fd; --card-title-color: #ffffff; background: linear-gradient(135deg, #090014, #12002b, #03001e) !important; color: #e0e0ff !important; font-family: 'Orbitron', monospace; }
         body.hubba-bubba-mode, body.candy-mode { --primary: #ff69b4; --secondary: #ff1493; background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493) !important; }
         body.forest-mode, body.spring-mode { --primary: #2e8b57; --secondary: #3cb371; background: linear-gradient(135deg, #a8e6cf, #dcedc1, #6b8e23) !important; }
         body.summer-mode, body.amber-mode, body.sunset-mode, body.desert-mode { --primary: #ff8c00; --secondary: #ff4500; background: linear-gradient(135deg, #ffa07a, #ff8c00, #ff4500) !important; }
@@ -276,10 +266,55 @@
                     <span style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary);">📊 Twój Kilometraż</span>
                     <span id="mileageWeeklyPace" style="font-size: 0.8rem; font-weight: 600; opacity: 0.9;">Śr. tempo tygodnia: --:--/km</span>
                 </div>
-                <div class="mileage-stats-grid">
-                    <div class="mileage-stat-card"><div class="mileage-stat-val" id="mileageWeekVal">0.0 km</div><div class="mileage-stat-lbl">Ten tydzień</div></div>
-                    <div class="mileage-stat-card"><div class="mileage-stat-val" id="mileageMonthVal">0.0 km</div><div class="mileage-stat-lbl">Ten miesiąc</div></div>
-                    <div class="mileage-stat-card"><div class="mileage-stat-val" id="mileageYearVal">0.0 km</div><div class="mileage-stat-lbl">Ten rok</div></div>
+                <!-- ✅ NOWY LAYOUT: karty + sparkline obok 3D donuta -->
+                <div style="display: flex; gap: 1rem; align-items: stretch; margin-bottom: 0.7rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 0.55rem;">
+                        <div class="mileage-stats-grid">
+                            <div class="mileage-stat-card">
+                                <div class="mileage-stat-top">
+                                    <span class="mileage-stat-lbl">📅 Ten tydzień</span>
+                                    <span class="mileage-stat-trend same" id="mileageWeekTrend" title="Trend vs poprzedni tydzień">—</span>
+                                </div>
+                                <div class="mileage-stat-val" id="mileageWeekVal">0.0 km</div>
+                                <div class="mileage-stat-meta" id="mileageWeekMeta">Brak biegów</div>
+                            </div>
+                            <div class="mileage-stat-card">
+                                <div class="mileage-stat-top">
+                                    <span class="mileage-stat-lbl">🗓️ Ten miesiąc</span>
+                                    <span class="mileage-stat-trend same" id="mileageMonthTrend" title="Trend vs poprzedni miesiąc">—</span>
+                                </div>
+                                <div class="mileage-stat-val" id="mileageMonthVal">0.0 km</div>
+                                <div class="mileage-stat-meta" id="mileageMonthMeta">Brak biegów</div>
+                            </div>
+                            <div class="mileage-stat-card">
+                                <div class="mileage-stat-top">
+                                    <span class="mileage-stat-lbl">📊 Ten rok</span>
+                                    <span class="mileage-stat-trend same" id="mileageYearTrend" title="Trend vs poprzedni rok">—</span>
+                                </div>
+                                <div class="mileage-stat-val" id="mileageYearVal">0.0 km</div>
+                                <div class="mileage-stat-meta" id="mileageYearMeta">Brak biegów</div>
+                            </div>
+                        </div>
+                        <!-- ✅ SPARKLINE 7 DNI -->
+                        <div style="background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); border-radius: 10px; padding: 0.45rem 0.6rem 0.4rem 0.6rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                                <span style="font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted);">📈 Ten tydzień — dni</span>
+                                <span id="weeklySparklineTotal" style="font-size: 0.64rem; font-weight: 800; color: var(--primary); font-variant-numeric: tabular-nums;">0 km</span>
+                            </div>
+                            <div id="weeklySparkline" style="display: flex; align-items: flex-end; gap: 4px; height: 34px;"></div>
+                        </div>
+                    </div>
+                    <div id="runTypeChartContainer" style="width: 175px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem;">
+                        <div style="position: relative; width: 155px; height: 155px; perspective: 700px;">
+                            <canvas id="runTypeChart" style="position: relative; z-index: 1; transform: rotateX(25deg) rotateZ(-8deg); filter: drop-shadow(0 12px 20px rgba(0,0,0,0.22)) drop-shadow(0 4px 6px rgba(0,0,0,0.12)); transition: transform 0.3s ease;"></canvas>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2; pointer-events: none;">
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; opacity: 0.85;">90 dni</div>
+                                <div id="runTypeChartTotal" style="font-size: 1.05rem; font-weight: 800; color: var(--primary); line-height: 1.1; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">0 km</div>
+                            </div>
+                        </div>
+                        <div id="runTypeLegend" style="display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; font-size: 0.7rem; font-weight: 700;"></div>
+                        <div style="font-size: 0.6rem; color: var(--text-muted); text-align: center; opacity: 0.7; line-height: 1.2;">Rozkład objętości<br>wg typu biegu</div>
+                    </div>
                 </div>
                 <div id="mileageLastRun" style="font-size: 0.8rem; margin-bottom: 0.6rem; padding: 0.35rem 0.55rem; background: var(--glass-subcard-solid); border-radius: 8px; border: 1px solid var(--glass-border);">
                     🏁 Ostatni bieg: brak zapisanych treningów
@@ -293,8 +328,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;">
                     <div>
                         <span style="font-size: 0.86rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary);">⏱️ Prognoza Biegów & Twoje Rekordy (PB)</span>
-                        <!-- ✅ POPRAWKA: usunięto "tempo uwzględnia dzisiejszą pogodę" -->
-                        <div style="opacity: 0.75; font-size: 0.72rem;">(Riegel + Twoje PB / dziennik treningów — bez wpływu pogody)</div>
+                        <div style="opacity: 0.75; font-size: 0.72rem;">(Riegel z Twoich treningów, PB jako referencja — bez pogody)</div>
                     </div>
                     <button onclick="openRecordsSettings(event)" style="padding: 0.3rem 0.75rem; font-size: 0.78rem; min-height: 28px; border-radius: 8px; box-shadow: none;">🏆 Edytuj rekordy</button>
                 </div>
@@ -635,6 +669,7 @@
 
     let precipitationChart = null;
     let temperatureChart = null;
+    let runTypeChart = null;
     let bgAnimActive = true;
     let currentThemeMode = 'auto';
     let currentIconSet = localStorage.getItem('meteoIconSet') || 'local';
@@ -767,11 +802,6 @@
         const s = paceSec % 60;
         return `${m}:${String(s).padStart(2,'0')}/km`;
     }
-    function formatPenalty(sec) {
-        if (sec <= 0) return '';
-        if (sec < 60) return `+${sec}s`;
-        return `+${secondsToTimeString(sec)}`;
-    }
 
     function riegelK(distKm) {
         if (distKm <= 1) return 1.08;
@@ -799,19 +829,16 @@
         return isNaN(d.getTime()) ? null : d;
     }
 
-    /* ═══════ KLUCZOWA POPRAWKA: poziom opadów z kontekstem dnia ═══════ */
     function getEffectivePrecipLevel(conditionCode, conditionText, precipMm, dayChance, dayMm) {
         const c = (conditionText || '').toLowerCase();
         const dChance = (dayChance !== undefined && dayChance !== null) ? dayChance : currentDayContext.chance;
         const dMm = (dayMm !== undefined && dayMm !== null) ? dayMm : currentDayContext.totalMm;
-
         if (/burz|thunder|lightning/.test(c) || [1087, 1273, 1276, 1279, 1282].includes(conditionCode)) return 'storm';
         if (/marznąc|freezing|szadź/.test(c) || [1072, 1168, 1171, 1198, 1201].includes(conditionCode)) return 'freezing';
         if (/obfity.*śnieg|heavy.*snow|zawieja|zamieć/.test(c) || [1114, 1117, 1222, 1225, 1258, 1264].includes(conditionCode)) return 'snow-heavy';
         if (/śnieg|snow|grad|sleet|deszcz ze śniegiem/.test(c) || [1066, 1069, 1204, 1207, 1210, 1213, 1216, 1219, 1237, 1249, 1252, 1255, 1261, 1279].includes(conditionCode)) return 'snow';
         if (/mgł|fog/.test(c) || [1030, 1135, 1147].includes(conditionCode)) return 'fog';
         if (/zadymien|smoke|haze|smog/.test(c)) return 'smog';
-
         let level = 'none';
         if (precipMm >= 2.5) level = 'rain-heavy';
         else if (precipMm >= 0.5) level = 'rain-mod';
@@ -820,7 +847,6 @@
         else if (/mżawk|drizzle/.test(c) || [1150, 1153].includes(conditionCode)) level = 'drizzle';
         else if (/deszcz|rain/.test(c) || [1063, 1180, 1183, 1240, 1273].includes(conditionCode)) level = 'rain-light';
         else if (precipMm > 0.1) level = 'rain-light';
-
         const levels = ['drizzle', 'rain-light', 'rain-mod', 'rain-heavy'];
         const baseIdx = levels.indexOf(level);
         if (baseIdx >= 0) {
@@ -829,47 +855,39 @@
             else if (dMm >= 12 && dChance >= 75) upgrade = 2;
             else if (dMm >= 6 && dChance >= 70) upgrade = 1;
             else if (dChance >= 85 && dMm >= 4) upgrade = 1;
-            if (upgrade > 0) {
-                level = levels[Math.min(baseIdx + upgrade, levels.length - 1)];
-            }
+            if (upgrade > 0) level = levels[Math.min(baseIdx + upgrade, levels.length - 1)];
         }
         return level;
     }
 
     function calculateRunningScore(temp, windKph, precipMm, dewPoint, aqi, conditionCode = 0, conditionText = '', dayChance, dayMm) {
         let score = 10;
-
         if (temp >= 10 && temp <= 16) score -= 0;
         else if ((temp >= 7 && temp < 10) || (temp > 16 && temp <= 20)) score -= 1;
         else if ((temp >= 2 && temp < 7) || (temp > 20 && temp <= 24)) score -= 2.5;
         else if ((temp >= -4 && temp < 2) || (temp > 24 && temp <= 28)) score -= 4.5;
         else score -= 6.5;
-
         if (windKph > 38) score -= 3.5;
         else if (windKph > 24) score -= 2;
         else if (windKph > 16) score -= 0.8;
-
         const precip = getEffectivePrecipLevel(conditionCode, conditionText, precipMm, dayChance, dayMm);
         switch (precip) {
-            case 'storm':      score -= 9;   break;
-            case 'freezing':   score -= 8.5; break;
-            case 'snow-heavy': score -= 6;   break;
-            case 'snow':       score -= 3.5; break;
-            case 'rain-heavy': score -= 7;   break;
-            case 'rain-mod':   score -= 5;   break;
+            case 'storm': score -= 9; break;
+            case 'freezing': score -= 8.5; break;
+            case 'snow-heavy': score -= 6; break;
+            case 'snow': score -= 3.5; break;
+            case 'rain-heavy': score -= 7; break;
+            case 'rain-mod': score -= 5; break;
             case 'rain-light': score -= 2.5; break;
-            case 'drizzle':    score -= 1;   break;
-            case 'fog':        score -= 1.5; break;
-            case 'smog':       score -= 3;   break;
+            case 'drizzle': score -= 1; break;
+            case 'fog': score -= 1.5; break;
+            case 'smog': score -= 3; break;
         }
-
         if (dewPoint > 20) score -= 3;
         else if (dewPoint > 16) score -= 1.5;
-
         if (aqi >= 5) score -= 5;
         else if (aqi === 4) score -= 3.5;
         else if (aqi === 3) score -= 2;
-
         return Math.max(1, Math.min(10, Math.round(score * 10) / 10));
     }
 
@@ -879,232 +897,84 @@
         else if (temp < -5) adjustSec += Math.round(Math.abs(temp + 5) * 1.2);
         if (windKph > 20) adjustSec += Math.round((windKph - 20) * 0.4);
         if (dewPoint > 16) adjustSec += Math.round((dewPoint - 16) * 1.5);
-
         const precip = getEffectivePrecipLevel(conditionCode, conditionText, precipMm, dayChance, dayMm);
         switch (precip) {
-            case 'storm':      adjustSec += 60; break;
-            case 'freezing':   adjustSec += 50; break;
+            case 'storm': adjustSec += 60; break;
+            case 'freezing': adjustSec += 50; break;
             case 'snow-heavy': adjustSec += 30; break;
-            case 'snow':       adjustSec += 15; break;
+            case 'snow': adjustSec += 15; break;
             case 'rain-heavy': adjustSec += 25; break;
-            case 'rain-mod':   adjustSec += 12; break;
-            case 'rain-light': adjustSec += 5;  break;
-            case 'drizzle':    adjustSec += 2;  break;
-            case 'fog':        adjustSec += 4;  break;
-            case 'smog':       adjustSec += 8;  break;
+            case 'rain-mod': adjustSec += 12; break;
+            case 'rain-light': adjustSec += 5; break;
+            case 'drizzle': adjustSec += 2; break;
+            case 'fog': adjustSec += 4; break;
+            case 'smog': adjustSec += 8; break;
         }
         return adjustSec;
     }
 
     function generateDetailedRunnerTip(condition, temp, wind, precipMm, aqi, dewPoint, conditionCode) {
         const level = getEffectivePrecipLevel(conditionCode || 0, condition, precipMm);
-
-        let runningTipsPool = [];
-
-        if (level === 'storm') {
-            runningTipsPool = [
-                "⛈️ <strong>Groźba wyładowań!</strong> Odpuść bieg w otwartym terenie. Wybierz trening w hali lub zrób sesję siłową w domu. Jeśli musisz wyjść — trzymaj się blisko zabudowań.",
-                "⛈️ <strong>Burza w okolicy.</strong> Ryzyko uderzenia pioruna. Zdecydowanie lepiej odpuścić i przenieść trening do pomieszczenia lub na później."
-            ];
-        } else if (level === 'freezing') {
-            runningTipsPool = [
-                "🧊 <strong>Marznący deszcz / gołoledź!</strong> Ekstremalne ryzyko poślizgnięcia. Bez kolców — zostań w domu. Bieganie po lodzie to nie trening, to loteria.",
-                "🧊 <strong>Gołoledź na trasie.</strong> Bardzo niebezpieczne. Odpuść bieg lub wybierz bieżnię. Jeśli wychodzisz — tylko w kolcach i bardzo ostrożnie."
-            ];
-        } else if (level === 'snow-heavy') {
-            runningTipsPool = [
-                "❄️ <strong>Obfity śnieg / zamieć!</strong> Widoczność spada, nawierzchnia zdradliwa. Skróć trening, załóż buty z agresywnym bieżnikiem, weź czołówkę.",
-                "❄️ <strong>Zamieć śnieżna.</strong> Odłóż długie wybieganie. Krótki bieg po znanej trasie, warstwy na cebulę, osłona twarzy."
-            ];
-        } else if (level === 'snow') {
-            runningTipsPool = [
-                "❄️ <strong>Śnieg na trasie.</strong> Załóż buty trailowe lub z kolcami jeśli masz. Skróć krok, obniż kadencję, nie forsuj tempa.",
-                "❄️ <strong>Lekki śnieg.</strong> Trzymaj się głównych, odśnieżonych ścieżek. Ciepłe skarpety i rękawiczki — zmarznięte palce psują komfort."
-            ];
-        } else if (level === 'rain-heavy') {
-            runningTipsPool = [
-                "🌧️ <strong>Ulewa!</strong> Realnie: rozważ odpuszczenie lub przeniesienie treningu na później. Jeśli biegniesz — wiatrówka z membraną, czapka z daszkiem, ciemne ubrania. Uważaj na kałuże i śliskie liście.",
-                "🌧️ <strong>Ulewny deszcz.</strong> Widoczność i przyczepność spadają. Krótszy bieg, wolniejsze tempo, pełna koncentracja. Uważaj na metalowe kratki i pasy na przejściach."
-            ];
-        } else if (level === 'rain-mod') {
-            runningTipsPool = [
-                "🌧️ <strong>Umiarkowany deszcz.</strong> Ubierz się warstwowo, weź wiatrówkę z kapturem. Skróć krok na mokrych liściach i metalowych kratkach.",
-                "🌧️ <strong>Deszcz na trasie.</strong> Mokre buty = ryzyko otarć. Załóż skarpety z wełny merino lub syntetyczne, posmaruj stopy wazeliną."
-            ];
-        } else if (level === 'rain-light') {
-            runningTipsPool = [
-                "🌦️ <strong>Lekki deszcz.</strong> Da się biegać — ustaw się plecami do wiatru na starcie i wracaj z wiatrem. Czapka z daszkiem ochroni oczy.",
-                "🌦️ <strong>Lekki deszcz.</strong> Wiatrówka, dobre skarpety, jasne ubrania. Skróć krok — mokra nawierzchnia wydłuża drogę hamowania."
-            ];
-        } else if (level === 'drizzle') {
-            runningTipsPool = [
-                "🌦️ <strong>Mżawka.</strong> Niby nie przeszkadza, ale po 30 minutach przemakasz. Cienka kurtka, czapka z daszkiem, jasne ubrania dla widoczności.",
-                "🌦️ <strong>Mżawka — pułapka.</strong> Nie zmarznij, bo po 40 minutach poczujesz. Wiatrówka oddychająca to dobra decyzja."
-            ];
-        } else if (level === 'fog') {
-            runningTipsPool = [
-                "🌫️ <strong>Mgła.</strong> Widoczność ograniczona — załóż jasne, odblaskowe ubrania. Biegnij po znanych trasach, unikaj poboczy dróg.",
-                "🌫️ <strong>Gęsta mgła.</strong> Zwiększ widoczność: odblaski, latarka (nawet w dzień), jasna kamizelka. Biegnij asekuracyjnie."
-            ];
-        } else if (level === 'smog') {
-            runningTipsPool = [
-                "😷 <strong>Zła jakość powietrza.</strong> Płuca przy intensywnym oddechu chłoną pył. Odpuść interwały, zrób lekki trucht lub trening w domu.",
-                "😷 <strong>Smog / zadymienie.</strong> Zdecydowanie lepiej trenować w pomieszczeniu lub przenieść bieg na inny dzień. Pył zostaje w płucach."
-            ];
-        } else if (temp > 24 || dewPoint > 19) {
-            runningTipsPool = [
-                "🥵 <strong>Upał / duchota.</strong> Biegnij o świcie lub po zachodzie. Tempo w dół o 20–30 s/km, tętno priorytetem. Pij małe łyki co 15 min.",
-                "🥵 <strong>Gorąco i parno.</strong> Zredukuj tempo o 20–30 s/km. Weź bukłak z elektrolitami, czapkę z daszkiem, krem z filtrem."
-            ];
-        } else if (temp < -2) {
-            runningTipsPool = [
-                "❄️ <strong>Mróz i zimno.</strong> Rozgrzewkę zrób w domu. Oddychaj przez nos / buff, osłoń twarz. Warstwy: termo, polar, wiatrówka.",
-                "❄️ <strong>Mróz.</strong> Zmarznięte mięśnie = ryzyko kontuzji. Dłuższa rozgrzewka, ochrona uszu, rękawiczki i ciepłe skarpety obowiązkowo."
-            ];
-        } else if (wind > 30) {
-            runningTipsPool = [
-                "💨 <strong>Silny wiatr.</strong> Zacznij pod wiatr, wracaj z wiatrem w plecach — nie zmarzniesz po spoceniu. Niższy środek ciężkości.",
-                "💨 <strong>Porywy do 30+ km/h.</strong> Skróć krok, pracuj ramionami. Na otwartej przestrzeni szukaj osłony drzew i budynków."
-            ];
-        } else {
-            runningTipsPool = [
-                "🚀 <strong>Dobre warunki.</strong> Idealne na zaplanowany trening. Trzymaj stabilną kadencję 170–180 kroków/min i pilnuj strefy tętna.",
-                "🚀 <strong>Świetna pogoda.</strong> Możesz poszaleć — interwały, tempo lub długie wybieganie. Pamiętaj o rozgrzewce i nawodnieniu.",
-                "🚀 <strong>Warunki optymalne.</strong> Dobry dzień na test formy — np. bieg progowy lub sprawdzenie tempa startowego."
-            ];
-        }
-
-        const recoveryPool = [
-            "🧘 <strong>Regeneracja:</strong> Po biegu 5 min rolowania ITBS, łydek i pleców. Przyspiesza regenerację i zapobiega przeciążeniom.",
-            "🧘 <strong>Regeneracja:</strong> Po treningu 10 min spaceru, potem stretching statyczny 5 min. Nawodnienie z elektrolitami w ciągu 30 min.",
-            "🧘 <strong>Regeneracja:</strong> Rolowanie i lekkie rozciąganie — 5–10 minut. Statyczny stretch dopiero po 20 min od biegu, nie od razu."
-        ];
-
-        return `<div>${getRandomItem(runningTipsPool)}</div><div style="margin-top:0.5rem; padding-top:0.4rem; border-top:1px dashed rgba(150,150,150,0.25);">${getRandomItem(recoveryPool)}</div>`;
+        let pool = [];
+        if (level === 'storm') pool = ["⛈️ <strong>Groźba wyładowań!</strong> Odpuść bieg w otwartym terenie. Wybierz trening w hali lub zrób sesję siłową w domu.", "⛈️ <strong>Burza w okolicy.</strong> Ryzyko uderzenia pioruna. Zdecydowanie lepiej odpuścić."];
+        else if (level === 'freezing') pool = ["🧊 <strong>Marznący deszcz / gołoledź!</strong> Ekstremalne ryzyko poślizgnięcia. Bez kolców — zostań w domu.", "🧊 <strong>Gołoledź na trasie.</strong> Bardzo niebezpieczne. Odpuść bieg lub wybierz bieżnię."];
+        else if (level === 'snow-heavy') pool = ["❄️ <strong>Obfity śnieg / zamieć!</strong> Skróć trening, załóż buty z agresywnym bieżnikiem, weź czołówkę.", "❄️ <strong>Zamieć śnieżna.</strong> Odłóż długie wybieganie. Krótki bieg po znanej trasie."];
+        else if (level === 'snow') pool = ["❄️ <strong>Śnieg na trasie.</strong> Załóż buty trailowe lub z kolcami jeśli masz. Skróć krok.", "❄️ <strong>Lekki śnieg.</strong> Trzymaj się głównych, odśnieżonych ścieżek. Ciepłe skarpety i rękawiczki."];
+        else if (level === 'rain-heavy') pool = ["🌧️ <strong>Ulewa!</strong> Rozważ odpuszczenie lub przeniesienie treningu. Jeśli biegniesz — wiatrówka z membraną.", "🌧️ <strong>Ulewny deszcz.</strong> Krótszy bieg, wolniejsze tempo, pełna koncentracja."];
+        else if (level === 'rain-mod') pool = ["🌧️ <strong>Umiarkowany deszcz.</strong> Ubierz się warstwowo, weź wiatrówkę z kapturem.", "🌧️ <strong>Deszcz na trasie.</strong> Mokre buty = ryzyko otarć. Załóż skarpety z wełny merino."];
+        else if (level === 'rain-light') pool = ["🌦️ <strong>Lekki deszcz.</strong> Da się biegać — ustaw się plecami do wiatru na starcie.", "🌦️ <strong>Lekki deszcz.</strong> Wiatrówka, dobre skarpety, jasne ubrania."];
+        else if (level === 'drizzle') pool = ["🌦️ <strong>Mżawka.</strong> Niby nie przeszkadza, ale po 30 minutach przemakasz.", "🌦️ <strong>Mżawka — pułapka.</strong> Wiatrówka oddychająca to dobra decyzja."];
+        else if (level === 'fog') pool = ["🌫️ <strong>Mgła.</strong> Załóż jasne, odblaskowe ubrania. Biegnij po znanych trasach.", "🌫️ <strong>Gęsta mgła.</strong> Zwiększ widoczność: odblaski, latarka, jasna kamizelka."];
+        else if (level === 'smog') pool = ["😷 <strong>Zła jakość powietrza.</strong> Odpuść interwały, zrób lekki trucht lub trening w domu.", "😷 <strong>Smog / zadymienie.</strong> Lepiej trenować w pomieszczeniu lub przenieść bieg."];
+        else if (temp > 24 || dewPoint > 19) pool = ["🥵 <strong>Upał / duchota.</strong> Biegnij o świcie lub po zachodzie. Tempo w dół o 20–30 s/km.", "🥵 <strong>Gorąco i parno.</strong> Zredukuj tempo o 20–30 s/km. Weź bukłak z elektrolitami."];
+        else if (temp < -2) pool = ["❄️ <strong>Mróz i zimno.</strong> Rozgrzewkę zrób w domu. Oddychaj przez nos / buff.", "❄️ <strong>Mróz.</strong> Dłuższa rozgrzewka, ochrona uszu, rękawiczki i ciepłe skarpety."];
+        else if (wind > 30) pool = ["💨 <strong>Silny wiatr.</strong> Zacznij pod wiatr, wracaj z wiatrem w plecach.", "💨 <strong>Porywy do 30+ km/h.</strong> Skróć krok, pracuj ramionami. Szukaj osłony drzew."];
+        else pool = ["🚀 <strong>Dobre warunki.</strong> Idealne na zaplanowany trening. Trzymaj stabilną kadencję 170–180.", "🚀 <strong>Świetna pogoda.</strong> Możesz poszaleć — interwały, tempo lub długie wybieganie.", "🚀 <strong>Warunki optymalne.</strong> Dobry dzień na test formy — np. bieg progowy."];
+        const recoveryPool = ["🧘 <strong>Regeneracja:</strong> Po biegu 5 min rolowania ITBS, łydek i pleców.", "🧘 <strong>Regeneracja:</strong> Po treningu 10 min spaceru, potem stretching statyczny 5 min.", "🧘 <strong>Regeneracja:</strong> Rolowanie i lekkie rozciąganie — 5–10 minut."];
+        return `<div>${getRandomItem(pool)}</div><div style="margin-top:0.5rem; padding-top:0.4rem; border-top:1px dashed rgba(150,150,150,0.25);">${getRandomItem(recoveryPool)}</div>`;
     }
 
     function findBestRunningWindow(hours, forecastDays) {
         if (!hours || hours.length < 2) return "Zbyt mało danych do wyznaczenia okna.";
-
-        const now = new Date();
-        const nowMs = now.getTime();
-        const nowHour = now.getHours();
-
-        function getDayContextForHour(h) {
+        const now = new Date(), nowMs = now.getTime(), nowHour = now.getHours();
+        function getCtx(h) {
             if (!forecastDays) return { chance: currentDayContext.chance, totalMm: currentDayContext.totalMm };
-            const hDate = new Date(h.time).toDateString();
-            const fd = forecastDays.find(fd => new Date(fd.date).toDateString() === hDate);
-            return {
-                chance: fd?.day?.daily_chance_of_rain || 0,
-                totalMm: fd?.day?.totalprecip_mm || 0
-            };
+            const fd = forecastDays.find(fd => new Date(fd.date).toDateString() === new Date(h.time).toDateString());
+            return { chance: fd?.day?.daily_chance_of_rain || 0, totalMm: fd?.day?.totalprecip_mm || 0 };
         }
-
-        function scoreHour(h) {
-            const ctx = getDayContextForHour(h);
-            return calculateRunningScore(
-                h.temp_c, h.wind_kph, h.precip_mm, h.dewpoint_c || 10, 1,
-                h.condition?.code, h.condition?.text,
-                ctx.chance, ctx.totalMm
-            );
-        }
-
-        function precipLevelHour(h) {
-            const ctx = getDayContextForHour(h);
-            return getEffectivePrecipLevel(h.condition?.code, h.condition?.text, h.precip_mm, ctx.chance, ctx.totalMm);
-        }
-
-        const currentHourData = hours.find(h => {
-            const d = new Date(h.time);
-            return d.getHours() === nowHour && Math.abs(d.getTime() - nowMs) < 3600000;
-        });
-        const currentScore = currentHourData ? scoreHour(currentHourData) : null;
-        const currentPrecip = currentHourData ? precipLevelHour(currentHourData) : 'none';
-        const isRainingNow = ['drizzle', 'rain-light', 'rain-mod', 'rain-heavy', 'storm', 'freezing', 'snow', 'snow-heavy'].includes(currentPrecip);
-
-        if (currentScore !== null && currentScore >= 8 && !isRainingNow) {
-            const nowH = String(now.getHours()).padStart(2, '0');
-            const nowM = String(now.getMinutes()).padStart(2, '0');
-            return `⭐ <strong>Złote okno — idealne warunki!</strong> Ocena: <strong>${currentScore.toFixed(1)}/10</strong> (godz. ${nowH}:${nowM}). Biegnij teraz — nie czekaj.`;
-        }
-        if (currentScore !== null && currentScore >= 6.5) {
-            const nowH = String(now.getHours()).padStart(2, '0');
-            const nowM = String(now.getMinutes()).padStart(2, '0');
-            const rainNote = isRainingNow ? ' Są opady — weź wiatrówkę i dobrze się ubierz.' : '';
-            return `✅ <strong>Dobre warunki do biegu</strong> — ocena <strong>${currentScore.toFixed(1)}/10</strong> (godz. ${nowH}:${nowM}). Możesz wychodzić.${rainNote}`;
-        }
-        if (currentScore !== null && currentScore >= 5) {
-            const nowH = String(now.getHours()).padStart(2, '0');
-            const nowM = String(now.getMinutes()).padStart(2, '0');
-            return `👍 <strong>Warunki przeciętne</strong> — ocena <strong>${currentScore.toFixed(1)}/10</strong> (godz. ${nowH}:${nowM}). Da się biegać, ale bez fajerwerków.`;
-        }
-
-        const futureHours = hours.filter(h => {
-            const d = new Date(h.time);
-            const diffMs = d.getTime() - nowMs;
-            if (diffMs < -10 * 60 * 1000) return false;
-            if (diffMs > 12 * 3600 * 1000) return false;
-            const hr = d.getHours();
-            return hr >= 6 && hr <= 21;
-        });
-
-        if (futureHours.length === 0) {
-            return '🌙 <strong>Dziś brak dobrych okien.</strong> Prognoza nie zawiera lepszych godzin w najbliższych 12h. Rozważ trening w pomieszczeniu lub przenieś na jutro.';
-        }
-
-        let bestScore = -1, bestIdx = 0;
-        for (let i = 0; i < futureHours.length; i++) {
-            const h1 = futureHours[i];
-            const h2 = futureHours[i + 1];
-            const s1 = scoreHour(h1);
-            const s2 = h2 ? scoreHour(h2) : s1;
-            const avg = h2 ? (s1 + s2) / 2 : s1;
-            if (avg > bestScore) { bestScore = avg; bestIdx = i; }
-        }
-
-        const bestH = futureHours[bestIdx];
-        const bestPrecip = precipLevelHour(bestH);
-        const bestIsRainy = ['drizzle', 'rain-light', 'rain-mod', 'rain-heavy', 'storm', 'freezing', 'snow', 'snow-heavy'].includes(bestPrecip);
-
-        if (bestScore < 5.5) {
-            const nowInfo = currentScore !== null ? ` Teraz: ${currentScore.toFixed(1)}/10.` : '';
-            return `🚫 <strong>Dziś brak dobrych okien treningowych.</strong> Nawet najlepsze z najbliższych 12h daje tylko <strong>${bestScore.toFixed(1)}/10</strong>.${nowInfo} Rozważ trening w pomieszczeniu lub przenieś na jutro.`;
-        }
-
-        const endIdx = Math.min(bestIdx + 2, futureHours.length - 1);
-        const endObj = futureHours[endIdx];
-        const startDate = new Date(bestH.time);
-        const endDate = new Date(endObj.time);
-        const tStart = startDate.toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
-        const tEnd = endDate.toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
-
-        if (startDate.toDateString() !== now.toDateString()) {
-            return `📅 <strong>Dziś słabe warunki — jutro lepiej.</strong> Prognoza wskazuje na <strong>Jutro ${tStart}–${tEnd}</strong> (ocena <strong>${bestScore.toFixed(1)}/10</strong>, ${bestH.temp_c}°C, wiatr ${bestH.wind_kph} km/h). Dziś rozważ indoor lub lekki trucht.`;
-        }
-
-        const waitMin = Math.round((startDate.getTime() - nowMs) / 60000);
-        const waitStr = waitMin < 60
-            ? `za ${Math.max(1, waitMin)} min`
-            : `za ${(waitMin / 60).toFixed(1).replace('.0', '')} h`;
-        const nowPart = currentScore !== null ? ` Teraz: ${currentScore.toFixed(1)}/10.` : '';
-        const rainNote = bestIsRainy ? ' W oknie wciąż może padać — weź wiatrówkę.' : '';
-
-        return `⏰ <strong>Najlepsze okno ${waitStr}:</strong> <strong>Dziś ${tStart}–${tEnd}</strong> (ocena <strong>${bestScore.toFixed(1)}/10</strong>, ${bestH.temp_c}°C, wiatr ${bestH.wind_kph} km/h).${nowPart} Do tego czasu odpocznij.${rainNote}`;
+        function scoreH(h) { const c = getCtx(h); return calculateRunningScore(h.temp_c, h.wind_kph, h.precip_mm, h.dewpoint_c || 10, 1, h.condition?.code, h.condition?.text, c.chance, c.totalMm); }
+        function precipH(h) { const c = getCtx(h); return getEffectivePrecipLevel(h.condition?.code, h.condition?.text, h.precip_mm, c.chance, c.totalMm); }
+        const curH = hours.find(h => { const d = new Date(h.time); return d.getHours() === nowHour && Math.abs(d.getTime() - nowMs) < 3600000; });
+        const curScore = curH ? scoreH(curH) : null;
+        const curPrecip = curH ? precipH(curH) : 'none';
+        const rainingNow = ['drizzle','rain-light','rain-mod','rain-heavy','storm','freezing','snow','snow-heavy'].includes(curPrecip);
+        const nowHM = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+        if (curScore !== null && curScore >= 8 && !rainingNow) return `⭐ <strong>Złote okno — idealne warunki!</strong> Ocena: <strong>${curScore.toFixed(1)}/10</strong> (godz. ${nowHM}). Biegnij teraz.`;
+        if (curScore !== null && curScore >= 6.5) return `✅ <strong>Dobre warunki do biegu</strong> — ocena <strong>${curScore.toFixed(1)}/10</strong> (godz. ${nowHM}).${rainingNow ? ' Są opady — weź wiatrówkę.' : ''}`;
+        if (curScore !== null && curScore >= 5) return `👍 <strong>Warunki przeciętne</strong> — ocena <strong>${curScore.toFixed(1)}/10</strong> (godz. ${nowHM}). Da się biegać.`;
+        const futureH = hours.filter(h => { const d = new Date(h.time); const diff = d.getTime() - nowMs; if (diff < -10*60*1000) return false; if (diff > 12*3600*1000) return false; const hr = d.getHours(); return hr >= 6 && hr <= 21; });
+        if (futureH.length === 0) return '🌙 <strong>Dziś brak dobrych okien.</strong> Rozważ trening w pomieszczeniu lub przenieś na jutro.';
+        let bestS = -1, bestI = 0;
+        for (let i = 0; i < futureH.length; i++) { const h1 = futureH[i]; const h2 = futureH[i+1]; const s1 = scoreH(h1); const s2 = h2 ? scoreH(h2) : s1; const avg = h2 ? (s1+s2)/2 : s1; if (avg > bestS) { bestS = avg; bestI = i; } }
+        const bestH = futureH[bestI];
+        if (bestS < 5.5) return `🚫 <strong>Dziś brak dobrych okien treningowych.</strong> Nawet najlepsze daje tylko <strong>${bestS.toFixed(1)}/10</strong>. Rozważ indoor lub przenieś na jutro.`;
+        const endI = Math.min(bestI + 2, futureH.length - 1);
+        const startD = new Date(bestH.time), endD = new Date(futureH[endI].time);
+        const tS = startD.toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
+        const tE = endD.toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
+        if (startD.toDateString() !== now.toDateString()) return `📅 <strong>Dziś słabe warunki — jutro lepiej.</strong> Prognoza: <strong>Jutro ${tS}–${tE}</strong> (ocena <strong>${bestS.toFixed(1)}/10</strong>).`;
+        const waitMin = Math.round((startD.getTime() - nowMs) / 60000);
+        const waitStr = waitMin < 60 ? `za ${Math.max(1, waitMin)} min` : `za ${(waitMin/60).toFixed(1).replace('.0','')} h`;
+        return `⏰ <strong>Najlepsze okno ${waitStr}:</strong> <strong>Dziś ${tS}–${tE}</strong> (ocena <strong>${bestS.toFixed(1)}/10</strong>, ${bestH.temp_c}°C, wiatr ${bestH.wind_kph} km/h).`;
     }
 
     function generateWeatherSummaryText(forecastDay) {
         if (!forecastDay) return '';
         const day = forecastDay.day;
-        const maxT = Math.round(day.maxtemp_c);
-        const minT = Math.round(day.mintemp_c);
-        const wind = Math.round(day.maxwind_kph);
-        const precip = day.totalprecip_mm;
-        const rainChance = day.daily_chance_of_rain || 0;
-        const humidity = day.avghumidity || 0;
-        const uv = day.uv || 0;
-
+        const maxT = Math.round(day.maxtemp_c), minT = Math.round(day.mintemp_c);
+        const wind = Math.round(day.maxwind_kph), precip = day.totalprecip_mm;
+        const rainChance = day.daily_chance_of_rain || 0, humidity = day.avghumidity || 0, uv = day.uv || 0;
         const parts = [];
-
         if (minT < 0) parts.push(`Mroźnie — rano ${minT}°C, w dzień maksymalnie ${maxT}°C`);
         else if (minT < 5) parts.push(`Zimno — rano tylko ${minT}°C, w dzień ${maxT}°C`);
         else if (minT < 10) parts.push(`Chłodno — rano ${minT}°C, w dzień maksymalnie ${maxT}°C`);
@@ -1112,133 +982,77 @@
         else if (maxT > 22) parts.push(`Ciepło — od ${minT}°C rano do ${maxT}°C w dzień`);
         else if (maxT - minT < 4) parts.push(`Stabilnie — około ${maxT}°C przez cały dzień`);
         else parts.push(`Przyjemnie — od ${minT}°C do ${maxT}°C`);
-
         if (precip < 0.3) {
-            if (rainChance > 60) parts.push(`prawie bez opadów, choć prognozy dają ${rainChance}% szans na deszcz`);
+            if (rainChance > 60) parts.push(`prawie bez opadów, choć prognozy dają ${rainChance}% szans`);
             else if (rainChance > 30) parts.push(`sucho (${rainChance}% szans na przelotny deszcz)`);
             else parts.push(`bez deszczu`);
-        } else if (precip < 2) {
-            parts.push(`możliwe przelotne opady — do ${precip.toFixed(1)} mm, ${rainChance}% szans`);
-        } else if (precip < 6) {
-            parts.push(`pewny deszcz — do ${precip.toFixed(1)} mm przy ${rainChance}% szans`);
-        } else if (precip < 15) {
-            parts.push(`sporo deszczu — nawet ${precip.toFixed(1)} mm, ${rainChance}% szans`);
-        } else {
-            parts.push(`naprawdę dużo deszczu — do ${precip.toFixed(1)} mm, ${rainChance}% szans`);
-        }
-
+        } else if (precip < 2) parts.push(`możliwe przelotne opady — do ${precip.toFixed(1)} mm, ${rainChance}% szans`);
+        else if (precip < 6) parts.push(`pewny deszcz — do ${precip.toFixed(1)} mm przy ${rainChance}% szans`);
+        else if (precip < 15) parts.push(`sporo deszczu — nawet ${precip.toFixed(1)} mm, ${rainChance}% szans`);
+        else parts.push(`naprawdę dużo deszczu — do ${precip.toFixed(1)} mm`);
         if (wind < 12) parts.push(`wiatru prawie nie ma`);
         else if (wind < 22) parts.push(`lekki wiatr (${wind} km/h)`);
-        else if (wind < 32) parts.push(`wiatr do ${wind} km/h — w otwartym terenie poczujesz opór`);
+        else if (wind < 32) parts.push(`wiatr do ${wind} km/h`);
         else parts.push(`silny wiatr, porywy do ${wind} km/h`);
-
         if (humidity > 80 && maxT > 20) parts.push(`parno (wilgotność ${humidity}%)`);
         else if (humidity < 30 && maxT > 15) parts.push(`sucho (wilgotność ${humidity}%)`);
-
-        if (uv >= 6) parts.push(`wysokie UV (${uv}) — krem z filtrem obowiązkowo`);
+        if (uv >= 6) parts.push(`wysokie UV (${uv})`);
         else if (uv >= 3) parts.push(`umiarkowane UV (${uv})`);
-
         const text = parts.join('. ') + '.';
         return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
-    /* ═══════ ✅ POPRAWKA #1: getBestEquivalentEffort ═══════
-       - Odwrócony mnożnik (dzielenie zamiast mnożenia)
-       - Odzyskiwanie sec z timeStr
-       - Lepsza selekcja: 1-2 biegi → najlepszy, 3+ → mediana TOP 3
-    */
+    // ✅ getBestEquivalentEffort: DZIENNIK MA PRIORYTET
     function getBestEquivalentEffort() {
-        const candidates = [];
-        const pbMap = [
-            { key:'d3k', distKm:3 }, { key:'d5k', distKm:5 }, { key:'d10k', distKm:10 },
-            { key:'d21k', distKm:21.097 }, { key:'d42k', distKm:42.195 }
-        ];
-        for (const pb of pbMap) {
-            const sec = timeStringToSeconds(runnerRecords[pb.key]);
-            if (sec > 0) {
-                candidates.push({
-                    distKm: pb.distKm, sec, source: 'pb',
-                    eq10k: sec * Math.pow(10 / pb.distKm, riegelK(pb.distKm))
-                });
-            }
-        }
-
-        const nowMs = Date.now();
         const logCandidates = runnerRuns
             .map(r => {
                 const km = parseFloat(r.km);
                 let sec = parseFloat(r.sec);
-                // Odzyskiwanie sec z timeStr jeśli brak
                 if ((!sec || sec <= 0) && r.timeStr) sec = timeStringToSeconds(r.timeStr);
                 if (!km || isNaN(km) || km < 1 || !sec || sec <= 0) return null;
-
                 const dateObj = parseRunDate(r.date);
-                const daysAgo = dateObj ? (nowMs - dateObj.getTime()) / 86400000 : 60;
+                const daysAgo = dateObj ? (Date.now() - dateObj.getTime()) / 86400000 : 60;
                 if (daysAgo > 90) return null;
-
                 const type = r.type || 'easy';
-                // ✅ KLUCZOWA POPRAWKA: dzielimy przez mnożnik (easy bieg jest WOLNIEJSZY od startu)
                 const adjustedSec = sec / getRunTypeMultiplier(type);
-
-                return {
-                    distKm: km, sec: adjustedSec, pace: adjustedSec / km,
-                    eq10k: adjustedSec * Math.pow(10 / km, riegelK(km)),
-                    source: 'log', type, daysAgo
-                };
+                return { distKm: km, sec: adjustedSec, pace: adjustedSec / km, eq10k: adjustedSec * Math.pow(10 / km, riegelK(km)), source: 'log', type, daysAgo };
             })
             .filter(Boolean)
             .sort((a, b) => a.eq10k - b.eq10k);
 
         if (logCandidates.length > 0) {
             const top = logCandidates.slice(0, Math.min(3, logCandidates.length));
-            // ✅ 3+ biegów → mediana TOP 3; 1-2 biegi → najlepszy
-            const chosen = top.length >= 3 ? top[1] : top[0];
-            candidates.push(chosen);
+            return top.length >= 3 ? top[1] : top[0];
         }
-
-        if (candidates.length === 0) {
-            const easySec = timeStringToSeconds(runnerProfile.easyPace || '05:30');
-            const base10kPace = Math.max(180, easySec - 45);
-            return { distKm: 10, sec: base10kPace * 10, pace: base10kPace, eq10k: base10kPace * 10, source: 'profile' };
+        const pbCandidates = [];
+        const pbMap = [{key:'d3k',distKm:3},{key:'d5k',distKm:5},{key:'d10k',distKm:10},{key:'d21k',distKm:21.097},{key:'d42k',distKm:42.195}];
+        for (const pb of pbMap) {
+            const sec = timeStringToSeconds(runnerRecords[pb.key]);
+            if (sec > 0) pbCandidates.push({ distKm: pb.distKm, sec, source: 'pb', eq10k: sec * Math.pow(10 / pb.distKm, riegelK(pb.distKm)) });
         }
-        candidates.sort((a, b) => a.eq10k - b.eq10k);
-        return candidates[0];
+        if (pbCandidates.length > 0) { pbCandidates.sort((a,b) => a.eq10k - b.eq10k); return pbCandidates[0]; }
+        const easySec = timeStringToSeconds(runnerProfile.easyPace || '05:30');
+        const base10kPace = Math.max(180, easySec - 45);
+        return { distKm: 10, sec: base10kPace * 10, pace: base10kPace, eq10k: base10kPace * 10, source: 'profile' };
     }
 
-    /* ═══════ ✅ POPRAWKA #3: getSourceLabel z diagnostyką ═══════ */
     function getSourceLabel(bestEffort) {
-        if (bestEffort.source === 'pb') {
-            return '🎯 Prognoza oparta na Twoich rekordach życiowych (PB).';
-        }
-        const totalRuns = Array.isArray(runnerRuns) ? runnerRuns.length : 0;
-        const validRuns = runnerRuns.filter(r => {
-            const km = parseFloat(r.km);
-            const sec = parseFloat(r.sec) || timeStringToSeconds(r.timeStr);
-            if (!(km >= 1) || !(sec > 0)) return false;
-            const dateObj = parseRunDate(r.date);
-            const daysAgo = dateObj ? (Date.now() - dateObj.getTime()) / 86400000 : 60;
-            return daysAgo <= 90;
-        });
-
         if (bestEffort.source === 'log') {
-            const n = validRuns.length;
-            return `📊 Prognoza z dziennika treningów: ${n} ${n === 1 ? 'bieg' : 'biegi'} (mediana TOP 3 z ostatnich 90 dni, tempo przeliczone na start).`;
-        }
-        if (totalRuns > 0 && validRuns.length === 0) {
-            const invalid = runnerRuns.filter(r => {
+            const validRuns = runnerRuns.filter(r => {
                 const km = parseFloat(r.km);
                 const sec = parseFloat(r.sec) || timeStringToSeconds(r.timeStr);
-                return !(km >= 1) || !(sec > 0);
+                if (!(km >= 1) || !(sec > 0)) return false;
+                const dateObj = parseRunDate(r.date);
+                const daysAgo = dateObj ? (Date.now() - dateObj.getTime()) / 86400000 : 60;
+                return daysAgo <= 90;
             });
-            if (invalid.length > 0) {
-                return `⚠️ ${invalid.length} z ${totalRuns} biegów ma nieprawidłowy dystans/czas — sprawdź „📜 Historia biegów". Prognoza z profilu Easy.`;
-            }
-            return `⚠️ Wszystkie biegi w dzienniku są starsze niż 90 dni — prognoza z profilu Easy. Dodaj świeży bieg.`;
+            const n = validRuns.length;
+            return `📊 Prognoza z dziennika treningów: ${n} ${n === 1 ? 'bieg' : 'biegi'} (mediana TOP 3 z ostatnich 90 dni, tempo przeliczone na start). PB pokazane jako referencja.`;
         }
-        return 'ℹ️ Brak danych treningowych — prognoza z profilu Easy. Dodaj biegi lub rekordy PB dla dokładniejszej prognozy.';
+        if (bestEffort.source === 'pb') return '🏆 Brak treningów w dzienniku — prognoza z Twoich rekordów życiowych (PB). Dodaj biegi, aby prognoza reagowała na aktualną formę.';
+        return 'ℹ️ Brak danych treningowych i PB — prognoza z profilu Easy.';
     }
 
-    /* ═══════ ✅ POPRAWKA #2: renderRacePredictor — BEZ POGODY ═══════ */
     function renderRacePredictor() {
         const container = document.getElementById('racePredictorGrid');
         if (!container) return;
@@ -1253,32 +1067,31 @@
             { name:'Maraton', distKm:42.195, key:'d42k' }
         ];
         container.innerHTML = targets.map(t => {
+            const predictedSec = Math.round(bestEffort.sec * Math.pow(t.distKm / bestEffort.distKm, riegelK(t.distKm)));
             const pbSec = timeStringToSeconds(runnerRecords[t.key]);
             const pbExists = pbSec > 0;
-            let baseSec;
-            if (pbExists) baseSec = pbSec;
-            else baseSec = Math.round(bestEffort.sec * Math.pow(t.distKm / bestEffort.distKm, riegelK(t.distKm)));
-
-            const baseTimeStr = secondsToTimeString(baseSec, t.distKm > 10);
-            const basePaceStr = formatPace(baseSec, t.distKm);
             const pbStr = pbExists ? secondsToTimeString(pbSec, t.distKm > 10) : null;
+            const baseTimeStr = secondsToTimeString(predictedSec, t.distKm > 10);
+            const basePaceStr = formatPace(predictedSec, t.distKm);
             const ratio = t.distKm / bestEffort.distKm;
-            const isExtrapolated = !pbExists && ratio > 2.5;
-
+            const isExtrapolated = ratio > 2.5;
             let extraWarn = '';
-            if (t.distKm > 40 && !pbExists) {
-                extraWarn = hasLongRun
-                    ? '<div class="pred-marathon-warn">⚠️ Prognoza z Riegla — realny start może być 3–8 min wolniejszy (zależnie od formy dnia i taktyki).</div>'
-                    : '<div class="pred-marathon-warn">⚠️ Brak PB na maraton i brak długich biegów (25+ km). Riegel może zaniżyć realny czas startu o 5–15 min. Dodaj PB 42 km lub długie wybieganie do dziennika.</div>';
+            if (pbExists && pbSec < predictedSec * 0.9 && bestEffort.source !== 'pb') {
+                const diff = predictedSec - pbSec;
+                extraWarn += `<div class="pred-marathon-warn" style="color:#0891b2; background:rgba(8,145,178,0.08); border-color:rgba(8,145,178,0.25);">🏆 Twoje PB (${pbStr}) jest o ${secondsToTimeString(diff)} szybsze niż prognoza z dziennika. Możesz być w lepszej formie — rozważ test na maksa.</div>`;
+            }
+            if (t.distKm > 40 && bestEffort.source !== 'pb') {
+                extraWarn += hasLongRun
+                    ? '<div class="pred-marathon-warn">⚠️ Prognoza z Riegla — realny start może być 3–8 min wolniejszy.</div>'
+                    : '<div class="pred-marathon-warn">⚠️ Brak PB 42 km i brak długich biegów (25+ km). Riegel może zaniżyć o 5–15 min.</div>';
             }
             if (t.distKm === 1 && !pbExists) {
-                extraWarn = '<div class="pred-marathon-warn speed">⚠️ 1 km to dystans szybkościowy — prognoza z Riegla jest orientacyjna. Wpisz PB 1 km dla dokładności.</div>';
+                extraWarn += '<div class="pred-marathon-warn speed">⚠️ 1 km to dystans szybkościowy — prognoza orientacyjna.</div>';
             }
-
             return `
                 <div class="predictor-pill">
                     <div class="pred-header">
-                        <span class="pred-dist">${t.name}${isExtrapolated ? ' <span class="pred-warn" title="Ekstrapolacja > 2,5× dystansu bazowego — wynik orientacyjny">⚠️</span>' : ''}</span>
+                        <span class="pred-dist">${t.name}${isExtrapolated ? ' <span class="pred-warn" title="Ekstrapolacja > 2,5×">⚠️</span>' : ''}</span>
                         ${pbExists ? `<span class="pred-pb-badge">🏆 ${pbStr}</span>` : `<span class="pred-pb-badge empty">brak PB</span>`}
                     </div>
                     <div class="pred-state">
@@ -1292,9 +1105,119 @@
                 </div>
             `;
         }).join('');
-
         const sourceEl = document.getElementById('predictorSource');
         if (sourceEl) sourceEl.textContent = getSourceLabel(bestEffort);
+    }
+
+    function renderRunTypeChart() {
+        const canvas = document.getElementById('runTypeChart');
+        const legend = document.getElementById('runTypeLegend');
+        const totalEl = document.getElementById('runTypeChartTotal');
+        if (!canvas) return;
+        const nowMs = Date.now();
+        const validRuns = runnerRuns.filter(r => {
+            const km = parseFloat(r.km);
+            if (!(km > 0)) return false;
+            const dateObj = parseRunDate(r.date);
+            const daysAgo = dateObj ? (nowMs - dateObj.getTime()) / 86400000 : 60;
+            return daysAgo <= 90;
+        });
+        const totals = { easy: 0, tempo: 0, race: 0 };
+        validRuns.forEach(r => {
+            const km = parseFloat(r.km) || 0;
+            const type = totals[r.type] !== undefined ? r.type : 'easy';
+            totals[type] += km;
+        });
+        const totalKm = totals.easy + totals.tempo + totals.race;
+        const isEmpty = totalKm === 0;
+        const pctEasy = isEmpty ? 0 : Math.round(totals.easy / totalKm * 100);
+        const pctTempo = isEmpty ? 0 : Math.round(totals.tempo / totalKm * 100);
+        const pctRace = isEmpty ? 0 : Math.max(0, 100 - pctEasy - pctTempo);
+        if (totalEl) totalEl.textContent = isEmpty ? '0 km' : `${totalKm.toFixed(1)} km`;
+        if (legend) legend.innerHTML = `
+            <span style="display:inline-flex; align-items:center; gap:3px; color:#27ae60;"><span style="width:8px; height:8px; border-radius:50%; background:#27ae60;"></span> Easy ${pctEasy}%</span>
+            <span style="display:inline-flex; align-items:center; gap:3px; color:#f39c12;"><span style="width:8px; height:8px; border-radius:50%; background:#f39c12;"></span> Tempo ${pctTempo}%</span>
+            <span style="display:inline-flex; align-items:center; gap:3px; color:#e74c3c;"><span style="width:8px; height:8px; border-radius:50%; background:#e74c3c;"></span> Start ${pctRace}%</span>
+        `;
+        const chartData = isEmpty ? [1, 0, 0] : [totals.easy, totals.tempo, totals.race];
+        const chartColors = isEmpty ? ['#d1d5db', '#e5e7eb', '#e5e7eb'] : ['#27ae60', '#f39c12', '#e74c3c'];
+        if (runTypeChart) {
+            runTypeChart.data.datasets[0].data = chartData;
+            runTypeChart.data.datasets[0].backgroundColor = chartColors;
+            runTypeChart.update();
+        } else {
+            const ctx = canvas.getContext('2d');
+            runTypeChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: { labels: ['Easy','Tempo','Start'], datasets: [{ data: chartData, backgroundColor: chartColors, borderColor: 'rgba(255,255,255,0.9)', borderWidth: 2.5, hoverOffset: 8, spacing: 1 }] },
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '62%',
+                    animation: { animateRotate: true, animateScale: true, duration: 600 },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: !isEmpty, backgroundColor: 'rgba(15,23,42,0.92)', padding: 8, cornerRadius: 8, displayColors: true,
+                            callbacks: { label: ctx => { const v = ctx.parsed; const pct = totalKm > 0 ? Math.round(v/totalKm*100) : 0; return ` ${ctx.label}: ${v.toFixed(1)} km (${pct}%)`; } }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // ✅ NOWA: helper trendu
+    function computeTrend(current, prev, periodLabel = 'poprzedni okres') {
+        if (prev === 0 && current === 0) return { cls: 'same', text: '—', title: `Brak danych w obu okresach (${periodLabel})` };
+        if (prev === 0) return { cls: 'up', text: 'nowe', title: `Pierwsze kilometry (+${current.toFixed(1)} km)` };
+        const diff = current - prev;
+        const pct = (diff / prev) * 100;
+        if (Math.abs(pct) < 1) return { cls: 'same', text: '≈ 0%', title: `${diff >= 0 ? '+' : ''}${diff.toFixed(1)} km vs ${periodLabel}` };
+        if (pct > 0) return { cls: 'up', text: `▲ ${pct.toFixed(0)}%`, title: `+${diff.toFixed(1)} km vs ${periodLabel}` };
+        return { cls: 'down', text: `▼ ${Math.abs(pct).toFixed(0)}%`, title: `${diff.toFixed(1)} km vs ${periodLabel}` };
+    }
+
+    // ✅ NOWA: sparkline 7-dniowy
+    function renderWeeklySparkline() {
+        const container = document.getElementById('weeklySparkline');
+        const totalEl = document.getElementById('weeklySparklineTotal');
+        if (!container) return;
+        const now = new Date();
+        const dayOfWeek = now.getDay() === 0 ? 7 : now.getDay();
+        const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek + 1, 0, 0, 0);
+        const dayLabels = ['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So', 'Nd'];
+        const dayFull = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
+        const todayIdx = dayOfWeek - 1;
+        const weekData = [0, 0, 0, 0, 0, 0, 0];
+        runnerRuns.forEach(r => {
+            const km = parseFloat(r.km);
+            if (!(km > 0)) return;
+            const rDate = parseRunDate(r.date);
+            if (!rDate) return;
+            const diff = Math.floor((rDate.getTime() - monday.getTime()) / 86400000);
+            if (diff >= 0 && diff < 7) weekData[diff] += km;
+        });
+        const weekTotal = weekData.reduce((a, b) => a + b, 0);
+        if (totalEl) totalEl.textContent = `${weekTotal.toFixed(1)} km`;
+        const maxKm = Math.max(...weekData, 0.1);
+        container.innerHTML = weekData.map((km, i) => {
+            const isToday = i === todayIdx;
+            const isFuture = i > todayIdx;
+            const heightPct = km > 0 ? Math.max(22, (km / maxKm) * 100) : 8;
+            let barBg;
+            if (km === 0) barBg = 'rgba(100, 116, 139, 0.2)';
+            else if (isToday) barBg = 'linear-gradient(180deg, var(--primary), var(--secondary))';
+            else barBg = 'rgba(0, 102, 204, 0.55)';
+            const dayColor = isToday ? 'var(--primary)' : (isFuture ? 'var(--text-muted)' : 'var(--text-color)');
+            const dayWeight = isToday ? 800 : 600;
+            const titleAttr = `${dayFull[i]}: ${km.toFixed(1)} km${isToday ? ' (dziś)' : ''}`;
+            return `
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; cursor: help;" title="${titleAttr}">
+                    <div style="width: 100%; height: 24px; display: flex; align-items: flex-end; justify-content: center; padding: 0 1px;">
+                        <div style="width: 100%; max-width: 18px; height: ${heightPct}%; background: ${barBg}; border-radius: 2px 2px 1px 1px; transition: all 0.3s ease; opacity: ${isFuture ? 0.45 : 1};"></div>
+                    </div>
+                    <div style="font-size: 0.58rem; font-weight: ${dayWeight}; color: ${dayColor}; line-height: 1;">${dayLabels[i]}</div>
+                </div>
+            `;
+        }).join('');
     }
 
     function switchSettingsTab(tabName, btnEl = null) {
@@ -1339,7 +1262,7 @@
         btn.style.background = '#27ae60';
         setTimeout(() => { btn.textContent = '💾 Zapisz profil'; btn.style.background = ''; }, 1400);
         updateProfileUI();
-        renderRacePredictor(); // ✅ POPRAWKA: bez pogody
+        renderRacePredictor();
     }
 
     function saveRecordsData() {
@@ -1356,7 +1279,7 @@
         btn.textContent = '✓ Zapisano!';
         btn.style.background = '#27ae60';
         setTimeout(() => { btn.textContent = '💾 Zapisz rekordy'; btn.style.background = ''; }, 1400);
-        renderRacePredictor(); // ✅ POPRAWKA: bez pogody
+        renderRacePredictor();
     }
 
     function loadProfileFormInputs() {
@@ -1418,7 +1341,7 @@
         try { localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns)); } catch(e) {}
         closeAddRunModal();
         updateMileageStats();
-        renderRacePredictor(); // ✅ POPRAWKA: bez pogody
+        renderRacePredictor();
     }
 
     function openHistoryModal() { renderHistoryList(); const m = document.getElementById('historyModal'); if (m) m.classList.add('active'); }
@@ -1429,7 +1352,7 @@
         try { localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns)); } catch(e) {}
         renderHistoryList();
         updateMileageStats();
-        renderRacePredictor(); // ✅ POPRAWKA: bez pogody
+        renderRacePredictor();
     }
 
     function renderHistoryList() {
@@ -1458,42 +1381,111 @@
         }).join('');
     }
 
+    // ✅ ZAKTUALIZOWANA: updateMileageStats z trendami i meta
     function updateMileageStats() {
         if (!Array.isArray(runnerRuns)) runnerRuns = [];
         const now = new Date();
         const currentYear = now.getFullYear();
         const currentMonth = now.getMonth();
         const dayOfWeek = now.getDay() === 0 ? 7 : now.getDay();
+
         const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek + 1, 0, 0, 0);
         const sunday = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + 6, 23, 59, 59, 999);
-        let weekKm = 0, monthKm = 0, yearKm = 0, weekSec = 0, weekKmForPace = 0;
+        const lastMonday = new Date(monday); lastMonday.setDate(monday.getDate() - 7);
+        const lastSunday = new Date(sunday); lastSunday.setDate(sunday.getDate() - 7);
+
+        const monthStart = new Date(currentYear, currentMonth, 1, 0, 0, 0);
+        const monthEnd = new Date(currentYear, currentMonth + 1, 0, 23, 59, 59, 999);
+        const lastMonthStart = new Date(currentYear, currentMonth - 1, 1, 0, 0, 0);
+        const lastMonthEnd = new Date(currentYear, currentMonth, 0, 23, 59, 59, 999);
+
+        const yearStart = new Date(currentYear, 0, 1, 0, 0, 0);
+        const yearEnd = new Date(currentYear, 11, 31, 23, 59, 59, 999);
+        const lastYearStart = new Date(currentYear - 1, 0, 1, 0, 0, 0);
+        const lastYearEnd = new Date(currentYear - 1, 11, 31, 23, 59, 59, 999);
+
+        let weekKm = 0, monthKm = 0, yearKm = 0;
+        let weekSec = 0, weekKmP = 0, weekCount = 0;
+        let monthSec = 0, monthKmP = 0, monthCount = 0;
+        let yearSec = 0, yearKmP = 0, yearCount = 0;
+        let lastWeekKm = 0, lastMonthKm = 0, lastYearKm = 0;
+
         runnerRuns.forEach(r => {
             const k = parseFloat(r.km);
             if (isNaN(k) || k <= 0) return;
             const rDate = parseRunDate(r.date);
             if (!rDate) return;
-            if (rDate >= monday && rDate <= sunday) {
-                weekKm += k;
-                const s = parseFloat(r.sec) || 0;
-                if (s > 0) { weekSec += s; weekKmForPace += k; }
-            }
-            if (rDate.getMonth() === currentMonth && rDate.getFullYear() === currentYear) monthKm += k;
-            if (rDate.getFullYear() === currentYear) yearKm += k;
+            const s = parseFloat(r.sec) || 0;
+
+            if (rDate >= monday && rDate <= sunday) { weekKm += k; weekCount++; if (s > 0) { weekSec += s; weekKmP += k; } }
+            if (rDate >= lastMonday && rDate <= lastSunday) lastWeekKm += k;
+            if (rDate >= monthStart && rDate <= monthEnd) { monthKm += k; monthCount++; if (s > 0) { monthSec += s; monthKmP += k; } }
+            if (rDate >= lastMonthStart && rDate <= lastMonthEnd) lastMonthKm += k;
+            if (rDate >= yearStart && rDate <= yearEnd) { yearKm += k; yearCount++; if (s > 0) { yearSec += s; yearKmP += k; } }
+            if (rDate >= lastYearStart && rDate <= lastYearEnd) lastYearKm += k;
         });
+
+        // TYDZIEŃ
         const elW = document.getElementById('mileageWeekVal');
-        const elM = document.getElementById('mileageMonthVal');
-        const elY = document.getElementById('mileageYearVal');
-        const elP = document.getElementById('mileageWeeklyPace');
-        const elL = document.getElementById('mileageLastRun');
+        const elWMeta = document.getElementById('mileageWeekMeta');
+        const elWTrend = document.getElementById('mileageWeekTrend');
         if (elW) elW.textContent = `${weekKm.toFixed(1)} km`;
-        if (elM) elM.textContent = `${monthKm.toFixed(1)} km`;
-        if (elY) elY.textContent = `${yearKm.toFixed(1)} km`;
-        const avgWeekPace = weekKmForPace > 0 ? (weekSec / weekKmForPace) : 0;
-        if (elP) {
-            elP.textContent = avgWeekPace > 0
-                ? `Śr. tempo tygodnia: ${secondsToTimeString(avgWeekPace)}/km`
-                : 'Śr. tempo tygodnia: --:--/km';
+        if (elWMeta) {
+            if (weekCount > 0) {
+                const pace = weekKmP > 0 ? secondsToTimeString(weekSec / weekKmP) : '--:--';
+                elWMeta.textContent = `${weekCount} ${weekCount === 1 ? 'bieg' : 'biegi'} • ${pace}/km`;
+            } else elWMeta.textContent = 'Brak biegów';
         }
+        if (elWTrend) {
+            const tr = computeTrend(weekKm, lastWeekKm, 'poprzedni tydzień');
+            elWTrend.textContent = tr.text;
+            elWTrend.className = `mileage-stat-trend ${tr.cls}`;
+            elWTrend.title = tr.title;
+        }
+
+        // MIESIĄC
+        const elM = document.getElementById('mileageMonthVal');
+        const elMMeta = document.getElementById('mileageMonthMeta');
+        const elMTrend = document.getElementById('mileageMonthTrend');
+        if (elM) elM.textContent = `${monthKm.toFixed(1)} km`;
+        if (elMMeta) {
+            if (monthCount > 0) {
+                const pace = monthKmP > 0 ? secondsToTimeString(monthSec / monthKmP) : '--:--';
+                elMMeta.textContent = `${monthCount} ${monthCount === 1 ? 'bieg' : 'biegów'} • ${pace}/km`;
+            } else elMMeta.textContent = 'Brak biegów';
+        }
+        if (elMTrend) {
+            const tr = computeTrend(monthKm, lastMonthKm, 'poprzedni miesiąc');
+            elMTrend.textContent = tr.text;
+            elMTrend.className = `mileage-stat-trend ${tr.cls}`;
+            elMTrend.title = tr.title;
+        }
+
+        // ROK
+        const elY = document.getElementById('mileageYearVal');
+        const elYMeta = document.getElementById('mileageYearMeta');
+        const elYTrend = document.getElementById('mileageYearTrend');
+        if (elY) elY.textContent = `${yearKm.toFixed(1)} km`;
+        if (elYMeta) {
+            if (yearCount > 0) {
+                const pace = yearKmP > 0 ? secondsToTimeString(yearSec / yearKmP) : '--:--';
+                elYMeta.textContent = `${yearCount} ${yearCount === 1 ? 'bieg' : 'biegów'} • ${pace}/km`;
+            } else elYMeta.textContent = 'Brak biegów';
+        }
+        if (elYTrend) {
+            const tr = computeTrend(yearKm, lastYearKm, 'poprzedni rok');
+            elYTrend.textContent = tr.text;
+            elYTrend.className = `mileage-stat-trend ${tr.cls}`;
+            elYTrend.title = tr.title;
+        }
+
+        // Header
+        const elP = document.getElementById('mileageWeeklyPace');
+        const avgWeekPace = weekKmP > 0 ? (weekSec / weekKmP) : 0;
+        if (elP) elP.textContent = avgWeekPace > 0 ? `Śr. tempo tygodnia: ${secondsToTimeString(avgWeekPace)}/km` : 'Śr. tempo tygodnia: --:--/km';
+
+        // Ostatni bieg
+        const elL = document.getElementById('mileageLastRun');
         if (elL) {
             if (runnerRuns.length > 0) {
                 const last = runnerRuns[0];
@@ -1504,6 +1496,9 @@
                 elL.textContent = '🏁 Ostatni bieg: brak zapisanych treningów';
             }
         }
+
+        renderRunTypeChart();
+        renderWeeklySparkline();
     }
 
     function getIconForCondition(code, isDay, conditionText = '', remoteCdnUrl = '') {
@@ -1592,11 +1587,11 @@
     }
 
     function getDewPointAnalysis(dewPoint) {
-        if (dewPoint < 10) return { status:'Błyskawiczne 👌', color:'#2ecc71', desc:'Pot odparowuje w mgnieniu oka. Chłodzenie ciała działa ze 100% wydajnością.' };
-        if (dewPoint <= 15) return { status:'Optymalne 👍', color:'#3498db', desc:'Komfortowe warunki do biegania. Wilgoć bez przeszkód schodzi ze skóry.' };
-        if (dewPoint <= 18) return { status:'Spowolnione 💧', color:'#f39c12', desc:'Odczuwalna wilgotność. Tętno treningowe może być wyższe o kilka uderzeń.' };
-        if (dewPoint <= 21) return { status:'Utrudnione ⚠️', color:'#e67e22', desc:'Duchota! Pot spływa zamiast chłodzić. Pij więcej wody i nie forsuj tempa.' };
-        return { status:'Zablokowane! 🚨', color:'#e74c3c', desc:'Ekstremalna parność. Zablokowana termoregulacja – wysokie ryzyko przegrzania!' };
+        if (dewPoint < 10) return { status:'Błyskawiczne 👌', color:'#2ecc71', desc:'Pot odparowuje w mgnieniu oka.' };
+        if (dewPoint <= 15) return { status:'Optymalne 👍', color:'#3498db', desc:'Komfortowe warunki do biegania.' };
+        if (dewPoint <= 18) return { status:'Spowolnione 💧', color:'#f39c12', desc:'Odczuwalna wilgotność. Tętno może być wyższe.' };
+        if (dewPoint <= 21) return { status:'Utrudnione ⚠️', color:'#e67e22', desc:'Duchota! Pij więcej wody i nie forsuj tempa.' };
+        return { status:'Zablokowane! 🚨', color:'#e74c3c', desc:'Ekstremalna parność. Wysokie ryzyko przegrzania!' };
     }
 
     function getRunningGear(feelsLike, precipMm, windKph, isDay) {
@@ -1607,7 +1602,7 @@
         else if (feelsLike >= 3) { top = 'Cienka bielizna termo + lekki longsleeve'; bottom = 'Długie legginsy biegowe'; accessories.push('Opaska na uszy / buff'); }
         else if (feelsLike >= -5) { top = 'Bielizna termo + bluza lub wiatrówka'; bottom = 'Długie legginsy ocieplane'; accessories.push('Czapka termo', 'Rękawiczki'); }
         else { top = 'Gruba bielizna termiczna + wiatrówka z membraną'; bottom = 'Ciepłe legginsy zimowe'; accessories.push('Ciepła czapka', 'Rękawice zimowe', 'Komin'); }
-        if (precipMm > 0.4) accessories.push('Czapka z daszkiem (ochrona oczu)', 'Wiatrówka wodoodporna');
+        if (precipMm > 0.4) accessories.push('Czapka z daszkiem', 'Wiatrówka wodoodporna');
         if (windKph > 25 && feelsLike < 15) accessories.push('Wiatrówka (windstopper)');
         if (isDay && feelsLike >= 18) accessories.push('Okulary przeciwsłoneczne');
         return { top, bottom, accessories: accessories.length ? accessories.join(', ') : 'Brak dodatkowych' };
@@ -1638,59 +1633,43 @@
     async function renderWeatherWarnings(alerts) {
         const warnEl = document.getElementById('weatherWarnings');
         const badgeEl = document.getElementById('warningsCountBadge');
-        const moreIndicatorEl = document.getElementById('warningsMoreIndicator');
+        const moreEl = document.getElementById('warningsMoreIndicator');
         if (!alerts || !alerts.alert || alerts.alert.length === 0) {
-            warnEl.innerHTML = '<div style="opacity:0.85; padding:0.4rem 0; font-size:0.88rem;">✅ Brak aktywnych ostrzeżeń dla regionu.</div>';
+            warnEl.innerHTML = '<div style="opacity:0.85; padding:0.4rem 0; font-size:0.88rem;">✅ Brak aktywnych ostrzeżeń.</div>';
             warnEl.style.maxHeight = 'none'; warnEl.style.overflowY = 'visible';
             if (badgeEl) badgeEl.style.display = 'none';
-            if (moreIndicatorEl) moreIndicatorEl.style.display = 'none';
+            if (moreEl) moreEl.style.display = 'none';
             return;
         }
-        const totalAlerts = alerts.alert.length;
-        if (badgeEl) { badgeEl.textContent = `${totalAlerts} ${totalAlerts === 1 ? 'aktywne' : 'aktywnych'}`; badgeEl.style.display = 'inline-block'; }
-        warnEl.innerHTML = '<div style="padding:0.6rem; opacity:0.8; font-size:0.85rem;">⏳ Tłumaczenie ostrzeżeń...</div>';
-        const renderedAlerts = await Promise.all(alerts.alert.map(async a => {
-            const headline = a.headline || a.event || 'Ostrzeżenie meteorologiczne';
-            const translatedHeadline = await translateWarningTextAsync(headline);
-            const desc = a.desc || a.description || a.instruction || 'Zalecana ostrożność na otwartej przestrzeni.';
-            const translatedDesc = await translateWarningTextAsync(desc);
+        const total = alerts.alert.length;
+        if (badgeEl) { badgeEl.textContent = `${total} ${total === 1 ? 'aktywne' : 'aktywnych'}`; badgeEl.style.display = 'inline-block'; }
+        warnEl.innerHTML = '<div style="padding:0.6rem; opacity:0.8; font-size:0.85rem;">⏳ Tłumaczenie...</div>';
+        const rendered = await Promise.all(alerts.alert.map(async a => {
+            const headline = a.headline || a.event || 'Ostrzeżenie';
+            const tHead = await translateWarningTextAsync(headline);
+            const desc = a.desc || a.description || a.instruction || 'Zalecana ostrożność.';
+            const tDesc = await translateWarningTextAsync(desc);
             let icon = '⚠️';
-            const textCheck = (headline + ' ' + (a.event || '')).toLowerCase();
-            if (textCheck.includes('storm') || textCheck.includes('burz')) icon = '⛈️';
-            else if (textCheck.includes('wind') || textCheck.includes('wiatr')) icon = '💨';
-            else if (textCheck.includes('rain') || textCheck.includes('deszcz')) icon = '🌧️';
-            else if (textCheck.includes('snow') || textCheck.includes('śnieg')) icon = '❄️';
-            let sevName = 'Stopień 2 (Umiarkowane)';
-            const sevLower = (a.severity || '').toLowerCase();
-            if (sevLower.includes('minor') || sevLower.includes('yellow')) sevName = 'Stopień 1 (Niskie)';
-            else if (sevLower.includes('extreme') || sevLower.includes('red')) sevName = 'Stopień 3 (Poważne)';
-            const effective = a.effective ? new Date(a.effective).toLocaleString('pl-PL', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Obecnie';
-            const expires = a.expires ? new Date(a.expires).toLocaleString('pl-PL', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Do odwołania';
-            return `
-                <div class="warning-card">
-                    <div class="warning-header">
-                        <span class="warning-icon">${icon}</span>
-                        <div>
-                            <div class="warning-title">${escapeHtml(translatedHeadline)}</div>
-                            <div class="warning-severity">Poziom: <strong>${sevName}</strong></div>
-                        </div>
-                    </div>
-                    <div class="warning-details">${escapeHtml(translatedDesc)}</div>
-                    <div class="warning-time">
-                        <span>⌛ <strong>Od:</strong> ${effective}</span>
-                        <span>🛑 <strong>Do:</strong> ${expires}</span>
-                    </div>
-                </div>
-            `;
+            const tc = (headline + ' ' + (a.event || '')).toLowerCase();
+            if (tc.includes('storm') || tc.includes('burz')) icon = '⛈️';
+            else if (tc.includes('wind') || tc.includes('wiatr')) icon = '💨';
+            else if (tc.includes('rain') || tc.includes('deszcz')) icon = '🌧️';
+            else if (tc.includes('snow') || tc.includes('śnieg')) icon = '❄️';
+            let sev = 'Stopień 2';
+            const sl = (a.severity || '').toLowerCase();
+            if (sl.includes('minor') || sl.includes('yellow')) sev = 'Stopień 1 (Niskie)';
+            else if (sl.includes('extreme') || sl.includes('red')) sev = 'Stopień 3 (Poważne)';
+            const eff = a.effective ? new Date(a.effective).toLocaleString('pl-PL', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Obecnie';
+            const exp = a.expires ? new Date(a.expires).toLocaleString('pl-PL', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Do odwołania';
+            return `<div class="warning-card"><div class="warning-header"><span class="warning-icon">${icon}</span><div><div class="warning-title">${escapeHtml(tHead)}</div><div class="warning-severity">Poziom: <strong>${sev}</strong></div></div></div><div class="warning-details">${escapeHtml(tDesc)}</div><div class="warning-time"><span>⌛ <strong>Od:</strong> ${eff}</span><span>🛑 <strong>Do:</strong> ${exp}</span></div></div>`;
         }));
-        warnEl.innerHTML = renderedAlerts.join('');
-        if (totalAlerts > 2) {
+        warnEl.innerHTML = rendered.join('');
+        if (total > 2) {
             warnEl.style.maxHeight = '370px'; warnEl.style.overflowY = 'auto';
-            const remaining = totalAlerts - 2;
-            if (moreIndicatorEl) { moreIndicatorEl.innerHTML = `🔔 <strong>+${remaining} kolejne ostrzeżenie${remaining === 1 ? '' : 'a/ń'}</strong> — przewiń listę w dół ⬇️`; moreIndicatorEl.style.display = 'block'; }
+            if (moreEl) { moreEl.innerHTML = `🔔 <strong>+${total - 2} kolejne</strong> — przewiń ⬇️`; moreEl.style.display = 'block'; }
         } else {
             warnEl.style.maxHeight = 'none'; warnEl.style.overflowY = 'visible';
-            if (moreIndicatorEl) moreIndicatorEl.style.display = 'none';
+            if (moreEl) moreEl.style.display = 'none';
         }
     }
 
@@ -1716,32 +1695,31 @@
         if (sunrise.includes(':') && sunset.includes(':')) {
             const [sH, sM] = sunrise.split(':').map(Number);
             const [eH, eM] = sunset.split(':').map(Number);
-            let nowHours, nowMinutes;
+            let nowH, nowM;
             try {
-                const cityTimeStr = new Date().toLocaleTimeString('pl-PL', { timeZone: lastAstroData.tz, hour:'2-digit', minute:'2-digit', hour12:false });
-                [nowHours, nowMinutes] = cityTimeStr.split(':').map(Number);
-            } catch (e) { const now = new Date(); nowHours = now.getHours(); nowMinutes = now.getMinutes(); }
-            const nowMins = nowHours * 60 + nowMinutes;
+                const t = new Date().toLocaleTimeString('pl-PL', { timeZone: lastAstroData.tz, hour:'2-digit', minute:'2-digit', hour12:false });
+                [nowH, nowM] = t.split(':').map(Number);
+            } catch (e) { const n = new Date(); nowH = n.getHours(); nowM = n.getMinutes(); }
+            const nowMins = nowH * 60 + nowM;
             const sMins = sH * 60 + sM;
             const eMins = eH * 60 + eM;
-            const dayMinutes = (eMins - sMins);
-            const dayH = Math.floor(dayMinutes / 60);
-            const dayM = dayMinutes % 60;
+            const dayMins = eMins - sMins;
+            const dH = Math.floor(dayMins / 60), dM = dayMins % 60;
             let progress = 0;
-            let dayStatus = `Długość dnia: ${dayH}h ${dayM}m`;
+            let status = `Długość dnia: ${dH}h ${dM}m`;
             const isNight = nowMins < sMins || nowMins >= eMins;
             if (!isNight) {
                 progress = ((nowMins - sMins) / (eMins - sMins)) * 100;
-                const leftMins = eMins - nowMins;
-                dayStatus += ` (do zachodu: ${Math.floor(leftMins / 60)}h ${leftMins % 60}m)`;
-            } else if (nowMins >= eMins) { progress = 100; dayStatus += ` (Noc)`; }
-            else { progress = 0; dayStatus += ` (Przed wschodem)`; }
-            const sunPosEl = document.getElementById('sunPosition');
-            const sunIconEl = document.querySelector('.sun-icon');
-            const dayLenEl = document.getElementById('widgetDayLength');
-            if (sunPosEl) sunPosEl.style.width = `${progress}%`;
-            if (sunIconEl) sunIconEl.style.left = `${progress}%`;
-            if (dayLenEl) dayLenEl.textContent = dayStatus;
+                const left = eMins - nowMins;
+                status += ` (do zachodu: ${Math.floor(left / 60)}h ${left % 60}m)`;
+            } else if (nowMins >= eMins) { progress = 100; status += ` (Noc)`; }
+            else { progress = 0; status += ` (Przed wschodem)`; }
+            const sunPos = document.getElementById('sunPosition');
+            const sunIcon = document.querySelector('.sun-icon');
+            const dayLen = document.getElementById('widgetDayLength');
+            if (sunPos) sunPos.style.width = `${progress}%`;
+            if (sunIcon) sunIcon.style.left = `${progress}%`;
+            if (dayLen) dayLen.textContent = status;
             if (currentThemeMode === 'auto') {
                 document.body.classList.toggle('night-mode', isNight);
                 document.body.classList.toggle('no-anim', !bgAnimActive);
@@ -1755,92 +1733,75 @@
         const now = new Date();
         const isDay = current.is_day !== 0;
         windAngleOffset = Math.sin((current.wind_degree || 0) * Math.PI / 180) * (current.wind_kph / 25);
-
-        currentDayContext = {
-            chance: forecast.forecastday[0].day.daily_chance_of_rain || 0,
-            totalMm: forecast.forecastday[0].day.totalprecip_mm || 0
-        };
-
+        currentDayContext = { chance: forecast.forecastday[0].day.daily_chance_of_rain || 0, totalMm: forecast.forecastday[0].day.totalprecip_mm || 0 };
         lastAstroData = { sunrise: forecast.forecastday[0].astro.sunrise, sunset: forecast.forecastday[0].astro.sunset, tz: location.tz_id };
-
         const allHours = [ ...(forecast.forecastday[0]?.hour || []), ...(forecast.forecastday[1]?.hour || []) ];
-        const next24Hours = allHours.filter(h => new Date(h.time) >= now).slice(0, 24);
-
+        const next24 = allHours.filter(h => new Date(h.time) >= now).slice(0, 24);
         const condText = translateWeatherCondition(current.condition.code, isDay, current.condition.text);
 
-        const widgetLocEl = document.getElementById('widgetLocation');
-        if (widgetLocEl) {
-            const loc = location.region ? `${location.name}, ${location.region}` : location.name;
-            widgetLocEl.textContent = loc;
-            widgetLocEl.title = loc;
-        }
+        const wlEl = document.getElementById('widgetLocation');
+        if (wlEl) { const loc = location.region ? `${location.name}, ${location.region}` : location.name; wlEl.textContent = loc; wlEl.title = loc; }
         document.getElementById('widgetCondition').textContent = condText;
         document.getElementById('widgetTemp').textContent = `${current.temp_c.toFixed(1)}°C`;
         document.getElementById('widgetWind').textContent = `${current.wind_kph} km/h`;
         document.getElementById('widgetHumidity').textContent = `${current.humidity}%`;
-        const widgetIconContainer = document.getElementById('widgetIcon');
-        widgetIconContainer.innerHTML = '';
-        widgetIconContainer.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, null, condText));
+        const wi = document.getElementById('widgetIcon');
+        wi.innerHTML = '';
+        wi.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, null, condText));
 
         document.getElementById('currentCity').textContent = `${location.name}, ${location.region || location.country}`;
         document.getElementById('currentCondition').textContent = condText;
         const isStatic = currentIconSet === 'api';
-        const mainIconSize = isStatic ? '85px' : '125px';
-        const mainIconContainer = document.getElementById('mainWeatherIcon');
-        mainIconContainer.innerHTML = '';
-        mainIconContainer.style.width = isStatic ? '95px' : '125px';
-        mainIconContainer.style.height = isStatic ? '95px' : '125px';
-        mainIconContainer.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, mainIconSize, condText));
+        const sz = isStatic ? '85px' : '125px';
+        const mc = document.getElementById('mainWeatherIcon');
+        mc.innerHTML = '';
+        mc.style.width = isStatic ? '95px' : '125px';
+        mc.style.height = isStatic ? '95px' : '125px';
+        mc.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, sz, condText));
 
         document.getElementById('tempNow').textContent = `${current.temp_c.toFixed(1)}°C (odcz. ${current.feelslike_c.toFixed(1)}°C)`;
         document.getElementById('windNow').textContent = `${current.wind_kph} km/h (porywy ${current.gust_kph || current.wind_kph} km/h)`;
         document.getElementById('pressureNow').textContent = `${current.pressure_mb} hPa`;
 
         const dewPoint = current.dewpoint_c ?? Math.round(current.temp_c - ((100 - current.humidity) / 5));
-        const dewAnalysis = getDewPointAnalysis(dewPoint);
+        const dewA = getDewPointAnalysis(dewPoint);
         document.getElementById('dewPointNow').textContent = `${dewPoint.toFixed(1)}°C`;
-        document.getElementById('dewComfort').textContent = dewAnalysis.status;
+        document.getElementById('dewComfort').textContent = dewA.status;
         document.getElementById('widgetDewVal').textContent = `${dewPoint.toFixed(1)}°C`;
-        const widgetDewStatusEl = document.getElementById('widgetDewStatus');
-        widgetDewStatusEl.textContent = dewAnalysis.status;
-        widgetDewStatusEl.style.color = dewAnalysis.color;
-        document.getElementById('widgetDewDesc').textContent = dewAnalysis.desc;
+        const wds = document.getElementById('widgetDewStatus');
+        wds.textContent = dewA.status;
+        wds.style.color = dewA.color;
+        document.getElementById('widgetDewDesc').textContent = dewA.desc;
 
         const astro = forecast.forecastday[0].astro;
         document.getElementById('widgetSunrise').textContent = parseSunTime(astro.sunrise);
         document.getElementById('widgetSunset').textContent = parseSunTime(astro.sunset);
         syncSunAndTheme();
-
         const moon = translateMoon(astro.moon_phase);
         document.getElementById('moonPhase').textContent = moon.name;
         document.getElementById('moonPhaseIcon').textContent = moon.icon;
         document.getElementById('moonrise').textContent = parseSunTime(astro.moonrise);
         document.getElementById('moonset').textContent = parseSunTime(astro.moonset);
 
-        const paceAdjustSec = calculatePaceAdjustment(
-            current.temp_c, current.wind_kph, dewPoint, current.precip_mm,
-            current.condition.code, current.condition.text
-        );
+        const paceAdj = calculatePaceAdjustment(current.temp_c, current.wind_kph, dewPoint, current.precip_mm, current.condition.code, current.condition.text);
         const paceEl = document.getElementById('paceAdjustmentVal');
         const paceAdv = document.getElementById('paceAdvice');
         const userEasySec = timeStringToSeconds(runnerProfile.easyPace || '05:30');
-        if (paceAdjustSec <= 0) {
+        if (paceAdj <= 0) {
             paceEl.textContent = '0 s / km (Ideał)';
             paceAdv.innerHTML = `Warunki idealne. Biegnij w swoim tempie bazowym Easy (<strong>${secondsToTimeString(userEasySec)}/km</strong>).`;
         } else {
-            paceEl.textContent = `+${paceAdjustSec} s / km`;
-            const adjustedEasy = secondsToTimeString(userEasySec + paceAdjustSec);
-            paceAdv.innerHTML = `Dla Twojego biegu spokojnego Easy (<strong>${secondsToTimeString(userEasySec)}/km</strong>) biegnij dziś na <strong>${adjustedEasy}/km</strong>, by utrzymać tętno w I strefie tlenowej!`;
+            paceEl.textContent = `+${paceAdj} s / km`;
+            paceAdv.innerHTML = `Dla Easy (<strong>${secondsToTimeString(userEasySec)}/km</strong>) biegnij dziś na <strong>${secondsToTimeString(userEasySec + paceAdj)}/km</strong>.`;
         }
-        // ✅ POPRAWKA: renderRacePredictor BEZ pogody
         renderRacePredictor();
 
         const uv = current.uv || 0;
         document.getElementById('uvIndexVal').textContent = `${uv} / 11+`;
-        let uvText = 'Brak potrzeby stosowania kremów z filtrem.';
-        if (uv >= 8) uvText = '⚠️ Bardzo silne UV! Stosuj krem SPF 50+, okulary z filtrem UV400 i czapkę.';
-        else if (uv >= 6) uvText = '☀️ Wysokie UV. Zalecany krem SPF 30+, okulary przeciwsłoneczne.';
-        else if (uv >= 3) uvText = '⛅ Umiarkowane UV. Przydatna czapka z daszkiem podczas dłuższego biegu.';
+        let uvText = 'Brak potrzeby kremów z filtrem.';
+        if (uv >= 8) uvText = '⚠️ Bardzo silne UV! Stosuj SPF 50+, okulary UV400 i czapkę.';
+        else if (uv >= 6) uvText = '☀️ Wysokie UV. Zalecany krem SPF 30+, okulary.';
+        else if (uv >= 3) uvText = '⛅ Umiarkowane UV. Przydatna czapka z daszkiem.';
         document.getElementById('uvAdvice').textContent = uvText;
 
         document.getElementById('weatherSummary').style.display = 'block';
@@ -1850,15 +1811,12 @@
         document.getElementById('runnerTip').style.display = 'block';
         document.getElementById('runnerTipText').innerHTML = generateDetailedRunnerTip(condText, current.temp_c, current.wind_kph, current.precip_mm, aqi, dewPoint, current.condition.code);
 
-        const runningScore = calculateRunningScore(
-            current.temp_c, current.wind_kph, current.precip_mm, dewPoint, aqi,
-            current.condition.code, current.condition.text
-        );
-        const scoreBadge = document.getElementById('runnerScoreBadge');
-        document.getElementById('runnerScoreVal').textContent = `${runningScore} / 10`;
-        if (runningScore >= 8) scoreBadge.style.background = '#27ae60';
-        else if (runningScore >= 5.5) scoreBadge.style.background = '#f39c12';
-        else scoreBadge.style.background = '#e74c3c';
+        const score = calculateRunningScore(current.temp_c, current.wind_kph, current.precip_mm, dewPoint, aqi, current.condition.code, current.condition.text);
+        const badge = document.getElementById('runnerScoreBadge');
+        document.getElementById('runnerScoreVal').textContent = `${score} / 10`;
+        if (score >= 8) badge.style.background = '#27ae60';
+        else if (score >= 5.5) badge.style.background = '#f39c12';
+        else badge.style.background = '#e74c3c';
 
         document.getElementById('goldenWindow').innerHTML = findBestRunningWindow(allHours, forecast.forecastday);
         const gear = getRunningGear(current.feelslike_c, current.precip_mm, current.wind_kph, isDay);
@@ -1869,12 +1827,12 @@
         document.getElementById('aqiValue').textContent = aqi;
         document.getElementById('pm25Value').textContent = current.air_quality?.pm2_5 ? `${current.air_quality.pm2_5.toFixed(1)} µg/m³` : '-';
         document.getElementById('pm10Value').textContent = current.air_quality?.pm10 ? `${current.air_quality.pm10.toFixed(1)} µg/m³` : '-';
-        document.getElementById('airQualityAdvice').innerHTML = aqi <= 2 ? '✅ Powietrze jest czyste i świeże. Płuca będą Ci wdzięczne!' : '⚠️ Wyczuwalny smog/pył w powietrzu. Lepiej odpuść ostre interwały na rzecz spokojnego biegu.';
+        document.getElementById('airQualityAdvice').innerHTML = aqi <= 2 ? '✅ Powietrze jest czyste i świeże. Płuca będą Ci wdzięczne!' : '⚠️ Wyczuwalny smog/pył w powietrzu. Odpuść ostre interwały.';
 
-        renderCharts(next24Hours);
-        renderHourly(next24Hours);
+        renderCharts(next24);
+        renderHourly(next24);
         renderDaily(forecast.forecastday);
-        updateStormAndFrost(next24Hours);
+        updateStormAndFrost(next24);
         renderWeatherWarnings(alerts);
         setWeatherBg(current.condition.code, isDay, condText);
         animateTiles();
@@ -1885,52 +1843,43 @@
         const temps = hours.map(h => h.temp_c);
         const precips = hours.map(h => h.precip_mm);
         const isDark = document.body.classList.contains('dark-mode') || document.body.classList.contains('night-mode') || document.body.classList.contains('matrix-mode') || document.body.classList.contains('neon-mode') || document.body.classList.contains('space-mode') || document.body.classList.contains('galaxy-mode');
-        const axisColor = isDark ? '#94a3b8' : '#64748b';
-        const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+        const ax = isDark ? '#94a3b8' : '#64748b';
+        const gr = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
         if (temperatureChart) temperatureChart.destroy();
-        const ctxT = document.getElementById('temperatureChart').getContext('2d');
-        temperatureChart = new Chart(ctxT, {
+        temperatureChart = new Chart(document.getElementById('temperatureChart').getContext('2d'), {
             type: 'line',
             data: { labels, datasets: [{ label:'°C', data: temps, borderColor:'#38bdf8', backgroundColor:'rgba(56, 189, 248, 0.18)', fill:true, tension:0.35, borderWidth:2 }] },
-            options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:axisColor}, grid:{color:gridColor}}, y:{ticks:{color:axisColor}, grid:{color:gridColor}} } }
+            options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:ax}, grid:{color:gr}}, y:{ticks:{color:ax}, grid:{color:gr}} } }
         });
         if (precipitationChart) precipitationChart.destroy();
-        const ctxP = document.getElementById('precipitationChart').getContext('2d');
-        precipitationChart = new Chart(ctxP, {
+        precipitationChart = new Chart(document.getElementById('precipitationChart').getContext('2d'), {
             type: 'bar',
             data: { labels, datasets: [{ label:'mm', data: precips, backgroundColor:'#0ea5e9' }] },
-            options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:axisColor}, grid:{color:gridColor}}, y:{ticks:{color:axisColor}, grid:{color:gridColor}} } }
+            options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:ax}, grid:{color:gr}}, y:{ticks:{color:ax}, grid:{color:gr}} } }
         });
-        const totalPrecip = precips.reduce((a,b) => a+b, 0);
-        document.getElementById('precipitationSummary').textContent = totalPrecip > 0.2
-            ? `Łącznie w ciągu 24h może spaść: ${totalPrecip.toFixed(1)} mm wody`
-            : 'W najbliższych 24h deszczu raczej nie uświadczysz.';
+        const tp = precips.reduce((a,b) => a+b, 0);
+        document.getElementById('precipitationSummary').textContent = tp > 0.2 ? `Łącznie w ciągu 24h może spaść: ${tp.toFixed(1)} mm wody` : 'W najbliższych 24h deszczu raczej nie uświadczysz.';
     }
 
     function renderHourly(hours) {
-        const container = document.getElementById('hourlyForecast');
-        container.innerHTML = '';
+        const c = document.getElementById('hourlyForecast');
+        c.innerHTML = '';
         hours.slice(0, 12).forEach(h => {
             const time = new Date(h.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
             const item = document.createElement('div');
             item.className = 'hour-item';
-            const condName = translateWeatherCondition(h.condition.code, h.is_day !== 0, h.condition.text);
-            const hourIcon = createWeatherIconElement(h.condition.code, h.is_day !== 0, h.condition.icon, '75px', condName);
+            const cn = translateWeatherCondition(h.condition.code, h.is_day !== 0, h.condition.text);
+            const hi = createWeatherIconElement(h.condition.code, h.is_day !== 0, h.condition.icon, '75px', cn);
             item.innerHTML = `<div style="font-size:1rem; font-weight:700;">${time}</div>`;
-            item.appendChild(hourIcon);
-            item.innerHTML += `
-                <div style="font-size:0.85rem; font-weight:600; line-height:1.25; min-height:2.6em; display:flex; align-items:center; justify-content:center;">${condName}</div>
-                <div style="font-weight:700; font-size:1.15rem; color:var(--primary);">${h.temp_c.toFixed(1)}°C</div>
-                <div style="font-size:0.8rem; opacity:0.85;">💨 ${h.wind_kph} km/h</div>
-                ${h.precip_mm > 0 ? `<div style="font-size:0.8rem; color:#38bdf8; font-weight:700;">☔ ${h.precip_mm.toFixed(1)} mm</div>` : ''}
-            `;
-            container.appendChild(item);
+            item.appendChild(hi);
+            item.innerHTML += `<div style="font-size:0.85rem; font-weight:600; line-height:1.25; min-height:2.6em; display:flex; align-items:center; justify-content:center;">${cn}</div><div style="font-weight:700; font-size:1.15rem; color:var(--primary);">${h.temp_c.toFixed(1)}°C</div><div style="font-size:0.8rem; opacity:0.85;">💨 ${h.wind_kph} km/h</div>${h.precip_mm > 0 ? `<div style="font-size:0.8rem; color:#38bdf8; font-weight:700;">☔ ${h.precip_mm.toFixed(1)} mm</div>` : ''}`;
+            c.appendChild(item);
         });
     }
 
     function renderDaily(days) {
-        const container = document.getElementById('forecast');
-        container.innerHTML = '';
+        const c = document.getElementById('forecast');
+        c.innerHTML = '';
         days.forEach(d => {
             const date = new Date(d.date).toLocaleDateString('pl-PL', { weekday:'short', day:'numeric', month:'short' });
             const item = document.createElement('div');
@@ -1942,74 +1891,67 @@
             item.style.alignItems = 'center';
             item.style.justifyContent = 'space-between';
             item.style.gap = '0.5rem';
-            const condName = translateWeatherCondition(d.day.condition.code, true, d.day.condition.text);
-            const dayIcon = createWeatherIconElement(d.day.condition.code, true, d.day.condition.icon, '85px', condName);
+            const cn = translateWeatherCondition(d.day.condition.code, true, d.day.condition.text);
+            const di = createWeatherIconElement(d.day.condition.code, true, d.day.condition.icon, '85px', cn);
             item.innerHTML = `<div style="font-weight:700; font-size:1.1rem; color: var(--card-title-color);">${date}</div>`;
-            item.appendChild(dayIcon);
-            item.innerHTML += `
-                <div style="font-size:0.88rem; font-weight:600; min-height:2.4em; display:flex; align-items:center;">${condName}</div>
-                <div style="font-weight:700; font-size:1.15rem;">
-                    <span style="color:#ef4444;">${d.day.maxtemp_c.toFixed(0)}°C</span> /
-                    <span style="color:#38bdf8; opacity:0.9;">${d.day.mintemp_c.toFixed(0)}°C</span>
-                </div>
-                ${d.day.daily_chance_of_rain > 0 ? `<div style="font-size:0.82rem; color:#38bdf8; font-weight:600;">☔ ${d.day.daily_chance_of_rain}%</div>` : ''}
-            `;
-            container.appendChild(item);
+            item.appendChild(di);
+            item.innerHTML += `<div style="font-size:0.88rem; font-weight:600; min-height:2.4em; display:flex; align-items:center;">${cn}</div><div style="font-weight:700; font-size:1.15rem;"><span style="color:#ef4444;">${d.day.maxtemp_c.toFixed(0)}°C</span> / <span style="color:#38bdf8; opacity:0.9;">${d.day.mintemp_c.toFixed(0)}°C</span></div>${d.day.daily_chance_of_rain > 0 ? `<div style="font-size:0.82rem; color:#38bdf8; font-weight:600;">☔ ${d.day.daily_chance_of_rain}%</div>` : ''}`;
+            c.appendChild(item);
         });
     }
 
     function updateStormAndFrost(hours) {
-        const stormHour = hours.find(h => [1087, 1273, 1276, 1279, 1282].includes(h.condition?.code) || h.condition?.text?.toLowerCase().includes('burz'));
+        const stormH = hours.find(h => [1087, 1273, 1276, 1279, 1282].includes(h.condition?.code) || h.condition?.text?.toLowerCase().includes('burz'));
         const stormEl = document.getElementById('stormContent');
-        if (stormHour) {
-            const t = new Date(stormHour.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
+        if (stormH) {
+            const t = new Date(stormH.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
             stormEl.innerHTML = `<span style="color:#ef4444; font-weight:700;">⚠️ Możliwe wyładowania ok. godz. ${t}! Lepiej nie biegać w lesie.</span>`;
-        } else stormEl.textContent = 'Spokojnie, brak burz na radarze w najbliższym czasie.';
-        const frostHour = hours.find(h => h.temp_c <= 2);
+        } else stormEl.textContent = 'Spokojnie, brak burz na radarze.';
+        const frostH = hours.find(h => h.temp_c <= 2);
         const frostEl = document.getElementById('frostContent');
-        if (frostHour) {
-            const t = new Date(frostHour.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
-            frostEl.innerHTML = `<span style="color:#38bdf8; font-weight:700;">❄️ Ryzyko przymrozku (${frostHour.temp_c.toFixed(1)}°C ok. godz. ${t}). Uważaj na mostkach i zakrętach!</span>`;
+        if (frostH) {
+            const t = new Date(frostH.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
+            frostEl.innerHTML = `<span style="color:#38bdf8; font-weight:700;">❄️ Ryzyko przymrozku (${frostH.temp_c.toFixed(1)}°C ok. godz. ${t}). Uważaj na mostkach!</span>`;
         } else frostEl.textContent = 'Brak przymrozków – trasy powinny być wolne od lodu.';
     }
 
-    function getRainIntensityFromCode(code, condText) {
-        const c = (condText || '').toLowerCase();
+    function getRainIntensityFromCode(code, ct) {
+        const c = (ct || '').toLowerCase();
         if ([1192, 1195, 1246, 1276, 1282, 1087].includes(code) || c.includes('ulewny') || c.includes('gwałtowna') || c.includes('torrential') || c.includes('burz') || c.includes('thunder') || c.includes('obfity')) return 'rain-heavy';
         if ([1186, 1189, 1201, 1243].includes(code) || c.includes('umiarkowan') || c.includes('moderate')) return 'rain-mod';
         if ([1072, 1150, 1153, 1168, 1171].includes(code) || c.includes('mżawk') || c.includes('drizzle')) return 'drizzle';
         return 'rain-light';
     }
-    function getSnowIntensityFromCode(code, condText) {
-        const c = (condText || '').toLowerCase();
+    function getSnowIntensityFromCode(code, ct) {
+        const c = (ct || '').toLowerCase();
         if ([1114, 1117, 1219, 1222, 1225, 1258, 1264, 1282].includes(code) || c.includes('obfity') || c.includes('heavy') || c.includes('zawieja') || c.includes('zamieć')) return 'snow-heavy';
         return 'snow-light';
     }
 
-    function setWeatherBg(code, isDay, conditionText = '') {
-        const condLower = (conditionText || '').toLowerCase();
+    function setWeatherBg(code, isDay, ct = '') {
+        const cl = (ct || '').toLowerCase();
         document.body.classList.remove('weather-clear','weather-clear-night','weather-partly','weather-cloudy','weather-overcast','weather-rain','weather-snow','weather-fog','rain-drizzle','rain-light','rain-mod','rain-heavy','snow-light','snow-heavy');
-        const rainCodes = [1063, 1072, 1150, 1153, 1168, 1171, 1180, 1183, 1186, 1189, 1192, 1195, 1198, 1201, 1240, 1243, 1246, 1273, 1276];
-        const snowCodes = [1066, 1069, 1114, 1117, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264, 1279, 1282];
-        const fogCodes = [1030, 1135, 1147];
-        if (rainCodes.includes(code) || condLower.includes('deszcz') || condLower.includes('rain') || condLower.includes('mżawk') || condLower.includes('drizzle') || condLower.includes('burz')) {
-            let intensity = getRainIntensityFromCode(code, conditionText);
-            const eff = getEffectivePrecipLevel(code, conditionText, 0);
-            if (eff === 'rain-heavy') intensity = 'rain-heavy';
-            else if (eff === 'rain-mod' && intensity === 'drizzle') intensity = 'rain-mod';
-            document.body.classList.add('weather-rain', intensity);
-            if (currentPresetName !== intensity) initParticles(intensity);
-        } else if (snowCodes.includes(code) || condLower.includes('śnieg') || condLower.includes('snow') || condLower.includes('sleet') || condLower.includes('deszcz ze śniegiem') || condLower.includes('grad')) {
-            const intensity = getSnowIntensityFromCode(code, conditionText);
-            document.body.classList.add('weather-snow', intensity);
-            if (currentPresetName !== intensity) initParticles(intensity);
-        } else if (fogCodes.includes(code) || condLower.includes('mgł') || condLower.includes('fog')) {
+        const rain = [1063, 1072, 1150, 1153, 1168, 1171, 1180, 1183, 1186, 1189, 1192, 1195, 1198, 1201, 1240, 1243, 1246, 1273, 1276];
+        const snow = [1066, 1069, 1114, 1117, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264, 1279, 1282];
+        const fog = [1030, 1135, 1147];
+        if (rain.includes(code) || cl.includes('deszcz') || cl.includes('rain') || cl.includes('mżawk') || cl.includes('drizzle') || cl.includes('burz')) {
+            let int = getRainIntensityFromCode(code, ct);
+            const eff = getEffectivePrecipLevel(code, ct, 0);
+            if (eff === 'rain-heavy') int = 'rain-heavy';
+            else if (eff === 'rain-mod' && int === 'drizzle') int = 'rain-mod';
+            document.body.classList.add('weather-rain', int);
+            if (currentPresetName !== int) initParticles(int);
+        } else if (snow.includes(code) || cl.includes('śnieg') || cl.includes('snow') || cl.includes('sleet') || cl.includes('grad')) {
+            const int = getSnowIntensityFromCode(code, ct);
+            document.body.classList.add('weather-snow', int);
+            if (currentPresetName !== int) initParticles(int);
+        } else if (fog.includes(code) || cl.includes('mgł') || cl.includes('fog')) {
             document.body.classList.add('weather-fog');
             currentPresetName = 'none'; particles = [];
-        } else if ([1009].includes(code) || condLower.includes('całkowite') || condLower.includes('overcast')) {
+        } else if ([1009].includes(code) || cl.includes('całkowite') || cl.includes('overcast')) {
             document.body.classList.add('weather-overcast');
             currentPresetName = 'none'; particles = [];
-        } else if ([1006].includes(code) || condLower.includes('pochmurno') || condLower.includes('zadymien') || condLower.includes('smoke') || condLower.includes('haze') || condLower.includes('smog')) {
+        } else if ([1006].includes(code) || cl.includes('pochmurno') || cl.includes('zadymien') || cl.includes('smoke') || cl.includes('haze') || cl.includes('smog')) {
             document.body.classList.add('weather-cloudy');
             currentPresetName = 'none'; particles = [];
         } else if ([1003].includes(code)) {
@@ -2036,7 +1978,7 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 pos => getWeatherData(`${pos.coords.latitude},${pos.coords.longitude}`),
-                () => { const fallback = localStorage.getItem('meteoLastCity') || 'Warszawa'; getWeatherData(fallback); }
+                () => { const fb = localStorage.getItem('meteoLastCity') || 'Warszawa'; getWeatherData(fb); }
             );
         } else getWeatherData('Warszawa');
     }
@@ -2049,47 +1991,46 @@
         if (!bgAnimActive) document.body.classList.add('no-anim');
         localStorage.setItem('meteoTheme', t);
         if (lastWeatherData) {
-            const next24 = [ ...(lastWeatherData.forecast.forecastday[0]?.hour || []), ...(lastWeatherData.forecast.forecastday[1]?.hour || []) ].filter(h => new Date(h.time) >= new Date()).slice(0, 24);
-            renderCharts(next24);
+            const n24 = [ ...(lastWeatherData.forecast.forecastday[0]?.hour || []), ...(lastWeatherData.forecast.forecastday[1]?.hour || []) ].filter(h => new Date(h.time) >= new Date()).slice(0, 24);
+            renderCharts(n24);
             setWeatherBg(lastWeatherData.current.condition.code, lastWeatherData.current.is_day !== 0, lastWeatherData.current.condition.text);
         }
     }
 
     document.addEventListener('click', (e) => {
-        const panel = document.getElementById('settingsPanel');
-        const toggleBtn = document.getElementById('settingsToggle');
-        if (panel && panel.classList.contains('active')) {
-            if (!panel.contains(e.target) && !toggleBtn.contains(e.target)) panel.classList.remove('active');
+        const p = document.getElementById('settingsPanel');
+        const b = document.getElementById('settingsToggle');
+        if (p && p.classList.contains('active')) {
+            if (!p.contains(e.target) && !b.contains(e.target)) p.classList.remove('active');
         }
     });
 
     function init() {
-        const themeList = document.getElementById('themeOptionsList');
+        const tl = document.getElementById('themeOptionsList');
         THEMES.forEach(t => {
             const d = document.createElement('div');
             d.className = 'theme-option';
             d.innerHTML = `<span>${t.emoji}</span> <span>${t.name}</span>`;
             d.onclick = () => setTheme(t.value);
-            themeList.appendChild(d);
+            tl.appendChild(d);
         });
         loadProfileFormInputs();
         updateProfileUI();
         updateMileageStats();
-        renderRacePredictor(); // ✅ POPRAWKA: bez pogody
-        const savedAnim = localStorage.getItem('meteoBgAnim');
-        if (savedAnim === '0') toggleBackgroundAnim();
+        renderRacePredictor();
+        const sa = localStorage.getItem('meteoBgAnim');
+        if (sa === '0') toggleBackgroundAnim();
         updateSettingsControls();
-        const savedTheme = localStorage.getItem('meteoTheme') || 'auto';
-        setTheme(savedTheme);
+        const st = localStorage.getItem('meteoTheme') || 'auto';
+        setTheme(st);
         setInterval(syncSunAndTheme, 60000);
-        const lastCity = localStorage.getItem('meteoLastCity');
-        if (lastCity) getWeatherData(lastCity);
+        const lc = localStorage.getItem('meteoLastCity');
+        if (lc) getWeatherData(lc);
         else getLocation();
     }
 
     window.onload = init;
 
-    // ✅ Narzędzie diagnostyczne — wpisz w konsoli: diagnosePredictions()
     function diagnosePredictions() {
         console.group('🔍 Diagnostyka prognoz');
         console.log('Wpisów w dzienniku:', runnerRuns.length);
@@ -2099,10 +2040,10 @@
         runnerRuns.forEach((r, i) => {
             const km = parseFloat(r.km);
             const sec = parseFloat(r.sec) || timeStringToSeconds(r.timeStr);
-            const dateObj = parseRunDate(r.date);
-            const daysAgo = dateObj ? ((nowMs - dateObj.getTime()) / 86400000).toFixed(1) : 'BRAK DATY';
-            const passes = km >= 1 && sec > 0 && (daysAgo === 'BRAK DATY' || parseFloat(daysAgo) <= 90);
-            console.log(`Bieg ${i+1}:`, {km, sec, timeStr: r.timeStr, type: r.type, daysAgo, passes, raw: r});
+            const dO = parseRunDate(r.date);
+            const dA = dO ? ((nowMs - dO.getTime()) / 86400000).toFixed(1) : 'BRAK';
+            const pass = km >= 1 && sec > 0 && (dA === 'BRAK' || parseFloat(dA) <= 90);
+            console.log(`Bieg ${i+1}:`, {km, sec, timeStr: r.timeStr, type: r.type, daysAgo: dA, passes: pass});
         });
         console.log('Wybrany bestEffort:', getBestEquivalentEffort());
         console.groupEnd();
