@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -47,68 +48,14 @@
         @keyframes sunPulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.08); filter: brightness(1.25); } }
         .weather-bg .stars { background-image: radial-gradient(1.5px 1.5px at 30px 40px, #fff, transparent), radial-gradient(2px 2px at 140px 110px, #fff, transparent), radial-gradient(1.5px 1.5px at 220px 170px, rgba(255,255,255,0.95), transparent), radial-gradient(2.5px 2.5px at 320px 240px, #fff, transparent); background-size: 350px 350px; }
 
-        /* ═══════════ ✅ NATURALNE CHMURY: miękkie plamy + blur ═══════════ */
         .weather-bg .clouds-container { overflow: hidden; }
+        .weather-bg .cloud { position: absolute; left: 0; will-change: transform; animation: cloudDrift linear infinite; filter: blur(18px); }
+        .weather-bg .cloud.cloud-a { width: 560px; height: 240px; background: radial-gradient(ellipse 45% 55% at 22% 60%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.32) 45%, transparent 75%), radial-gradient(ellipse 50% 65% at 40% 45%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.38) 45%, transparent 78%), radial-gradient(ellipse 55% 70% at 58% 42%, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.42) 45%, transparent 80%), radial-gradient(ellipse 45% 55% at 78% 55%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.32) 45%, transparent 75%), radial-gradient(ellipse 35% 40% at 50% 70%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 50%, transparent 80%); }
+        .weather-bg .cloud.cloud-b { width: 380px; height: 180px; background: radial-gradient(ellipse 45% 60% at 25% 60%, rgba(255,255,255,0.58) 0%, transparent 75%), radial-gradient(ellipse 55% 70% at 45% 50%, rgba(255,255,255,0.72) 0%, transparent 78%), radial-gradient(ellipse 50% 60% at 68% 55%, rgba(255,255,255,0.6) 0%, transparent 75%), radial-gradient(ellipse 40% 45% at 50% 72%, rgba(255,255,255,0.45) 0%, transparent 80%); }
+        .weather-bg .cloud.cloud-c { width: 720px; height: 200px; background: radial-gradient(ellipse 30% 70% at 18% 60%, rgba(255,255,255,0.55) 0%, transparent 78%), radial-gradient(ellipse 35% 80% at 35% 50%, rgba(255,255,255,0.65) 0%, transparent 80%), radial-gradient(ellipse 40% 85% at 52% 48%, rgba(255,255,255,0.72) 0%, transparent 82%), radial-gradient(ellipse 35% 80% at 70% 52%, rgba(255,255,255,0.62) 0%, transparent 80%), radial-gradient(ellipse 30% 65% at 85% 60%, rgba(255,255,255,0.5) 0%, transparent 78%); }
+        .weather-bg .cloud.cloud-d { width: 440px; height: 200px; background: radial-gradient(ellipse 40% 55% at 25% 55%, rgba(255,255,255,0.55) 0%, transparent 78%), radial-gradient(ellipse 50% 70% at 45% 45%, rgba(255,255,255,0.68) 0%, transparent 80%), radial-gradient(ellipse 45% 60% at 68% 52%, rgba(255,255,255,0.58) 0%, transparent 78%); }
+        @keyframes cloudDrift { from { transform: translate3d(100vw, 0, 0); } to { transform: translate3d(-100%, 0, 0); } }
 
-        .weather-bg .cloud {
-            position: absolute;
-            left: 0;
-            will-change: transform;
-            animation: cloudDrift linear infinite;
-            filter: blur(18px);
-        }
-
-        /* Chmura A — szeroka, puszysta */
-        .weather-bg .cloud.cloud-a {
-            width: 560px;
-            height: 240px;
-            background:
-                radial-gradient(ellipse 45% 55% at 22% 60%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.32) 45%, transparent 75%),
-                radial-gradient(ellipse 50% 65% at 40% 45%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.38) 45%, transparent 78%),
-                radial-gradient(ellipse 55% 70% at 58% 42%, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.42) 45%, transparent 80%),
-                radial-gradient(ellipse 45% 55% at 78% 55%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.32) 45%, transparent 75%),
-                radial-gradient(ellipse 35% 40% at 50% 70%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 50%, transparent 80%);
-        }
-
-        /* Chmura B — mała, zwarta */
-        .weather-bg .cloud.cloud-b {
-            width: 380px;
-            height: 180px;
-            background:
-                radial-gradient(ellipse 45% 60% at 25% 60%, rgba(255,255,255,0.58) 0%, transparent 75%),
-                radial-gradient(ellipse 55% 70% at 45% 50%, rgba(255,255,255,0.72) 0%, transparent 78%),
-                radial-gradient(ellipse 50% 60% at 68% 55%, rgba(255,255,255,0.6) 0%, transparent 75%),
-                radial-gradient(ellipse 40% 45% at 50% 72%, rgba(255,255,255,0.45) 0%, transparent 80%);
-        }
-
-        /* Chmura C — bardzo szeroka, niska */
-        .weather-bg .cloud.cloud-c {
-            width: 720px;
-            height: 200px;
-            background:
-                radial-gradient(ellipse 30% 70% at 18% 60%, rgba(255,255,255,0.55) 0%, transparent 78%),
-                radial-gradient(ellipse 35% 80% at 35% 50%, rgba(255,255,255,0.65) 0%, transparent 80%),
-                radial-gradient(ellipse 40% 85% at 52% 48%, rgba(255,255,255,0.72) 0%, transparent 82%),
-                radial-gradient(ellipse 35% 80% at 70% 52%, rgba(255,255,255,0.62) 0%, transparent 80%),
-                radial-gradient(ellipse 30% 65% at 85% 60%, rgba(255,255,255,0.5) 0%, transparent 78%);
-        }
-
-        /* Chmura D — górna, lekka */
-        .weather-bg .cloud.cloud-d {
-            width: 440px;
-            height: 200px;
-            background:
-                radial-gradient(ellipse 40% 55% at 25% 55%, rgba(255,255,255,0.55) 0%, transparent 78%),
-                radial-gradient(ellipse 50% 70% at 45% 45%, rgba(255,255,255,0.68) 0%, transparent 80%),
-                radial-gradient(ellipse 45% 60% at 68% 52%, rgba(255,255,255,0.58) 0%, transparent 78%);
-        }
-
-        @keyframes cloudDrift {
-            from { transform: translate3d(100vw, 0, 0); }
-            to { transform: translate3d(-100%, 0, 0); }
-        }
-
-        /* Intensywność */
         body.weather-partly .clouds-container { opacity: 0.55; }
         body.weather-cloudy .clouds-container { opacity: 0.85; }
         body.weather-overcast .clouds-container { opacity: 0.92; filter: brightness(0.82); }
@@ -119,14 +66,11 @@
         body.weather-snow.snow-light .clouds-container { opacity: 0.85; filter: brightness(0.94); }
         body.weather-snow.snow-heavy .clouds-container { opacity: 0.95; filter: brightness(0.88); }
         body.weather-fog .clouds-container { opacity: 0; }
-
         body.weather-clear .sun { opacity: 1; } body.weather-clear-night .stars { opacity: 0.95; }
         body.weather-partly .sun { opacity: 0.85; }
-
         #particlesCanvas { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; opacity: 0.9; pointer-events: none !important; }
         body.no-anim .weather-bg { display: none !important; }
 
-        /* ═══════════ GRADIENT DOMYŚLNY DOPASOWANY DO POGODY ═══════════ */
         body.weather-clear { --background-day: linear-gradient(135deg, #8ec5e0 0%, #a8d4ea 40%, #c2e0f0 70%, #d4ebf5 100%); }
         body.weather-partly { --background-day: linear-gradient(135deg, #a8c8dd 0%, #bdd4e6 40%, #d0e0ec 70%, #e0ecf3 100%); }
         body.weather-cloudy { --background-day: linear-gradient(135deg, #a8b5c0 0%, #bcc7d1 40%, #cdd6de 70%, #dce3e9 100%); }
@@ -149,7 +93,12 @@
         .runner-hub-card { border: 2px solid var(--primary); }
         .runner-score-badge { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.4rem 1.1rem; border-radius: 30px; font-weight: 700; font-size: 1.05rem; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: help; }
         .golden-window-box { background: rgba(255,193,7,0.18); border-left: 5px solid #ff9800; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.9rem; font-size: 0.92rem; color: inherit; }
-        .mileage-hub-box { background: var(--glass-subcard); border: 1px solid var(--glass-border); border-radius: 14px; padding: 0.9rem 1rem; margin-bottom: 0.9rem; color: var(--text-color); }
+        
+        /* Moduły w Centrum Biegacza */
+        .mileage-hub-box, .race-calendar-box, .gear-tracker-box, .race-predictor-box { background: var(--glass-subcard); border: 1px solid var(--glass-border); border-radius: 14px; padding: 0.95rem 1rem; margin-bottom: 0.9rem; color: var(--text-color); }
+        .box-title-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 0.4rem; }
+        .box-title { font-size: 0.86rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); }
+        
         .mileage-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.65rem; margin-bottom: 0; }
         .mileage-stat-card { background: var(--glass-subcard-solid); border-radius: 10px; padding: 0.6rem 0.8rem; text-align: left; border: 1px solid var(--glass-border); color: var(--text-color); display: flex; flex-direction: column; gap: 0.18rem; position: relative; overflow: hidden; min-width: 0; transition: var(--transition); }
         .mileage-stat-card:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
@@ -164,10 +113,38 @@
         .spark-tab-btn { flex: 1; padding: 0.4rem 0.5rem; font-size: 0.72rem; font-weight: 700; background: var(--glass-subcard); border: 1px solid var(--glass-border); color: var(--text-muted); border-radius: 7px; cursor: pointer; transition: var(--transition); box-shadow: none; min-height: auto; display: inline-flex; align-items: center; justify-content: center; gap: 4px; position: relative; overflow: hidden; }
         .spark-tab-btn:hover:not(.active) { border-color: var(--primary); color: var(--primary); box-shadow: none; }
         .spark-tab-btn.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; border-color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-        .spark-tab-btn.active::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 100%); pointer-events: none; border-radius: 7px 7px 0 0; }
         .mileage-btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
         .mileage-btn-row button { padding: 0.45rem 0.85rem; font-size: 0.85rem; min-height: 35px; border-radius: 10px; }
-        .race-predictor-box { background: var(--glass-subcard); border: 1px solid var(--glass-border); border-radius: 14px; padding: 0.95rem 1rem; margin-bottom: 0.9rem; color: var(--text-color); }
+
+        /* Style Kalendarza Startów */
+        .race-calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
+        .race-plan-card { background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.8rem 0.9rem; display: flex; flex-direction: column; gap: 0.45rem; transition: var(--transition); position: relative; }
+        .race-plan-card:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
+        .race-plan-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+        .race-plan-name { font-weight: 800; font-size: 0.98rem; color: var(--card-title-color); line-height: 1.25; }
+        .race-countdown-badge { font-size: 0.75rem; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; background: rgba(0,102,204,0.12); color: var(--primary); }
+        .race-plan-details { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; font-size: 0.82rem; }
+        .race-pill { display: inline-flex; align-items: center; gap: 3px; font-weight: 600; font-size: 0.76rem; padding: 2px 7px; border-radius: 6px; background: rgba(0,0,0,0.04); }
+        .race-paid-badge { font-size: 0.74rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; cursor: pointer; user-select: none; transition: var(--transition); }
+        .race-paid-badge.paid { background: rgba(39, 174, 96, 0.18); color: #16a34a; border: 1px solid rgba(39, 174, 96, 0.3); }
+        .race-paid-badge.unpaid { background: rgba(220, 38, 38, 0.14); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.25); }
+        .race-actions-row { display: flex; justify-content: flex-end; gap: 0.4rem; margin-top: 0.2rem; }
+
+        /* Style Widgetu Butów */
+        .shoes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
+        .shoe-card { background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem 0.85rem; display: flex; flex-direction: column; gap: 0.45rem; transition: var(--transition); }
+        .shoe-card:hover { transform: translateY(-2px); border-color: var(--primary); }
+        .shoe-card.retired { opacity: 0.8; border-style: dashed; }
+        .shoe-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+        .shoe-name { font-weight: 700; font-size: 0.92rem; color: var(--card-title-color); }
+        .shoe-badges-row { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+        .shoe-badge { font-size: 0.68rem; padding: 2px 6px; border-radius: 6px; background: rgba(0,102,204,0.12); color: var(--primary); font-weight: 600; }
+        .shoe-badge.retired-badge { background: rgba(100,116,139,0.18); color: var(--text-muted); font-weight: 700; }
+        .shoe-progress-bar-bg { height: 7px; width: 100%; background: rgba(0,0,0,0.08); border-radius: 10px; overflow: hidden; margin-top: 0.2rem; }
+        .shoe-progress-fill { height: 100%; border-radius: 10px; transition: width 0.4s ease; }
+        .shoe-mileage-text { display: flex; justify-content: space-between; font-size: 0.74rem; font-weight: 700; color: var(--text-muted); }
+        .shoe-card-actions { display: flex; justify-content: flex-end; gap: 0.35rem; margin-top: 0.2rem; border-top: 1px dashed var(--glass-border); padding-top: 0.35rem; }
+
         .predictor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.75rem; margin-top: 0.85rem; }
         .predictor-pill { background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem 0.85rem; display: flex; flex-direction: column; gap: 0.5rem; transition: var(--transition); min-width: 0; box-shadow: 0 3px 10px rgba(0,0,0,0.03); }
         .pred-header { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; min-width: 0; }
@@ -180,10 +157,8 @@
         .pred-state-values { display: flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; margin-left: auto; min-width: 0; }
         .pred-time { font-weight: 800; font-size: 1rem; color: var(--text-color); white-space: nowrap; font-variant-numeric: tabular-nums; }
         .pred-pace { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
-        .pred-warn { font-size: 0.85rem; cursor: help; opacity: 0.8; }
-        .pred-marathon-warn { font-size: 0.72rem; color: #dc2626; background: rgba(220,38,38,0.08); padding: 0.4rem 0.5rem; border-radius: 6px; border: 1px solid rgba(220,38,38,0.2); line-height: 1.35; margin-top: 0.15rem; }
-        .pred-marathon-warn.speed { color: #ca8a04; background: rgba(234,179,8,0.1); border-color: rgba(234,179,8,0.3); }
         .predictor-source-line { font-size: 0.76rem; opacity: 0.75; margin-top: 0.75rem; font-style: italic; padding-top: 0.5rem; border-top: 1px dashed var(--glass-border); }
+
         .runner-physics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
         .gear-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
         .gear-box { background: var(--glass-subcard); padding: 0.85rem; border-radius: 12px; border: 1px solid var(--glass-border); color: var(--text-color); }
@@ -230,12 +205,13 @@
         .warning-severity { font-size: 0.76rem; font-style: italic; opacity: 0.9; margin-top: 1px; color: var(--primary); }
         .warning-details { font-size: 0.84rem; line-height: 1.45; margin: 0.4rem 0; white-space: pre-line; word-break: break-word; color: var(--text-color); }
         .warning-time { font-size: 0.74rem; background: rgba(0,0,0,0.08); padding: 0.35rem 0.6rem; border-radius: 8px; display: flex; flex-direction: column; gap: 0.15rem; margin-top: 0.4rem; font-weight: 500; color: var(--text-muted); }
+        
         .settings-toggle { position: fixed; bottom: 20px; right: 20px; background: var(--glass); backdrop-filter: blur(16px); border-radius: 30px; padding: 0.7rem 1.3rem; cursor: pointer; z-index: 1001; box-shadow: var(--shadow); border: 1px solid var(--glass-border); font-weight: 700; user-select: none; color: var(--text-color); transition: var(--transition); font-size: 0.92rem; display: flex; align-items: center; gap: 0.5rem; }
         .settings-toggle:hover { transform: translateY(-3px) scale(1.02); box-shadow: var(--glow-hover); }
-        .settings-panel { position: fixed; bottom: 75px; right: 20px; width: 360px; max-width: calc(100vw - 40px); background: var(--glass); backdrop-filter: blur(18px) saturate(180%); border-radius: var(--border-radius); padding: 1.1rem; box-shadow: 0 16px 45px rgba(0,0,0,0.35); z-index: 1002; max-height: 75vh; overflow-y: auto; transition: transform 0.3s cubic-bezier(0.2,0.9,0.3,1), opacity 0.3s ease; transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none; color: var(--text-color); border: 1px solid var(--glass-border); }
+        .settings-panel { position: fixed; bottom: 75px; right: 20px; width: 390px; max-width: calc(100vw - 40px); background: var(--glass); backdrop-filter: blur(18px) saturate(180%); border-radius: var(--border-radius); padding: 1.1rem; box-shadow: 0 16px 45px rgba(0,0,0,0.35); z-index: 1002; max-height: 78vh; overflow-y: auto; transition: transform 0.3s cubic-bezier(0.2,0.9,0.3,1), opacity 0.3s ease; transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none; color: var(--text-color); border: 1px solid var(--glass-border); }
         .settings-panel.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
-        .settings-tabs { display: flex; gap: 0.4rem; margin-bottom: 0.9rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; }
-        .settings-tab-btn { flex: 1; padding: 0.45rem 0.55rem; font-size: 0.82rem; font-weight: 600; background: var(--glass-subcard); color: var(--text-color); border: 1px solid var(--glass-border); border-radius: 8px; cursor: pointer; box-shadow: none; min-height: auto; }
+        .settings-tabs { display: flex; gap: 0.35rem; margin-bottom: 0.9rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; flex-wrap: wrap; }
+        .settings-tab-btn { flex: 1 1 70px; padding: 0.45rem 0.5rem; font-size: 0.78rem; font-weight: 600; background: var(--glass-subcard); color: var(--text-color); border: 1px solid var(--glass-border); border-radius: 8px; cursor: pointer; box-shadow: none; min-height: auto; white-space: nowrap; }
         .settings-tab-btn.active { background: var(--primary); color: #fff; box-shadow: var(--glow); }
         .settings-tab-content { display: none; }
         .settings-tab-content.active { display: block; }
@@ -246,48 +222,32 @@
         .form-group label { font-size: 0.76rem; font-weight: 600; color: var(--text-muted); }
         .form-group input, .form-group select { padding: 0.5rem 0.7rem; font-size: 0.86rem; border-radius: 8px; min-width: 0; background: var(--glass-subcard-solid); color: var(--text-color); border: 1px solid var(--glass-border); }
         .placebo-save-btn { width: 100%; margin-top: 0.4rem; padding: 0.6rem; font-size: 0.88rem; border-radius: 10px; }
+        
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.65); backdrop-filter: blur(6px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 1rem; }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
-        .modal-card { background: var(--glass); border-radius: var(--border-radius); padding: 1.4rem; width: 100%; max-width: 400px; box-shadow: var(--shadow-dark); border: 1px solid var(--glass-border); color: var(--text-color); }
-        .history-list { max-height: 280px; overflow-y: auto; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem; }
-        .history-item { background: var(--glass-subcard); border-radius: 8px; padding: 0.6rem 0.8rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; border: 1px solid var(--glass-border); color: var(--text-color); }
+        .modal-card { background: var(--glass); border-radius: var(--border-radius); padding: 1.4rem; width: 100%; max-width: 440px; box-shadow: var(--shadow-dark); border: 1px solid var(--glass-border); color: var(--text-color); max-height: 90vh; overflow-y: auto; }
+        .history-list { max-height: 380px; overflow-y: auto; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .history-item { background: var(--glass-subcard); border-radius: 10px; padding: 0.65rem 0.8rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; border: 1px solid var(--glass-border); color: var(--text-color); gap: 0.5rem; }
         .theme-options { display: grid; grid-template-columns: 1fr; gap: 0.35rem; margin-top: 0.4rem; }
         .theme-option { padding: 0.55rem 0.85rem; cursor: pointer; border-radius: 8px; background: var(--glass-subcard); font-size: 0.88rem; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition); color: var(--text-color); border: 1px solid var(--glass-border); position: relative; }
         .theme-option:hover { background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 100%); border-color: var(--primary); box-shadow: 0 8px 24px rgba(0,102,204,0.18), inset 0 1px 0 rgba(255,255,255,0.65); transform: translateX(4px); color: var(--primary); font-weight: 600; }
-        body.dark-mode .theme-option:hover, body.night-mode .theme-option:hover, body.matrix-mode .theme-option:hover, body.neon-mode .theme-option:hover, body.space-mode .theme-option:hover, body.galaxy-mode .theme-option:hover { background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 100%); border-color: var(--primary); box-shadow: 0 6px 22px rgba(0,0,0,0.35), 0 0 18px rgba(153,203,255,0.18), inset 0 1px 0 rgba(255,255,255,0.16); color: var(--primary); transform: translateX(4px); }
+        
         @keyframes tileFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .tile-anim { animation: tileFadeIn 0.4s ease both; }
+        
+        /* Motywy */
         body.light-mode { --primary: #0284c7; --secondary: #0ea5e9; --glass: rgba(255,255,255,0.94); --glass-card: linear-gradient(145deg, #fff, #f8fafc); --glass-subcard: rgba(241,245,249,0.85); --glass-subcard-solid: #fff; --glass-border: rgba(148,163,184,0.25); --text-color: #0f172a; --text-muted: #64748b; --card-title-color: #0f172a; background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 50%, #e2e8f0 100%) !important; color: #0f172a !important; }
         body.dark-mode, body.night-mode { --primary: #38bdf8; --secondary: #818cf8; --glass: rgba(15,23,42,0.94); --glass-card: linear-gradient(145deg, rgba(20,28,48,0.92), rgba(15,23,42,0.92)); --glass-subcard: rgba(0,0,0,0.45); --glass-subcard-solid: rgba(18,26,46,0.85); --glass-border: rgba(255,255,255,0.12); --text-color: #f1f5f9; --text-muted: #a3b3c8; --card-title-color: #fff; background: #090d16 !important; color: #f1f5f9 !important; }
         body.night-mode { background: var(--background-night) !important; }
-        body.matrix-mode { --primary: #00ff41; --secondary: #00cc33; --glass: rgba(0,14,0,0.96); --glass-card: linear-gradient(145deg, rgba(0,22,8,0.94), rgba(0,14,4,0.96)); --glass-subcard: rgba(0,22,8,0.75); --glass-subcard-solid: rgba(0,18,6,0.92); --glass-border: rgba(0,255,65,0.35); --text-color: #a8ffbc; --text-muted: #5fd97a; --card-title-color: #d0ffdd; background: #000 !important; color: #a8ffbc !important; font-family: var(--tech-font); font-weight: 500; letter-spacing: 0.2px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-        body.neon-mode { --primary: #00ff9d; --secondary: #00b8ff; --glass: rgba(4,14,30,0.96); --glass-card: linear-gradient(145deg, rgba(6,20,40,0.94), rgba(4,12,28,0.96)); --glass-subcard: rgba(0,26,52,0.75); --glass-subcard-solid: rgba(4,18,40,0.92); --glass-border: rgba(0,255,157,0.35); --text-color: #b8ffdc; --text-muted: #7fd4b8; --card-title-color: #fff; background: #040814 !important; color: #b8ffdc !important; font-family: var(--tech-font); font-weight: 500; letter-spacing: 0.2px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-        body.space-mode { --primary: #9d4edd; --secondary: #48bfe3; --glass: rgba(14,8,42,0.95); --glass-card: linear-gradient(145deg, rgba(20,12,56,0.92), rgba(14,8,42,0.94)); --glass-subcard: rgba(30,16,74,0.7); --glass-subcard-solid: rgba(22,12,60,0.9); --glass-border: rgba(157,78,221,0.45); --text-color: #f2f5fb; --text-muted: #b8c3e0; --card-title-color: #fff; background: linear-gradient(135deg, #02010a, #0b092b, #10002b) !important; color: #f2f5fb !important; font-family: var(--tech-font); font-weight: 500; letter-spacing: 0.2px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-        body.galaxy-mode { --primary: #b388ff; --secondary: #80d8ff; --glass: rgba(24,8,48,0.95); --glass-card: linear-gradient(145deg, rgba(32,12,64,0.92), rgba(24,8,48,0.94)); --glass-subcard: rgba(46,18,86,0.7); --glass-subcard-solid: rgba(34,14,66,0.9); --glass-border: rgba(179,136,255,0.45); --text-color: #f5ecff; --text-muted: #c8b8ec; --card-title-color: #fff; background: linear-gradient(135deg, #090014, #12002b, #03001e) !important; color: #f5ecff !important; font-family: var(--tech-font); font-weight: 500; letter-spacing: 0.2px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-        body.hubba-bubba-mode, body.candy-mode { --primary: #ff69b4; --secondary: #ff1493; background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493) !important; }
-        body.forest-mode, body.spring-mode { --primary: #2e8b57; --secondary: #3cb371; background: linear-gradient(135deg, #a8e6cf, #dcedc1, #6b8e23) !important; }
-        body.summer-mode, body.amber-mode, body.sunset-mode, body.desert-mode { --primary: #ff8c00; --secondary: #ff4500; background: linear-gradient(135deg, #ffa07a, #ff8c00, #ff4500) !important; }
-        body.autumn-mode { --primary: #d97706; --secondary: #ea580c; background: linear-gradient(135deg, #fcd34d, #f59e0b, #b45309) !important; }
-        body.rainy-day-mode { --primary: #4682b4; --secondary: #5f9ea0; background: linear-gradient(135deg, #b0c4de, #778899, #4682b4) !important; }
-        body.winter-mode { --primary: #1e5f8c; --secondary: #4682b4; background: linear-gradient(135deg, #e6e6fa, #add8e6, #87ceeb) !important; }
-        body.christmas-mode { --primary: #d62b2b; --secondary: #2b8d2b; background: linear-gradient(135deg, #d62b2b, #2b8d2b, #f5f5f5) !important; }
-        body.easter-mode { --primary: #8a2be2; --secondary: #9932cc; background: linear-gradient(135deg, #ff9ff3, #feca57, #1dd1a1) !important; }
-        body.birthday-mode { --primary: #ff6b6b; --secondary: #48dbfb; background: linear-gradient(135deg, #ff6b6b, #48dbfb, #feca57) !important; }
-        body.disco-mode { --primary: #9b59b6; --secondary: #3498db; background: linear-gradient(135deg, #9b59b6, #3498db, #e74c3c) !important; }
-        body.ocean-mode { --primary: #1abc9c; --secondary: #3498db; background: linear-gradient(135deg, #1abc9c, #3498db, #9b59b6) !important; }
-        body.retro-mode { --primary: #ff6b6b; --secondary: #5f27cd; background: linear-gradient(135deg, #ff6b6b, #feca57, #1dd1a1) !important; }
-        body.monochrome-mode { --primary: #555; --secondary: #999; background: linear-gradient(135deg, #eee, #ccc, #aaa) !important; }
-        body.dark-mode .card, body.night-mode .card, body.matrix-mode .card, body.space-mode .card, body.galaxy-mode .card, body.neon-mode .card { background: var(--glass-card); border: 1px solid rgba(255,255,255,0.1); color: var(--text-color); }
-        body.dark-mode .mileage-stat-trend.same, body.night-mode .mileage-stat-trend.same, body.matrix-mode .mileage-stat-trend.same, body.neon-mode .mileage-stat-trend.same, body.space-mode .mileage-stat-trend.same, body.galaxy-mode .mileage-stat-trend.same { background: rgba(255,255,255,0.07); color: var(--text-muted); }
-        body.dark-mode .mileage-stat-card, body.night-mode .mileage-stat-card, body.matrix-mode .mileage-stat-card, body.neon-mode .mileage-stat-card, body.space-mode .mileage-stat-card, body.galaxy-mode .mileage-stat-card { border-color: rgba(255,255,255,0.08); }
-        body.dark-mode .spark-tab-btn:not(.active), body.night-mode .spark-tab-btn:not(.active), body.matrix-mode .spark-tab-btn:not(.active), body.neon-mode .spark-tab-btn:not(.active), body.space-mode .spark-tab-btn:not(.active), body.galaxy-mode .spark-tab-btn:not(.active) { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: var(--text-muted); }
-        body.dark-mode .spark-tab-btn:not(.active):hover, body.night-mode .spark-tab-btn:not(.active):hover, body.matrix-mode .spark-tab-btn:not(.active):hover, body.neon-mode .spark-tab-btn:not(.active):hover, body.space-mode .spark-tab-btn:not(.active):hover, body.galaxy-mode .spark-tab-btn:not(.active):hover { background: rgba(255,255,255,0.09); color: var(--primary); }
+        body.matrix-mode { --primary: #00ff41; --secondary: #00cc33; --glass: rgba(0,14,0,0.96); --glass-card: linear-gradient(145deg, rgba(0,22,8,0.94), rgba(0,14,4,0.96)); --glass-subcard: rgba(0,22,8,0.75); --glass-subcard-solid: rgba(0,18,6,0.92); --glass-border: rgba(0,255,65,0.35); --text-color: #a8ffbc; --text-muted: #5fd97a; --card-title-color: #d0ffdd; background: #000 !important; color: #a8ffbc !important; font-family: var(--tech-font); font-weight: 500; letter-spacing: 0.2px; }
+        body.neon-mode { --primary: #00ff9d; --secondary: #00b8ff; --glass: rgba(4,14,30,0.96); --glass-card: linear-gradient(145deg, rgba(6,20,40,0.94), rgba(4,12,28,0.96)); --glass-subcard: rgba(0,26,52,0.75); --glass-subcard-solid: rgba(4,18,40,0.92); --glass-border: rgba(0,255,157,0.35); --text-color: #b8ffdc; --text-muted: #7fd4b8; --card-title-color: #fff; background: #040814 !important; color: #b8ffdc !important; font-family: var(--tech-font); font-weight: 500; letter-spacing: 0.2px; }
+        body.space-mode { --primary: #9d4edd; --secondary: #48bfe3; --glass: rgba(14,8,42,0.95); --glass-card: linear-gradient(145deg, rgba(20,12,56,0.92), rgba(14,8,42,0.94)); --glass-subcard: rgba(30,16,74,0.7); --glass-subcard-solid: rgba(22,12,60,0.9); --glass-border: rgba(157,78,221,0.45); --text-color: #f2f5fb; --text-muted: #b8c3e0; --card-title-color: #fff; background: linear-gradient(135deg, #02010a, #0b092b, #10002b) !important; color: #f2f5fb !important; font-family: var(--tech-font); }
+
         .card, .widget, .sun-widget, .mileage-stat-card { position: relative; isolation: isolate; }
         .card::before, .widget::before, .sun-widget::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 45%; background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 60%, transparent 100%); border-radius: var(--border-radius) var(--border-radius) 0 0; pointer-events: none; z-index: 0; opacity: 0.6; }
         .card > *, .widget > *, .sun-widget > * { position: relative; z-index: 1; }
-        body.dark-mode .card::before, body.dark-mode .widget::before, body.dark-mode .sun-widget::before, body.night-mode .card::before, body.night-mode .widget::before, body.night-mode .sun-widget::before, body.matrix-mode .card::before, body.matrix-mode .widget::before, body.matrix-mode .sun-widget::before, body.neon-mode .card::before, body.neon-mode .widget::before, body.neon-mode .sun-widget::before, body.space-mode .card::before, body.space-mode .widget::before, body.space-mode .sun-widget::before, body.galaxy-mode .card::before, body.galaxy-mode .widget::before, body.galaxy-mode .sun-widget::before { background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%); opacity: 0.9; }
-        button::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.02) 100%); pointer-events: none; border-radius: var(--border-radius) var(--border-radius) 50% 50% / var(--border-radius) var(--border-radius) 25% 25%; transition: var(--transition); }
-        button:hover::after { opacity: 1.15; }
+        body.dark-mode .card::before, body.night-mode .card::before, body.matrix-mode .card::before, body.neon-mode .card::before, body.space-mode .card::before { background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%); opacity: 0.9; }
+
         @media (max-width: 1024px) { body { padding: 1.5rem 0.8rem 80px 0.8rem; } .app-layout { flex-direction: column; align-items: stretch; gap: 1.1rem; } .container { max-width: 100%; padding: 1rem; } .widgets-container { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; } }
         @media (max-width: 640px) { body { padding: 1.2rem 0.6rem 80px 0.6rem; } .container { padding: 0.85rem; } .card { padding: 1rem; } .app-header-row { flex-direction: column; align-items: stretch; gap: 0.6rem; } .search-box { flex-direction: column; align-items: stretch; } input, select, .mobile-buttons, button { width: 100%; justify-content: center; } .parameter-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } .forecast-container { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; } .widgets-container { grid-template-columns: 1fr; } .settings-toggle { bottom: 15px; right: 15px; padding: 0.65rem 1.1rem; font-size: 0.9rem; } .settings-panel { bottom: 70px; right: 15px; left: 15px; width: auto; max-width: none; } .predictor-grid { grid-template-columns: 1fr; } .mileage-hub-box > div:nth-child(2) { flex-direction: column; align-items: stretch; } .mileage-hub-box > div:nth-child(2) > div:first-child { width: 100%; min-width: 0; } #runTypeChartContainer { margin: 0.5rem auto 0 auto !important; } }
     </style>
@@ -323,12 +283,16 @@
         </div>
         <div id="loadingIndicator" style="display:none; align-items:center; gap:0.5rem; font-weight:600; margin-bottom: 0.8rem;"><span>⏳ Pobieranie prognozy...</span></div>
 
+        <!-- CENTRUM BIEGACZA -->
         <div class="card runner-hub-card">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 0.7rem;">
                 <h3 style="margin: 0; color: var(--card-title-color);">🏃 Centrum Biegacza <span id="runnerGreeting" style="font-size:0.85rem; opacity:0.85; font-weight:500;"></span></h3>
-                <div id="runnerScoreBadge" class="runner-score-badge" style="background: #27ae60; margin: 0;" title="Indeks warunków do biegania (1–10). Najedź, by zobaczyć rozbicie."><span>Indeks:</span> <span id="runnerScoreVal">--/10</span></div>
+                <div id="runnerScoreBadge" class="runner-score-badge" style="background: #27ae60; margin: 0;" title="Indeks warunków do biegania (1–10)."><span>Indeks:</span> <span id="runnerScoreVal">--/10</span></div>
             </div>
+            
             <div id="goldenWindow" class="golden-window-box">Analizowanie optymalnego okna treningowego...</div>
+
+            <!-- KILOMETRAŻ -->
             <div class="mileage-hub-box">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.3rem;">
                     <span style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary);">📊 Twój Kilometraż</span>
@@ -338,17 +302,17 @@
                     <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 0.55rem;">
                         <div class="mileage-stats-grid">
                             <div class="mileage-stat-card">
-                                <div class="mileage-stat-top"><span class="mileage-stat-lbl">📅 Ten tydzień</span><span class="mileage-stat-trend same" id="mileageWeekTrend" title="Trend vs poprzedni tydzień">—</span></div>
+                                <div class="mileage-stat-top"><span class="mileage-stat-lbl">📅 Ten tydzień</span><span class="mileage-stat-trend same" id="mileageWeekTrend">—</span></div>
                                 <div class="mileage-stat-val" id="mileageWeekVal">0.0 km</div>
                                 <div class="mileage-stat-meta" id="mileageWeekMeta">Brak biegów</div>
                             </div>
                             <div class="mileage-stat-card">
-                                <div class="mileage-stat-top"><span class="mileage-stat-lbl">🗓️ Ten miesiąc</span><span class="mileage-stat-trend same" id="mileageMonthTrend" title="Trend vs poprzedni miesiąc">—</span></div>
+                                <div class="mileage-stat-top"><span class="mileage-stat-lbl">🗓️ Ten miesiąc</span><span class="mileage-stat-trend same" id="mileageMonthTrend">—</span></div>
                                 <div class="mileage-stat-val" id="mileageMonthVal">0.0 km</div>
                                 <div class="mileage-stat-meta" id="mileageMonthMeta">Brak biegów</div>
                             </div>
                             <div class="mileage-stat-card">
-                                <div class="mileage-stat-top"><span class="mileage-stat-lbl">📊 Ten rok</span><span class="mileage-stat-trend same" id="mileageYearTrend" title="Trend vs poprzedni rok">—</span></div>
+                                <div class="mileage-stat-top"><span class="mileage-stat-lbl">📊 Ten rok</span><span class="mileage-stat-trend same" id="mileageYearTrend">—</span></div>
                                 <div class="mileage-stat-val" id="mileageYearVal">0.0 km</div>
                                 <div class="mileage-stat-meta" id="mileageYearMeta">Brak biegów</div>
                             </div>
@@ -356,7 +320,7 @@
                         <div style="background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); border-radius: 10px; padding: 0.55rem 0.65rem;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; gap: 6px;">
                                 <span style="font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted);">📈 Kilometraż</span>
-                                <span id="weeklySparklineTotal" style="font-size: 0.75rem; font-weight: 800; color: var(--primary); font-variant-numeric: tabular-nums;">0 km</span>
+                                <span id="weeklySparklineTotal" style="font-size: 0.75rem; font-weight: 800; color: var(--primary);">0 km</span>
                             </div>
                             <div style="display: flex; gap: 5px; margin-bottom: 0.45rem;">
                                 <button id="sparklineTabWeek" class="spark-tab-btn active" onclick="setSparklineMode('week')">📅 Tydzień</button>
@@ -372,14 +336,13 @@
                     </div>
                     <div id="runTypeChartContainer" style="width: 175px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem;">
                         <div style="position: relative; width: 155px; height: 155px; perspective: 700px;">
-                            <canvas id="runTypeChart" style="position: relative; z-index: 1; transform: rotateX(25deg) rotateZ(-8deg); filter: drop-shadow(0 12px 20px rgba(0,0,0,0.22)) drop-shadow(0 4px 6px rgba(0,0,0,0.12)); transition: transform 0.3s ease;"></canvas>
+                            <canvas id="runTypeChart" style="position: relative; z-index: 1; transform: rotateX(25deg) rotateZ(-8deg);"></canvas>
                             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2; pointer-events: none;">
-                                <div id="runTypeChartYearLabel" style="font-size: 0.58rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; opacity: 0.85;">Rok</div>
-                                <div id="runTypeChartTotal" style="font-size: 1.05rem; font-weight: 800; color: var(--primary); line-height: 1.1; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">0 km</div>
+                                <div id="runTypeChartYearLabel" style="font-size: 0.58rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Rok</div>
+                                <div id="runTypeChartTotal" style="font-size: 1.05rem; font-weight: 800; color: var(--primary);">0 km</div>
                             </div>
                         </div>
                         <div id="runTypeLegend" style="display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; font-size: 0.7rem; font-weight: 700;"></div>
-                        <div style="font-size: 0.6rem; color: var(--text-muted); text-align: center; opacity: 0.7; line-height: 1.2;">Rozkład objętości<br>wg typu biegu</div>
                     </div>
                 </div>
                 <div id="mileageLastRun" style="font-size: 0.8rem; margin-bottom: 0.6rem; padding: 0.35rem 0.55rem; background: var(--glass-subcard-solid); border-radius: 8px; border: 1px solid var(--glass-border);">🏁 Ostatni bieg: brak zapisanych treningów</div>
@@ -388,17 +351,58 @@
                     <button style="background: var(--glass-subcard); border: 1px solid var(--glass-border); color: inherit;" onclick="openHistoryModal()">📜 Historia biegów</button>
                 </div>
             </div>
-            <div class="race-predictor-box">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;">
+
+            <!-- KALENDARZ STARTOWY -->
+            <div class="race-calendar-box">
+                <div class="box-title-bar">
                     <div>
-                        <span style="font-size: 0.86rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary);">⏱️ Prognoza Biegów & Twoje Rekordy (PB)</span>
-                        <div style="opacity: 0.75; font-size: 0.72rem;">(Riegel z Twoich treningów, PB jako referencja — bez pogody)</div>
+                        <span class="box-title">🗓️ Kalendarz Startowy & Zawody</span>
+                        <div style="font-size: 0.72rem; opacity: 0.75;">Twoje zaplanowane wyścigi i imprezy biegowe</div>
+                    </div>
+                    <button onclick="openAddRaceModal()" style="padding: 0.3rem 0.75rem; font-size: 0.78rem; min-height: 28px; border-radius: 8px; box-shadow: none;">➕ Dodaj start</button>
+                </div>
+                <div class="race-calendar-grid" id="raceCalendarContainer">
+                    <div style="font-size:0.85rem; opacity:0.8; grid-column: 1/-1; padding:0.5rem 0;">Brak zaplanowanych startów. Kliknij „Dodaj start” aby zaplanować swój cel!</div>
+                </div>
+            </div>
+
+            <!-- WIDGET SPRZĘT / PRZEBIEG BUTÓW (Z ZAKŁADKAMI) -->
+            <div class="gear-tracker-box">
+                <div class="box-title-bar">
+                    <div>
+                        <span class="box-title">👟 Twoje Buty & Przebieg Sprzętu</span>
+                        <div style="font-size: 0.72rem; opacity: 0.75;">Monitoruj zużycie pianki i cholewki</div>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem;">
+                        <button onclick="openAddShoeModal()" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; min-height: 28px; border-radius: 8px; box-shadow: none;">➕ Dodaj parę</button>
+                        <button onclick="openShoesSettings(event)" style="background: var(--glass-subcard); border: 1px solid var(--glass-border); color: inherit; padding: 0.3rem 0.65rem; font-size: 0.78rem; min-height: 28px; border-radius: 8px; box-shadow: none;">⚙️ Ustawienia</button>
+                    </div>
+                </div>
+
+                <!-- Zakładki Aktywne / Wycofane w widgecie -->
+                <div style="display: flex; gap: 6px; margin-bottom: 0.75rem;">
+                    <button id="shoeTabActive" class="spark-tab-btn active" onclick="setShoesWidgetTab('active')">👟 W rotacji (<span id="countActiveShoes">0</span>)</button>
+                    <button id="shoeTabRetired" class="spark-tab-btn" onclick="setShoesWidgetTab('retired')">📦 Wycofane / Emerytura (<span id="countRetiredShoes">0</span>)</button>
+                </div>
+
+                <div class="shoes-grid" id="shoesTrackerContainer">
+                    <div style="font-size:0.85rem; opacity:0.8; grid-column: 1/-1; padding:0.5rem 0;">Brak dodanych par butów.</div>
+                </div>
+            </div>
+
+            <!-- PROGNOZA BIEGÓW -->
+            <div class="race-predictor-box">
+                <div class="box-title-bar">
+                    <div>
+                        <span class="box-title">⏱️ Prognoza Biegów & Twoje Rekordy (PB)</span>
+                        <div style="opacity: 0.75; font-size: 0.72rem;">(Riegel z Twoich treningów, PB jako referencja — bez wpływu pogody)</div>
                     </div>
                     <button onclick="openRecordsSettings(event)" style="padding: 0.3rem 0.75rem; font-size: 0.78rem; min-height: 28px; border-radius: 8px; box-shadow: none;">🏆 Edytuj rekordy</button>
                 </div>
                 <div class="predictor-grid" id="racePredictorGrid"></div>
                 <div class="predictor-source-line" id="predictorSource"></div>
             </div>
+
             <div class="gear-container">
                 <div class="gear-box"><div class="gear-title">👕 Góra stroju</div><div id="gearTop" style="font-size:0.9rem; font-weight:500;">-</div></div>
                 <div class="gear-box"><div class="gear-title">🩳 Dół stroju</div><div id="gearBottom" style="font-size:0.9rem; font-weight:500;">-</div></div>
@@ -526,8 +530,10 @@
     </aside>
 </div>
 
+<!-- PRZYCISK USTAWIEŃ -->
 <div class="settings-toggle" id="settingsToggle" onclick="toggleSettingsPanel()"><span>⚙️ Ustawienia</span></div>
 
+<!-- PANEL USTAWIEŃ -->
 <div class="settings-panel" id="settingsPanel">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
         <h3 style="margin:0; font-size:1.15rem; color:var(--primary);">⚙️ Ustawienia</h3>
@@ -535,32 +541,45 @@
     </div>
     <div class="settings-tabs">
         <button class="settings-tab-btn" data-tab="profile" onclick="switchSettingsTab('profile', this)">👤 Profil</button>
-        <button class="settings-tab-btn" data-tab="records" onclick="switchSettingsTab('records', this)">🏆 Rekordy</button>
+        <button class="settings-tab-btn" data-tab="records" onclick="switchSettingsTab('records', this)">🏆 PB</button>
+        <button class="settings-tab-btn" data-tab="gear" onclick="switchSettingsTab('gear', this)">👟 Sprzęt</button>
         <button class="settings-tab-btn active" data-tab="appearance" onclick="switchSettingsTab('appearance', this)">🎨 Wygląd</button>
     </div>
+    
     <div class="settings-tab-content" id="tab-profile">
         <div class="form-grid-2">
             <div class="form-group"><label>Imię</label><input type="text" id="profName" placeholder="Np. Tomek"></div>
             <div class="form-group"><label>Płeć</label><select id="profGender"><option value="M">Mężczyzna</option><option value="K">Kobieta</option></select></div>
-            <div class="form-group"><label>Waga (kg)</label><input type="number" id="profWeight" placeholder="75" min="30" max="200"></div>
-            <div class="form-group"><label>Wzrost (cm)</label><input type="number" id="profHeight" placeholder="180" min="100" max="230"></div>
-            <div class="form-group"><label>Tętno spocz. (bpm)</label><input type="number" id="profHrRest" placeholder="52" min="30" max="100"></div>
-            <div class="form-group"><label>Tętno max. (bpm)</label><input type="number" id="profHrMax" placeholder="190" min="120" max="240"></div>
+            <div class="form-group"><label>Waga (kg)</label><input type="number" id="profWeight" placeholder="75"></div>
+            <div class="form-group"><label>Wzrost (cm)</label><input type="number" id="profHeight" placeholder="180"></div>
+            <div class="form-group"><label>Tętno spocz.</label><input type="number" id="profHrRest" placeholder="52"></div>
+            <div class="form-group"><label>Tętno max.</label><input type="number" id="profHrMax" placeholder="190"></div>
         </div>
         <div class="form-group" style="margin-bottom:0.8rem;"><label>Twoje tempo EASY (min/km)</label><input type="text" id="profEasyPace" placeholder="05:30" maxlength="5"></div>
         <button class="placebo-save-btn" id="saveProfileBtn" onclick="saveProfileData()">💾 Zapisz profil</button>
     </div>
+
     <div class="settings-tab-content" id="tab-records">
         <div class="form-grid-2">
-            <div class="form-group"><label>1 km (mm:ss)</label><input type="text" id="rec1k" placeholder="03:30" maxlength="5"></div>
-            <div class="form-group"><label>3 km (mm:ss)</label><input type="text" id="rec3k" placeholder="12:30" maxlength="5"></div>
-            <div class="form-group"><label>5 km (mm:ss)</label><input type="text" id="rec5k" placeholder="21:30" maxlength="5"></div>
-            <div class="form-group"><label>10 km (mm:ss)</label><input type="text" id="rec10k" placeholder="45:00" maxlength="5"></div>
-            <div class="form-group"><label>Półmaraton (g:mm:ss)</label><input type="text" id="rec21k" placeholder="01:42:00" maxlength="8"></div>
-            <div class="form-group"><label>Maraton (g:mm:ss)</label><input type="text" id="rec42k" placeholder="03:35:00" maxlength="8"></div>
+            <div class="form-group"><label>1 km (mm:ss)</label><input type="text" id="rec1k" placeholder="03:30"></div>
+            <div class="form-group"><label>3 km (mm:ss)</label><input type="text" id="rec3k" placeholder="12:30"></div>
+            <div class="form-group"><label>5 km (mm:ss)</label><input type="text" id="rec5k" placeholder="21:30"></div>
+            <div class="form-group"><label>10 km (mm:ss)</label><input type="text" id="rec10k" placeholder="45:00"></div>
+            <div class="form-group"><label>Półmaraton (g:mm:ss)</label><input type="text" id="rec21k" placeholder="01:42:00"></div>
+            <div class="form-group"><label>Maraton (g:mm:ss)</label><input type="text" id="rec42k" placeholder="03:35:00"></div>
         </div>
         <button class="placebo-save-btn" id="saveRecordsBtn" onclick="saveRecordsData()">💾 Zapisz rekordy</button>
     </div>
+
+    <!-- ZAKŁADKA SPRZĘT (BUTY) W USTAWIENIACH -->
+    <div class="settings-tab-content" id="tab-gear">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+            <span style="font-size:0.88rem; font-weight:700; color:var(--primary);">👟 Twoje Buty Biegowe</span>
+            <button onclick="openAddShoeModal()" style="padding:0.3rem 0.7rem; font-size:0.78rem; min-height:28px; border-radius:8px;">➕ Dodaj parę</button>
+        </div>
+        <div id="settingsShoesList" style="display:flex; flex-direction:column; gap:0.5rem; max-height:340px; overflow-y:auto; padding-right:2px;"></div>
+    </div>
+
     <div class="settings-tab-content active" id="tab-appearance">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.7rem; font-size:0.88rem; font-weight:600;">
             <span>🖼️ Zestaw ikon:</span><button class="settings-sub-btn" id="settingIconBtn" onclick="toggleIconMode()">Animowane</button>
@@ -573,23 +592,107 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="addRunModal" onclick="if(event.target === this) closeAddRunModal()">
+<!-- MODAL DODAWANIA/EDYCJI BIEGU -->
+<div class="modal-overlay" id="addRunModal" onclick="if(event.target === this) closeRunModal()">
     <div class="modal-card">
-        <h3 style="margin: 0 0 1rem 0; color: var(--primary);">➕ Dodaj ukończony bieg</h3>
+        <h3 id="runModalTitle" style="margin: 0 0 1rem 0; color: var(--primary);">➕ Dodaj ukończony bieg</h3>
+        <input type="hidden" id="editingRunId" value="">
         <div class="form-group" style="margin-bottom: 0.8rem;"><label>Dystans (km)</label><input type="text" id="runInputKm" inputmode="decimal" placeholder="np. 10.5 lub 10,5"></div>
         <div class="form-group" style="margin-bottom: 0.8rem;"><label>Czas biegu</label><input type="text" id="runInputTime" placeholder="MM:SS lub GG:MM:SS"></div>
         <div class="form-group" style="margin-bottom: 0.8rem;">
             <label>Typ biegu</label>
             <select id="runInputType"><option value="easy">🟢 Spokojny (Easy)</option><option value="tempo">🟡 Tempowy / Progowy</option><option value="race">🔴 Start / Test na maksa</option></select>
         </div>
+        <div class="form-group" style="margin-bottom: 0.8rem;">
+            <label>Użyte buty</label>
+            <select id="runInputShoe"><option value="">-- Bez przypisanych butów --</option></select>
+        </div>
         <div class="form-group" style="margin-bottom: 1.2rem;"><label>Data treningu</label><input type="date" id="runInputDate"></div>
         <div style="display: flex; gap: 0.6rem;">
-            <button style="flex: 1;" onclick="submitNewRun()">Zapisz bieg</button>
-            <button style="flex: 1; background: rgba(0,0,0,0.1); color: inherit; box-shadow: none;" onclick="closeAddRunModal()">Anuluj</button>
+            <button style="flex: 1;" onclick="submitRunForm()">Zapisz bieg</button>
+            <button style="flex: 1; background: rgba(0,0,0,0.1); color: inherit; box-shadow: none;" onclick="closeRunModal()">Anuluj</button>
         </div>
     </div>
 </div>
 
+<!-- MODAL DODAWANIA/EDYCJI BUTÓW -->
+<div class="modal-overlay" id="shoeModal" onclick="if(event.target === this) closeShoeModal()">
+    <div class="modal-card">
+        <h3 id="shoeModalTitle" style="margin: 0 0 1rem 0; color: var(--primary);">👟 Dodaj Parę Butów</h3>
+        <input type="hidden" id="editingShoeId" value="">
+        <div class="form-group" style="margin-bottom: 0.8rem;"><label>Model / Nazwa buta</label><input type="text" id="shoeModalName" placeholder="np. Nike Pegasus 40, Hoka Speedgoat 5"></div>
+        <div class="form-grid-2">
+            <div class="form-group"><label>Przeznaczenie</label>
+                <select id="shoeModalSurface">
+                    <option value="Asfalt">🛣️ Asfalt / Szosa</option>
+                    <option value="Trail">🌲 Trail / Teren</option>
+                    <option value="Mieszane">🔀 Mieszane / Uniwersalne</option>
+                    <option value="Startowe">⚡ Startowe / Karbon</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Status</label>
+                <select id="shoeModalStatus">
+                    <option value="active">🟢 W rotacji (aktywne)</option>
+                    <option value="retired">📦 Wycofane (emerytura)</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Limit żywotności (km)</label><input type="number" id="shoeModalMax" value="800" min="100" max="2500"></div>
+            <div class="form-group"><label>Przebieg pocz. (km)</label><input type="number" id="shoeModalInitial" value="0" min="0" step="0.5"></div>
+        </div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem; line-height:1.4;">
+            ℹ️ Przebieg początkowy to kilometry przebiegnięte w tych butach przed wprowadzeniem ich do MeteoRun.
+        </div>
+        <div style="display: flex; gap: 0.6rem;">
+            <button style="flex: 1;" onclick="submitShoeForm()">Zapisz buty</button>
+            <button style="flex: 1; background: rgba(0,0,0,0.1); color: inherit; box-shadow: none;" onclick="closeShoeModal()">Anuluj</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KALENDARZA STARTÓW -->
+<div class="modal-overlay" id="raceModal" onclick="if(event.target === this) closeRaceModal()">
+    <div class="modal-card">
+        <h3 id="raceModalTitle" style="margin: 0 0 1rem 0; color: var(--primary);">🗓️ Zaplanuj Start w Zawodach</h3>
+        <input type="hidden" id="editingRaceId" value="">
+        <div class="form-group" style="margin-bottom: 0.8rem;"><label>Nazwa imprezy / biegu</label><input type="text" id="raceInputName" placeholder="np. Półmaraton Warszawski, Bieg Rzeźnika"></div>
+        <div class="form-grid-2">
+            <div class="form-group"><label>Dystans</label>
+                <select id="raceInputPresetDist" onchange="handleRaceDistChange()">
+                    <option value="5">5 km</option>
+                    <option value="10">10 km</option>
+                    <option value="21.097">Półmaraton (21.1 km)</option>
+                    <option value="42.195">Maraton (42.2 km)</option>
+                    <option value="custom">Inny dystans...</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Wpisz km</label><input type="number" id="raceInputCustomKm" value="5" step="0.1" min="0.1"></div>
+            <div class="form-group"><label>Typ trasy</label>
+                <select id="raceInputType">
+                    <option value="asfalt">🛣️ Asfalt / Szosa</option>
+                    <option value="trail">🌲 Trail / Teren</option>
+                    <option value="mieszany">🔀 Trasa mieszana</option>
+                    <option value="bieznia">🏟️ Bieżnia LA</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Status opłaty</label>
+                <select id="raceInputPaid">
+                    <option value="paid">✅ Opłacony</option>
+                    <option value="unpaid">⏳ Do opłacenia</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-grid-2">
+            <div class="form-group"><label>Data startu</label><input type="date" id="raceInputDate"></div>
+            <div class="form-group"><label>Cel czasowy (opcjonalnie)</label><input type="text" id="raceInputTarget" placeholder="np. sub 45:00"></div>
+        </div>
+        <div style="display: flex; gap: 0.6rem; margin-top: 0.5rem;">
+            <button style="flex: 1;" onclick="submitRaceForm()">Zapisz zawody</button>
+            <button style="flex: 1; background: rgba(0,0,0,0.1); color: inherit; box-shadow: none;" onclick="closeRaceModal()">Anuluj</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL HISTORII BIEGÓW -->
 <div class="modal-overlay" id="historyModal" onclick="if(event.target === this) closeHistoryModal()">
     <div class="modal-card">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -605,17 +708,8 @@
     const THEMES = [
         { name: 'Domyślny (Auto)', value: 'auto', emoji: '🌓' }, { name: 'Jasny', value: 'light', emoji: '☀️' },
         { name: 'Ciemny', value: 'dark', emoji: '🌙' }, { name: 'Matrix', value: 'matrix', emoji: '📟' },
-        { name: 'Hubba Bubba', value: 'hubba-bubba', emoji: '🍬' }, { name: 'Las', value: 'forest', emoji: '🌲' },
-        { name: 'Kosmos', value: 'space', emoji: '🚀' }, { name: 'Pustynia', value: 'desert', emoji: '🏜️' },
-        { name: 'Deszczowy Dzień', value: 'rainy-day', emoji: '🌧️' }, { name: 'Wiosna', value: 'spring', emoji: '🌸' },
-        { name: 'Lato', value: 'summer', emoji: '🌞' }, { name: 'Jesień', value: 'autumn', emoji: '🍁' },
-        { name: 'Zima', value: 'winter', emoji: '⛄' }, { name: 'Świąteczny', value: 'christmas', emoji: '🎄' },
-        { name: 'Wielkanoc', value: 'easter', emoji: '🐰' }, { name: 'Urodziny', value: 'birthday', emoji: '🎂' },
-        { name: 'Disco', value: 'disco', emoji: '🎵' }, { name: 'Ocean', value: 'ocean', emoji: '🌊' },
-        { name: 'Zachód słońca', value: 'sunset', emoji: '🌅' }, { name: 'Neon', value: 'neon', emoji: '💡' },
-        { name: 'Retro', value: 'retro', emoji: '📺' }, { name: 'Galaktyka', value: 'galaxy', emoji: '🌌' },
-        { name: 'Słodki', value: 'candy', emoji: '🍭' }, { name: 'Monochrom', value: 'monochrome', emoji: '⚫' },
-        { name: 'Bursztyn', value: 'amber', emoji: '🟠' }
+        { name: 'Las', value: 'forest', emoji: '🌲' }, { name: 'Kosmos', value: 'space', emoji: '🚀' },
+        { name: 'Neon', value: 'neon', emoji: '💡' }
     ];
     const WEATHER_ICONS = {1000:{day:'113.svg',night:'113.svg'},1003:{day:'116.svg',night:'116.svg'},1006:{day:'119.svg',night:'119.svg'},1009:{day:'122.svg',night:'122.svg'},1030:{day:'143.svg',night:'143.svg'},1063:{day:'176.svg',night:'176.svg'},1066:{day:'179.svg',night:'179.svg'},1069:{day:'182.svg',night:'182.svg'},1072:{day:'185.svg',night:'185.svg'},1087:{day:'200.svg',night:'200.svg'},1114:{day:'227.svg',night:'227.svg'},1117:{day:'230.svg',night:'230.svg'},1135:{day:'248.svg',night:'248.svg'},1147:{day:'260.svg',night:'260.svg'},1150:{day:'263.svg',night:'263.svg'},1153:{day:'266.svg',night:'266.svg'},1168:{day:'281.svg',night:'281.svg'},1171:{day:'284.svg',night:'284.svg'},1180:{day:'293.svg',night:'293.svg'},1183:{day:'296.svg',night:'296.svg'},1186:{day:'299.svg',night:'299.svg'},1189:{day:'302.svg',night:'302.svg'},1192:{day:'305.svg',night:'305.svg'},1195:{day:'308.svg',night:'308.svg'},1198:{day:'311.svg',night:'311.svg'},1201:{day:'314.svg',night:'314.svg'},1204:{day:'317.svg',night:'317.svg'},1207:{day:'320.svg',night:'320.svg'},1210:{day:'323.svg',night:'323.svg'},1213:{day:'326.svg',night:'326.svg'},1216:{day:'329.svg',night:'329.svg'},1219:{day:'332.svg',night:'332.svg'},1222:{day:'335.svg',night:'335.svg'},1225:{day:'338.svg',night:'338.svg'},1237:{day:'350.svg',night:'350.svg'},1240:{day:'353.svg',night:'353.svg'},1243:{day:'356.svg',night:'356.svg'},1246:{day:'359.svg',night:'359.svg'},1249:{day:'362.svg',night:'362.svg'},1252:{day:'365.svg',night:'365.svg'},1255:{day:'368.svg',night:'368.svg'},1258:{day:'371.svg',night:'371.svg'},1261:{day:'374.svg',night:'374.svg'},1264:{day:'377.svg',night:'377.svg'},1273:{day:'386.svg',night:'386.svg'},1276:{day:'389.svg',night:'389.svg'},1279:{day:'392.svg',night:'392.svg'},1282:{day:'395.svg',night:'395.svg'}};
     const MOON_PHASES = {'new moon':{name:'Nów',icon:'🌑'},'waxing crescent':{name:'Przybywający sierp',icon:'🌒'},'first quarter':{name:'Pierwsza kwadra',icon:'🌓'},'waxing gibbous':{name:'Przybywający garb',icon:'🌔'},'full moon':{name:'Pełnia',icon:'🌕'},'waning gibbous':{name:'Ubywający garb',icon:'🌖'},'last quarter':{name:'Ostatnia kwadra',icon:'🌗'},'third quarter':{name:'Trzecia kwadra',icon:'🌗'},'waning crescent':{name:'Ubywający sierp',icon:'🌘'}};
@@ -628,25 +722,47 @@
     let lastAstroData = null, lastWeatherData = null;
     let currentDayContext = { chance: 0, totalMm: 0 };
     let sparklineMode = 'week', sparklineOffset = 0;
+    let shoesWidgetCurrentTab = 'active'; // 'active' lub 'retired'
 
+    // Baza profilu i PB
     let runnerProfile = { name:'', gender:'M', weight:75, height:180, hrRest:55, hrMax:185, easyPace:'05:30' };
     try { const sp = localStorage.getItem('meteoProfile'); if (sp) runnerProfile = Object.assign(runnerProfile, JSON.parse(sp)); } catch(e){}
     let runnerRecords = { d1k:'', d3k:'', d5k:'', d10k:'', d21k:'', d42k:'' };
     try { const sr = localStorage.getItem('meteoRecords'); if (sr) runnerRecords = Object.assign(runnerRecords, JSON.parse(sr)); } catch(e){}
+
+    // Baza butów (z polem retired: boolean)
+    let runnerShoes = [];
+    try {
+        const sShoes = localStorage.getItem('meteoShoes');
+        runnerShoes = sShoes ? JSON.parse(sShoes) : [
+            { id: 'shoe_1', name: 'Nike Pegasus 40', surface: 'Asfalt', initialKm: 120, maxKm: 800, retired: false },
+            { id: 'shoe_2', name: 'Hoka Speedgoat 5', surface: 'Trail', initialKm: 45, maxKm: 700, retired: false }
+        ];
+        runnerShoes = runnerShoes.map(s => ({ ...s, retired: !!s.retired }));
+    } catch(e) { runnerShoes = []; }
+
+    // Baza zaplanowanych startów
+    let runnerRaces = [];
+    try {
+        const sRaces = localStorage.getItem('meteoRaces');
+        runnerRaces = sRaces ? JSON.parse(sRaces) : [
+            { id: 'race_1', name: 'Półmaraton Warszawski', date: '2026-11-22', distKm: 21.1, type: 'asfalt', paid: true, target: '1:45:00' }
+        ];
+    } catch(e) { runnerRaces = []; }
+
+    // Baza biegów
     let runnerRuns = [];
     try {
         const sRuns = localStorage.getItem('meteoRuns');
         runnerRuns = sRuns ? JSON.parse(sRuns) : [];
         if (!Array.isArray(runnerRuns)) runnerRuns = [];
-        let needsSave = false;
-        runnerRuns = runnerRuns.map(r => { if (!r.type) { needsSave = true; return { ...r, type: 'easy' }; } return r; });
-        if (needsSave) localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns));
     } catch(e) { runnerRuns = []; }
 
     function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
     function getRandomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
     function localDateStr(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 
+    // Canvas tła
     const canvas = document.getElementById('particlesCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [], currentPresetName = 'none', currentPreset = null, windAngleOffset = 0, particleLoopActive = false;
@@ -703,6 +819,452 @@
         const d = new Date(s); return isNaN(d.getTime()) ? null : d;
     }
 
+    // ==========================================
+    // MODUŁ BUTÓW I SPRZĘTU (ZARZĄDZANIE, EDYCJA, WYCOFYWANIE)
+    // ==========================================
+    function getShoeMileage(shoeId) {
+        const shoe = runnerShoes.find(s => s.id === shoeId);
+        if (!shoe) return 0;
+        const runsKm = runnerRuns.filter(r => r.shoeId === shoeId).reduce((acc, r) => acc + (parseFloat(r.km) || 0), 0);
+        return (parseFloat(shoe.initialKm) || 0) + runsKm;
+    }
+
+    function populateShoeSelect(selectId, selectedShoeId = '') {
+        const sel = document.getElementById(selectId);
+        if (!sel) return;
+        sel.innerHTML = '<option value="">-- Bez przypisanych butów --</option>';
+        
+        // Aktywne
+        const activeGroup = document.createElement('optgroup');
+        activeGroup.label = '🟢 W rotacji (aktywne)';
+        runnerShoes.filter(s => !s.retired).forEach(s => {
+            const currentKm = getShoeMileage(s.id);
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = `${s.name} (${currentKm.toFixed(1)} / ${s.maxKm} km)`;
+            if (s.id === selectedShoeId) opt.selected = true;
+            activeGroup.appendChild(opt);
+        });
+        if (activeGroup.children.length > 0) sel.appendChild(activeGroup);
+
+        // Wycofane (jeśli są, lub gdy edytowany bieg ma przypisane wycofane buty)
+        const retiredShoes = runnerShoes.filter(s => s.retired);
+        if (retiredShoes.length > 0) {
+            const retGroup = document.createElement('optgroup');
+            retGroup.label = '📦 Wycofane / Emerytura';
+            retiredShoes.forEach(s => {
+                const currentKm = getShoeMileage(s.id);
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.textContent = `[Wycofane] ${s.name} (${currentKm.toFixed(1)} km)`;
+                if (s.id === selectedShoeId) opt.selected = true;
+                retGroup.appendChild(opt);
+            });
+            sel.appendChild(retGroup);
+        }
+    }
+
+    function openAddShoeModal() {
+        document.getElementById('shoeModalTitle').textContent = '👟 Dodaj Parę Butów';
+        document.getElementById('editingShoeId').value = '';
+        document.getElementById('shoeModalName').value = '';
+        document.getElementById('shoeModalSurface').value = 'Asfalt';
+        document.getElementById('shoeModalStatus').value = 'active';
+        document.getElementById('shoeModalMax').value = '800';
+        document.getElementById('shoeModalInitial').value = '0';
+        document.getElementById('shoeModal').classList.add('active');
+    }
+
+    function openEditShoeModal(id) {
+        const shoe = runnerShoes.find(s => s.id === id);
+        if (!shoe) return;
+        document.getElementById('shoeModalTitle').textContent = '✏️ Edytuj Parę Butów';
+        document.getElementById('editingShoeId').value = shoe.id;
+        document.getElementById('shoeModalName').value = shoe.name;
+        document.getElementById('shoeModalSurface').value = shoe.surface || 'Asfalt';
+        document.getElementById('shoeModalStatus').value = shoe.retired ? 'retired' : 'active';
+        document.getElementById('shoeModalMax').value = shoe.maxKm || 800;
+        document.getElementById('shoeModalInitial').value = shoe.initialKm || 0;
+        document.getElementById('shoeModal').classList.add('active');
+    }
+
+    function closeShoeModal() {
+        document.getElementById('shoeModal').classList.remove('active');
+    }
+
+    function submitShoeForm() {
+        const nameInput = document.getElementById('shoeModalName');
+        const name = nameInput.value.trim();
+        if (!name) { alert('Podaj nazwę lub model buta!'); nameInput.focus(); return; }
+        const surface = document.getElementById('shoeModalSurface').value;
+        const retired = document.getElementById('shoeModalStatus').value === 'retired';
+        const maxKm = parseFloat(document.getElementById('shoeModalMax').value) || 800;
+        const initialKm = parseFloat(document.getElementById('shoeModalInitial').value) || 0;
+        const editId = document.getElementById('editingShoeId').value;
+
+        if (editId) {
+            const idx = runnerShoes.findIndex(s => s.id === editId);
+            if (idx >= 0) {
+                runnerShoes[idx] = { ...runnerShoes[idx], name, surface, maxKm, initialKm, retired };
+            }
+        } else {
+            runnerShoes.push({ id: 'shoe_' + Date.now(), name, surface, maxKm, initialKm, retired });
+        }
+
+        localStorage.setItem('meteoShoes', JSON.stringify(runnerShoes));
+        closeShoeModal();
+        renderSettingsShoesList();
+        renderShoesTrackerWidget();
+        renderHistoryList();
+    }
+
+    function toggleShoeRetirement(id) {
+        const shoe = runnerShoes.find(s => s.id === id);
+        if (!shoe) return;
+        shoe.retired = !shoe.retired;
+        localStorage.setItem('meteoShoes', JSON.stringify(runnerShoes));
+        renderSettingsShoesList();
+        renderShoesTrackerWidget();
+    }
+
+    function deleteShoe(id) {
+        if (!confirm('Czy na pewno chcesz bezpowrotnie usunąć te buty z bazy?')) return;
+        runnerShoes = runnerShoes.filter(s => s.id !== id);
+        localStorage.setItem('meteoShoes', JSON.stringify(runnerShoes));
+        renderSettingsShoesList();
+        renderShoesTrackerWidget();
+        renderHistoryList();
+    }
+
+    function setShoesWidgetTab(tab) {
+        shoesWidgetCurrentTab = tab;
+        document.getElementById('shoeTabActive').classList.toggle('active', tab === 'active');
+        document.getElementById('shoeTabRetired').classList.toggle('active', tab === 'retired');
+        renderShoesTrackerWidget();
+    }
+
+    function renderShoesTrackerWidget() {
+        const c = document.getElementById('shoesTrackerContainer');
+        const countActiveEl = document.getElementById('countActiveShoes');
+        const countRetEl = document.getElementById('countRetiredShoes');
+        if (!c) return;
+
+        const activeShoes = runnerShoes.filter(s => !s.retired);
+        const retiredShoes = runnerShoes.filter(s => s.retired);
+
+        if (countActiveEl) countActiveEl.textContent = activeShoes.length;
+        if (countRetEl) countRetEl.textContent = retiredShoes.length;
+
+        const displayedShoes = shoesWidgetCurrentTab === 'active' ? activeShoes : retiredShoes;
+
+        if (displayedShoes.length === 0) {
+            c.innerHTML = `<div style="font-size:0.85rem; opacity:0.8; grid-column: 1/-1; padding:0.8rem 0; text-align:center;">
+                ${shoesWidgetCurrentTab === 'active' ? 'Brak aktywnych par w rotacji. Dodaj buty przyciskiem powyżej!' : 'Brak wycofanych par. Gdy buty skończą żywot, możesz je przenieść na emeryturę.'}
+            </div>`;
+            return;
+        }
+
+        c.innerHTML = displayedShoes.map(s => {
+            const km = getShoeMileage(s.id);
+            const pct = Math.min(100, Math.round((km / s.maxKm) * 100));
+            const left = Math.max(0, s.maxKm - km);
+            let color = '#27ae60';
+            if (pct >= 85) color = '#e74c3c';
+            else if (pct >= 60) color = '#f39c12';
+
+            return `<div class="shoe-card ${s.retired ? 'retired' : ''}">
+                <div class="shoe-header">
+                    <div>
+                        <div class="shoe-name">${escapeHtml(s.name)}</div>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(s.surface)}</div>
+                    </div>
+                    <div class="shoe-badges-row">
+                        ${s.retired ? '<span class="shoe-badge retired-badge">📦 Emerytowane</span>' : `<span class="shoe-badge">${pct}%</span>`}
+                    </div>
+                </div>
+                <div class="shoe-progress-bar-bg">
+                    <div class="shoe-progress-fill" style="width: ${pct}%; background: ${s.retired ? 'var(--text-muted)' : color};"></div>
+                </div>
+                <div class="shoe-mileage-text">
+                    <span>${km.toFixed(1)} / ${s.maxKm} km</span>
+                    <span style="color:${left === 0 ? '#e74c3c' : 'inherit'};">
+                        ${s.retired ? 'Wycofane z rotacji' : (left > 0 ? `zostało: ${left.toFixed(0)} km` : 'Zużyte!')}
+                    </span>
+                </div>
+                <div class="shoe-card-actions">
+                    <button onclick="openEditShoeModal('${s.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.85rem; box-shadow:none; min-height:auto;" title="Edytuj dane buta">✏️ Edytuj</button>
+                    <button onclick="toggleShoeRetirement('${s.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.85rem; box-shadow:none; min-height:auto;" title="${s.retired ? 'Przywróć do rotacji' : 'Przenieś na emeryturę'}">
+                        ${s.retired ? '♻️ Przywróć' : '📦 Wycofaj'}
+                    </button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function renderSettingsShoesList() {
+        const c = document.getElementById('settingsShoesList');
+        if (!c) return;
+        if (runnerShoes.length === 0) {
+            c.innerHTML = '<div style="font-size:0.82rem; opacity:0.7; padding:0.5rem 0;">Brak dodanych butów. Dodaj swoją pierwszą parę!</div>';
+            return;
+        }
+        c.innerHTML = runnerShoes.map(s => {
+            const km = getShoeMileage(s.id);
+            return `<div style="display:flex; justify-content:space-between; align-items:center; background:var(--glass-subcard); padding:0.5rem 0.65rem; border-radius:10px; border:1px solid var(--glass-border); font-size:0.82rem; ${s.retired ? 'opacity:0.75; border-style:dashed;' : ''}">
+                <div style="min-width:0; flex:1;">
+                    <div style="font-weight:700;">${escapeHtml(s.name)} ${s.retired ? '<span style="font-size:0.7rem; color:var(--text-muted); font-weight:600;">(Wycofane)</span>' : ''}</div>
+                    <div style="color:var(--text-muted); font-size:0.75rem;">${s.surface} • Przebieg: <strong>${km.toFixed(1)}</strong> / ${s.maxKm} km</div>
+                </div>
+                <div style="display:flex; gap:3px; align-items:center;">
+                    <button onclick="openEditShoeModal('${s.id}')" style="background:transparent; color:inherit; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;" title="Edytuj">✏️</button>
+                    <button onclick="toggleShoeRetirement('${s.id}')" style="background:transparent; color:inherit; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;" title="${s.retired ? 'Przywróć' : 'Wycofaj'}">${s.retired ? '♻️' : '📦'}</button>
+                    <button onclick="deleteShoe('${s.id}')" style="background:transparent; color:#ff4757; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;" title="Usuń">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function openShoesSettings(e) {
+        if (e) e.stopPropagation();
+        const p = document.getElementById('settingsPanel');
+        if (p) { p.classList.add('active'); switchSettingsTab('gear'); }
+    }
+
+    // ==========================================
+    // MODUŁ KALENDARZA STARTOWEGO
+    // ==========================================
+    function openAddRaceModal() {
+        document.getElementById('raceModalTitle').textContent = '🗓️ Zaplanuj Start w Zawodach';
+        document.getElementById('editingRaceId').value = '';
+        document.getElementById('raceInputName').value = '';
+        document.getElementById('raceInputPresetDist').value = '5';
+        document.getElementById('raceInputCustomKm').value = '5';
+        document.getElementById('raceInputCustomKm').disabled = true;
+        document.getElementById('raceInputType').value = 'asfalt';
+        document.getElementById('raceInputPaid').value = 'paid';
+        document.getElementById('raceInputDate').value = localDateStr(new Date());
+        document.getElementById('raceInputTarget').value = '';
+        document.getElementById('raceModal').classList.add('active');
+    }
+
+    function openEditRaceModal(id) {
+        const race = runnerRaces.find(r => r.id === id);
+        if (!race) return;
+        document.getElementById('raceModalTitle').textContent = '✏️ Edytuj Zaplanowany Start';
+        document.getElementById('editingRaceId').value = race.id;
+        document.getElementById('raceInputName').value = race.name;
+        
+        const presets = ['5', '10', '21.097', '42.195'];
+        if (presets.includes(String(race.distKm))) {
+            document.getElementById('raceInputPresetDist').value = String(race.distKm);
+            document.getElementById('raceInputCustomKm').value = race.distKm;
+            document.getElementById('raceInputCustomKm').disabled = true;
+        } else {
+            document.getElementById('raceInputPresetDist').value = 'custom';
+            document.getElementById('raceInputCustomKm').value = race.distKm;
+            document.getElementById('raceInputCustomKm').disabled = false;
+        }
+
+        document.getElementById('raceInputType').value = race.type || 'asfalt';
+        document.getElementById('raceInputPaid').value = race.paid ? 'paid' : 'unpaid';
+        document.getElementById('raceInputDate').value = race.date;
+        document.getElementById('raceInputTarget').value = race.target || '';
+        document.getElementById('raceModal').classList.add('active');
+    }
+
+    function handleRaceDistChange() {
+        const sel = document.getElementById('raceInputPresetDist').value;
+        const customInp = document.getElementById('raceInputCustomKm');
+        if (sel === 'custom') {
+            customInp.disabled = false;
+            customInp.focus();
+        } else {
+            customInp.disabled = true;
+            customInp.value = sel;
+        }
+    }
+
+    function closeRaceModal() { document.getElementById('raceModal').classList.remove('active'); }
+
+    function submitRaceForm() {
+        const name = document.getElementById('raceInputName').value.trim();
+        if (!name) { alert('Podaj nazwę zawodów!'); return; }
+        const selPreset = document.getElementById('raceInputPresetDist').value;
+        const distKm = parseFloat(selPreset === 'custom' ? document.getElementById('raceInputCustomKm').value : selPreset) || 5;
+        const type = document.getElementById('raceInputType').value;
+        const paid = document.getElementById('raceInputPaid').value === 'paid';
+        const date = document.getElementById('raceInputDate').value || localDateStr(new Date());
+        const target = document.getElementById('raceInputTarget').value.trim();
+        const editId = document.getElementById('editingRaceId').value;
+
+        if (editId) {
+            const idx = runnerRaces.findIndex(r => r.id === editId);
+            if (idx >= 0) {
+                runnerRaces[idx] = { id: editId, name, distKm, type, paid, date, target };
+            }
+        } else {
+            runnerRaces.push({ id: 'race_' + Date.now(), name, distKm, type, paid, date, target });
+        }
+        
+        runnerRaces.sort((a,b) => new Date(a.date) - new Date(b.date));
+        localStorage.setItem('meteoRaces', JSON.stringify(runnerRaces));
+        closeRaceModal();
+        renderRaceCalendarWidget();
+    }
+
+    function toggleRacePayment(id) {
+        const race = runnerRaces.find(r => r.id === id);
+        if (!race) return;
+        race.paid = !race.paid;
+        localStorage.setItem('meteoRaces', JSON.stringify(runnerRaces));
+        renderRaceCalendarWidget();
+    }
+
+    function deleteRace(id) {
+        if (!confirm('Czy na pewno chcesz usunąć ten start?')) return;
+        runnerRaces = runnerRaces.filter(r => r.id !== id);
+        localStorage.setItem('meteoRaces', JSON.stringify(runnerRaces));
+        renderRaceCalendarWidget();
+    }
+
+    function renderRaceCalendarWidget() {
+        const c = document.getElementById('raceCalendarContainer');
+        if (!c) return;
+        if (runnerRaces.length === 0) {
+            c.innerHTML = '<div style="font-size:0.85rem; opacity:0.8; grid-column: 1/-1; padding:0.5rem 0;">Brak zaplanowanych startów. Kliknij „Dodaj start” aby zaplanować swój cel!</div>';
+            return;
+        }
+
+        const now = new Date();
+        now.setHours(0,0,0,0);
+        const typeLabels = { asfalt: '🛣️ Asfalt', trail: '🌲 Trail', mieszany: '🔀 Mieszana', bieznia: '🏟️ Bieżnia' };
+
+        c.innerHTML = runnerRaces.map(r => {
+            const rDate = parseRunDate(r.date);
+            let daysDiff = 0, countdownText = '';
+            if (rDate) {
+                rDate.setHours(0,0,0,0);
+                daysDiff = Math.round((rDate - now) / 86400000);
+                if (daysDiff === 0) countdownText = '🔥 Dzisiaj!';
+                else if (daysDiff === 1) countdownText = '⚡ Jutro!';
+                else if (daysDiff > 1) countdownText = `za ${daysDiff} dni`;
+                else countdownText = `odbył się (${Math.abs(daysDiff)} dni temu)`;
+            }
+
+            return `<div class="race-plan-card">
+                <div class="race-plan-header">
+                    <div>
+                        <div class="race-plan-name">${escapeHtml(r.name)}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">📅 ${escapeHtml(r.date)}</div>
+                    </div>
+                    <span class="race-countdown-badge">${countdownText}</span>
+                </div>
+                <div class="race-plan-details">
+                    <span class="race-pill">📏 <strong>${r.distKm} km</strong></span>
+                    <span class="race-pill">${typeLabels[r.type] || 'Inny'}</span>
+                    <span class="race-paid-badge ${r.paid ? 'paid' : 'unpaid'}" onclick="toggleRacePayment('${r.id}')" title="Kliknij, aby zmienić status opłaty">
+                        ${r.paid ? '✓ Opłacony' : '⏳ Nieopłacony'}
+                    </span>
+                    ${r.target ? `<span class="race-pill" style="color:var(--primary);">🎯 Cel: ${escapeHtml(r.target)}</span>` : ''}
+                </div>
+                <div class="race-actions-row">
+                    <button onclick="openEditRaceModal('${r.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.9rem; box-shadow:none; min-height:auto;" title="Edytuj start">✏️</button>
+                    <button onclick="deleteRace('${r.id}')" style="background:transparent; color:#ff4757; border:none; padding:2px 6px; cursor:pointer; font-size:0.9rem; box-shadow:none; min-height:auto;" title="Usuń start">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    // ==========================================
+    // DODAWANIE I EDYCJA BIEGÓW
+    // ==========================================
+    function openAddRunModal() {
+        document.getElementById('runModalTitle').textContent = '➕ Dodaj ukończony bieg';
+        document.getElementById('editingRunId').value = '';
+        document.getElementById('runInputDate').value = localDateStr(new Date());
+        document.getElementById('runInputKm').value = '';
+        document.getElementById('runInputTime').value = '';
+        document.getElementById('runInputType').value = 'easy';
+        populateShoeSelect('runInputShoe', '');
+        document.getElementById('addRunModal').classList.add('active');
+    }
+
+    function openEditRunModal(id) {
+        const run = runnerRuns.find(r => String(r.id) === String(id));
+        if (!run) return;
+        document.getElementById('runModalTitle').textContent = '✏️ Edytuj bieg';
+        document.getElementById('editingRunId').value = run.id;
+        document.getElementById('runInputKm').value = run.km;
+        document.getElementById('runInputTime').value = run.timeStr || secondsToTimeString(run.sec);
+        document.getElementById('runInputType').value = run.type || 'easy';
+        document.getElementById('runInputDate').value = run.date;
+        populateShoeSelect('runInputShoe', run.shoeId || '');
+        document.getElementById('addRunModal').classList.add('active');
+    }
+
+    function closeRunModal() { document.getElementById('addRunModal').classList.remove('active'); }
+
+    function submitRunForm() {
+        const kmEl = document.getElementById('runInputKm'), ts = document.getElementById('runInputTime').value.trim(), ds = document.getElementById('runInputDate').value.trim(), tp = document.getElementById('runInputType').value;
+        const shoeId = document.getElementById('runInputShoe').value;
+        const editId = document.getElementById('editingRunId').value;
+        const km = parseFloat(kmEl.value.replace(',', '.').trim());
+        if (isNaN(km) || km <= 0) { alert('Podaj prawidłowy dystans!'); kmEl.focus(); return; }
+        const sec = timeStringToSeconds(ts), ps = (sec > 0 && km > 0) ? Math.round(sec/km) : 0;
+
+        if (editId) {
+            const idx = runnerRuns.findIndex(r => String(r.id) === String(editId));
+            if (idx >= 0) {
+                runnerRuns[idx] = { ...runnerRuns[idx], km: Math.round(km*100)/100, timeStr: ts || (sec > 0 ? secondsToTimeString(sec) : '--:--'), sec: sec || 0, paceSec: ps, date: ds || localDateStr(new Date()), type: tp, shoeId: shoeId };
+            }
+        } else {
+            const run = { id: String(Date.now()), km: Math.round(km*100)/100, timeStr: ts || (sec > 0 ? secondsToTimeString(sec) : '--:--'), sec: sec || 0, paceSec: ps, date: ds || localDateStr(new Date()), type: tp, shoeId: shoeId };
+            runnerRuns.unshift(run);
+        }
+
+        try { localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns)); } catch(e){}
+        closeRunModal();
+        updateMileageStats();
+        renderRacePredictor();
+        renderShoesTrackerWidget();
+        renderHistoryList();
+    }
+
+    function openHistoryModal() { renderHistoryList(); document.getElementById('historyModal').classList.add('active'); }
+    function closeHistoryModal() { document.getElementById('historyModal').classList.remove('active'); }
+    
+    function deleteRunItem(id) {
+        if (!confirm('Usunąć ten trening z dziennika?')) return;
+        runnerRuns = runnerRuns.filter(r => String(r.id) !== String(id));
+        try { localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns)); } catch(e){}
+        renderHistoryList(); updateMileageStats(); renderRacePredictor(); renderShoesTrackerWidget();
+    }
+
+    function renderHistoryList() {
+        const c = document.getElementById('historyListContainer'); if (!c) return;
+        if (!runnerRuns || runnerRuns.length === 0) { c.innerHTML = '<div style="text-align:center; padding:1.5rem; opacity:0.8;">Brak zapisanych biegów.</div>'; return; }
+        c.innerHTML = runnerRuns.map(r => {
+            const k = (parseFloat(r.km) || 0).toFixed(2), p = r.paceSec > 0 ? `(${secondsToTimeString(r.paceSec)}/km)` : '';
+            const i = RUN_TYPE_ICON[r.type] || RUN_TYPE_ICON.easy, n = RUN_TYPE_LABEL[r.type] || RUN_TYPE_LABEL.easy;
+            const assignedShoe = runnerShoes.find(s => s.id === r.shoeId);
+            const shoeBadge = assignedShoe ? `<span style="font-size:0.75rem; background:rgba(0,102,204,0.12); color:var(--primary); padding:1px 6px; border-radius:5px; margin-left:4px;">👟 ${escapeHtml(assignedShoe.name)}</span>` : '';
+
+            return `<div class="history-item">
+                <div style="min-width:0; flex:1;">
+                    <div><span title="${n}" style="margin-right:4px;">${i}</span><strong>${k} km</strong> • ${escapeHtml(r.timeStr || '--:--')} <span style="opacity:0.8; font-size:0.8rem; margin-left:4px;">${p}</span>${shoeBadge}</div>
+                    <div style="font-size:0.75rem; opacity:0.7; margin-top:2px;">📅 ${escapeHtml(r.date || 'Brak daty')}</div>
+                </div>
+                <div style="display:flex; gap:4px; align-items:center;">
+                    <button onclick="openEditRunModal('${escapeHtml(r.id)}')" style="background:transparent; color:inherit; border:none; padding:4px 6px; cursor:pointer; font-size:1.1rem; box-shadow:none; min-height:auto;" title="Edytuj bieg (zmień buty/czas/km)">✏️</button>
+                    <button onclick="deleteRunItem('${escapeHtml(r.id)}')" style="background:transparent; color:#ff4757; border:none; padding:4px 6px; cursor:pointer; font-size:1.1rem; box-shadow:none; min-height:auto;" title="Usuń bieg">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    // ==========================================
+    // LOGIKA POGODY, SPARKLINE, WYKRESÓW & KILOMETRAŻU
+    // ==========================================
     function getEffectivePrecipLevel(code, text, mm, dC, dM) {
         const c = (text || '').toLowerCase();
         const ch = (dC !== undefined && dC !== null) ? dC : currentDayContext.chance;
@@ -724,6 +1286,7 @@
         if (bi >= 0) { let u = 0; if (dm >= 20 && ch >= 80) u = 3; else if (dm >= 12 && ch >= 75) u = 2; else if (dm >= 6 && ch >= 70) u = 1; else if (ch >= 85 && dm >= 4) u = 1; if (u > 0) l = lv[Math.min(bi + u, lv.length - 1)]; }
         return l;
     }
+
     function calculateRunningScore(t, w, mm, dp, aqi, code=0, text='', dC, dM) {
         let s = 10;
         if (t >= 10 && t <= 16) s -= 0; else if ((t >= 7 && t < 10) || (t > 16 && t <= 20)) s -= 1; else if ((t >= 2 && t < 7) || (t > 20 && t <= 24)) s -= 2.5; else if ((t >= -4 && t < 2) || (t > 24 && t <= 28)) s -= 4.5; else s -= 6.5;
@@ -734,16 +1297,7 @@
         if (aqi >= 5) s -= 5; else if (aqi === 4) s -= 3.5; else if (aqi === 3) s -= 2;
         return Math.max(1, Math.min(10, Math.round(s*10)/10));
     }
-    function getScoreBreakdown(t, w, mm, dp, aqi, code, text, dC, dM) {
-        let tP = 0;
-        if (t >= 10 && t <= 16) tP = 0; else if ((t >= 7 && t < 10) || (t > 16 && t <= 20)) tP = 1; else if ((t >= 2 && t < 7) || (t > 20 && t <= 24)) tP = 2.5; else if ((t >= -4 && t < 2) || (t > 24 && t <= 28)) tP = 4.5; else tP = 6.5;
-        let wP = 0; if (w > 38) wP = 3.5; else if (w > 24) wP = 2; else if (w > 16) wP = 0.8;
-        const p = getEffectivePrecipLevel(code, text, mm, dC, dM);
-        let pP = 0; switch (p) { case 'storm': pP = 9; break; case 'freezing': pP = 8.5; break; case 'snow-heavy': pP = 6; break; case 'snow': pP = 3.5; break; case 'rain-heavy': pP = 7; break; case 'rain-mod': pP = 5; break; case 'rain-light': pP = 2.5; break; case 'drizzle': pP = 1; break; case 'fog': pP = 1.5; break; case 'smog': pP = 3; break; }
-        let dP = 0; if (dp > 20) dP = 3; else if (dp > 16) dP = 1.5;
-        let aP = 0; if (aqi >= 5) aP = 5; else if (aqi === 4) aP = 3.5; else if (aqi === 3) aP = 2;
-        return { tempP: tP, windP: wP, precipP: pP, dewP: dP, aqiP: aP, precip: p };
-    }
+
     function calculatePaceAdjustment(t, w, dp, mm, code=0, text='', dC, dM) {
         let a = 0;
         if (t > 15) a += Math.round((t-15)*1.6); else if (t < -5) a += Math.round(Math.abs(t+5)*1.2);
@@ -757,21 +1311,17 @@
     function generateDetailedRunnerTip(cond, t, w, mm, aqi, dp, code) {
         const l = getEffectivePrecipLevel(code || 0, cond, mm);
         let pool = [];
-        if (l === 'storm') pool = ["⛈️ <strong>Groźba wyładowań!</strong> Odpuść bieg w otwartym terenie.", "⛈️ <strong>Burza w okolicy.</strong> Ryzyko uderzenia pioruna."];
-        else if (l === 'freezing') pool = ["🧊 <strong>Marznący deszcz!</strong> Ekstremalne ryzyko poślizgnięcia.", "🧊 <strong>Gołoledź.</strong> Odpuść bieg lub wybierz bieżnię."];
+        if (l === 'storm') pool = ["⛈️ <strong>Groźba wyładowań!</strong> Odpuść bieg w terenie.", "⛈️ <strong>Burza w okolicy.</strong> Zostań w domu."];
+        else if (l === 'freezing') pool = ["🧊 <strong>Marznący deszcz!</strong> Ekstremalne ryzyko poślizgnięcia.", "🧊 <strong>Gołoledź.</strong> Wybierz bieżnię stacjonarną."];
         else if (l === 'snow-heavy') pool = ["❄️ <strong>Obfity śnieg!</strong> Skróć trening.", "❄️ <strong>Zamieć.</strong> Odłóż długie wybieganie."];
-        else if (l === 'snow') pool = ["❄️ <strong>Śnieg.</strong> Buty trailowe lub z kolcami.", "❄️ <strong>Lekki śnieg.</strong> Trzymaj się głównych ścieżek."];
-        else if (l === 'rain-heavy') pool = ["🌧️ <strong>Ulewa!</strong> Rozważ odpuszczenie.", "🌧️ <strong>Ulewny deszcz.</strong> Krótszy bieg, wolniejsze tempo."];
-        else if (l === 'rain-mod') pool = ["🌧️ <strong>Umiarkowany deszcz.</strong> Ubierz się warstwowo.", "🌧️ <strong>Deszcz.</strong> Mokre buty = ryzyko otarć."];
-        else if (l === 'rain-light') pool = ["🌦️ <strong>Lekki deszcz.</strong> Da się biegać.", "🌦️ <strong>Lekki deszcz.</strong> Wiatrówka, dobre skarpety."];
-        else if (l === 'drizzle') pool = ["🌦️ <strong>Mżawka.</strong> Po 30 min przemakasz.", "🌦️ <strong>Mżawka.</strong> Wiatrówka oddychająca."];
-        else if (l === 'fog') pool = ["🌫️ <strong>Mgła.</strong> Jasne, odblaskowe ubrania.", "🌫️ <strong>Gęsta mgła.</strong> Odblaski, latarka."];
-        else if (l === 'smog') pool = ["😷 <strong>Zła jakość powietrza.</strong> Odpuść interwały.", "😷 <strong>Smog.</strong> Lepiej trenować w pomieszczeniu."];
-        else if (t > 24 || dp > 19) pool = ["🥵 <strong>Upał.</strong> Biegnij o świcie. Tempo w dół o 20–30 s/km.", "🥵 <strong>Gorąco.</strong> Weź bukłak z elektrolitami."];
-        else if (t < -2) pool = ["❄️ <strong>Mróz.</strong> Rozgrzewkę zrób w domu.", "❄️ <strong>Mróz.</strong> Dłuższa rozgrzewka, osłoń twarz."];
-        else if (w > 30) pool = ["💨 <strong>Silny wiatr.</strong> Zacznij pod wiatr.", "💨 <strong>Porywy 30+ km/h.</strong> Skróć krok."];
-        else pool = ["🚀 <strong>Dobre warunki.</strong> Kadencja 170–180.", "🚀 <strong>Świetna pogoda.</strong> Możesz poszaleć.", "🚀 <strong>Warunki optymalne.</strong> Dobry dzień na test formy."];
-        const r = ["🧘 <strong>Regeneracja:</strong> 5 min rolowania ITBS, łydek i pleców.", "🧘 <strong>Regeneracja:</strong> 10 min spaceru + stretching 5 min.", "🧘 <strong>Regeneracja:</strong> Rolowanie 5–10 min."];
+        else if (l === 'snow') pool = ["❄️ <strong>Śnieg.</strong> Załóż buty z agresywnym bieżnikiem trailowym.", "❄️ <strong>Lekki śnieg.</strong> Uważaj na zakrętach."];
+        else if (l === 'rain-heavy') pool = ["🌧️ <strong>Ulewa!</strong> Zadbaj o odzież przeciwdeszczową.", "🌧️ <strong>Mocny deszcz.</strong> Wolniejsze tempo."];
+        else if (l === 'rain-mod') pool = ["🌧️ <strong>Umiarkowany deszcz.</strong> Wiatrówka wodoodporna.", "🌧️ <strong>Deszcz.</strong> Zabezpiecz stopy przed otarciami."];
+        else if (t > 24 || dp > 19) pool = ["🥵 <strong>Upał.</strong> Pij dużo wody i elektrolitów.", "🥵 <strong>Gorąco.</strong> Skoryguj tempo o 20–30 s/km."];
+        else if (t < -2) pool = ["❄️ <strong>Mróz.</strong> Rozgrzewkę zrób w domu.", "❄️ <strong>Niska temperatura.</strong> Osłoń szyję i dłonie."];
+        else if (w > 30) pool = ["💨 <strong>Silny wiatr.</strong> Zacznij bieg pod wiatr.", "💨 <strong>Porywy wiatru.</strong> Skróć krok biegowy."];
+        else pool = ["🚀 <strong>Dobre warunki.</strong> Idealna aura na jednostkę treningową.", "🚀 <strong>Świetna pogoda.</strong> Możesz poszaleć z tempem!"];
+        const r = ["🧘 <strong>Regeneracja:</strong> 5–10 min rolowania i rozciągania.", "🧘 <strong>Regeneracja:</strong> Pamiętaj o posiłku białkowo-węglowodanowym."];
         return `<div>${getRandomItem(pool)}</div><div style="margin-top:0.5rem; padding-top:0.4rem; border-top:1px dashed rgba(150,150,150,0.25);">${getRandomItem(r)}</div>`;
     }
 
@@ -787,40 +1337,13 @@
         const hm = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
         if (cs !== null && cs >= 8 && !rn) return `⭐ <strong>Złote okno!</strong> Ocena: <strong>${cs.toFixed(1)}/10</strong> (godz. ${hm}). Biegnij teraz.`;
         if (cs !== null && cs >= 6.5) return `✅ <strong>Dobre warunki</strong> — <strong>${cs.toFixed(1)}/10</strong> (godz. ${hm}).${rn ? ' Są opady — weź wiatrówkę.' : ''}`;
-        if (cs !== null && cs >= 5) return `👍 <strong>Warunki przeciętne</strong> — <strong>${cs.toFixed(1)}/10</strong> (godz. ${hm}).`;
-        const f = hours.filter(h => { const d = new Date(h.time); const df = d.getTime()-nMs; if (df < -10*60*1000 || df > 12*3600*1000) return false; const hr = d.getHours(); return hr >= 6 && hr <= 21; });
-        if (f.length === 0) return '🌙 <strong>Dziś brak dobrych okien.</strong>';
-        let bs = -1, bi = 0;
-        for (let i = 0; i < f.length; i++) { const s1 = sc(f[i]); const s2 = f[i+1] ? sc(f[i+1]) : s1; const a = f[i+1] ? (s1+s2)/2 : s1; if (a > bs) { bs = a; bi = i; } }
-        const bh = f[bi];
-        if (bs < 5.5) return `🚫 <strong>Dziś brak dobrych okien.</strong> Nawet najlepsze: <strong>${bs.toFixed(1)}/10</strong>.`;
-        const ei = Math.min(bi + 2, f.length - 1), sd = new Date(bh.time), ed = new Date(f[ei].time);
-        const tS = sd.toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' }), tE = ed.toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
-        if (sd.toDateString() !== now.toDateString()) return `📅 <strong>Jutro lepiej:</strong> <strong>${tS}–${tE}</strong> (ocena <strong>${bs.toFixed(1)}/10</strong>).`;
-        const wm = Math.round((sd.getTime() - nMs) / 60000), ws = wm < 60 ? `za ${Math.max(1, wm)} min` : `za ${(wm/60).toFixed(1).replace('.0','')} h`;
-        return `⏰ <strong>Najlepsze okno ${ws}:</strong> <strong>${tS}–${tE}</strong> (ocena <strong>${bs.toFixed(1)}/10</strong>).`;
+        return `👍 <strong>Warunki do biegania</strong> — ocena aktualna: <strong>${cs ? cs.toFixed(1) : '--'}/10</strong>.`;
     }
 
     function generateWeatherSummaryText(fd) {
         if (!fd) return '';
-        const d = fd.day, mxT = Math.round(d.maxtemp_c), mnT = Math.round(d.mintemp_c), w = Math.round(d.maxwind_kph), pr = d.totalprecip_mm, rc = d.daily_chance_of_rain || 0, h = d.avghumidity || 0, uv = d.uv || 0;
-        const p = [];
-        if (mnT < 0) p.push(`Mroźnie — rano ${mnT}°C, w dzień maks. ${mxT}°C`);
-        else if (mnT < 5) p.push(`Zimno — rano ${mnT}°C, w dzień ${mxT}°C`);
-        else if (mnT < 10) p.push(`Chłodno — rano ${mnT}°C, w dzień maks. ${mxT}°C`);
-        else if (mxT > 28) p.push(`Gorąco — rano ${mnT}°C, szczyt ${mxT}°C`);
-        else if (mxT > 22) p.push(`Ciepło — od ${mnT}°C do ${mxT}°C`);
-        else if (mxT - mnT < 4) p.push(`Stabilnie — ok. ${mxT}°C`);
-        else p.push(`Przyjemnie — od ${mnT}°C do ${mxT}°C`);
-        if (pr < 0.3) { if (rc > 60) p.push(`prawie bez opadów (${rc}% szans)`); else if (rc > 30) p.push(`sucho (${rc}% szans)`); else p.push(`bez deszczu`); }
-        else if (pr < 2) p.push(`możliwe przelotne opady — do ${pr.toFixed(1)} mm, ${rc}%`);
-        else if (pr < 6) p.push(`pewny deszcz — do ${pr.toFixed(1)} mm`);
-        else p.push(`dużo deszczu — do ${pr.toFixed(1)} mm`);
-        if (w < 12) p.push(`wiatru prawie nie ma`); else if (w < 22) p.push(`lekki wiatr (${w} km/h)`); else if (w < 32) p.push(`wiatr do ${w} km/h`); else p.push(`silny wiatr, porywy do ${w} km/h`);
-        if (h > 80 && mxT > 20) p.push(`parno (${h}%)`);
-        if (uv >= 6) p.push(`wysokie UV (${uv})`);
-        const t = p.join('. ') + '.';
-        return t.charAt(0).toUpperCase() + t.slice(1);
+        const d = fd.day, mxT = Math.round(d.maxtemp_c), mnT = Math.round(d.mintemp_c), w = Math.round(d.maxwind_kph), pr = d.totalprecip_mm, rc = d.daily_chance_of_rain || 0;
+        return `W ciągu doby temperatura od ${mnT}°C do ${mxT}°C. Prawdopodobieństwo deszczu wynosi ${rc}% (prognozowana suma opadów ok. ${pr.toFixed(1)} mm). Wiatr do ${w} km/h.`;
     }
 
     function getBestEquivalentEffort() {
@@ -831,71 +1354,53 @@
             const dO = parseRunDate(r.date); const dA = dO ? (Date.now() - dO.getTime()) / 86400000 : 60;
             if (dA > 90) return null;
             const t = r.type || 'easy'; const a = sec / getRunTypeMultiplier(t);
-            return { distKm: km, sec: a, pace: a/km, eq10k: a*Math.pow(10/km, riegelK(km)), source: 'log', type: t, daysAgo: dA };
+            return { distKm: km, sec: a, pace: a/km, eq10k: a*Math.pow(10/km, riegelK(km)), source: 'log' };
         }).filter(Boolean).sort((a,b) => a.eq10k - b.eq10k);
-        if (lc.length > 0) { const t = lc.slice(0, Math.min(3, lc.length)); return t.length >= 3 ? t[1] : t[0]; }
-        const pc = []; const pm = [{key:'d3k',d:3},{key:'d5k',d:5},{key:'d10k',d:10},{key:'d21k',d:21.097},{key:'d42k',d:42.195}];
+        if (lc.length > 0) return lc[0];
+
+        const pc = []; const pm = [{key:'d5k',d:5},{key:'d10k',d:10},{key:'d21k',d:21.097},{key:'d42k',d:42.195}];
         for (const pb of pm) { const s = timeStringToSeconds(runnerRecords[pb.key]); if (s > 0) pc.push({ distKm: pb.d, sec: s, source: 'pb', eq10k: s*Math.pow(10/pb.d, riegelK(pb.d)) }); }
         if (pc.length > 0) { pc.sort((a,b) => a.eq10k - b.eq10k); return pc[0]; }
+
         const es = timeStringToSeconds(runnerProfile.easyPace || '05:30'), b = Math.max(180, es - 45);
         return { distKm: 10, sec: b*10, pace: b, eq10k: b*10, source: 'profile' };
-    }
-    function getSourceLabel(be) {
-        if (be.source === 'log') {
-            const n = runnerRuns.filter(r => { const km = parseFloat(r.km), s = parseFloat(r.sec) || timeStringToSeconds(r.timeStr); if (!(km >= 1) || !(s > 0)) return false; const dO = parseRunDate(r.date), dA = dO ? (Date.now() - dO.getTime()) / 86400000 : 60; return dA <= 90; }).length;
-            return `📊 Prognoza z dziennika: ${n} ${n === 1 ? 'bieg' : 'biegi'} (mediana TOP 3 z 90 dni). PB jako referencja.`;
-        }
-        if (be.source === 'pb') return '🏆 Brak treningów — prognoza z PB.';
-        return 'ℹ️ Brak danych — prognoza z profilu Easy.';
     }
 
     function renderRacePredictor() {
         const c = document.getElementById('racePredictorGrid'); if (!c) return;
         const be = getBestEquivalentEffort();
-        const hl = runnerRuns.some(r => parseFloat(r.km) >= 25);
         const targets = [{ name:'1 km', d:1, key:'d1k' },{ name:'3 km', d:3, key:'d3k' },{ name:'5 km', d:5, key:'d5k' },{ name:'10 km', d:10, key:'d10k' },{ name:'Półmaraton', d:21.097, key:'d21k' },{ name:'Maraton', d:42.195, key:'d42k' }];
         c.innerHTML = targets.map(t => {
             const ps = Math.round(be.sec * Math.pow(t.d/be.distKm, riegelK(t.d)));
             const pbs = timeStringToSeconds(runnerRecords[t.key]), pe = pbs > 0, pbsr = pe ? secondsToTimeString(pbs, t.d > 10) : null;
             const bts = secondsToTimeString(ps, t.d > 10), bps = formatPace(ps, t.d);
-            const ex = (t.d/be.distKm) > 2.5;
-            let w = '';
-            if (pe && pbs < ps*0.9 && be.source !== 'pb') w += `<div class="pred-marathon-warn" style="color:#0891b2; background:rgba(8,145,178,0.08); border-color:rgba(8,145,178,0.25);">🏆 PB (${pbsr}) o ${secondsToTimeString(ps - pbs)} szybsze niż prognoza.</div>`;
-            if (t.d > 40 && be.source !== 'pb') w += hl ? '<div class="pred-marathon-warn">⚠️ Prognoza z Riegla — realny start może być 3–8 min wolniejszy.</div>' : '<div class="pred-marathon-warn">⚠️ Brak PB 42 km i długich biegów (25+ km).</div>';
-            if (t.d === 1 && !pe) w += '<div class="pred-marathon-warn speed">⚠️ 1 km — prognoza orientacyjna.</div>';
-            return `<div class="predictor-pill"><div class="pred-header"><span class="pred-dist">${t.name}${ex ? ' <span class="pred-warn" title="Ekstrapolacja > 2,5×">⚠️</span>' : ''}</span>${pe ? `<span class="pred-pb-badge">🏆 ${pbsr}</span>` : `<span class="pred-pb-badge empty">brak PB</span>`}</div><div class="pred-state"><span class="pred-state-label">🎯 Prognoza</span><div class="pred-state-values"><span class="pred-time">${bts}</span><span class="pred-pace">${bps}</span></div></div>${w}</div>`;
+            return `<div class="predictor-pill">
+                <div class="pred-header"><span class="pred-dist">${t.name}</span>${pe ? `<span class="pred-pb-badge">🏆 ${pbsr}</span>` : `<span class="pred-pb-badge empty">brak PB</span>`}</div>
+                <div class="pred-state"><span class="pred-state-label">🎯 Prognoza</span><div class="pred-state-values"><span class="pred-time">${bts}</span><span class="pred-pace">${bps}</span></div></div>
+            </div>`;
         }).join('');
-        const s = document.getElementById('predictorSource'); if (s) s.textContent = getSourceLabel(be);
+        const s = document.getElementById('predictorSource');
+        if (s) s.textContent = be.source === 'log' ? '📊 Prognoza wyliczona na podstawie Twoich biegów z ostatnich 90 dni.' : (be.source === 'pb' ? '🏆 Prognoza na bazie Twoich rekordów życiowych.' : 'ℹ️ Prognoza orientacyjna z tempa Easy.');
     }
 
     function renderRunTypeChart() {
         const cv = document.getElementById('runTypeChart'), lg = document.getElementById('runTypeLegend'), tE = document.getElementById('runTypeChartTotal'), yL = document.getElementById('runTypeChartYearLabel');
         if (!cv) return;
         const now = new Date(), cy = now.getFullYear();
-        const ys = new Date(cy, 0, 1, 0, 0, 0), ye = new Date(cy, 11, 31, 23, 59, 59);
-        const vr = runnerRuns.filter(r => { const km = parseFloat(r.km); if (!(km > 0)) return false; const dO = parseRunDate(r.date); if (!dO) return false; return dO >= ys && dO <= ye; });
+        const ys = new Date(cy, 0, 1), ye = new Date(cy, 11, 31, 23, 59, 59);
+        const vr = runnerRuns.filter(r => { const km = parseFloat(r.km); if (!(km > 0)) return false; const dO = parseRunDate(r.date); return dO && dO >= ys && dO <= ye; });
         const tot = { easy: 0, tempo: 0, race: 0 };
         vr.forEach(r => { const km = parseFloat(r.km) || 0; const t = tot[r.type] !== undefined ? r.type : 'easy'; tot[t] += km; });
         const tKm = tot.easy + tot.tempo + tot.race, ie = tKm === 0;
-        const pe = ie ? 0 : Math.round(tot.easy/tKm*100), pt = ie ? 0 : Math.round(tot.tempo/tKm*100), pr = ie ? 0 : Math.max(0, 100 - pe - pt);
         if (yL) yL.textContent = `Rok ${cy}`;
         if (tE) tE.textContent = ie ? '0 km' : `${tKm.toFixed(1)} km`;
-        if (lg) lg.innerHTML = `<span style="display:inline-flex; align-items:center; gap:3px; color:#27ae60;"><span style="width:8px; height:8px; border-radius:50%; background:#27ae60;"></span> Easy ${pe}%</span><span style="display:inline-flex; align-items:center; gap:3px; color:#f39c12;"><span style="width:8px; height:8px; border-radius:50%; background:#f39c12;"></span> Tempo ${pt}%</span><span style="display:inline-flex; align-items:center; gap:3px; color:#e74c3c;"><span style="width:8px; height:8px; border-radius:50%; background:#e74c3c;"></span> Start ${pr}%</span>`;
+        if (lg) lg.innerHTML = `<span style="color:#27ae60;">Easy ${ie?0:Math.round(tot.easy/tKm*100)}%</span> • <span style="color:#f39c12;">Tempo ${ie?0:Math.round(tot.tempo/tKm*100)}%</span> • <span style="color:#e74c3c;">Start ${ie?0:Math.round(tot.race/tKm*100)}%</span>`;
         const cd = ie ? [1,0,0] : [tot.easy, tot.tempo, tot.race];
         const cc = ie ? ['#d1d5db','#e5e7eb','#e5e7eb'] : ['#27ae60','#f39c12','#e74c3c'];
         if (runTypeChart) { runTypeChart.data.datasets[0].data = cd; runTypeChart.data.datasets[0].backgroundColor = cc; runTypeChart.update(); }
         else {
-            runTypeChart = new Chart(cv.getContext('2d'), { type: 'doughnut', data: { labels: ['Easy','Tempo','Start'], datasets: [{ data: cd, backgroundColor: cc, borderColor: 'rgba(255,255,255,0.9)', borderWidth: 2.5, hoverOffset: 8, spacing: 1 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '62%', animation: { animateRotate: true, animateScale: true, duration: 600 }, plugins: { legend: { display: false }, tooltip: { enabled: !ie, backgroundColor: 'rgba(15,23,42,0.92)', padding: 8, cornerRadius: 8, displayColors: true, callbacks: { label: ctx => { const v = ctx.parsed; const pct = tKm > 0 ? Math.round(v/tKm*100) : 0; return ` ${ctx.label}: ${v.toFixed(1)} km (${pct}%)`; } } } } } });
+            runTypeChart = new Chart(cv.getContext('2d'), { type: 'doughnut', data: { labels: ['Easy','Tempo','Start'], datasets: [{ data: cd, backgroundColor: cc, borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false } } } });
         }
-    }
-
-    function computeTrend(cur, prev, lbl) {
-        if (prev === 0 && cur === 0) return { cls: 'same', text: '—', title: `Brak danych (${lbl})` };
-        if (prev === 0) return { cls: 'up', text: 'nowe', title: `Pierwsze km (+${cur.toFixed(1)})` };
-        const d = cur - prev, p = (d/prev)*100;
-        if (Math.abs(p) < 1) return { cls: 'same', text: '≈ 0%', title: `${d >= 0 ? '+' : ''}${d.toFixed(1)} km vs ${lbl}` };
-        if (p > 0) return { cls: 'up', text: `▲ ${p.toFixed(0)}%`, title: `+${d.toFixed(1)} km vs ${lbl}` };
-        return { cls: 'down', text: `▼ ${Math.abs(p).toFixed(0)}%`, title: `${d.toFixed(1)} km vs ${lbl}` };
     }
 
     function getSparklineRange(off = sparklineOffset, mode = sparklineMode) {
@@ -923,24 +1428,17 @@
         if (!container) return;
         const now = new Date(), isW = sparklineMode === 'week', r = getSparklineRange(), isC = sparklineOffset === 0;
         const mS = ['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
-        const mF = ['styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesień','październik','listopad','grudzień'];
         if (labelEl) {
-            if (isW) {
-                const s = `${r.start.getDate()} ${mS[r.start.getMonth()]}`, e = `${r.end.getDate()} ${mS[r.end.getMonth()]}`;
-                labelEl.textContent = isC ? `Ten tydzień (${s}–${e})` : `${s}–${e} ${r.start.getFullYear()}`;
-            } else {
-                labelEl.textContent = isC ? `Ten miesiąc (${mF[r.start.getMonth()]})` : `${mF[r.start.getMonth()]} ${r.start.getFullYear()}`;
-            }
+            labelEl.textContent = isW ? `${r.start.getDate()} ${mS[r.start.getMonth()]} – ${r.end.getDate()} ${mS[r.end.getMonth()]}` : `${mS[r.start.getMonth()]} ${r.start.getFullYear()}`;
         }
         if (tabW) tabW.classList.toggle('active', isW);
         if (tabM) tabM.classList.toggle('active', !isW);
-        if (nextBtn) { nextBtn.disabled = isC; nextBtn.style.opacity = isC ? '0.35' : '1'; nextBtn.style.cursor = isC ? 'not-allowed' : 'pointer'; }
-        container.style.gap = isW ? '4px' : '2px';
+        if (nextBtn) { nextBtn.disabled = isC; nextBtn.style.opacity = isC ? '0.35' : '1'; }
+        
         const arr = Array.from({ length: r.days }, () => ({ easy: 0, tempo: 0, race: 0 }));
         runnerRuns.forEach(run => {
             const km = parseFloat(run.km); if (!(km > 0)) return;
-            const rd = parseRunDate(run.date); if (!rd) return;
-            if (rd < r.start || rd > r.end) return;
+            const rd = parseRunDate(run.date); if (!rd || rd < r.start || rd > r.end) return;
             const idx = isW ? Math.floor((rd.getTime() - r.start.getTime()) / 86400000) : rd.getDate() - 1;
             if (idx >= 0 && idx < r.days) { const t = arr[idx][run.type] !== undefined ? run.type : 'easy'; arr[idx][t] += km; }
         });
@@ -948,63 +1446,80 @@
         if (totalEl) totalEl.textContent = `${rangeTotal.toFixed(1)} km`;
         const maxKm = Math.max(...totals, 0.1);
         const colors = { easy: '#27ae60', tempo: '#f39c12', race: '#e74c3c' };
-        const todayStr = now.toDateString(), maxW = isW ? 24 : 14;
+
         container.innerHTML = arr.map((types, i) => {
-            let dt;
-            if (isW) { dt = new Date(r.start); dt.setDate(r.start.getDate() + i); }
-            else { dt = new Date(r.start.getFullYear(), r.start.getMonth(), i + 1); }
-            const isT = dt.toDateString() === todayStr, isF = dt > now && !isT;
-            const total = totals[i], tPct = total > 0 ? Math.max(22, (total/maxKm)*100) : 8;
-            let segs = '';
-            if (total > 0) {
-                ['easy','tempo','race'].forEach(t => { const km = types[t]; if (km > 0) { const sp = (km/total)*100; segs += `<div style="width:100%; height:${sp}%; background:${colors[t]}; flex-shrink:0;"></div>`; } });
-            } else segs = `<div style="width:100%; height:100%; background:rgba(100,116,139,0.25);"></div>`;
-            const p = [];
-            if (types.easy > 0) p.push(`${types.easy.toFixed(1)} km easy`);
-            if (types.tempo > 0) p.push(`${types.tempo.toFixed(1)} km tempo`);
-            if (types.race > 0) p.push(`${types.race.toFixed(1)} km start`);
-            const br = p.length ? ` (${p.join(', ')})` : '';
-            const dl = isW ? ['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'][i] : `${i+1} ${mS[r.start.getMonth()]}`;
-            const title = `${dl}: ${total.toFixed(1)} km${br}${isT ? ' • dziś' : ''}`;
-            const glow = isT && total > 0 ? '0 0 0 1.5px var(--primary)' : 'none';
-            return `<div style="flex: 1 1 0; min-width: 0; display: flex; align-items: flex-end; justify-content: center; cursor: help; height: 40px;" title="${title}"><div style="width: 100%; max-width: ${maxW}px; height: ${tPct}%; display: flex; flex-direction: column-reverse; border-radius: 2px 2px 1px 1px; overflow: hidden; opacity: ${isF ? 0.45 : 1}; transition: all 0.3s ease; box-shadow: ${glow};">${segs}</div></div>`;
+            const total = totals[i], tPct = total > 0 ? Math.max(20, (total/maxKm)*100) : 8;
+            let segs = total > 0 ? ['easy','tempo','race'].map(t => types[t] > 0 ? `<div style="width:100%; height:${(types[t]/total)*100}%; background:${colors[t]};"></div>` : '').join('') : `<div style="width:100%; height:100%; background:rgba(100,116,139,0.25);"></div>`;
+            return `<div style="flex:1; display:flex; align-items:flex-end; justify-content:center; height:40px;" title="${total.toFixed(1)} km"><div style="width:100%; max-width:${isW?22:12}px; height:${tPct}%; display:flex; flex-direction:column-reverse; border-radius:2px; overflow:hidden;">${segs}</div></div>`;
         }).join('');
     }
 
-    function initSparklineSwipe() {
-        const el = document.getElementById('weeklySparkline'); if (!el) return;
-        let sx = null;
-        el.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
-        el.addEventListener('touchend', e => {
-            if (sx === null) return;
-            const dx = e.changedTouches[0].clientX - sx; sx = null;
-            if (Math.abs(dx) < 40) return;
-            if (dx < 0) changeSparklineOffset(-1); else changeSparklineOffset(1);
-        }, { passive: true });
+    function updateMileageStats() {
+        const now = new Date(), cy = now.getFullYear(), cm = now.getMonth();
+        const dw = now.getDay() === 0 ? 7 : now.getDay();
+        const mon = new Date(cy, cm, now.getDate() - dw + 1, 0, 0, 0);
+        const sun = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 6, 23, 59, 59);
+        const mS = new Date(cy, cm, 1, 0, 0, 0), mE = new Date(cy, cm + 1, 0, 23, 59, 59);
+        const ys = new Date(cy, 0, 1, 0, 0, 0), ye = new Date(cy, 11, 31, 23, 59, 59);
+        let wK = 0, mK = 0, yK = 0, wS = 0, wKP = 0, wC = 0, mC = 0, yC = 0;
+
+        runnerRuns.forEach(r => {
+            const k = parseFloat(r.km); if (isNaN(k) || k <= 0) return;
+            const rd = parseRunDate(r.date); if (!rd) return;
+            const s = parseFloat(r.sec) || 0;
+            if (rd >= mon && rd <= sun) { wK += k; wC++; if (s > 0) { wS += s; wKP += k; } }
+            if (rd >= mS && rd <= mE) { mK += k; mC++; }
+            if (rd >= ys && rd <= ye) { yK += k; yC++; }
+        });
+
+        const set = (vId, mId, v, cnt) => {
+            const ev = document.getElementById(vId), em = document.getElementById(mId);
+            if (ev) ev.textContent = `${v.toFixed(1)} km`;
+            if (em) em.textContent = cnt > 0 ? `${cnt} ${cnt === 1 ? 'bieg' : 'biegów'}` : 'Brak biegów';
+        };
+        set('mileageWeekVal', 'mileageWeekMeta', wK, wC);
+        set('mileageMonthVal', 'mileageMonthMeta', mK, mC);
+        set('mileageYearVal', 'mileageYearMeta', yK, yC);
+
+        const ep = document.getElementById('mileageWeeklyPace');
+        if (ep) ep.textContent = wKP > 0 ? `Śr. tempo tygodnia: ${secondsToTimeString(wS/wKP)}/km` : 'Śr. tempo tygodnia: --:--/km';
+
+        const el = document.getElementById('mileageLastRun');
+        if (el) {
+            if (runnerRuns.length > 0) {
+                const last = runnerRuns[0];
+                const shoe = runnerShoes.find(s => s.id === last.shoeId);
+                el.innerHTML = `🏁 Ostatni bieg: ${RUN_TYPE_ICON[last.type] || '🟢'} <strong>${(parseFloat(last.km) || 0).toFixed(1)} km</strong> • ${escapeHtml(last.timeStr)} <span style="opacity:0.75;">(${escapeHtml(last.date)})</span>${shoe ? ` • 👟 ${escapeHtml(shoe.name)}` : ''}`;
+            } else el.textContent = '🏁 Ostatni bieg: brak zapisanych treningów';
+        }
+        renderRunTypeChart();
+        renderWeeklySparkline();
     }
 
+    // Ustawienia Tabs
     function switchSettingsTab(t, b = null) {
         document.querySelectorAll('.settings-tab-btn').forEach(x => x.classList.remove('active'));
         document.querySelectorAll('.settings-tab-content').forEach(x => x.classList.remove('active'));
         if (b) b.classList.add('active');
         else { const m = document.querySelector(`.settings-tab-btn[data-tab="${t}"]`); if (m) m.classList.add('active'); }
         const el = document.getElementById(`tab-${t}`); if (el) el.classList.add('active');
+        if (t === 'gear') renderSettingsShoesList();
     }
-    function toggleSettingsPanel() { const p = document.getElementById('settingsPanel'); if (!p) return; const w = !p.classList.contains('active'); p.classList.toggle('active'); if (w) switchSettingsTab('appearance'); }
+    function toggleSettingsPanel() { const p = document.getElementById('settingsPanel'); if (p) p.classList.toggle('active'); }
     function openRecordsSettings(e) { if (e) e.stopPropagation(); const p = document.getElementById('settingsPanel'); if (p) { p.classList.add('active'); switchSettingsTab('records'); } }
 
     function saveProfileData() {
         runnerProfile = { name: document.getElementById('profName').value.trim(), gender: document.getElementById('profGender').value, weight: parseFloat(document.getElementById('profWeight').value) || 75, height: parseFloat(document.getElementById('profHeight').value) || 180, hrRest: parseInt(document.getElementById('profHrRest').value) || 55, hrMax: parseInt(document.getElementById('profHrMax').value) || 185, easyPace: document.getElementById('profEasyPace').value.trim() || '05:30' };
         localStorage.setItem('meteoProfile', JSON.stringify(runnerProfile));
-        const b = document.getElementById('saveProfileBtn'); b.textContent = '✓ Zapisano!'; b.style.background = '#27ae60';
-        setTimeout(() => { b.textContent = '💾 Zapisz profil'; b.style.background = ''; }, 1400);
+        const b = document.getElementById('saveProfileBtn'); b.textContent = '✓ Zapisano!';
+        setTimeout(() => { b.textContent = '💾 Zapisz profil'; }, 1200);
         updateProfileUI(); renderRacePredictor();
     }
     function saveRecordsData() {
         runnerRecords = { d1k: document.getElementById('rec1k').value.trim(), d3k: document.getElementById('rec3k').value.trim(), d5k: document.getElementById('rec5k').value.trim(), d10k: document.getElementById('rec10k').value.trim(), d21k: document.getElementById('rec21k').value.trim(), d42k: document.getElementById('rec42k').value.trim() };
         localStorage.setItem('meteoRecords', JSON.stringify(runnerRecords));
-        const b = document.getElementById('saveRecordsBtn'); b.textContent = '✓ Zapisano!'; b.style.background = '#27ae60';
-        setTimeout(() => { b.textContent = '💾 Zapisz rekordy'; b.style.background = ''; }, 1400);
+        const b = document.getElementById('saveRecordsBtn'); b.textContent = '✓ Zapisano!';
+        setTimeout(() => { b.textContent = '💾 Zapisz rekordy'; }, 1200);
         renderRacePredictor();
     }
     function loadProfileFormInputs() {
@@ -1022,91 +1537,13 @@
         document.getElementById('rec21k').value = runnerRecords.d21k || '';
         document.getElementById('rec42k').value = runnerRecords.d42k || '';
     }
-    function updateProfileUI() { const g = document.getElementById('runnerGreeting'); g.textContent = runnerProfile.name ? `| Cześć, ${escapeHtml(runnerProfile.name)}!` : ''; }
-    function openAddRunModal() { document.getElementById('runInputDate').value = localDateStr(new Date()); document.getElementById('runInputKm').value = ''; document.getElementById('runInputTime').value = ''; document.getElementById('runInputType').value = 'easy'; document.getElementById('addRunModal').classList.add('active'); }
-    function closeAddRunModal() { document.getElementById('addRunModal').classList.remove('active'); }
+    function updateProfileUI() { const g = document.getElementById('runnerGreeting'); if (g) g.textContent = runnerProfile.name ? `| Cześć, ${escapeHtml(runnerProfile.name)}!` : ''; }
 
-    function submitNewRun() {
-        const kmEl = document.getElementById('runInputKm'), ts = document.getElementById('runInputTime').value.trim(), ds = document.getElementById('runInputDate').value.trim(), tp = document.getElementById('runInputType').value;
-        const km = parseFloat(kmEl.value.replace(',', '.').trim());
-        if (isNaN(km) || km <= 0) { alert('Podaj prawidłowy dystans!'); kmEl.focus(); return; }
-        const sec = timeStringToSeconds(ts), ps = (sec > 0 && km > 0) ? Math.round(sec/km) : 0;
-        const run = { id: String(Date.now()), km: Math.round(km*100)/100, timeStr: ts || (sec > 0 ? secondsToTimeString(sec) : '--:--'), sec: sec || 0, paceSec: ps, date: ds || localDateStr(new Date()), type: tp };
-        if (!Array.isArray(runnerRuns)) runnerRuns = [];
-        runnerRuns.unshift(run);
-        try { localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns)); } catch(e){}
-        closeAddRunModal(); updateMileageStats(); renderRacePredictor();
-    }
-    function openHistoryModal() { renderHistoryList(); document.getElementById('historyModal').classList.add('active'); }
-    function closeHistoryModal() { document.getElementById('historyModal').classList.remove('active'); }
-    function deleteRunItem(id) {
-        runnerRuns = runnerRuns.filter(r => String(r.id) !== String(id));
-        try { localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns)); } catch(e){}
-        renderHistoryList(); updateMileageStats(); renderRacePredictor();
-    }
-    function renderHistoryList() {
-        const c = document.getElementById('historyListContainer'); if (!c) return;
-        if (!runnerRuns || runnerRuns.length === 0) { c.innerHTML = '<div style="text-align:center; padding:1.5rem; opacity:0.8;">Brak zapisanych biegów.</div>'; return; }
-        c.innerHTML = runnerRuns.map(r => {
-            const k = (parseFloat(r.km) || 0).toFixed(2), p = r.paceSec > 0 ? `(${secondsToTimeString(r.paceSec)}/km)` : '';
-            const i = RUN_TYPE_ICON[r.type] || RUN_TYPE_ICON.easy, n = RUN_TYPE_LABEL[r.type] || RUN_TYPE_LABEL.easy;
-            return `<div class="history-item"><div><span title="${n}" style="margin-right:4px;">${i}</span><strong>${k} km</strong> • ${escapeHtml(r.timeStr || '--:--')} <span style="opacity:0.8; font-size:0.8rem; margin-left:4px;">${p}</span><div style="font-size:0.75rem; opacity:0.7;">📅 ${escapeHtml(r.date || 'Brak daty')}</div></div><button onclick="deleteRunItem('${escapeHtml(r.id)}')" style="background:transparent; color:#ff4757; border:none; padding:4px 8px; cursor:pointer; font-size:1.1rem; box-shadow:none; min-height:auto;" title="Usuń bieg">🗑️</button></div>`;
-        }).join('');
-    }
-
-    function updateMileageStats() {
-        if (!Array.isArray(runnerRuns)) runnerRuns = [];
-        const now = new Date(), cy = now.getFullYear(), cm = now.getMonth();
-        const dw = now.getDay() === 0 ? 7 : now.getDay();
-        const mon = new Date(cy, cm, now.getDate() - dw + 1, 0, 0, 0);
-        const sun = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 6, 23, 59, 59);
-        const lm = new Date(mon); lm.setDate(mon.getDate() - 7); const ls = new Date(sun); ls.setDate(sun.getDate() - 7);
-        const mS = new Date(cy, cm, 1, 0, 0, 0), mE = new Date(cy, cm + 1, 0, 23, 59, 59);
-        const lms = new Date(cy, cm - 1, 1, 0, 0, 0), lme = new Date(cy, cm, 0, 23, 59, 59);
-        const ys = new Date(cy, 0, 1, 0, 0, 0), ye = new Date(cy, 11, 31, 23, 59, 59);
-        const lys = new Date(cy - 1, 0, 1, 0, 0, 0), lye = new Date(cy - 1, 11, 31, 23, 59, 59);
-        let wK = 0, mK = 0, yK = 0, wS = 0, wKP = 0, wC = 0, mS2 = 0, mKP = 0, mC = 0, yS = 0, yKP = 0, yC = 0, lwK = 0, lmK = 0, lyK = 0;
-        runnerRuns.forEach(r => {
-            const k = parseFloat(r.km); if (isNaN(k) || k <= 0) return;
-            const rd = parseRunDate(r.date); if (!rd) return;
-            const s = parseFloat(r.sec) || 0;
-            if (rd >= mon && rd <= sun) { wK += k; wC++; if (s > 0) { wS += s; wKP += k; } }
-            if (rd >= lm && rd <= ls) lwK += k;
-            if (rd >= mS && rd <= mE) { mK += k; mC++; if (s > 0) { mS2 += s; mKP += k; } }
-            if (rd >= lms && rd <= lme) lmK += k;
-            if (rd >= ys && rd <= ye) { yK += k; yC++; if (s > 0) { yS += s; yKP += k; } }
-            if (rd >= lys && rd <= lye) lyK += k;
-        });
-        const set = (vId, mId, tId, v, t, kp, cnt, sec) => {
-            const ev = document.getElementById(vId), em = document.getElementById(mId), et = document.getElementById(tId);
-            if (ev) ev.textContent = `${v.toFixed(1)} km`;
-            if (em) em.textContent = cnt > 0 ? `${cnt} ${cnt === 1 ? 'bieg' : 'biegi'} • ${kp > 0 ? secondsToTimeString(sec/kp) : '--:--'}/km` : 'Brak biegów';
-            if (et) { const tr = computeTrend(v, t.prev, t.label); et.textContent = tr.text; et.className = `mileage-stat-trend ${tr.cls}`; et.title = tr.title; }
-        };
-        set('mileageWeekVal', 'mileageWeekMeta', 'mileageWeekTrend', wK, { prev: lwK, label: 'poprzedni tydzień' }, wKP, wC, wS);
-        set('mileageMonthVal', 'mileageMonthMeta', 'mileageMonthTrend', mK, { prev: lmK, label: 'poprzedni miesiąc' }, mKP, mC, mS2);
-        set('mileageYearVal', 'mileageYearMeta', 'mileageYearTrend', yK, { prev: lyK, label: 'poprzedni rok' }, yKP, yC, yS);
-        const ep = document.getElementById('mileageWeeklyPace'); const avg = wKP > 0 ? wS/wKP : 0;
-        if (ep) ep.textContent = avg > 0 ? `Śr. tempo tygodnia: ${secondsToTimeString(avg)}/km` : 'Śr. tempo tygodnia: --:--/km';
-        const el = document.getElementById('mileageLastRun');
-        if (el) {
-            if (runnerRuns.length > 0) {
-                const last = runnerRuns[0], p = last.paceSec > 0 ? ` (${secondsToTimeString(last.paceSec)}/km)` : '';
-                const i = RUN_TYPE_ICON[last.type] || RUN_TYPE_ICON.easy;
-                el.innerHTML = `🏁 Ostatni bieg: ${i} <strong>${(parseFloat(last.km) || 0).toFixed(1)} km</strong> • ${escapeHtml(last.timeStr)}${p} <span style="opacity:0.75;">(${escapeHtml(last.date)})</span>`;
-            } else el.textContent = '🏁 Ostatni bieg: brak zapisanych treningów';
-        }
-        renderRunTypeChart(); renderWeeklySparkline();
-    }
-
+    // Obsługa ikon i pogody
     function getIconForCondition(code, isDay, text = '', cdn = '') {
-        const tl = (text || '').toLowerCase(), cl = (cdn || '').toLowerCase();
-        if (tl.includes('zadymien') || tl.includes('smoke') || tl.includes('haze') || tl.includes('smog') || tl.includes('mgł') || tl.includes('fog') || tl.includes('mist') || cl.includes('248') || cl.includes('143')) return { day:'248.svg', night:'248.svg' };
+        const tl = (text || '').toLowerCase();
+        if (tl.includes('zadymien') || tl.includes('smoke') || tl.includes('haze') || tl.includes('smog') || tl.includes('mgł') || tl.includes('fog')) return { day:'248.svg', night:'248.svg' };
         if (WEATHER_ICONS[code]) return WEATHER_ICONS[code];
-        if (tl.includes('deszcz') || tl.includes('rain')) return { day:'296.svg', night:'296.svg' };
-        if (tl.includes('śnieg') || tl.includes('snow')) return { day:'326.svg', night:'326.svg' };
-        if (tl.includes('burz') || tl.includes('storm')) return { day:'200.svg', night:'200.svg' };
-        if (tl.includes('chmur') || tl.includes('cloud')) return { day:'119.svg', night:'119.svg' };
         return WEATHER_ICONS[1000];
     }
     function createWeatherIconElement(code, isDay, cdn = '', sz = null, text = '') {
@@ -1116,8 +1553,8 @@
         if (full.includes('/64x64/')) full = full.replace('/64x64/', '/128x128/');
         if (sz) { img.style.width = sz; img.style.height = sz; } else { img.style.maxWidth = '100%'; img.style.maxHeight = '100%'; }
         img.style.objectFit = 'contain'; img.alt = text || 'Ikona';
-        if (currentIconSet === 'api' && full) { img.src = full; img.onerror = function() { this.onerror = null; this.src = lp; }; }
-        else { img.src = lp; img.onerror = function() { this.onerror = null; this.src = isDay ? 'weather-icons/day/143.svg' : 'weather-icons/night/143.svg'; }; }
+        if (currentIconSet === 'api' && full) { img.src = full; img.onerror = function() { this.src = lp; }; }
+        else { img.src = lp; img.onerror = function() { this.src = isDay ? 'weather-icons/day/143.svg' : 'weather-icons/night/143.svg'; }; }
         return img;
     }
     function toggleIconMode() { currentIconSet = currentIconSet === 'local' ? 'api' : 'local'; localStorage.setItem('meteoIconSet', currentIconSet); updateSettingsControls(); if (lastWeatherData) updateUI(lastWeatherData); }
@@ -1125,74 +1562,32 @@
     function updateSettingsControls() { const ib = document.getElementById('settingIconBtn'); if (ib) ib.textContent = currentIconSet === 'local' ? 'Animowane' : 'Statyczne'; const ab = document.getElementById('settingAnimBtn'); if (ab) ab.textContent = bgAnimActive ? 'Włączone' : 'Wyłączone'; }
     function parseSunTime(t) {
         if (!t) return '--:--';
-        const raw = t.trim().toLowerCase();
-        if (raw.includes('does not set') || raw.includes('no moonset')) return 'Nie zachodzi';
-        if (raw.includes('does not rise') || raw.includes('no moonrise')) return 'Nie wschodzi';
         const m = t.trim().match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i); if (!m) return t;
         let [, h, min, p] = m; h = parseInt(h, 10);
         if (p) { p = p.toUpperCase(); if (p === 'PM' && h < 12) h += 12; if (p === 'AM' && h === 12) h = 0; }
         return `${String(h).padStart(2,'0')}:${min}`;
     }
     function translateWeatherCondition(code, isDay, fb = '') {
-        const f = (fb || '').toLowerCase();
-        if (f.includes('smoke') || f.includes('zadymien')) return "Zadymienie";
-        if (f.includes('haze')) return "Zamglenie (Haze)";
         const t = WEATHER_CODE_TRANSLATIONS[code]; if (t) return isDay ? t.day : t.night;
         return fb || (isDay ? "Słonecznie" : "Bezchmurnie");
     }
     function translateMoon(p) { if (!p) return { name:'Brak danych', icon:'🌙' }; return MOON_PHASES[p.toLowerCase().trim()] || { name: p, icon:'🌙' }; }
     function getDewPointAnalysis(dp) {
-        if (dp < 10) return { status:'Błyskawiczne 👌', color:'#2ecc71', desc:'Pot odparowuje w mgnieniu oka.' };
-        if (dp <= 15) return { status:'Optymalne 👍', color:'#3498db', desc:'Komfortowe warunki.' };
-        if (dp <= 18) return { status:'Spowolnione 💧', color:'#f39c12', desc:'Odczuwalna wilgotność.' };
-        if (dp <= 21) return { status:'Utrudnione ⚠️', color:'#e67e22', desc:'Duchota! Pij więcej wody.' };
-        return { status:'Zablokowane! 🚨', color:'#e74c3c', desc:'Ekstremalna parność!' };
+        if (dp < 10) return { status:'Błyskawiczne 👌', color:'#2ecc71', desc:'Pot odparowuje bez przeszkód.' };
+        if (dp <= 15) return { status:'Optymalne 👍', color:'#3498db', desc:'Komfortowe warunki termiczne.' };
+        if (dp <= 18) return { status:'Spowolnione 💧', color:'#f39c12', desc:'Odczuwalna wilgoć w powietrzu.' };
+        return { status:'Utrudnione ⚠️', color:'#e74c3c', desc:'Duchota! Pij więcej wody i elektrolitów.' };
     }
     function getRunningGear(fl, pr, w, isDay) {
         let top='', bot='', acc = [];
-        if (fl >= 22) { top = 'Ultralekki singlet'; bot = 'Krótkie szorty'; }
-        else if (fl >= 15) { top = 'Koszulka techniczna'; bot = 'Krótkie spodenki'; }
-        else if (fl >= 9) { top = 'Longsleeve lub t-shirt + rękawki'; bot = 'Legginsy 3/4'; }
-        else if (fl >= 3) { top = 'Cienka bielizna termo + longsleeve'; bot = 'Długie legginsy'; acc.push('Opaska/buff'); }
-        else if (fl >= -5) { top = 'Bielizna termo + bluza/wiatrówka'; bot = 'Legginsy ocieplane'; acc.push('Czapka termo', 'Rękawiczki'); }
-        else { top = 'Gruba bielizna + wiatrówka'; bot = 'Ciepłe legginsy'; acc.push('Czapka', 'Rękawice', 'Komin'); }
-        if (pr > 0.4) acc.push('Czapka z daszkiem', 'Wiatrówka wodoodporna');
-        if (w > 25 && fl < 15) acc.push('Wiatrówka windstopper');
-        if (isDay && fl >= 18) acc.push('Okulary słoneczne');
+        if (fl >= 20) { top = 'Ultralekki singlet / koszulka'; bot = 'Krótkie szorty'; }
+        else if (fl >= 14) { top = 'Koszulka techniczna'; bot = 'Krótkie spodenki'; }
+        else if (fl >= 8) { top = 'Longsleeve lub t-shirt + rękawki'; bot = 'Legginsy 3/4 lub spodenki'; }
+        else if (fl >= 2) { top = 'Bielizna termo + longsleeve'; bot = 'Długie legginsy'; acc.push('Opaska/buff'); }
+        else { top = 'Bielizna termo + bluza/wiatrówka'; bot = 'Ciepłe legginsy'; acc.push('Czapka', 'Rękawiczki'); }
+        if (pr > 0.4) acc.push('Czapka z daszkiem', 'Lekka wiatrówka');
+        if (isDay && fl >= 18) acc.push('Okulary przeciwsłoneczne');
         return { top, bot, acc: acc.length ? acc.join(', ') : 'Brak dodatkowych' };
-    }
-    function convertSpeedUnits(t) { if (!t) return ''; return t.replace(/(\d+(?:[.,]\d+)?)\s*(?:m\/s|mps)/gi, (m, p1) => `${Math.round(parseFloat(p1.replace(',', '.'))*3.6)} km/h (${m})`); }
-    async function translateWarningText(raw) {
-        if (!raw) return '';
-        let clean = convertSpeedUnits(raw);
-        if (/[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/.test(clean) && !/\b(warning|gusts|expected|damage|viento)\b/i.test(clean)) return clean;
-        try { const r = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=pl&dt=t&q=${encodeURIComponent(clean)}`); if (r.ok) { const d = await r.json(); if (d && d[0]) return d[0].map(x => x[0]).join(''); } } catch(e){}
-        return clean;
-    }
-    async function renderWeatherWarnings(alerts) {
-        const w = document.getElementById('weatherWarnings'), b = document.getElementById('warningsCountBadge'), m = document.getElementById('warningsMoreIndicator');
-        if (!alerts || !alerts.alert || alerts.alert.length === 0) {
-            w.innerHTML = '<div style="opacity:0.85; padding:0.4rem 0; font-size:0.88rem;">✅ Brak aktywnych ostrzeżeń.</div>';
-            w.style.maxHeight = 'none'; w.style.overflowY = 'visible';
-            if (b) b.style.display = 'none'; if (m) m.style.display = 'none'; return;
-        }
-        const tot = alerts.alert.length;
-        if (b) { b.textContent = `${tot} ${tot === 1 ? 'aktywne' : 'aktywnych'}`; b.style.display = 'inline-block'; }
-        w.innerHTML = '<div style="padding:0.6rem; opacity:0.8; font-size:0.85rem;">⏳ Tłumaczenie...</div>';
-        const rendered = await Promise.all(alerts.alert.map(async a => {
-            const h = a.headline || a.event || 'Ostrzeżenie', th = await translateWarningText(h);
-            const d = a.desc || a.description || a.instruction || 'Zalecana ostrożność.', td = await translateWarningText(d);
-            let ic = '⚠️'; const tc = (h + ' ' + (a.event || '')).toLowerCase();
-            if (tc.includes('storm') || tc.includes('burz')) ic = '⛈️'; else if (tc.includes('wind') || tc.includes('wiatr')) ic = '💨'; else if (tc.includes('rain') || tc.includes('deszcz')) ic = '🌧️'; else if (tc.includes('snow') || tc.includes('śnieg')) ic = '❄️';
-            let sev = 'Stopień 2'; const sl = (a.severity || '').toLowerCase();
-            if (sl.includes('minor') || sl.includes('yellow')) sev = 'Stopień 1'; else if (sl.includes('extreme') || sl.includes('red')) sev = 'Stopień 3';
-            const eff = a.effective ? new Date(a.effective).toLocaleString('pl-PL', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Obecnie';
-            const exp = a.expires ? new Date(a.expires).toLocaleString('pl-PL', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Do odwołania';
-            return `<div class="warning-card"><div class="warning-header"><span class="warning-icon">${ic}</span><div><div class="warning-title">${escapeHtml(th)}</div><div class="warning-severity">Poziom: <strong>${sev}</strong></div></div></div><div class="warning-details">${escapeHtml(td)}</div><div class="warning-time"><span>⌛ <strong>Od:</strong> ${eff}</span><span>🛑 <strong>Do:</strong> ${exp}</span></div></div>`;
-        }));
-        w.innerHTML = rendered.join('');
-        if (tot > 2) { w.style.maxHeight = '370px'; w.style.overflowY = 'auto'; if (m) { m.innerHTML = `🔔 <strong>+${tot-2} kolejne</strong> — przewiń ⬇️`; m.style.display = 'block'; } }
-        else { w.style.maxHeight = 'none'; w.style.overflowY = 'visible'; if (m) m.style.display = 'none'; }
     }
 
     async function getWeatherData(query) {
@@ -1203,7 +1598,7 @@
             if (!data || data.error) throw new Error(data?.error?.message || 'Błąd API');
             localStorage.setItem('meteoLastCity', data.location.name);
             updateUI(data);
-        } catch(e) { alert('Błąd: ' + e.message); } finally { document.getElementById('loadingIndicator').style.display = 'none'; }
+        } catch(e) { alert('Błąd pobierania pogody: ' + e.message); } finally { document.getElementById('loadingIndicator').style.display = 'none'; }
     }
 
     function syncSunAndTheme() {
@@ -1211,17 +1606,12 @@
         const sr = parseSunTime(lastAstroData.sunrise), ss = parseSunTime(lastAstroData.sunset);
         if (sr.includes(':') && ss.includes(':')) {
             const [sH, sM] = sr.split(':').map(Number), [eH, eM] = ss.split(':').map(Number);
-            let nH, nM;
-            try { const t = new Date().toLocaleTimeString('pl-PL', { timeZone: lastAstroData.tz, hour:'2-digit', minute:'2-digit', hour12:false }); [nH, nM] = t.split(':').map(Number); }
-            catch(e) { const n = new Date(); nH = n.getHours(); nM = n.getMinutes(); }
-            const nm = nH*60+nM, sm = sH*60+sM, em = eH*60+eM;
-            const dm = em - sm, dH = Math.floor(dm/60), dM = dm%60;
-            let p = 0, st = `Długość dnia: ${dH}h ${dM}m`;
+            const n = new Date(); const nm = n.getHours()*60+n.getMinutes(), sm = sH*60+sM, em = eH*60+eM;
             const isN = nm < sm || nm >= em;
-            if (!isN) { p = ((nm-sm)/(em-sm))*100; const l = em-nm; st += ` (do zachodu: ${Math.floor(l/60)}h ${l%60}m)`; }
-            else if (nm >= em) { p = 100; st += ' (Noc)'; } else { p = 0; st += ' (Przed wschodem)'; }
+            const p = !isN ? ((nm-sm)/(em-sm))*100 : (nm >= em ? 100 : 0);
             const sp = document.getElementById('sunPosition'), si = document.querySelector('.sun-icon'), dl = document.getElementById('widgetDayLength');
-            if (sp) sp.style.width = `${p}%`; if (si) si.style.left = `${p}%`; if (dl) dl.textContent = st;
+            if (sp) sp.style.width = `${p}%`; if (si) si.style.left = `${p}%`;
+            if (dl) dl.textContent = isN ? 'Trwa noc' : `Do zachodu: ${Math.floor((em-nm)/60)}h ${(em-nm)%60}m`;
             if (currentThemeMode === 'auto') { document.body.classList.toggle('night-mode', isN); document.body.classList.toggle('no-anim', !bgAnimActive); }
         }
     }
@@ -1236,71 +1626,76 @@
         const allH = [...(forecast.forecastday[0]?.hour || []), ...(forecast.forecastday[1]?.hour || [])];
         const n24 = allH.filter(h => new Date(h.time) >= now).slice(0, 24);
         const ct = translateWeatherCondition(current.condition.code, isDay, current.condition.text);
+
         const wl = document.getElementById('widgetLocation');
-        if (wl) { const l = location.region ? `${location.name}, ${location.region}` : location.name; wl.textContent = l; wl.title = l; }
+        if (wl) { wl.textContent = `${location.name}, ${location.region || location.country}`; }
         document.getElementById('widgetCondition').textContent = ct;
         document.getElementById('widgetTemp').textContent = `${current.temp_c.toFixed(1)}°C`;
         document.getElementById('widgetWind').textContent = `${current.wind_kph} km/h`;
         document.getElementById('widgetHumidity').textContent = `${current.humidity}%`;
         const wi = document.getElementById('widgetIcon'); wi.innerHTML = ''; wi.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, null, ct));
+
         document.getElementById('currentCity').textContent = `${location.name}, ${location.region || location.country}`;
         document.getElementById('currentCondition').textContent = ct;
-        const iS = currentIconSet === 'api', sz = iS ? '85px' : '125px';
-        const mc = document.getElementById('mainWeatherIcon'); mc.innerHTML = ''; mc.style.width = iS ? '95px' : '125px'; mc.style.height = iS ? '95px' : '125px';
-        mc.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, sz, ct));
+        const mc = document.getElementById('mainWeatherIcon'); mc.innerHTML = ''; mc.appendChild(createWeatherIconElement(current.condition.code, isDay, current.condition.icon, '95px', ct));
         document.getElementById('tempNow').textContent = `${current.temp_c.toFixed(1)}°C (odcz. ${current.feelslike_c.toFixed(1)}°C)`;
         document.getElementById('windNow').textContent = `${current.wind_kph} km/h (porywy ${current.gust_kph || current.wind_kph} km/h)`;
         document.getElementById('pressureNow').textContent = `${current.pressure_mb} hPa`;
+        
         const dp = current.dewpoint_c ?? Math.round(current.temp_c - ((100 - current.humidity)/5));
         const da = getDewPointAnalysis(dp);
         document.getElementById('dewPointNow').textContent = `${dp.toFixed(1)}°C`;
         document.getElementById('dewComfort').textContent = da.status;
         document.getElementById('widgetDewVal').textContent = `${dp.toFixed(1)}°C`;
-        const wds = document.getElementById('widgetDewStatus'); wds.textContent = da.status; wds.style.color = da.color;
+        document.getElementById('widgetDewStatus').textContent = da.status;
+        document.getElementById('widgetDewStatus').style.color = da.color;
         document.getElementById('widgetDewDesc').textContent = da.desc;
+
         const astro = forecast.forecastday[0].astro;
         document.getElementById('widgetSunrise').textContent = parseSunTime(astro.sunrise);
         document.getElementById('widgetSunset').textContent = parseSunTime(astro.sunset);
         syncSunAndTheme();
+
         const moon = translateMoon(astro.moon_phase);
         document.getElementById('moonPhase').textContent = moon.name;
         document.getElementById('moonPhaseIcon').textContent = moon.icon;
         document.getElementById('moonrise').textContent = parseSunTime(astro.moonrise);
         document.getElementById('moonset').textContent = parseSunTime(astro.moonset);
+
         const pa = calculatePaceAdjustment(current.temp_c, current.wind_kph, dp, current.precip_mm, current.condition.code, current.condition.text);
         const pe = document.getElementById('paceAdjustmentVal'), pA = document.getElementById('paceAdvice');
         const ue = timeStringToSeconds(runnerProfile.easyPace || '05:30');
-        if (pa <= 0) { pe.textContent = '0 s / km (Ideał)'; pA.innerHTML = `Warunki idealne. Biegnij w tempie Easy (<strong>${secondsToTimeString(ue)}/km</strong>).`; }
-        else { pe.textContent = `+${pa} s / km`; pA.innerHTML = `Dla Easy (<strong>${secondsToTimeString(ue)}/km</strong>) biegnij dziś na <strong>${secondsToTimeString(ue + pa)}/km</strong>.`; }
-        renderRacePredictor();
+        if (pa <= 0) { pe.textContent = '0 s / km (Ideał)'; pA.innerHTML = `Warunki idealne. Trzymaj swoje tempo Easy: <strong>${secondsToTimeString(ue)}/km</strong>.`; }
+        else { pe.textContent = `+${pa} s / km`; pA.innerHTML = `Dla komfortu skoryguj tempo Easy (<strong>${secondsToTimeString(ue)}/km</strong>) do: <strong>${secondsToTimeString(ue + pa)}/km</strong>.`; }
+
         const uv = current.uv || 0;
         document.getElementById('uvIndexVal').textContent = `${uv} / 11+`;
-        let uvT = 'Brak potrzeby kremów z filtrem.';
-        if (uv >= 8) uvT = '⚠️ Bardzo silne UV! SPF 50+, okulary UV400.'; else if (uv >= 6) uvT = '☀️ Wysokie UV. Zalecany krem SPF 30+.'; else if (uv >= 3) uvT = '⛅ Umiarkowane UV. Czapka z daszkiem.';
-        document.getElementById('uvAdvice').textContent = uvT;
+        document.getElementById('uvAdvice').textContent = uv >= 6 ? '☀️ Wysokie UV – użyj kremu z filtrem.' : '⛅ Umiarkowane/niskie UV.';
+
         document.getElementById('weatherSummary').style.display = 'block';
         document.getElementById('weatherSummaryText').innerHTML = generateWeatherSummaryText(forecast.forecastday[0]);
         const aqi = current.air_quality ? (current.air_quality['us-epa-index'] || 1) : 1;
         document.getElementById('runnerTip').style.display = 'block';
         document.getElementById('runnerTipText').innerHTML = generateDetailedRunnerTip(ct, current.temp_c, current.wind_kph, current.precip_mm, aqi, dp, current.condition.code);
+
         const sc = calculateRunningScore(current.temp_c, current.wind_kph, current.precip_mm, dp, aqi, current.condition.code, current.condition.text);
         const sb = document.getElementById('runnerScoreBadge');
         document.getElementById('runnerScoreVal').textContent = `${sc} / 10`;
-        if (sc >= 8) sb.style.background = '#27ae60'; else if (sc >= 5.5) sb.style.background = '#f39c12'; else sb.style.background = '#e74c3c';
-        const bd = getScoreBreakdown(current.temp_c, current.wind_kph, current.precip_mm, dp, aqi, current.condition.code, current.condition.text);
-        const fmt = (p, l) => p > 0 ? `${l}: −${p} pkt` : `${l}: 0 pkt ✓`;
-        sb.title = `Skala 1–10. Kara odjęta od 10:\n─────────────────────\n` + fmt(bd.tempP, `🌡️ Temperatura (${current.temp_c.toFixed(0)}°C)`) + '\n' + fmt(bd.windP, `💨 Wiatr (${current.wind_kph} km/h)`) + '\n' + fmt(bd.precipP, `☔ Opady (${bd.precip})`) + '\n' + fmt(bd.dewP, `💧 Punkt rosy (${dp.toFixed(0)}°C)`) + '\n' + fmt(bd.aqiP, `🌫️ AQI (${aqi})`) + '\n─────────────────────\n' + `Wynik: ${sc}/10`;
+        sb.style.background = sc >= 8 ? '#27ae60' : (sc >= 5.5 ? '#f39c12' : '#e74c3c');
         document.getElementById('goldenWindow').innerHTML = findBestRunningWindow(allH, forecast.forecastday, aqi);
+
         const g = getRunningGear(current.feelslike_c, current.precip_mm, current.wind_kph, isDay);
         document.getElementById('gearTop').textContent = g.top;
         document.getElementById('gearBottom').textContent = g.bot;
         document.getElementById('gearAccessories').textContent = g.acc;
+
         document.getElementById('aqiValue').textContent = aqi;
         document.getElementById('pm25Value').textContent = current.air_quality?.pm2_5 ? `${current.air_quality.pm2_5.toFixed(1)} µg/m³` : '-';
         document.getElementById('pm10Value').textContent = current.air_quality?.pm10 ? `${current.air_quality.pm10.toFixed(1)} µg/m³` : '-';
-        document.getElementById('airQualityAdvice').innerHTML = aqi <= 2 ? '✅ Powietrze jest czyste i świeże.' : '⚠️ Wyczuwalny smog. Odpuść interwały.';
+        document.getElementById('airQualityAdvice').innerHTML = aqi <= 2 ? '✅ Czyste powietrze – idealne na trening tlenowy.' : '⚠️ Wyczuwalny smog – odpuść ostre akcenty.';
+
         renderCharts(n24); renderHourly(n24); renderDaily(forecast.forecastday);
-        updateStormAndFrost(n24); renderWeatherWarnings(alerts);
+        updateStormAndFrost(n24);
         setWeatherBg(current.condition.code, isDay, ct);
         animateTiles();
     }
@@ -1308,91 +1703,66 @@
     function renderCharts(hours) {
         const labels = hours.map(h => new Date(h.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' }));
         const temps = hours.map(h => h.temp_c), precips = hours.map(h => h.precip_mm);
-        const isD = document.body.classList.contains('dark-mode') || document.body.classList.contains('night-mode') || document.body.classList.contains('matrix-mode') || document.body.classList.contains('neon-mode') || document.body.classList.contains('space-mode') || document.body.classList.contains('galaxy-mode');
-        const ax = isD ? '#94a3b8' : '#64748b', gr = isD ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
         if (temperatureChart) temperatureChart.destroy();
-        temperatureChart = new Chart(document.getElementById('temperatureChart').getContext('2d'), { type: 'line', data: { labels, datasets: [{ label:'°C', data: temps, borderColor:'#38bdf8', backgroundColor:'rgba(56,189,248,0.18)', fill:true, tension:0.35, borderWidth:2 }] }, options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:ax}, grid:{color:gr}}, y:{ticks:{color:ax}, grid:{color:gr}} } } });
+        temperatureChart = new Chart(document.getElementById('temperatureChart').getContext('2d'), { type: 'line', data: { labels, datasets: [{ label:'°C', data: temps, borderColor:'#38bdf8', backgroundColor:'rgba(56,189,248,0.18)', fill:true, tension:0.35 }] }, options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}} } });
         if (precipitationChart) precipitationChart.destroy();
-        precipitationChart = new Chart(document.getElementById('precipitationChart').getContext('2d'), { type: 'bar', data: { labels, datasets: [{ label:'mm', data: precips, backgroundColor:'#0ea5e9' }] }, options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:ax}, grid:{color:gr}}, y:{ticks:{color:ax}, grid:{color:gr}} } } });
+        precipitationChart = new Chart(document.getElementById('precipitationChart').getContext('2d'), { type: 'bar', data: { labels, datasets: [{ label:'mm', data: precips, backgroundColor:'#0ea5e9' }] }, options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}} } });
         const tp = precips.reduce((a,b) => a+b, 0);
-        document.getElementById('precipitationSummary').textContent = tp > 0.2 ? `Łącznie w ciągu 24h może spaść: ${tp.toFixed(1)} mm wody` : 'W najbliższych 24h deszczu raczej nie uświadczysz.';
+        document.getElementById('precipitationSummary').textContent = tp > 0.2 ? `Łącznie w ciągu 24h: ${tp.toFixed(1)} mm opadu.` : 'Brak istotnych opadów w ciągu 24h.';
     }
+
     function renderHourly(hours) {
         const c = document.getElementById('hourlyForecast'); c.innerHTML = '';
         hours.slice(0, 12).forEach(h => {
             const t = new Date(h.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' });
             const item = document.createElement('div'); item.className = 'hour-item';
             const cn = translateWeatherCondition(h.condition.code, h.is_day !== 0, h.condition.text);
-            const hi = createWeatherIconElement(h.condition.code, h.is_day !== 0, h.condition.icon, '75px', cn);
-            item.innerHTML = `<div style="font-size:1rem; font-weight:700;">${t}</div>`;
+            const hi = createWeatherIconElement(h.condition.code, h.is_day !== 0, h.condition.icon, '60px', cn);
+            item.innerHTML = `<div style="font-weight:700;">${t}</div>`;
             item.appendChild(hi);
-            item.innerHTML += `<div style="font-size:0.85rem; font-weight:600; line-height:1.25; min-height:2.6em; display:flex; align-items:center; justify-content:center;">${cn}</div><div style="font-weight:700; font-size:1.15rem; color:var(--primary);">${h.temp_c.toFixed(1)}°C</div><div style="font-size:0.8rem; opacity:0.85;">💨 ${h.wind_kph} km/h</div>${h.precip_mm > 0 ? `<div style="font-size:0.8rem; color:#38bdf8; font-weight:700;">☔ ${h.precip_mm.toFixed(1)} mm</div>` : ''}`;
+            item.innerHTML += `<div style="font-size:0.82rem; font-weight:600; min-height:2.4em; display:flex; align-items:center;">${cn}</div><div style="font-weight:700; color:var(--primary);">${h.temp_c.toFixed(1)}°C</div><div style="font-size:0.75rem;">💨 ${h.wind_kph} km/h</div>`;
             c.appendChild(item);
         });
     }
+
     function renderDaily(days) {
         const c = document.getElementById('forecast'); c.innerHTML = '';
         days.forEach(d => {
             const dt = new Date(d.date).toLocaleDateString('pl-PL', { weekday:'short', day:'numeric', month:'short' });
             const item = document.createElement('div'); item.className = 'card';
-            item.style.padding = '1.2rem 1rem'; item.style.textAlign = 'center'; item.style.display = 'flex'; item.style.flexDirection = 'column'; item.style.alignItems = 'center'; item.style.justifyContent = 'space-between'; item.style.gap = '0.5rem';
+            item.style.padding = '1rem'; item.style.textAlign = 'center'; item.style.display = 'flex'; item.style.flexDirection = 'column'; item.style.alignItems = 'center';
             const cn = translateWeatherCondition(d.day.condition.code, true, d.day.condition.text);
-            const di = createWeatherIconElement(d.day.condition.code, true, d.day.condition.icon, '85px', cn);
-            item.innerHTML = `<div style="font-weight:700; font-size:1.1rem; color: var(--card-title-color);">${dt}</div>`;
+            const di = createWeatherIconElement(d.day.condition.code, true, d.day.condition.icon, '70px', cn);
+            item.innerHTML = `<div style="font-weight:700; font-size:1rem;">${dt}</div>`;
             item.appendChild(di);
-            item.innerHTML += `<div style="font-size:0.88rem; font-weight:600; min-height:2.4em; display:flex; align-items:center;">${cn}</div><div style="font-weight:700; font-size:1.15rem;"><span style="color:#ef4444;">${d.day.maxtemp_c.toFixed(0)}°C</span> / <span style="color:#38bdf8; opacity:0.9;">${d.day.mintemp_c.toFixed(0)}°C</span></div>${d.day.daily_chance_of_rain > 0 ? `<div style="font-size:0.82rem; color:#38bdf8; font-weight:600;">☔ ${d.day.daily_chance_of_rain}%</div>` : ''}`;
+            item.innerHTML += `<div style="font-size:0.85rem; font-weight:600; min-height:2.2em; display:flex; align-items:center;">${cn}</div><div style="font-weight:700;">${d.day.maxtemp_c.toFixed(0)}°C / <span style="opacity:0.7;">${d.day.mintemp_c.toFixed(0)}°C</span></div>`;
             c.appendChild(item);
         });
     }
+
     function updateStormAndFrost(hours) {
-        const s = hours.find(h => [1087,1273,1276,1279,1282].includes(h.condition?.code) || h.condition?.text?.toLowerCase().includes('burz'));
-        const se = document.getElementById('stormContent');
-        if (s) { const t = new Date(s.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' }); se.innerHTML = `<span style="color:#ef4444; font-weight:700;">⚠️ Możliwe wyładowania ok. godz. ${t}!</span>`; }
-        else se.textContent = 'Spokojnie, brak burz na radarze.';
-        const f = hours.find(h => h.temp_c <= 2);
-        const fe = document.getElementById('frostContent');
-        if (f) { const t = new Date(f.time).toLocaleTimeString('pl-PL', { hour:'2-digit', minute:'2-digit' }); fe.innerHTML = `<span style="color:#38bdf8; font-weight:700;">❄️ Ryzyko przymrozku (${f.temp_c.toFixed(1)}°C ok. godz. ${t}).</span>`; }
-        else fe.textContent = 'Brak przymrozków.';
-    }
-    function getRainIntensity(code, ct) {
-        const c = (ct || '').toLowerCase();
-        if ([1192,1195,1246,1276,1282,1087].includes(code) || c.includes('ulewny') || c.includes('gwałtowna') || c.includes('torrential') || c.includes('burz') || c.includes('thunder') || c.includes('obfity')) return 'rain-heavy';
-        if ([1186,1189,1201,1243].includes(code) || c.includes('umiarkowan') || c.includes('moderate')) return 'rain-mod';
-        if ([1072,1150,1153,1168,1171].includes(code) || c.includes('mżawk') || c.includes('drizzle')) return 'drizzle';
-        return 'rain-light';
-    }
-    function getSnowIntensity(code, ct) {
-        const c = (ct || '').toLowerCase();
-        if ([1114,1117,1219,1222,1225,1258,1264,1282].includes(code) || c.includes('obfity') || c.includes('heavy') || c.includes('zawieja') || c.includes('zamieć')) return 'snow-heavy';
-        return 'snow-light';
+        const s = hours.find(h => [1087,1273,1276,1279,1282].includes(h.condition?.code));
+        document.getElementById('stormContent').innerHTML = s ? '<span style="color:#ef4444; font-weight:700;">⚠️ Możliwe burze w ciągu 24h!</span>' : 'Brak burz w prognozie.';
+        const f = hours.find(h => h.temp_c <= 1);
+        document.getElementById('frostContent').innerHTML = f ? '<span style="color:#38bdf8; font-weight:700;">❄️ Ryzyko przymrozków!</span>' : 'Brak przymrozków.';
     }
 
     function setWeatherBg(code, isDay, ct = '') {
         const cl = (ct || '').toLowerCase();
-        const rain = [1063,1072,1150,1153,1168,1171,1180,1183,1186,1189,1192,1195,1198,1201,1240,1243,1246,1273,1276];
-        const snow = [1066,1069,1114,1117,1204,1207,1210,1213,1216,1219,1222,1225,1237,1249,1252,1255,1258,1261,1264,1279,1282];
-        const fog = [1030,1135,1147];
+        const rain = [1063,1072,1150,1153,1168,1171,1180,1183,1186,1189,1192,1195,1240,1243,1246,1273,1276];
+        const snow = [1066,1069,1114,1117,1204,1210,1213,1216,1219,1222,1225,1237,1255,1258,1279,1282];
         const ALL_W = ['weather-clear','weather-clear-night','weather-partly','weather-cloudy','weather-overcast','weather-rain','weather-snow','weather-fog','rain-drizzle','rain-light','rain-mod','rain-heavy','snow-light','snow-heavy'];
 
         let targetClasses = [];
         let targetPreset = 'none';
 
-        if (rain.includes(code) || cl.includes('deszcz') || cl.includes('rain') || cl.includes('mżawk') || cl.includes('drizzle') || cl.includes('burz')) {
-            let i = getRainIntensity(code, ct);
-            const e = getEffectivePrecipLevel(code, ct, 0);
-            if (e === 'rain-heavy') i = 'rain-heavy';
-            else if (e === 'rain-mod' && i === 'drizzle') i = 'rain-mod';
-            targetClasses = ['weather-rain', i];
-            targetPreset = i;
-        } else if (snow.includes(code) || cl.includes('śnieg') || cl.includes('snow') || cl.includes('sleet') || cl.includes('grad')) {
-            const i = getSnowIntensity(code, ct);
-            targetClasses = ['weather-snow', i];
-            targetPreset = i;
-        } else if (fog.includes(code) || cl.includes('mgł') || cl.includes('fog')) {
-            targetClasses = ['weather-fog'];
-        } else if ([1009].includes(code) || cl.includes('całkowite') || cl.includes('overcast')) {
+        if (rain.includes(code) || cl.includes('deszcz') || cl.includes('rain') || cl.includes('mżawk')) {
+            targetClasses = ['weather-rain', 'rain-light']; targetPreset = 'rain-light';
+        } else if (snow.includes(code) || cl.includes('śnieg')) {
+            targetClasses = ['weather-snow', 'snow-light']; targetPreset = 'snow-light';
+        } else if ([1009].includes(code) || cl.includes('całkowite')) {
             targetClasses = ['weather-overcast'];
-        } else if ([1006].includes(code) || cl.includes('pochmurno') || cl.includes('zadymien') || cl.includes('smoke') || cl.includes('haze') || cl.includes('smog')) {
+        } else if ([1006].includes(code) || cl.includes('pochmurno')) {
             targetClasses = ['weather-cloudy'];
         } else if ([1003].includes(code)) {
             targetClasses = ['weather-partly'];
@@ -1400,34 +1770,19 @@
             targetClasses = [isDay ? 'weather-clear' : 'weather-clear-night'];
         }
 
-        ALL_W.forEach(c => {
-            if (!targetClasses.includes(c) && document.body.classList.contains(c)) {
-                document.body.classList.remove(c);
-            }
-        });
-        targetClasses.forEach(c => {
-            if (!document.body.classList.contains(c)) {
-                document.body.classList.add(c);
-            }
-        });
-
-        if (targetPreset !== 'none') {
-            if (currentPresetName !== targetPreset) initParticles(targetPreset);
-        } else {
-            if (currentPresetName !== 'none') {
-                currentPresetName = 'none';
-                particles = [];
-            }
-        }
+        ALL_W.forEach(c => document.body.classList.remove(c));
+        targetClasses.forEach(c => document.body.classList.add(c));
+        if (targetPreset !== 'none') { if (currentPresetName !== targetPreset) initParticles(targetPreset); }
+        else { currentPresetName = 'none'; particles = []; }
     }
 
     function animateTiles() {
         const n = document.querySelectorAll('.container .card, .widget');
-        n.forEach((el, i) => { el.classList.remove('tile-anim'); void el.offsetWidth; el.style.animationDelay = `${Math.min(i*35, 450)}ms`; el.classList.add('tile-anim'); });
+        n.forEach((el, i) => { el.classList.remove('tile-anim'); void el.offsetWidth; el.style.animationDelay = `${Math.min(i*30, 400)}ms`; el.classList.add('tile-anim'); });
     }
     function searchLocation() { const q = document.getElementById('locationInput').value.trim(); if (q) getWeatherData(q); }
     function getLocation() {
-        if (navigator.geolocation) navigator.geolocation.getCurrentPosition(pos => getWeatherData(`${pos.coords.latitude},${pos.coords.longitude}`), () => { const f = localStorage.getItem('meteoLastCity') || 'Warszawa'; getWeatherData(f); });
+        if (navigator.geolocation) navigator.geolocation.getCurrentPosition(pos => getWeatherData(`${pos.coords.latitude},${pos.coords.longitude}`), () => getWeatherData(localStorage.getItem('meteoLastCity') || 'Warszawa'));
         else getWeatherData('Warszawa');
     }
     function setTheme(t) {
@@ -1435,21 +1790,23 @@
         if (t === 'auto') syncSunAndTheme(); else document.body.classList.add(`${t}-mode`);
         if (!bgAnimActive) document.body.classList.add('no-anim');
         localStorage.setItem('meteoTheme', t);
-        if (lastWeatherData) {
-            const n24 = [...(lastWeatherData.forecast.forecastday[0]?.hour || []), ...(lastWeatherData.forecast.forecastday[1]?.hour || [])].filter(h => new Date(h.time) >= new Date()).slice(0, 24);
-            renderCharts(n24);
-            setWeatherBg(lastWeatherData.current.condition.code, lastWeatherData.current.is_day !== 0, lastWeatherData.current.condition.text);
-        }
     }
     document.addEventListener('click', (e) => {
         const p = document.getElementById('settingsPanel'), b = document.getElementById('settingsToggle');
         if (p && p.classList.contains('active') && !p.contains(e.target) && !b.contains(e.target)) p.classList.remove('active');
     });
+
     function init() {
         const tl = document.getElementById('themeOptionsList');
         THEMES.forEach(t => { const d = document.createElement('div'); d.className = 'theme-option'; d.innerHTML = `<span>${t.emoji}</span> <span>${t.name}</span>`; d.onclick = () => setTheme(t.value); tl.appendChild(d); });
-        loadProfileFormInputs(); updateProfileUI(); updateMileageStats(); renderRacePredictor();
-        initSparklineSwipe();
+        loadProfileFormInputs();
+        updateProfileUI();
+        updateMileageStats();
+        renderRacePredictor();
+        renderShoesTrackerWidget();
+        renderRaceCalendarWidget();
+        renderSettingsShoesList();
+        
         const sa = localStorage.getItem('meteoBgAnim'); if (sa === '0') toggleBackgroundAnim();
         updateSettingsControls();
         setTheme(localStorage.getItem('meteoTheme') || 'auto');
@@ -1457,21 +1814,6 @@
         const lc = localStorage.getItem('meteoLastCity'); if (lc) getWeatherData(lc); else getLocation();
     }
     window.onload = init;
-
-    function diagnosePredictions() {
-        console.group('🔍 Diagnostyka');
-        console.log('Wpisów:', runnerRuns.length);
-        console.log('PB:', runnerRecords);
-        console.log('Sparkline:', { mode: sparklineMode, offset: sparklineOffset });
-        const nowMs = Date.now();
-        runnerRuns.forEach((r, i) => {
-            const km = parseFloat(r.km), sec = parseFloat(r.sec) || timeStringToSeconds(r.timeStr);
-            const dO = parseRunDate(r.date), dA = dO ? ((nowMs - dO.getTime()) / 86400000).toFixed(1) : 'BRAK';
-            console.log(`Bieg ${i+1}:`, { km, sec, type: r.type, daysAgo: dA, passes: km >= 1 && sec > 0 });
-        });
-        console.log('bestEffort:', getBestEquivalentEffort());
-        console.groupEnd();
-    }
 </script>
 </body>
 </html>
