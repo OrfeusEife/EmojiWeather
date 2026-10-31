@@ -95,10 +95,71 @@
         .golden-window-box { background: rgba(255,193,7,0.18); border-left: 5px solid #ff9800; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.9rem; font-size: 0.92rem; color: inherit; }
         
         /* Moduły w Centrum Biegacza */
-        .mileage-hub-box, .race-calendar-box, .gear-tracker-box, .race-predictor-box { background: var(--glass-subcard); border: 1px solid var(--glass-border); border-radius: 14px; padding: 0.95rem 1rem; margin-bottom: 0.9rem; color: var(--text-color); }
+        .mileage-hub-box, .race-calendar-box, .sticky-note-box, .gear-tracker-box, .race-predictor-box { background: var(--glass-subcard); border: 1px solid var(--glass-border); border-radius: 14px; padding: 0.95rem 1rem; margin-bottom: 0.9rem; color: var(--text-color); }
         .box-title-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 0.4rem; }
         .box-title { font-size: 0.86rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); }
         
+        /* Wiersz: Kalendarz Startowy obok Sticky Note */
+        .calendar-and-note-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+            gap: 0.9rem;
+            margin-bottom: 0.9rem;
+            align-items: stretch;
+        }
+        .calendar-and-note-grid > div {
+            margin-bottom: 0 !important;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Sticky Note Widget */
+        .sticky-note-box {
+            position: relative;
+            background: linear-gradient(135deg, rgba(254, 240, 138, 0.22) 0%, rgba(253, 224, 71, 0.1) 100%);
+            border-left: 5px solid #eab308;
+            box-shadow: 0 4px 14px rgba(234, 179, 8, 0.08);
+            transition: var(--transition);
+        }
+        .sticky-note-box.color-mint { background: linear-gradient(135deg, rgba(167, 243, 208, 0.25) 0%, rgba(110, 231, 183, 0.12) 100%); border-left-color: #10b981; }
+        .sticky-note-box.color-blue { background: linear-gradient(135deg, rgba(186, 230, 253, 0.25) 0%, rgba(125, 211, 252, 0.12) 100%); border-left-color: #0284c7; }
+        .sticky-note-box.color-pink { background: linear-gradient(135deg, rgba(252, 231, 243, 0.28) 0%, rgba(244, 114, 182, 0.12) 100%); border-left-color: #ec4899; }
+        .sticky-note-textarea {
+            width: 100%;
+            flex: 1;
+            min-height: 110px;
+            background: transparent;
+            border: none;
+            resize: vertical;
+            outline: none;
+            padding: 0.35rem 0.2rem;
+            font-family: inherit;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+        .sticky-quick-tags {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-top: 0.35rem;
+            padding-top: 0.35rem;
+            border-top: 1px dashed var(--glass-border);
+        }
+        .sticky-tag-btn {
+            padding: 1px 6px;
+            font-size: 0.7rem;
+            border-radius: 6px;
+            background: var(--glass-subcard-solid);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            cursor: pointer;
+            box-shadow: none;
+            min-height: auto;
+            font-weight: 600;
+        }
+
         .mileage-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.65rem; margin-bottom: 0; }
         .mileage-stat-card { background: var(--glass-subcard-solid); border-radius: 10px; padding: 0.6rem 0.8rem; text-align: left; border: 1px solid var(--glass-border); color: var(--text-color); display: flex; flex-direction: column; gap: 0.18rem; position: relative; overflow: hidden; min-width: 0; transition: var(--transition); }
         .mileage-stat-card:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
@@ -116,21 +177,20 @@
         .mileage-btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
         .mileage-btn-row button { padding: 0.45rem 0.85rem; font-size: 0.85rem; min-height: 35px; border-radius: 10px; }
 
-        /* Style Kalendarza Startów */
-        .race-calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
-        .race-plan-card { background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.8rem 0.9rem; display: flex; flex-direction: column; gap: 0.45rem; transition: var(--transition); position: relative; }
+        /* Kalendarz Startów & Buty */
+        .race-calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.65rem; }
+        .race-plan-card { background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem 0.85rem; display: flex; flex-direction: column; gap: 0.35rem; transition: var(--transition); }
         .race-plan-card:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
         .race-plan-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
-        .race-plan-name { font-weight: 800; font-size: 0.98rem; color: var(--card-title-color); line-height: 1.25; }
-        .race-countdown-badge { font-size: 0.75rem; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; background: rgba(0,102,204,0.12); color: var(--primary); }
-        .race-plan-details { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; font-size: 0.82rem; }
-        .race-pill { display: inline-flex; align-items: center; gap: 3px; font-weight: 600; font-size: 0.76rem; padding: 2px 7px; border-radius: 6px; background: rgba(0,0,0,0.04); }
-        .race-paid-badge { font-size: 0.74rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; cursor: pointer; user-select: none; transition: var(--transition); }
+        .race-plan-name { font-weight: 800; font-size: 0.94rem; color: var(--card-title-color); line-height: 1.25; }
+        .race-countdown-badge { font-size: 0.72rem; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; background: rgba(0,102,204,0.12); color: var(--primary); }
+        .race-plan-details { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; font-size: 0.8rem; }
+        .race-pill { display: inline-flex; align-items: center; gap: 3px; font-weight: 600; font-size: 0.74rem; padding: 2px 6px; border-radius: 6px; background: rgba(0,0,0,0.04); }
+        .race-paid-badge { font-size: 0.72rem; font-weight: 700; padding: 2px 7px; border-radius: 6px; cursor: pointer; user-select: none; transition: var(--transition); }
         .race-paid-badge.paid { background: rgba(39, 174, 96, 0.18); color: #16a34a; border: 1px solid rgba(39, 174, 96, 0.3); }
         .race-paid-badge.unpaid { background: rgba(220, 38, 38, 0.14); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.25); }
-        .race-actions-row { display: flex; justify-content: flex-end; gap: 0.4rem; margin-top: 0.2rem; }
+        .race-actions-row { display: flex; justify-content: flex-end; gap: 0.35rem; margin-top: 0.15rem; }
 
-        /* Style Widgetu Butów */
         .shoes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
         .shoe-card { background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem 0.85rem; display: flex; flex-direction: column; gap: 0.45rem; transition: var(--transition); }
         .shoe-card:hover { transform: translateY(-2px); border-color: var(--primary); }
@@ -152,7 +212,6 @@
         .pred-pb-badge { font-size: 0.78rem; color: #d97706; font-weight: 700; white-space: nowrap; background: rgba(217,119,6,0.12); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(217,119,6,0.2); }
         .pred-pb-badge.empty { color: var(--text-muted); background: transparent; border: 1px dashed rgba(100,116,139,0.3); font-weight: 500; font-style: italic; }
         .pred-state { display: flex; justify-content: space-between; align-items: baseline; gap: 0.4rem; padding: 0.45rem 0.6rem; border-radius: 8px; background: rgba(0,0,0,0.03); flex-wrap: wrap; min-width: 0; }
-        body.dark-mode .pred-state, body.night-mode .pred-state, body.matrix-mode .pred-state, body.space-mode .pred-state, body.galaxy-mode .pred-state, body.neon-mode .pred-state { background: rgba(255,255,255,0.04); }
         .pred-state-label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
         .pred-state-values { display: flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; margin-left: auto; min-width: 0; }
         .pred-time { font-weight: 800; font-size: 1rem; color: var(--text-color); white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -170,7 +229,6 @@
         .weather-summary, .runner-tip { border-radius: var(--border-radius); padding: 1rem 1.2rem; margin-bottom: 1rem; border-left: 4px solid var(--primary); background: var(--glass-subcard); border: 1px solid var(--glass-border); color: var(--text-color); }
         .hourly-forecast { display: flex; gap: 0.9rem; margin: 1rem 0; overflow-x: auto; padding-bottom: 0.9rem; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--secondary) rgba(0,102,204,0.08); }
         .hourly-forecast::-webkit-scrollbar { height: 7px; }
-        .hourly-forecast::-webkit-scrollbar-track { background: rgba(0,0,0,0.06); border-radius: 20px; margin: 0 6px; }
         .hourly-forecast::-webkit-scrollbar-thumb { background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 20px; }
         .hour-item { flex: 0 0 145px; scroll-snap-align: start; padding: 0.9rem 0.75rem; border-radius: var(--border-radius); background: var(--glass-subcard-solid); border: 1px solid var(--glass-border); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 0.35rem; transition: var(--transition); color: var(--text-color); }
         .forecast-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin-top: 1rem; }
@@ -235,20 +293,36 @@
         @keyframes tileFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .tile-anim { animation: tileFadeIn 0.4s ease both; }
         
-        /* Motywy */
+        /* ═══════════ WSZYSTKIE MOTYWY (PEŁNA LISTA 25 MOTYWÓW) ═══════════ */
         body.light-mode { --primary: #0284c7; --secondary: #0ea5e9; --glass: rgba(255,255,255,0.94); --glass-card: linear-gradient(145deg, #fff, #f8fafc); --glass-subcard: rgba(241,245,249,0.85); --glass-subcard-solid: #fff; --glass-border: rgba(148,163,184,0.25); --text-color: #0f172a; --text-muted: #64748b; --card-title-color: #0f172a; background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 50%, #e2e8f0 100%) !important; color: #0f172a !important; }
         body.dark-mode, body.night-mode { --primary: #38bdf8; --secondary: #818cf8; --glass: rgba(15,23,42,0.94); --glass-card: linear-gradient(145deg, rgba(20,28,48,0.92), rgba(15,23,42,0.92)); --glass-subcard: rgba(0,0,0,0.45); --glass-subcard-solid: rgba(18,26,46,0.85); --glass-border: rgba(255,255,255,0.12); --text-color: #f1f5f9; --text-muted: #a3b3c8; --card-title-color: #fff; background: #090d16 !important; color: #f1f5f9 !important; }
         body.night-mode { background: var(--background-night) !important; }
         body.matrix-mode { --primary: #00ff41; --secondary: #00cc33; --glass: rgba(0,14,0,0.96); --glass-card: linear-gradient(145deg, rgba(0,22,8,0.94), rgba(0,14,4,0.96)); --glass-subcard: rgba(0,22,8,0.75); --glass-subcard-solid: rgba(0,18,6,0.92); --glass-border: rgba(0,255,65,0.35); --text-color: #a8ffbc; --text-muted: #5fd97a; --card-title-color: #d0ffdd; background: #000 !important; color: #a8ffbc !important; font-family: var(--tech-font); font-weight: 500; letter-spacing: 0.2px; }
         body.neon-mode { --primary: #00ff9d; --secondary: #00b8ff; --glass: rgba(4,14,30,0.96); --glass-card: linear-gradient(145deg, rgba(6,20,40,0.94), rgba(4,12,28,0.96)); --glass-subcard: rgba(0,26,52,0.75); --glass-subcard-solid: rgba(4,18,40,0.92); --glass-border: rgba(0,255,157,0.35); --text-color: #b8ffdc; --text-muted: #7fd4b8; --card-title-color: #fff; background: #040814 !important; color: #b8ffdc !important; font-family: var(--tech-font); font-weight: 500; letter-spacing: 0.2px; }
         body.space-mode { --primary: #9d4edd; --secondary: #48bfe3; --glass: rgba(14,8,42,0.95); --glass-card: linear-gradient(145deg, rgba(20,12,56,0.92), rgba(14,8,42,0.94)); --glass-subcard: rgba(30,16,74,0.7); --glass-subcard-solid: rgba(22,12,60,0.9); --glass-border: rgba(157,78,221,0.45); --text-color: #f2f5fb; --text-muted: #b8c3e0; --card-title-color: #fff; background: linear-gradient(135deg, #02010a, #0b092b, #10002b) !important; color: #f2f5fb !important; font-family: var(--tech-font); }
+        body.galaxy-mode { --primary: #b388ff; --secondary: #80d8ff; --glass: rgba(24,8,48,0.95); --glass-card: linear-gradient(145deg, rgba(32,12,64,0.92), rgba(24,8,48,0.94)); --glass-subcard: rgba(46,18,86,0.7); --glass-subcard-solid: rgba(34,14,66,0.9); --glass-border: rgba(179,136,255,0.45); --text-color: #f5ecff; --text-muted: #c8b8ec; --card-title-color: #fff; background: linear-gradient(135deg, #090014, #12002b, #03001e) !important; color: #f5ecff !important; font-family: var(--tech-font); }
+        body.hubba-bubba-mode, body.candy-mode { --primary: #ff69b4; --secondary: #ff1493; background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493) !important; }
+        body.forest-mode, body.spring-mode { --primary: #2e8b57; --secondary: #3cb371; background: linear-gradient(135deg, #a8e6cf, #dcedc1, #6b8e23) !important; }
+        body.summer-mode, body.amber-mode, body.sunset-mode, body.desert-mode { --primary: #ff8c00; --secondary: #ff4500; background: linear-gradient(135deg, #ffa07a, #ff8c00, #ff4500) !important; }
+        body.autumn-mode { --primary: #d97706; --secondary: #ea580c; background: linear-gradient(135deg, #fcd34d, #f59e0b, #b45309) !important; }
+        body.rainy-day-mode { --primary: #4682b4; --secondary: #5f9ea0; background: linear-gradient(135deg, #b0c4de, #778899, #4682b4) !important; }
+        body.winter-mode { --primary: #1e5f8c; --secondary: #4682b4; background: linear-gradient(135deg, #e6e6fa, #add8e6, #87ceeb) !important; }
+        body.christmas-mode { --primary: #d62b2b; --secondary: #2b8d2b; background: linear-gradient(135deg, #d62b2b, #2b8d2b, #f5f5f5) !important; }
+        body.easter-mode { --primary: #8a2be2; --secondary: #9932cc; background: linear-gradient(135deg, #ff9ff3, #feca57, #1dd1a1) !important; }
+        body.birthday-mode { --primary: #ff6b6b; --secondary: #48dbfb; background: linear-gradient(135deg, #ff6b6b, #48dbfb, #feca57) !important; }
+        body.disco-mode { --primary: #9b59b6; --secondary: #3498db; background: linear-gradient(135deg, #9b59b6, #3498db, #e74c3c) !important; }
+        body.ocean-mode { --primary: #1abc9c; --secondary: #3498db; background: linear-gradient(135deg, #1abc9c, #3498db, #9b59b6) !important; }
+        body.retro-mode { --primary: #ff6b6b; --secondary: #5f27cd; background: linear-gradient(135deg, #ff6b6b, #feca57, #1dd1a1) !important; }
+        body.monochrome-mode { --primary: #555; --secondary: #999; background: linear-gradient(135deg, #eee, #ccc, #aaa) !important; }
 
+        body.dark-mode .card, body.night-mode .card, body.matrix-mode .card, body.space-mode .card, body.galaxy-mode .card, body.neon-mode .card { background: var(--glass-card); border: 1px solid rgba(255,255,255,0.1); color: var(--text-color); }
         .card, .widget, .sun-widget, .mileage-stat-card { position: relative; isolation: isolate; }
         .card::before, .widget::before, .sun-widget::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 45%; background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 60%, transparent 100%); border-radius: var(--border-radius) var(--border-radius) 0 0; pointer-events: none; z-index: 0; opacity: 0.6; }
         .card > *, .widget > *, .sun-widget > * { position: relative; z-index: 1; }
-        body.dark-mode .card::before, body.night-mode .card::before, body.matrix-mode .card::before, body.neon-mode .card::before, body.space-mode .card::before { background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%); opacity: 0.9; }
+        body.dark-mode .card::before, body.night-mode .card::before, body.matrix-mode .card::before, body.neon-mode .card::before, body.space-mode .card::before, body.galaxy-mode .card::before { background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%); opacity: 0.9; }
 
         @media (max-width: 1024px) { body { padding: 1.5rem 0.8rem 80px 0.8rem; } .app-layout { flex-direction: column; align-items: stretch; gap: 1.1rem; } .container { max-width: 100%; padding: 1rem; } .widgets-container { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; } }
+        @media (max-width: 900px) { .calendar-and-note-grid { grid-template-columns: 1fr; } }
         @media (max-width: 640px) { body { padding: 1.2rem 0.6rem 80px 0.6rem; } .container { padding: 0.85rem; } .card { padding: 1rem; } .app-header-row { flex-direction: column; align-items: stretch; gap: 0.6rem; } .search-box { flex-direction: column; align-items: stretch; } input, select, .mobile-buttons, button { width: 100%; justify-content: center; } .parameter-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } .forecast-container { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; } .widgets-container { grid-template-columns: 1fr; } .settings-toggle { bottom: 15px; right: 15px; padding: 0.65rem 1.1rem; font-size: 0.9rem; } .settings-panel { bottom: 70px; right: 15px; left: 15px; width: auto; max-width: none; } .predictor-grid { grid-template-columns: 1fr; } .mileage-hub-box > div:nth-child(2) { flex-direction: column; align-items: stretch; } .mileage-hub-box > div:nth-child(2) > div:first-child { width: 100%; min-width: 0; } #runTypeChartContainer { margin: 0.5rem auto 0 auto !important; } }
     </style>
 </head>
@@ -352,21 +426,49 @@
                 </div>
             </div>
 
-            <!-- KALENDARZ STARTOWY -->
-            <div class="race-calendar-box">
-                <div class="box-title-bar">
-                    <div>
-                        <span class="box-title">🗓️ Kalendarz Startowy & Zawody</span>
-                        <div style="font-size: 0.72rem; opacity: 0.75;">Twoje zaplanowane wyścigi i imprezy biegowe</div>
+            <!-- WIERSZ: KALENDARZ STARTOWY + STICKY NOTE (OBOK SIEBIE) -->
+            <div class="calendar-and-note-grid">
+                <!-- KALENDARZ STARTOWY -->
+                <div class="race-calendar-box">
+                    <div class="box-title-bar">
+                        <div>
+                            <span class="box-title">🗓️ Kalendarz Startowy</span>
+                            <div style="font-size: 0.72rem; opacity: 0.75;">Zaplanowane zawody i imprezy</div>
+                        </div>
+                        <button onclick="openAddRaceModal()" style="padding: 0.28rem 0.65rem; font-size: 0.76rem; min-height: 28px; border-radius: 8px; box-shadow: none;">➕ Dodaj start</button>
                     </div>
-                    <button onclick="openAddRaceModal()" style="padding: 0.3rem 0.75rem; font-size: 0.78rem; min-height: 28px; border-radius: 8px; box-shadow: none;">➕ Dodaj start</button>
+                    <div class="race-calendar-grid" id="raceCalendarContainer" style="flex: 1;">
+                        <div style="font-size:0.83rem; opacity:0.8; grid-column: 1/-1; padding:0.5rem 0;">Brak zaplanowanych startów. Kliknij „Dodaj start”!</div>
+                    </div>
                 </div>
-                <div class="race-calendar-grid" id="raceCalendarContainer">
-                    <div style="font-size:0.85rem; opacity:0.8; grid-column: 1/-1; padding:0.5rem 0;">Brak zaplanowanych startów. Kliknij „Dodaj start” aby zaplanować swój cel!</div>
+
+                <!-- STICKY NOTE (NOTATNIK BIEGACZA) -->
+                <div class="sticky-note-box" id="stickyNoteWidget">
+                    <div class="box-title-bar" style="margin-bottom: 0.35rem;">
+                        <div style="display: flex; align-items: center; gap: 0.4rem;">
+                            <span class="box-title" style="color: #b45309;">📌 Notatnik Biegacza</span>
+                            <span id="stickySaveIndicator" style="font-size: 0.68rem; opacity: 0.75; font-weight: 600;">✓ Zapisano</span>
+                        </div>
+                        <div style="display: flex; gap: 4px; align-items: center;">
+                            <button onclick="changeStickyColor('yellow')" title="Żółta" style="background:#fef08a; border:1px solid #eab308; width:18px; height:18px; padding:0; min-height:18px; border-radius:50%; box-shadow:none; cursor:pointer;"></button>
+                            <button onclick="changeStickyColor('mint')" title="Miętowa" style="background:#a7f3d0; border:1px solid #10b981; width:18px; height:18px; padding:0; min-height:18px; border-radius:50%; box-shadow:none; cursor:pointer;"></button>
+                            <button onclick="changeStickyColor('blue')" title="Błękitna" style="background:#bae6fd; border:1px solid #0284c7; width:18px; height:18px; padding:0; min-height:18px; border-radius:50%; box-shadow:none; cursor:pointer;"></button>
+                            <button onclick="changeStickyColor('pink')" title="Różowa" style="background:#fce7f3; border:1px solid #ec4899; width:18px; height:18px; padding:0; min-height:18px; border-radius:50%; box-shadow:none; cursor:pointer;"></button>
+                            <button onclick="clearStickyNote()" title="Wyczyść" style="background:transparent; border:none; padding:0 2px; min-height:auto; font-size:0.85rem; cursor:pointer; color:inherit; box-shadow:none;">🗑️</button>
+                        </div>
+                    </div>
+                    <textarea class="sticky-note-textarea" id="stickyNoteInput" placeholder="Szybkie notatki: cel na ten tydzień, pakiet startowy, badania, suplementy..." oninput="handleStickyInput()"></textarea>
+                    <div class="sticky-quick-tags">
+                        <span style="font-size:0.68rem; opacity:0.75; font-weight:700; align-self:center;">Szybkie tagi:</span>
+                        <button class="sticky-tag-btn" onclick="appendStickyTag('⚡ Elektrolity')">+ Elektrolity</button>
+                        <button class="sticky-tag-btn" onclick="appendStickyTag('🧘 Rozciąganie')">+ Rozciąganie</button>
+                        <button class="sticky-tag-btn" onclick="appendStickyTag('💧 Nawodnienie')">+ Woda</button>
+                        <button class="sticky-tag-btn" onclick="appendStickyTag('🎯 Cel: PB')">+ Cel: PB</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- WIDGET SPRZĘT / PRZEBIEG BUTÓW (Z ZAKŁADKAMI) -->
+            <!-- WIDGET BUTÓW (Z ZAKŁADKAMI) -->
             <div class="gear-tracker-box">
                 <div class="box-title-bar">
                     <div>
@@ -379,7 +481,6 @@
                     </div>
                 </div>
 
-                <!-- Zakładki Aktywne / Wycofane w widgecie -->
                 <div style="display: flex; gap: 6px; margin-bottom: 0.75rem;">
                     <button id="shoeTabActive" class="spark-tab-btn active" onclick="setShoesWidgetTab('active')">👟 W rotacji (<span id="countActiveShoes">0</span>)</button>
                     <button id="shoeTabRetired" class="spark-tab-btn" onclick="setShoesWidgetTab('retired')">📦 Wycofane / Emerytura (<span id="countRetiredShoes">0</span>)</button>
@@ -640,7 +741,7 @@
             <div class="form-group"><label>Przebieg pocz. (km)</label><input type="number" id="shoeModalInitial" value="0" min="0" step="0.5"></div>
         </div>
         <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem; line-height:1.4;">
-            ℹ️ Przebieg początkowy to kilometry przebiegnięte w tych butach przed wprowadzeniem ich do MeteoRun.
+            ℹ️ Przebieg początkowy to kilometry pokonane w tych butach przed wprowadzeniem ich do MeteoRun.
         </div>
         <div style="display: flex; gap: 0.6rem;">
             <button style="flex: 1;" onclick="submitShoeForm()">Zapisz buty</button>
@@ -705,12 +806,36 @@
 
 <script>
     const API_KEY = 'd0c0831962dc429f91771349242705';
+
+    // ═══════════ WSZYSTKIE 25 MOTYWÓW ═══════════
     const THEMES = [
-        { name: 'Domyślny (Auto)', value: 'auto', emoji: '🌓' }, { name: 'Jasny', value: 'light', emoji: '☀️' },
-        { name: 'Ciemny', value: 'dark', emoji: '🌙' }, { name: 'Matrix', value: 'matrix', emoji: '📟' },
-        { name: 'Las', value: 'forest', emoji: '🌲' }, { name: 'Kosmos', value: 'space', emoji: '🚀' },
-        { name: 'Neon', value: 'neon', emoji: '💡' }
+        { name: 'Domyślny (Auto)', value: 'auto', emoji: '🌓' },
+        { name: 'Jasny', value: 'light', emoji: '☀️' },
+        { name: 'Ciemny', value: 'dark', emoji: '🌙' },
+        { name: 'Matrix', value: 'matrix', emoji: '📟' },
+        { name: 'Hubba Bubba', value: 'hubba-bubba', emoji: '🍬' },
+        { name: 'Las', value: 'forest', emoji: '🌲' },
+        { name: 'Kosmos', value: 'space', emoji: '🚀' },
+        { name: 'Pustynia', value: 'desert', emoji: '🏜️' },
+        { name: 'Deszczowy Dzień', value: 'rainy-day', emoji: '🌧️' },
+        { name: 'Wiosna', value: 'spring', emoji: '🌸' },
+        { name: 'Lato', value: 'summer', emoji: '🌞' },
+        { name: 'Jesień', value: 'autumn', emoji: '🍁' },
+        { name: 'Zima', value: 'winter', emoji: '⛄' },
+        { name: 'Świąteczny', value: 'christmas', emoji: '🎄' },
+        { name: 'Wielkanoc', value: 'easter', emoji: '🐰' },
+        { name: 'Urodziny', value: 'birthday', emoji: '🎂' },
+        { name: 'Disco', value: 'disco', emoji: '🎵' },
+        { name: 'Ocean', value: 'ocean', emoji: '🌊' },
+        { name: 'Zachód słońca', value: 'sunset', emoji: '🌅' },
+        { name: 'Neon', value: 'neon', emoji: '💡' },
+        { name: 'Retro', value: 'retro', emoji: '📺' },
+        { name: 'Galaktyka', value: 'galaxy', emoji: '🌌' },
+        { name: 'Słodki', value: 'candy', emoji: '🍭' },
+        { name: 'Monochrom', value: 'monochrome', emoji: '⚫' },
+        { name: 'Bursztyn', value: 'amber', emoji: '🟠' }
     ];
+
     const WEATHER_ICONS = {1000:{day:'113.svg',night:'113.svg'},1003:{day:'116.svg',night:'116.svg'},1006:{day:'119.svg',night:'119.svg'},1009:{day:'122.svg',night:'122.svg'},1030:{day:'143.svg',night:'143.svg'},1063:{day:'176.svg',night:'176.svg'},1066:{day:'179.svg',night:'179.svg'},1069:{day:'182.svg',night:'182.svg'},1072:{day:'185.svg',night:'185.svg'},1087:{day:'200.svg',night:'200.svg'},1114:{day:'227.svg',night:'227.svg'},1117:{day:'230.svg',night:'230.svg'},1135:{day:'248.svg',night:'248.svg'},1147:{day:'260.svg',night:'260.svg'},1150:{day:'263.svg',night:'263.svg'},1153:{day:'266.svg',night:'266.svg'},1168:{day:'281.svg',night:'281.svg'},1171:{day:'284.svg',night:'284.svg'},1180:{day:'293.svg',night:'293.svg'},1183:{day:'296.svg',night:'296.svg'},1186:{day:'299.svg',night:'299.svg'},1189:{day:'302.svg',night:'302.svg'},1192:{day:'305.svg',night:'305.svg'},1195:{day:'308.svg',night:'308.svg'},1198:{day:'311.svg',night:'311.svg'},1201:{day:'314.svg',night:'314.svg'},1204:{day:'317.svg',night:'317.svg'},1207:{day:'320.svg',night:'320.svg'},1210:{day:'323.svg',night:'323.svg'},1213:{day:'326.svg',night:'326.svg'},1216:{day:'329.svg',night:'329.svg'},1219:{day:'332.svg',night:'332.svg'},1222:{day:'335.svg',night:'335.svg'},1225:{day:'338.svg',night:'338.svg'},1237:{day:'350.svg',night:'350.svg'},1240:{day:'353.svg',night:'353.svg'},1243:{day:'356.svg',night:'356.svg'},1246:{day:'359.svg',night:'359.svg'},1249:{day:'362.svg',night:'362.svg'},1252:{day:'365.svg',night:'365.svg'},1255:{day:'368.svg',night:'368.svg'},1258:{day:'371.svg',night:'371.svg'},1261:{day:'374.svg',night:'374.svg'},1264:{day:'377.svg',night:'377.svg'},1273:{day:'386.svg',night:'386.svg'},1276:{day:'389.svg',night:'389.svg'},1279:{day:'392.svg',night:'392.svg'},1282:{day:'395.svg',night:'395.svg'}};
     const MOON_PHASES = {'new moon':{name:'Nów',icon:'🌑'},'waxing crescent':{name:'Przybywający sierp',icon:'🌒'},'first quarter':{name:'Pierwsza kwadra',icon:'🌓'},'waxing gibbous':{name:'Przybywający garb',icon:'🌔'},'full moon':{name:'Pełnia',icon:'🌕'},'waning gibbous':{name:'Ubywający garb',icon:'🌖'},'last quarter':{name:'Ostatnia kwadra',icon:'🌗'},'third quarter':{name:'Trzecia kwadra',icon:'🌗'},'waning crescent':{name:'Ubywający sierp',icon:'🌘'}};
     const WEATHER_CODE_TRANSLATIONS = {1000:{day:"Słonecznie",night:"Bezchmurnie"},1003:{day:"Częściowe zachmurzenie",night:"Częściowe zachmurzenie"},1006:{day:"Pochmurno",night:"Pochmurno"},1009:{day:"Zachmurzenie całkowite",night:"Zachmurzenie całkowite"},1030:{day:"Lekka mgła",night:"Lekka mgła"},1135:{day:"Mgła",night:"Mgła"},1147:{day:"Marznąca mgła/Szadź",night:"Marznąca mgła/Szadź"},1063:{day:"Przelotne opady deszczu",night:"Przelotne opady deszczu"},1072:{day:"Przelotna marznąca mżawka",night:"Przelotna marznąca mżawka"},1150:{day:"Przelotna mżawka",night:"Przelotna mżawka"},1153:{day:"Lekka mżawka",night:"Lekka mżawka"},1168:{day:"Marznąca mżawka",night:"Marznąca mżawka"},1171:{day:"Silna marznąca mżawka",night:"Silna marznąca mżawka"},1180:{day:"Miejscowy lekki deszcz",night:"Miejscowy lekki deszcz"},1183:{day:"Lekki deszcz",night:"Lekki deszcz"},1186:{day:"Umiarkowany deszcz, przejaśnienia",night:"Umiarkowany deszcz, przejaśnienia"},1189:{day:"Umiarkowany deszcz",night:"Umiarkowany deszcz"},1192:{day:"Ulewny deszcz, przejaśnienia",night:"Ulewny deszcz, przejaśnienia"},1195:{day:"Ulewny deszcz",night:"Ulewny deszcz"},1198:{day:"Lekki marznący deszcz",night:"Lekki marznący deszcz"},1201:{day:"Umiarkowany/mocny marznący deszcz",night:"Umiarkowany/mocny marznący deszcz"},1240:{day:"Lekki przelotny deszcz",night:"Lekki przelotny deszcz"},1243:{day:"Umiarkowany/mocny przelotny deszcz",night:"Umiarkowany/mocny przelotny deszcz"},1246:{day:"Gwałtowna ulewa",night:"Gwałtowna ulewa"},1066:{day:"Przelotne opady śniegu",night:"Przelotne opady śniegu"},1114:{day:"Zawieja śnieżna",night:"Zawieja śnieżna"},1117:{day:"Zamieć śnieżna",night:"Zamieć śnieżna"},1210:{day:"Przelotny lekki śnieg",night:"Przelotny lekki śnieg"},1213:{day:"Lekki śnieg",night:"Lekki śnieg"},1216:{day:"Przelotny umiarkowany śnieg",night:"Przelotny umiarkowany śnieg"},1219:{day:"Umiarkowany śnieg",night:"Umiarkowany śnieg"},1222:{day:"Przelotny obfity śnieg",night:"Przelotny obfity śnieg"},1225:{day:"Obfity śnieg",night:"Obfity śnieg"},1255:{day:"Lekkie opady śniegu",night:"Lekkie opady śniegu"},1258:{day:"Umiarkowane/obfite opady śniegu",night:"Umiarkowane/obfite opady śniegu"},1069:{day:"Przelotny deszcz ze śniegiem",night:"Przelotny deszcz ze śniegiem"},1204:{day:"Lekki deszcz ze śniegiem",night:"Lekki deszcz ze śniegiem"},1207:{day:"Umiarkowany/obfite deszcz ze śniegiem",night:"Umiarkowany/obfite deszcz ze śniegiem"},1249:{day:"Lekkie opady deszczu ze śniegiem",night:"Lekkie opady deszczu ze śniegiem"},1252:{day:"Umiarkowane/obfite opady deszczu ze śniegiem",night:"Umiarkowane/obfite opady deszczu ze śniegiem"},1237:{day:"Grad",night:"Grad"},1261:{day:"Lekkie opady gradu",night:"Lekkie opady gradu"},1264:{day:"Umiarkowane/obfite opady gradu",night:"Umiarkowane/obfite opady gradu"},1087:{day:"Możliwe burze",night:"Możliwe burze"},1273:{day:"Lekki deszcz z burzą",night:"Lekki deszcz z burzą"},1276:{day:"Umiarkowany/obfite deszcz z burzą",night:"Umiarkowany/obfite deszcz z burzą"},1279:{day:"Lekki śnieg z burzą",night:"Lekki śnieg z burzą"},1282:{day:"Umiarkowany/obfity śnieg z burzą",night:"Umiarkowany/obfity śnieg z burzą"}};
@@ -722,15 +847,13 @@
     let lastAstroData = null, lastWeatherData = null;
     let currentDayContext = { chance: 0, totalMm: 0 };
     let sparklineMode = 'week', sparklineOffset = 0;
-    let shoesWidgetCurrentTab = 'active'; // 'active' lub 'retired'
+    let shoesWidgetCurrentTab = 'active';
 
-    // Baza profilu i PB
     let runnerProfile = { name:'', gender:'M', weight:75, height:180, hrRest:55, hrMax:185, easyPace:'05:30' };
     try { const sp = localStorage.getItem('meteoProfile'); if (sp) runnerProfile = Object.assign(runnerProfile, JSON.parse(sp)); } catch(e){}
     let runnerRecords = { d1k:'', d3k:'', d5k:'', d10k:'', d21k:'', d42k:'' };
     try { const sr = localStorage.getItem('meteoRecords'); if (sr) runnerRecords = Object.assign(runnerRecords, JSON.parse(sr)); } catch(e){}
 
-    // Baza butów (z polem retired: boolean)
     let runnerShoes = [];
     try {
         const sShoes = localStorage.getItem('meteoShoes');
@@ -741,7 +864,6 @@
         runnerShoes = runnerShoes.map(s => ({ ...s, retired: !!s.retired }));
     } catch(e) { runnerShoes = []; }
 
-    // Baza zaplanowanych startów
     let runnerRaces = [];
     try {
         const sRaces = localStorage.getItem('meteoRaces');
@@ -750,7 +872,6 @@
         ];
     } catch(e) { runnerRaces = []; }
 
-    // Baza biegów
     let runnerRuns = [];
     try {
         const sRuns = localStorage.getItem('meteoRuns');
@@ -762,7 +883,7 @@
     function getRandomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
     function localDateStr(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 
-    // Canvas tła
+    // Canvas cząsteczek
     const canvas = document.getElementById('particlesCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [], currentPresetName = 'none', currentPreset = null, windAngleOffset = 0, particleLoopActive = false;
@@ -820,7 +941,49 @@
     }
 
     // ==========================================
-    // MODUŁ BUTÓW I SPRZĘTU (ZARZĄDZANIE, EDYCJA, WYCOFYWANIE)
+    // NOTATNIK BIEGACZA (STICKY NOTE)
+    // ==========================================
+    function initStickyNote() {
+        const savedText = localStorage.getItem('meteoStickyNote') || '';
+        const savedColor = localStorage.getItem('meteoStickyColor') || 'yellow';
+        const txtEl = document.getElementById('stickyNoteInput');
+        if (txtEl) txtEl.value = savedText;
+        changeStickyColor(savedColor, false);
+    }
+    let stickySaveTimeout = null;
+    function handleStickyInput() {
+        const val = document.getElementById('stickyNoteInput').value;
+        const ind = document.getElementById('stickySaveIndicator');
+        if (ind) ind.textContent = '⏳ Zapisywanie...';
+        clearTimeout(stickySaveTimeout);
+        stickySaveTimeout = setTimeout(() => {
+            localStorage.setItem('meteoStickyNote', val);
+            if (ind) ind.textContent = '✓ Zapisano';
+        }, 500);
+    }
+    function appendStickyTag(tag) {
+        const txt = document.getElementById('stickyNoteInput');
+        if (!txt) return;
+        const cur = txt.value.trim();
+        txt.value = cur ? `${cur}\n• ${tag}` : `• ${tag}`;
+        handleStickyInput();
+        txt.focus();
+    }
+    function clearStickyNote() {
+        if (!confirm('Wyczyścić treść notatki?')) return;
+        const txt = document.getElementById('stickyNoteInput');
+        if (txt) { txt.value = ''; handleStickyInput(); }
+    }
+    function changeStickyColor(color, save = true) {
+        const w = document.getElementById('stickyNoteWidget');
+        if (!w) return;
+        w.classList.remove('color-mint', 'color-blue', 'color-pink');
+        if (color !== 'yellow') w.classList.add(`color-${color}`);
+        if (save) localStorage.setItem('meteoStickyColor', color);
+    }
+
+    // ==========================================
+    // MODUŁ BUTÓW I SPRZĘTU
     // ==========================================
     function getShoeMileage(shoeId) {
         const shoe = runnerShoes.find(s => s.id === shoeId);
@@ -828,13 +991,10 @@
         const runsKm = runnerRuns.filter(r => r.shoeId === shoeId).reduce((acc, r) => acc + (parseFloat(r.km) || 0), 0);
         return (parseFloat(shoe.initialKm) || 0) + runsKm;
     }
-
     function populateShoeSelect(selectId, selectedShoeId = '') {
         const sel = document.getElementById(selectId);
         if (!sel) return;
         sel.innerHTML = '<option value="">-- Bez przypisanych butów --</option>';
-        
-        // Aktywne
         const activeGroup = document.createElement('optgroup');
         activeGroup.label = '🟢 W rotacji (aktywne)';
         runnerShoes.filter(s => !s.retired).forEach(s => {
@@ -847,7 +1007,6 @@
         });
         if (activeGroup.children.length > 0) sel.appendChild(activeGroup);
 
-        // Wycofane (jeśli są, lub gdy edytowany bieg ma przypisane wycofane buty)
         const retiredShoes = runnerShoes.filter(s => s.retired);
         if (retiredShoes.length > 0) {
             const retGroup = document.createElement('optgroup');
@@ -863,7 +1022,6 @@
             sel.appendChild(retGroup);
         }
     }
-
     function openAddShoeModal() {
         document.getElementById('shoeModalTitle').textContent = '👟 Dodaj Parę Butów';
         document.getElementById('editingShoeId').value = '';
@@ -874,7 +1032,6 @@
         document.getElementById('shoeModalInitial').value = '0';
         document.getElementById('shoeModal').classList.add('active');
     }
-
     function openEditShoeModal(id) {
         const shoe = runnerShoes.find(s => s.id === id);
         if (!shoe) return;
@@ -887,11 +1044,7 @@
         document.getElementById('shoeModalInitial').value = shoe.initialKm || 0;
         document.getElementById('shoeModal').classList.add('active');
     }
-
-    function closeShoeModal() {
-        document.getElementById('shoeModal').classList.remove('active');
-    }
-
+    function closeShoeModal() { document.getElementById('shoeModal').classList.remove('active'); }
     function submitShoeForm() {
         const nameInput = document.getElementById('shoeModalName');
         const name = nameInput.value.trim();
@@ -904,20 +1057,16 @@
 
         if (editId) {
             const idx = runnerShoes.findIndex(s => s.id === editId);
-            if (idx >= 0) {
-                runnerShoes[idx] = { ...runnerShoes[idx], name, surface, maxKm, initialKm, retired };
-            }
+            if (idx >= 0) { runnerShoes[idx] = { ...runnerShoes[idx], name, surface, maxKm, initialKm, retired }; }
         } else {
             runnerShoes.push({ id: 'shoe_' + Date.now(), name, surface, maxKm, initialKm, retired });
         }
-
         localStorage.setItem('meteoShoes', JSON.stringify(runnerShoes));
         closeShoeModal();
         renderSettingsShoesList();
         renderShoesTrackerWidget();
         renderHistoryList();
     }
-
     function toggleShoeRetirement(id) {
         const shoe = runnerShoes.find(s => s.id === id);
         if (!shoe) return;
@@ -926,7 +1075,6 @@
         renderSettingsShoesList();
         renderShoesTrackerWidget();
     }
-
     function deleteShoe(id) {
         if (!confirm('Czy na pewno chcesz bezpowrotnie usunąć te buty z bazy?')) return;
         runnerShoes = runnerShoes.filter(s => s.id !== id);
@@ -935,42 +1083,36 @@
         renderShoesTrackerWidget();
         renderHistoryList();
     }
-
     function setShoesWidgetTab(tab) {
         shoesWidgetCurrentTab = tab;
         document.getElementById('shoeTabActive').classList.toggle('active', tab === 'active');
         document.getElementById('shoeTabRetired').classList.toggle('active', tab === 'retired');
         renderShoesTrackerWidget();
     }
-
     function renderShoesTrackerWidget() {
         const c = document.getElementById('shoesTrackerContainer');
         const countActiveEl = document.getElementById('countActiveShoes');
         const countRetEl = document.getElementById('countRetiredShoes');
         if (!c) return;
-
         const activeShoes = runnerShoes.filter(s => !s.retired);
         const retiredShoes = runnerShoes.filter(s => s.retired);
-
         if (countActiveEl) countActiveEl.textContent = activeShoes.length;
         if (countRetEl) countRetEl.textContent = retiredShoes.length;
+        const displayed = shoesWidgetCurrentTab === 'active' ? activeShoes : retiredShoes;
 
-        const displayedShoes = shoesWidgetCurrentTab === 'active' ? activeShoes : retiredShoes;
-
-        if (displayedShoes.length === 0) {
+        if (displayed.length === 0) {
             c.innerHTML = `<div style="font-size:0.85rem; opacity:0.8; grid-column: 1/-1; padding:0.8rem 0; text-align:center;">
-                ${shoesWidgetCurrentTab === 'active' ? 'Brak aktywnych par w rotacji. Dodaj buty przyciskiem powyżej!' : 'Brak wycofanych par. Gdy buty skończą żywot, możesz je przenieść na emeryturę.'}
+                ${shoesWidgetCurrentTab === 'active' ? 'Brak aktywnych par w rotacji. Dodaj buty przyciskiem powyżej!' : 'Brak wycofanych par.'}
             </div>`;
             return;
         }
 
-        c.innerHTML = displayedShoes.map(s => {
+        c.innerHTML = displayed.map(s => {
             const km = getShoeMileage(s.id);
             const pct = Math.min(100, Math.round((km / s.maxKm) * 100));
             const left = Math.max(0, s.maxKm - km);
             let color = '#27ae60';
-            if (pct >= 85) color = '#e74c3c';
-            else if (pct >= 60) color = '#f39c12';
+            if (pct >= 85) color = '#e74c3c'; else if (pct >= 60) color = '#f39c12';
 
             return `<div class="shoe-card ${s.retired ? 'retired' : ''}">
                 <div class="shoe-header">
@@ -978,57 +1120,40 @@
                         <div class="shoe-name">${escapeHtml(s.name)}</div>
                         <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(s.surface)}</div>
                     </div>
-                    <div class="shoe-badges-row">
-                        ${s.retired ? '<span class="shoe-badge retired-badge">📦 Emerytowane</span>' : `<span class="shoe-badge">${pct}%</span>`}
-                    </div>
+                    <div class="shoe-badges-row">${s.retired ? '<span class="shoe-badge retired-badge">📦 Emerytowane</span>' : `<span class="shoe-badge">${pct}%</span>`}</div>
                 </div>
-                <div class="shoe-progress-bar-bg">
-                    <div class="shoe-progress-fill" style="width: ${pct}%; background: ${s.retired ? 'var(--text-muted)' : color};"></div>
-                </div>
+                <div class="shoe-progress-bar-bg"><div class="shoe-progress-fill" style="width: ${pct}%; background: ${s.retired ? 'var(--text-muted)' : color};"></div></div>
                 <div class="shoe-mileage-text">
                     <span>${km.toFixed(1)} / ${s.maxKm} km</span>
-                    <span style="color:${left === 0 ? '#e74c3c' : 'inherit'};">
-                        ${s.retired ? 'Wycofane z rotacji' : (left > 0 ? `zostało: ${left.toFixed(0)} km` : 'Zużyte!')}
-                    </span>
+                    <span style="color:${left === 0 ? '#e74c3c' : 'inherit'};">${s.retired ? 'Wycofane' : (left > 0 ? `zostało: ${left.toFixed(0)} km` : 'Zużyte!')}</span>
                 </div>
                 <div class="shoe-card-actions">
-                    <button onclick="openEditShoeModal('${s.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.85rem; box-shadow:none; min-height:auto;" title="Edytuj dane buta">✏️ Edytuj</button>
-                    <button onclick="toggleShoeRetirement('${s.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.85rem; box-shadow:none; min-height:auto;" title="${s.retired ? 'Przywróć do rotacji' : 'Przenieś na emeryturę'}">
-                        ${s.retired ? '♻️ Przywróć' : '📦 Wycofaj'}
-                    </button>
+                    <button onclick="openEditShoeModal('${s.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.85rem; box-shadow:none; min-height:auto;">✏️ Edytuj</button>
+                    <button onclick="toggleShoeRetirement('${s.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.85rem; box-shadow:none; min-height:auto;">${s.retired ? '♻️ Przywróć' : '📦 Wycofaj'}</button>
                 </div>
             </div>`;
         }).join('');
     }
-
     function renderSettingsShoesList() {
         const c = document.getElementById('settingsShoesList');
         if (!c) return;
-        if (runnerShoes.length === 0) {
-            c.innerHTML = '<div style="font-size:0.82rem; opacity:0.7; padding:0.5rem 0;">Brak dodanych butów. Dodaj swoją pierwszą parę!</div>';
-            return;
-        }
+        if (runnerShoes.length === 0) { c.innerHTML = '<div style="font-size:0.82rem; opacity:0.7; padding:0.5rem 0;">Brak dodanych butów.</div>'; return; }
         c.innerHTML = runnerShoes.map(s => {
             const km = getShoeMileage(s.id);
             return `<div style="display:flex; justify-content:space-between; align-items:center; background:var(--glass-subcard); padding:0.5rem 0.65rem; border-radius:10px; border:1px solid var(--glass-border); font-size:0.82rem; ${s.retired ? 'opacity:0.75; border-style:dashed;' : ''}">
                 <div style="min-width:0; flex:1;">
-                    <div style="font-weight:700;">${escapeHtml(s.name)} ${s.retired ? '<span style="font-size:0.7rem; color:var(--text-muted); font-weight:600;">(Wycofane)</span>' : ''}</div>
-                    <div style="color:var(--text-muted); font-size:0.75rem;">${s.surface} • Przebieg: <strong>${km.toFixed(1)}</strong> / ${s.maxKm} km</div>
+                    <div style="font-weight:700;">${escapeHtml(s.name)} ${s.retired ? '<span style="font-size:0.7rem; color:var(--text-muted);">(Wycofane)</span>' : ''}</div>
+                    <div style="color:var(--text-muted); font-size:0.75rem;">${s.surface} • <strong>${km.toFixed(1)}</strong> / ${s.maxKm} km</div>
                 </div>
                 <div style="display:flex; gap:3px; align-items:center;">
-                    <button onclick="openEditShoeModal('${s.id}')" style="background:transparent; color:inherit; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;" title="Edytuj">✏️</button>
-                    <button onclick="toggleShoeRetirement('${s.id}')" style="background:transparent; color:inherit; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;" title="${s.retired ? 'Przywróć' : 'Wycofaj'}">${s.retired ? '♻️' : '📦'}</button>
-                    <button onclick="deleteShoe('${s.id}')" style="background:transparent; color:#ff4757; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;" title="Usuń">🗑️</button>
+                    <button onclick="openEditShoeModal('${s.id}')" style="background:transparent; color:inherit; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;">✏️</button>
+                    <button onclick="toggleShoeRetirement('${s.id}')" style="background:transparent; color:inherit; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;">${s.retired ? '♻️' : '📦'}</button>
+                    <button onclick="deleteShoe('${s.id}')" style="background:transparent; color:#ff4757; border:none; padding:3px 5px; cursor:pointer; font-size:0.95rem; box-shadow:none; min-height:auto;">🗑️</button>
                 </div>
             </div>`;
         }).join('');
     }
-
-    function openShoesSettings(e) {
-        if (e) e.stopPropagation();
-        const p = document.getElementById('settingsPanel');
-        if (p) { p.classList.add('active'); switchSettingsTab('gear'); }
-    }
+    function openShoesSettings(e) { if (e) e.stopPropagation(); const p = document.getElementById('settingsPanel'); if (p) { p.classList.add('active'); switchSettingsTab('gear'); } }
 
     // ==========================================
     // MODUŁ KALENDARZA STARTOWEGO
@@ -1046,14 +1171,12 @@
         document.getElementById('raceInputTarget').value = '';
         document.getElementById('raceModal').classList.add('active');
     }
-
     function openEditRaceModal(id) {
         const race = runnerRaces.find(r => r.id === id);
         if (!race) return;
-        document.getElementById('raceModalTitle').textContent = '✏️ Edytuj Zaplanowany Start';
+        document.getElementById('raceModalTitle').textContent = '✏️ Edytuj Start w Zawodach';
         document.getElementById('editingRaceId').value = race.id;
         document.getElementById('raceInputName').value = race.name;
-        
         const presets = ['5', '10', '21.097', '42.195'];
         if (presets.includes(String(race.distKm))) {
             document.getElementById('raceInputPresetDist').value = String(race.distKm);
@@ -1064,28 +1187,19 @@
             document.getElementById('raceInputCustomKm').value = race.distKm;
             document.getElementById('raceInputCustomKm').disabled = false;
         }
-
         document.getElementById('raceInputType').value = race.type || 'asfalt';
         document.getElementById('raceInputPaid').value = race.paid ? 'paid' : 'unpaid';
         document.getElementById('raceInputDate').value = race.date;
         document.getElementById('raceInputTarget').value = race.target || '';
         document.getElementById('raceModal').classList.add('active');
     }
-
     function handleRaceDistChange() {
         const sel = document.getElementById('raceInputPresetDist').value;
         const customInp = document.getElementById('raceInputCustomKm');
-        if (sel === 'custom') {
-            customInp.disabled = false;
-            customInp.focus();
-        } else {
-            customInp.disabled = true;
-            customInp.value = sel;
-        }
+        if (sel === 'custom') { customInp.disabled = false; customInp.focus(); }
+        else { customInp.disabled = true; customInp.value = sel; }
     }
-
     function closeRaceModal() { document.getElementById('raceModal').classList.remove('active'); }
-
     function submitRaceForm() {
         const name = document.getElementById('raceInputName').value.trim();
         if (!name) { alert('Podaj nazwę zawodów!'); return; }
@@ -1099,19 +1213,15 @@
 
         if (editId) {
             const idx = runnerRaces.findIndex(r => r.id === editId);
-            if (idx >= 0) {
-                runnerRaces[idx] = { id: editId, name, distKm, type, paid, date, target };
-            }
+            if (idx >= 0) runnerRaces[idx] = { id: editId, name, distKm, type, paid, date, target };
         } else {
             runnerRaces.push({ id: 'race_' + Date.now(), name, distKm, type, paid, date, target });
         }
-        
         runnerRaces.sort((a,b) => new Date(a.date) - new Date(b.date));
         localStorage.setItem('meteoRaces', JSON.stringify(runnerRaces));
         closeRaceModal();
         renderRaceCalendarWidget();
     }
-
     function toggleRacePayment(id) {
         const race = runnerRaces.find(r => r.id === id);
         if (!race) return;
@@ -1119,24 +1229,17 @@
         localStorage.setItem('meteoRaces', JSON.stringify(runnerRaces));
         renderRaceCalendarWidget();
     }
-
     function deleteRace(id) {
         if (!confirm('Czy na pewno chcesz usunąć ten start?')) return;
         runnerRaces = runnerRaces.filter(r => r.id !== id);
         localStorage.setItem('meteoRaces', JSON.stringify(runnerRaces));
         renderRaceCalendarWidget();
     }
-
     function renderRaceCalendarWidget() {
         const c = document.getElementById('raceCalendarContainer');
         if (!c) return;
-        if (runnerRaces.length === 0) {
-            c.innerHTML = '<div style="font-size:0.85rem; opacity:0.8; grid-column: 1/-1; padding:0.5rem 0;">Brak zaplanowanych startów. Kliknij „Dodaj start” aby zaplanować swój cel!</div>';
-            return;
-        }
-
-        const now = new Date();
-        now.setHours(0,0,0,0);
+        if (runnerRaces.length === 0) { c.innerHTML = '<div style="font-size:0.83rem; opacity:0.8; grid-column: 1/-1; padding:0.5rem 0;">Brak zaplanowanych startów. Kliknij „Dodaj start”!</div>'; return; }
+        const now = new Date(); now.setHours(0,0,0,0);
         const typeLabels = { asfalt: '🛣️ Asfalt', trail: '🌲 Trail', mieszany: '🔀 Mieszana', bieznia: '🏟️ Bieżnia' };
 
         c.innerHTML = runnerRaces.map(r => {
@@ -1155,21 +1258,19 @@
                 <div class="race-plan-header">
                     <div>
                         <div class="race-plan-name">${escapeHtml(r.name)}</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">📅 ${escapeHtml(r.date)}</div>
+                        <div style="font-size: 0.73rem; color: var(--text-muted);">📅 ${escapeHtml(r.date)}</div>
                     </div>
                     <span class="race-countdown-badge">${countdownText}</span>
                 </div>
                 <div class="race-plan-details">
                     <span class="race-pill">📏 <strong>${r.distKm} km</strong></span>
                     <span class="race-pill">${typeLabels[r.type] || 'Inny'}</span>
-                    <span class="race-paid-badge ${r.paid ? 'paid' : 'unpaid'}" onclick="toggleRacePayment('${r.id}')" title="Kliknij, aby zmienić status opłaty">
-                        ${r.paid ? '✓ Opłacony' : '⏳ Nieopłacony'}
-                    </span>
+                    <span class="race-paid-badge ${r.paid ? 'paid' : 'unpaid'}" onclick="toggleRacePayment('${r.id}')" title="Kliknij, aby zmienić status opłaty">${r.paid ? '✓ Opłacony' : '⏳ Nieopłacony'}</span>
                     ${r.target ? `<span class="race-pill" style="color:var(--primary);">🎯 Cel: ${escapeHtml(r.target)}</span>` : ''}
                 </div>
                 <div class="race-actions-row">
-                    <button onclick="openEditRaceModal('${r.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.9rem; box-shadow:none; min-height:auto;" title="Edytuj start">✏️</button>
-                    <button onclick="deleteRace('${r.id}')" style="background:transparent; color:#ff4757; border:none; padding:2px 6px; cursor:pointer; font-size:0.9rem; box-shadow:none; min-height:auto;" title="Usuń start">🗑️</button>
+                    <button onclick="openEditRaceModal('${r.id}')" style="background:transparent; color:inherit; border:none; padding:2px 6px; cursor:pointer; font-size:0.9rem; box-shadow:none; min-height:auto;">✏️</button>
+                    <button onclick="deleteRace('${r.id}')" style="background:transparent; color:#ff4757; border:none; padding:2px 6px; cursor:pointer; font-size:0.9rem; box-shadow:none; min-height:auto;">🗑️</button>
                 </div>
             </div>`;
         }).join('');
@@ -1188,7 +1289,6 @@
         populateShoeSelect('runInputShoe', '');
         document.getElementById('addRunModal').classList.add('active');
     }
-
     function openEditRunModal(id) {
         const run = runnerRuns.find(r => String(r.id) === String(id));
         if (!run) return;
@@ -1201,9 +1301,7 @@
         populateShoeSelect('runInputShoe', run.shoeId || '');
         document.getElementById('addRunModal').classList.add('active');
     }
-
     function closeRunModal() { document.getElementById('addRunModal').classList.remove('active'); }
-
     function submitRunForm() {
         const kmEl = document.getElementById('runInputKm'), ts = document.getElementById('runInputTime').value.trim(), ds = document.getElementById('runInputDate').value.trim(), tp = document.getElementById('runInputType').value;
         const shoeId = document.getElementById('runInputShoe').value;
@@ -1214,14 +1312,11 @@
 
         if (editId) {
             const idx = runnerRuns.findIndex(r => String(r.id) === String(editId));
-            if (idx >= 0) {
-                runnerRuns[idx] = { ...runnerRuns[idx], km: Math.round(km*100)/100, timeStr: ts || (sec > 0 ? secondsToTimeString(sec) : '--:--'), sec: sec || 0, paceSec: ps, date: ds || localDateStr(new Date()), type: tp, shoeId: shoeId };
-            }
+            if (idx >= 0) runnerRuns[idx] = { ...runnerRuns[idx], km: Math.round(km*100)/100, timeStr: ts || (sec > 0 ? secondsToTimeString(sec) : '--:--'), sec: sec || 0, paceSec: ps, date: ds || localDateStr(new Date()), type: tp, shoeId: shoeId };
         } else {
             const run = { id: String(Date.now()), km: Math.round(km*100)/100, timeStr: ts || (sec > 0 ? secondsToTimeString(sec) : '--:--'), sec: sec || 0, paceSec: ps, date: ds || localDateStr(new Date()), type: tp, shoeId: shoeId };
             runnerRuns.unshift(run);
         }
-
         try { localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns)); } catch(e){}
         closeRunModal();
         updateMileageStats();
@@ -1229,17 +1324,14 @@
         renderShoesTrackerWidget();
         renderHistoryList();
     }
-
     function openHistoryModal() { renderHistoryList(); document.getElementById('historyModal').classList.add('active'); }
     function closeHistoryModal() { document.getElementById('historyModal').classList.remove('active'); }
-    
     function deleteRunItem(id) {
         if (!confirm('Usunąć ten trening z dziennika?')) return;
         runnerRuns = runnerRuns.filter(r => String(r.id) !== String(id));
         try { localStorage.setItem('meteoRuns', JSON.stringify(runnerRuns)); } catch(e){}
         renderHistoryList(); updateMileageStats(); renderRacePredictor(); renderShoesTrackerWidget();
     }
-
     function renderHistoryList() {
         const c = document.getElementById('historyListContainer'); if (!c) return;
         if (!runnerRuns || runnerRuns.length === 0) { c.innerHTML = '<div style="text-align:center; padding:1.5rem; opacity:0.8;">Brak zapisanych biegów.</div>'; return; }
@@ -1255,8 +1347,8 @@
                     <div style="font-size:0.75rem; opacity:0.7; margin-top:2px;">📅 ${escapeHtml(r.date || 'Brak daty')}</div>
                 </div>
                 <div style="display:flex; gap:4px; align-items:center;">
-                    <button onclick="openEditRunModal('${escapeHtml(r.id)}')" style="background:transparent; color:inherit; border:none; padding:4px 6px; cursor:pointer; font-size:1.1rem; box-shadow:none; min-height:auto;" title="Edytuj bieg (zmień buty/czas/km)">✏️</button>
-                    <button onclick="deleteRunItem('${escapeHtml(r.id)}')" style="background:transparent; color:#ff4757; border:none; padding:4px 6px; cursor:pointer; font-size:1.1rem; box-shadow:none; min-height:auto;" title="Usuń bieg">🗑️</button>
+                    <button onclick="openEditRunModal('${escapeHtml(r.id)}')" style="background:transparent; color:inherit; border:none; padding:4px 6px; cursor:pointer; font-size:1.1rem; box-shadow:none; min-height:auto;">✏️</button>
+                    <button onclick="deleteRunItem('${escapeHtml(r.id)}')" style="background:transparent; color:#ff4757; border:none; padding:4px 6px; cursor:pointer; font-size:1.1rem; box-shadow:none; min-height:auto;">🗑️</button>
                 </div>
             </div>`;
         }).join('');
@@ -1496,7 +1588,6 @@
         renderWeeklySparkline();
     }
 
-    // Ustawienia Tabs
     function switchSettingsTab(t, b = null) {
         document.querySelectorAll('.settings-tab-btn').forEach(x => x.classList.remove('active'));
         document.querySelectorAll('.settings-tab-content').forEach(x => x.classList.remove('active'));
@@ -1539,7 +1630,6 @@
     }
     function updateProfileUI() { const g = document.getElementById('runnerGreeting'); if (g) g.textContent = runnerProfile.name ? `| Cześć, ${escapeHtml(runnerProfile.name)}!` : ''; }
 
-    // Obsługa ikon i pogody
     function getIconForCondition(code, isDay, text = '', cdn = '') {
         const tl = (text || '').toLowerCase();
         if (tl.includes('zadymien') || tl.includes('smoke') || tl.includes('haze') || tl.includes('smog') || tl.includes('mgł') || tl.includes('fog')) return { day:'248.svg', night:'248.svg' };
@@ -1628,7 +1718,7 @@
         const ct = translateWeatherCondition(current.condition.code, isDay, current.condition.text);
 
         const wl = document.getElementById('widgetLocation');
-        if (wl) { wl.textContent = `${location.name}, ${location.region || location.country}`; }
+        if (wl) wl.textContent = `${location.name}, ${location.region || location.country}`;
         document.getElementById('widgetCondition').textContent = ct;
         document.getElementById('widgetTemp').textContent = `${current.temp_c.toFixed(1)}°C`;
         document.getElementById('widgetWind').textContent = `${current.wind_kph} km/h`;
@@ -1806,6 +1896,7 @@
         renderShoesTrackerWidget();
         renderRaceCalendarWidget();
         renderSettingsShoesList();
+        initStickyNote();
         
         const sa = localStorage.getItem('meteoBgAnim'); if (sa === '0') toggleBackgroundAnim();
         updateSettingsControls();
