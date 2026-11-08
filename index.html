@@ -1554,24 +1554,72 @@
     }
 
     function renderRunTypeChart() {
-        const cv = document.getElementById('runTypeChart'), lg = document.getElementById('runTypeLegend'), tE = document.getElementById('runTypeChartTotal'), yL = document.getElementById('runTypeChartYearLabel');
-        if (!cv) return;
-        const now = new Date(), cy = now.getFullYear();
-        const ys = new Date(cy, 0, 1), ye = new Date(cy, 11, 31, 23, 59, 59);
-        const vr = runnerRuns.filter(r => { const km = parseFloat(r.km); if (!(km > 0)) return false; const dO = parseRunDate(r.date); return dO && dO >= ys && dO <= ye; });
-        const tot = { easy: 0, tempo: 0, race: 0 };
-        vr.forEach(r => { const km = parseFloat(r.km) || 0; const t = tot[r.type] !== undefined ? r.type : 'easy'; tot[t] += km; });
-        const tKm = tot.easy + tot.tempo + tot.race, ie = tKm === 0;
-        if (yL) yL.textContent = `Rok ${cy}`;
-        if (tE) tE.textContent = ie ? '0 km' : `${tKm.toFixed(1)} km`;
-        if (lg) lg.innerHTML = `<span style="color:#27ae60;">Easy ${ie?0:Math.round(tot.easy/tKm*100)}%</span> • <span style="color:#f39c12;">Tempo ${ie?0:Math.round(tot.tempo/tKm*100)}%</span> • <span style="color:#e74c3c;">Start ${ie?0:Math.round(tot.race/tKm*100)}%</span>`;
-        const cd = ie ? [1,0,0] : [tot.easy, tot.tempo, tot.race];
-        const cc = ie ? ['#d1d5db','#e5e7eb','#e5e7eb'] : ['#27ae60','#f39c12','#e74c3c'];
-        if (runTypeChart) { runTypeChart.data.datasets[0].data = cd; runTypeChart.data.datasets[0].backgroundColor = cc; runTypeChart.update(); }
-        else {
-            runTypeChart = new Chart(cv.getContext('2d'), { type: 'doughnut', data: { labels: ['Easy','Tempo','Start'], datasets: [{ data: cd, backgroundColor: cc, borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false } } } });
+    const cv = document.getElementById('runTypeChart'),
+          lg = document.getElementById('runTypeLegend'),
+          tE = document.getElementById('runTypeChartTotal'),
+          yL = document.getElementById('runTypeChartYearLabel');
+    if (!cv) return;
+    const now = new Date(), cy = now.getFullYear();
+    const ys = new Date(cy, 0, 1), ye = new Date(cy, 11, 31, 23, 59, 59);
+    const vr = runnerRuns.filter(r => {
+        const km = parseFloat(r.km); if (!(km > 0)) return false;
+        const dO = parseRunDate(r.date); return dO && dO >= ys && dO <= ye;
+    });
+    const tot = { easy: 0, tempo: 0, race: 0 };
+    vr.forEach(r => {
+        const km = parseFloat(r.km) || 0;
+        const t = tot[r.type] !== undefined ? r.type : 'easy';
+        tot[t] += km;
+    });
+
+    // ═══ NOWE: bazowe km roku doliczane do wykresu ═══
+    const baseKm = baseYearlyKm[cy] || 0;
+    const runKm = tot.easy + tot.tempo + tot.race;
+    const tKm = runKm + baseKm;
+    const ie = tKm === 0;
+
+    if (yL) yL.textContent = `Rok ${cy}`;
+    if (tE) tE.textContent = ie ? '0 km' : `${tKm.toFixed(1)} km`;
+
+    // ═══ Legenda – proporcje liczone od tKm (z bazowymi) ═══
+    if (lg) {
+        const pct = v => (ie || tKm === 0) ? 0 : Math.round((v / tKm) * 100);
+        const parts = [];
+        if (baseKm > 0) parts.push(`<span style="color:#8b5cf6;">Bazowe ${pct(baseKm)}%</span>`);
+        parts.push(`<span style="color:#27ae60;">Easy ${pct(tot.easy)}%</span>`);
+        parts.push(`<span style="color:#f39c12;">Tempo ${pct(tot.tempo)}%</span>`);
+        parts.push(`<span style="color:#e74c3c;">Start ${pct(tot.race)}%</span>`);
+        lg.innerHTML = parts.join(' • ');
+    }
+
+    // ═══ Dane wykresu – bazowe jako osobny segment ═══
+    let dataArr, colorArr, labelArr;
+    if (ie) {
+        dataArr = [1]; colorArr = ['#d1d5db']; labelArr = ['Brak'];
+    } else {
+        dataArr = []; colorArr = []; labelArr = [];
+        if (tot.easy  > 0) { dataArr.push(tot.easy);  colorArr.push('#27ae60'); labelArr.push('Easy');  }
+        if (tot.tempo > 0) { dataArr.push(tot.tempo); colorArr.push('#f39c12'); labelArr.push('Tempo'); }
+        if (tot.race  > 0) { dataArr.push(tot.race);  colorArr.push('#e74c3c'); labelArr.push('Start'); }
+        if (baseKm    > 0) { dataArr.push(baseKm);    colorArr.push('#8b5cf6'); labelArr.push('Bazowe'); }
+        if (dataArr.length === 0) {
+            dataArr = [1]; colorArr = ['#d1d5db']; labelArr = ['Brak'];
         }
     }
+
+    if (runTypeChart) {
+        runTypeChart.data.labels = labelArr;
+        runTypeChart.data.datasets[0].data = dataArr;
+        runTypeChart.data.datasets[0].backgroundColor = colorArr;
+        runTypeChart.update();
+    } else {
+        runTypeChart = new Chart(cv.getContext('2d'), {
+            type: 'doughnut',
+            data: { labels: labelArr, datasets: [{ data: dataArr, backgroundColor: colorArr, borderWidth: 2 }] },
+            options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false } } }
+        });
+    }
+}
 
     function getSparklineRange(off = sparklineOffset, mode = sparklineMode) {
         const now = new Date();
