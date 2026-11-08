@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -423,6 +422,7 @@
                 <div class="mileage-btn-row">
                     <button onclick="openAddRunModal()">➕ Dodaj bieg</button>
                     <button style="background: var(--glass-subcard); border: 1px solid var(--glass-border); color: inherit;" onclick="openHistoryModal()">📜 Historia biegów</button>
+                    <button style="background: var(--glass-subcard); border: 1px solid var(--glass-border); color: inherit;" onclick="openBaseKmModal()">🎯 Startowy km roku</button>
                 </div>
             </div>
 
@@ -804,6 +804,31 @@
     </div>
 </div>
 
+<!-- MODAL STARTOWEGO KILOMETRAŻU ROCZNEGO -->
+<div class="modal-overlay" id="baseKmModal" onclick="if(event.target === this) closeBaseKmModal()">
+    <div class="modal-card">
+        <h3 style="margin: 0 0 0.6rem 0; color: var(--primary);">🎯 Startowy kilometraż roku</h3>
+        <p style="font-size:0.83rem; color:var(--text-muted); margin:0 0 0.9rem 0; line-height:1.4;">
+            Nie zaczynasz używać MeteoRun od stycznia? Dodaj kilometry, które przebiegłeś <strong>w tym roku przed rozpoczęciem korzystania z aplikacji</strong> — zostaną doliczone do rocznego kilometrażu. Możesz edytować lub usunąć bazowy kilometraż w każdej chwili (wpisując 0).
+        </p>
+        <div class="form-grid-2">
+            <div class="form-group">
+                <label>Rok</label>
+                <input type="number" id="baseKmYear" min="2020" max="2100" value="2025" oninput="updateBaseKmInfo()">
+            </div>
+            <div class="form-group">
+                <label>Bazowy kilometraż (km)</label>
+                <input type="number" id="baseKmValue" min="0" step="0.1" value="0" placeholder="np. 250.5" oninput="updateBaseKmInfo()">
+            </div>
+        </div>
+        <div id="baseKmInfo" style="font-size:0.82rem; margin: 0.4rem 0 1rem 0; padding:0.6rem 0.8rem; background:var(--glass-subcard); border-radius:8px; border:1px solid var(--glass-border); line-height:1.5;"></div>
+        <div style="display: flex; gap: 0.6rem;">
+            <button style="flex: 1;" onclick="saveBaseKm()">💾 Zapisz</button>
+            <button style="flex: 1; background: rgba(0,0,0,0.1); color: inherit; box-shadow: none;" onclick="closeBaseKmModal()">Anuluj</button>
+        </div>
+    </div>
+</div>
+
 <script>
     const API_KEY = 'd0c0831962dc429f91771349242705';
 
@@ -879,6 +904,13 @@
         if (!Array.isArray(runnerRuns)) runnerRuns = [];
     } catch(e) { runnerRuns = []; }
 
+    // ═══════════ STARTOWY KILOMETRAŻ ROCZNY (baza przed użyciem app) ═══════════
+    let baseYearlyKm = {};
+    try {
+        const b = localStorage.getItem('meteoBaseKm');
+        if (b) baseYearlyKm = JSON.parse(b) || {};
+    } catch(e) { baseYearlyKm = {}; }
+
     function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
     function getRandomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
     function localDateStr(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
@@ -938,6 +970,52 @@
         if (!s) return null;
         if (typeof s === 'string' && s.includes('-')) { const p = s.split('-'); if (p.length === 3) { const d = new Date(parseInt(p[0],10), parseInt(p[1],10)-1, parseInt(p[2],10), 12); if (!isNaN(d.getTime())) return d; } }
         const d = new Date(s); return isNaN(d.getTime()) ? null : d;
+    }
+
+    // ==========================================
+    // STARTOWY KILOMETRAŻ ROCZNY
+    // ==========================================
+    function openBaseKmModal() {
+        const cy = new Date().getFullYear();
+        document.getElementById('baseKmYear').value = cy;
+        document.getElementById('baseKmValue').value = baseYearlyKm[cy] || 0;
+        updateBaseKmInfo();
+        document.getElementById('baseKmModal').classList.add('active');
+    }
+    function closeBaseKmModal() {
+        document.getElementById('baseKmModal').classList.remove('active');
+    }
+    function updateBaseKmInfo() {
+        const yearEl = document.getElementById('baseKmYear');
+        const valEl = document.getElementById('baseKmValue');
+        const info = document.getElementById('baseKmInfo');
+        if (!yearEl || !valEl || !info) return;
+        const year = parseInt(yearEl.value);
+        const val = parseFloat(String(valEl.value).replace(',', '.')) || 0;
+        if (isNaN(year)) { info.textContent = 'Podaj prawidłowy rok.'; return; }
+        const runsKm = runnerRuns.filter(r => {
+            const d = parseRunDate(r.date);
+            return d && d.getFullYear() === year;
+        }).reduce((acc, r) => acc + (parseFloat(r.km) || 0), 0);
+        const existingBase = baseYearlyKm[year] || 0;
+        info.innerHTML = `📊 Biegi w aplikacji (${year}): <strong>${runsKm.toFixed(1)} km</strong><br>`
+            + `🎯 Bazowy kilometraż: <strong>${val.toFixed(1)} km</strong>${existingBase > 0 && existingBase !== val ? ` <span style="opacity:0.6;">(obecnie: ${existingBase.toFixed(1)} km)</span>` : ''}<br>`
+            + `📈 Razem rok ${year}: <strong>${(runsKm + val).toFixed(1)} km</strong>`;
+    }
+    function saveBaseKm() {
+        const year = parseInt(document.getElementById('baseKmYear').value);
+        const raw = String(document.getElementById('baseKmValue').value).replace(',', '.');
+        const val = parseFloat(raw) || 0;
+        if (isNaN(year) || year < 2000 || year > 2100) { alert('Podaj prawidłowy rok (2000–2100)!'); return; }
+        if (val < 0) { alert('Kilometraż nie może być ujemny!'); return; }
+        if (val === 0) {
+            delete baseYearlyKm[year];
+        } else {
+            baseYearlyKm[year] = Math.round(val * 10) / 10;
+        }
+        try { localStorage.setItem('meteoBaseKm', JSON.stringify(baseYearlyKm)); } catch(e) {}
+        closeBaseKmModal();
+        updateMileageStats();
     }
 
     // ==========================================
@@ -1571,7 +1649,24 @@
         };
         set('mileageWeekVal', 'mileageWeekMeta', wK, wC);
         set('mileageMonthVal', 'mileageMonthMeta', mK, mC);
-        set('mileageYearVal', 'mileageYearMeta', yK, yC);
+
+        // Rok z uwzględnieniem bazowego kilometrażu
+        const yearBase = baseYearlyKm[cy] || 0;
+        const yearTotal = yK + yearBase;
+        const yv = document.getElementById('mileageYearVal');
+        if (yv) yv.textContent = `${yearTotal.toFixed(1)} km`;
+        const ym = document.getElementById('mileageYearMeta');
+        if (ym) {
+            if (yC > 0 && yearBase > 0) {
+                ym.textContent = `${yC} ${yC === 1 ? 'bieg' : 'biegów'} + ${yearBase.toFixed(0)} km bazowe`;
+            } else if (yC > 0) {
+                ym.textContent = `${yC} ${yC === 1 ? 'bieg' : 'biegów'}`;
+            } else if (yearBase > 0) {
+                ym.textContent = `${yearBase.toFixed(0)} km bazowe`;
+            } else {
+                ym.textContent = 'Brak biegów';
+            }
+        }
 
         const ep = document.getElementById('mileageWeeklyPace');
         if (ep) ep.textContent = wKP > 0 ? `Śr. tempo tygodnia: ${secondsToTimeString(wS/wKP)}/km` : 'Śr. tempo tygodnia: --:--/km';
@@ -1680,6 +1775,130 @@
         return { top, bot, acc: acc.length ? acc.join(', ') : 'Brak dodatkowych' };
     }
 
+    // ═══════════ OSTRZEŻENIA METEO – FILTROWANIE PO REGIONIE ═══════════
+    const REGION_ALIASES = {
+        'małopolskie':   ['lesser poland','malopolskie','małopolskie'],
+        'mazowieckie':   ['masovia','mazovian','mazowieckie'],
+        'pomorskie':     ['pomerania','pomorskie'],
+        'śląskie':       ['silesia','silesian','slaskie','śląskie'],
+        'wielkopolskie': ['greater poland','wielkopolskie'],
+        'dolnośląskie':  ['lower silesia','dolnoslaskie','dolnośląskie'],
+        'kujawsko-pomorskie': ['kuyavian-pomeranian','kuyavian-pomerania','kujawsko-pomorskie'],
+        'lubelskie':     ['lublin','lubelskie'],
+        'lubuskie':      ['lubusz','lubuskie'],
+        'łódzkie':       ['lodz','lodzkie','łódzkie'],
+        'opolskie':      ['opole','opolskie'],
+        'podkarpackie':  ['subcarpathian','podkarpackie'],
+        'podlaskie':     ['podlachia','podlaskie'],
+        'świętokrzyskie':['swietokrzyskie','holy cross','świętokrzyskie'],
+        'warmińsko-mazurskie': ['warmian-masurian','warminsko-mazurskie','warmińsko-mazurskie'],
+        'zachodniopomorskie':  ['west pomeranian','west pomerania','zachodniopomorskie']
+    };
+
+    function _normalizeRegion(s) {
+        return String(s || '').toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function _getRegionAliases(region) {
+        const aliases = new Set();
+        if (!region) return aliases;
+        const rLow = String(region).toLowerCase().trim();
+        const rNorm = _normalizeRegion(region);
+        aliases.add(rNorm);
+        if (REGION_ALIASES[rLow]) {
+            REGION_ALIASES[rLow].forEach(a => aliases.add(_normalizeRegion(a)));
+        }
+        for (const [pl, enList] of Object.entries(REGION_ALIASES)) {
+            const enNormList = enList.map(_normalizeRegion);
+            if (enNormList.includes(rNorm)) {
+                aliases.add(_normalizeRegion(pl));
+                enNormList.forEach(a => aliases.add(a));
+                break;
+            }
+        }
+        return aliases;
+    }
+
+    function _alertMatchesLocation(alert, location) {
+        const areasRaw = alert.areas || alert.area || '';
+        if (!areasRaw) return null;
+
+        const areasNorm = _normalizeRegion(areasRaw);
+        if (areasNorm.includes('polska') || areasNorm.includes('poland')) return true;
+
+        const regionAliases = _getRegionAliases(location.region || '');
+        const cityNorm = _normalizeRegion(location.name || '');
+
+        for (const alias of regionAliases) {
+            if (alias && areasNorm.includes(alias)) return true;
+        }
+        if (cityNorm && areasNorm.includes(cityNorm)) return true;
+
+        const parts = areasNorm.split(/[,;]/).map(p => p.trim()).filter(p => p.length >= 3);
+        for (const part of parts) {
+            for (const alias of regionAliases) {
+                if (alias && (part.includes(alias) || alias.includes(part))) return true;
+            }
+            if (cityNorm && (part.includes(cityNorm) || cityNorm.includes(part))) return true;
+        }
+        return false;
+    }
+
+    function renderWeatherWarnings(alerts, location) {
+        const container = document.getElementById('weatherWarnings');
+        const countBadge = document.getElementById('warningsCountBadge');
+        if (!container) return;
+
+        const alertList = (alerts && alerts.alert) || [];
+        if (alertList.length === 0) {
+            container.innerHTML = '<div style="font-size:0.85rem; opacity:0.85; padding:0.5rem 0;">Brak aktywnych ostrzeżeń dla tego regionu.</div>';
+            if (countBadge) countBadge.style.display = 'none';
+            return;
+        }
+
+        const relevant = alertList.filter(a => {
+            const m = _alertMatchesLocation(a, location);
+            return m === true || m === null;
+        });
+
+        if (relevant.length === 0) {
+            container.innerHTML = '<div style="font-size:0.85rem; opacity:0.85; padding:0.5rem 0;">Brak aktywnych ostrzeżeń dla tego regionu.<br><span style="font-size:0.75rem; opacity:0.7;">(API zwróciło ostrzeżenia dla innych regionów — zostały ukryte)</span></div>';
+            if (countBadge) countBadge.style.display = 'none';
+            return;
+        }
+
+        if (countBadge) {
+            countBadge.style.display = 'inline-block';
+            countBadge.textContent = relevant.length;
+        }
+
+        const sevColors = { minor:'#f39c12', moderate:'#f39c12', severe:'#e74c3c', extreme:'#c0392b' };
+        const sevIcons  = { minor:'⚡', moderate:'⚡', severe:'⚠️', extreme:'🚨' };
+
+        container.innerHTML = relevant.map(a => {
+            const sev = (a.severity || '').toLowerCase();
+            const color = sevColors[sev] || 'var(--primary)';
+            const icon  = sevIcons[sev]  || '⚠️';
+            const eff = a.effective ? new Date(a.effective).toLocaleString('pl-PL', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}) : '—';
+            const exp = a.expires   ? new Date(a.expires).toLocaleString('pl-PL',   {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}) : '—';
+            return `<div class="warning-card" style="border-left-color:${color};">
+                <div class="warning-header">
+                    <span class="warning-icon">${icon}</span>
+                    <div>
+                        <div class="warning-title">${escapeHtml(a.event || a.headline || 'Ostrzeżenie')}</div>
+                        <div class="warning-severity" style="color:${color};">${escapeHtml(a.severity || '')}${a.areas ? ` • ${escapeHtml(a.areas)}` : ''}</div>
+                    </div>
+                </div>
+                <div class="warning-details">${escapeHtml(a.desc || a.note || '').replace(/\n/g, '<br>')}</div>
+                ${a.instruction ? `<div class="warning-details" style="font-size:0.8rem; opacity:0.85;"><em>ℹ️ ${escapeHtml(a.instruction)}</em></div>` : ''}
+                <div class="warning-time">
+                    <span>📅 Ważne od: ${eff}</span>
+                    <span>⏰ Ważne do: ${exp}</span>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
     async function getWeatherData(query) {
         try {
             document.getElementById('loadingIndicator').style.display = 'flex';
@@ -1783,6 +2002,9 @@
         document.getElementById('pm25Value').textContent = current.air_quality?.pm2_5 ? `${current.air_quality.pm2_5.toFixed(1)} µg/m³` : '-';
         document.getElementById('pm10Value').textContent = current.air_quality?.pm10 ? `${current.air_quality.pm10.toFixed(1)} µg/m³` : '-';
         document.getElementById('airQualityAdvice').innerHTML = aqi <= 2 ? '✅ Czyste powietrze – idealne na trening tlenowy.' : '⚠️ Wyczuwalny smog – odpuść ostre akcenty.';
+
+        // ═══ OSTRZEŻENIA METEO – z filtrowaniem po regionie ═══
+        renderWeatherWarnings(alerts, location);
 
         renderCharts(n24); renderHourly(n24); renderDaily(forecast.forecastday);
         updateStormAndFrost(n24);
